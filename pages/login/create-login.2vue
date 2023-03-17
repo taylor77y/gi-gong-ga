@@ -1,0 +1,108 @@
+<template>
+  <view class="page flex-col">
+    <view class="image-wrapper_3 flex-row justify-between">
+      <image
+	    @click="getLoginPath()"
+        class="icon_2"
+        referrerpolicy="no-referrer"
+        src="/static/lanhu_zhuce/psljw3d93xzc2hmmyqamvys5ev1xalh167ae7845b6-aef9-4061-8022-e0c399532fac.png"
+      />
+      <image
+	    @click="cancel()"
+        class="icon_1"
+        referrerpolicy="no-referrer"
+        src="/static/lanhu_zhuce/psapqjl86336aq62bxd25p22qgqwbzf11t59c51cdb-df92-487a-8a86-f42061c28b59.png"
+      />
+    </view>
+    <image
+      class="image_4"
+      referrerpolicy="no-referrer"
+      src="/static/lanhu_zhuce/ps09kfeay0j3gexmggyq0zq6076zqwnjex0c0eddf8db-50d3-4105-b43b-3215d86ad0da.png"
+    />
+    <text class="text_1">{{i18n.hyldba}}！</text>
+    <button class="button_2 flex-col" @click="getRegister(1)">
+      <view class="image-text_1">
+        <image
+          class="icon_3"
+          referrerpolicy="no-referrer"
+          src="/static/lanhu_zhuce/psc49fyldwwxgqs0wh2x95t832awhrlk8ss2f54107b-f1ec-4c1f-8f6d-053d40ba6a6d.png"
+        />
+        <text class="text-group_3" >{{i18n.yqsryxsjh}}</text>
+      </view>
+    </button>
+    <image
+      class="image_5"
+      referrerpolicy="no-referrer"
+      src="/static/lanhu_zhuce/ps3v442udjcq9380xvsgnj628loqiz37an892bc31e-6b35-46bc-a524-18ae8f2579f1.png"
+    />
+    <!-- <button class="button_3 flex-col" @click="onClick_2">
+      <view class="image-text_2 flex-row justify-between">
+        <image
+          class="label_1"
+          referrerpolicy="no-referrer"
+          src="/static/lanhu_zhuce/pshcu3kr9hhzpv999xj8ea9gdohga5bvqao6764757a-c7cb-4e39-8972-953166d7794f.png"
+        />
+        <text class="text-group_4">通过Google继续</text>
+      </view>
+    </button> -->
+    <!-- <button class="button_4 flex-col" @click="onClick_3">
+      <image
+        class="label_2"
+        referrerpolicy="no-referrer"
+        src="/static/lanhu_zhuce/psvevi3ufys2km2xcy2ps6sh07vw483k05fb711f-36b8-47bf-8f04-1d5eb6e576de.png"
+      />
+      <text class="text_6">通过Apple继续</text>
+    </button> -->
+    <view class="text-wrapper_2" @click="getLoginPath()">
+      <text class="text_7">{{i18n.zcg}}？</text>
+      <text class="text_8"></text>
+      <text class="text_9">&nbsp;{{i18n.dl}}</text>
+    </view>
+<!--    <text class="text_10" @click="getRegister(2)">注册一个企业账户</text>
+    <text class="text_11">或者</text> -->
+  </view>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      constants: {}
+    };
+  },
+  computed:{
+	  i18n() {
+	  	return this.$t("member")
+	  },
+  },
+  methods: {
+	cancel() {
+		uni.navigateTo({
+			url: `/pages/index/index`
+		})
+	},  
+	getLoginPath() {
+	   uni.navigateTo({
+	   	url: `/pages/login/login`
+	   })	
+	},
+	getRegister(index) {
+		const temp = {
+			1: '/pages/login/register'
+		}
+		uni.navigateTo({
+			url: temp[index]
+		})	
+	},
+    onClick_2() {
+      alert(1);
+    },
+    onClick_3() {
+      alert(1);
+    }
+  }
+};
+</script>
+<style lang='scss'>
+@import '@/common/common.scss';
+@import './assets/2.scss';
+</style>

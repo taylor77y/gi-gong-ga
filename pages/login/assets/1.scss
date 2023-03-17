@@ -1,0 +1,195 @@
+.page {
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  width: 750rpx;
+  height: 1334rpx;
+  overflow: hidden;
+  .icon_1 {
+    width: 30rpx;
+    height: 30rpx;
+    margin: 67rpx 0 0 674rpx;
+  }
+  .text_1 {
+    width: 202rpx;
+    height: 49rpx;
+    overflow-wrap: break-word;
+    color: rgba(0, 0, 0, 1);
+    font-size: 52rpx;
+    font-family: PingFang-SC-Bold;
+    font-weight: 700;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+    margin: 69rpx 0 0 47rpx;
+  }
+  .text_2 {
+    width: 320rpx;
+    height: 27rpx;
+    overflow-wrap: break-word;
+    color: rgba(101, 106, 117, 1);
+    font-size: 28rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+    margin: 100rpx 0 0 46rpx;
+  }
+  .input_1 {
+    background-color: rgba(246, 246, 246, 1);
+    border-radius: 10px;
+    width: 654rpx;
+    height: 98rpx;
+    border: 1px solid rgba(161, 45, 62, 1);
+    margin: 15rpx 0 0 48rpx;
+    .text_3 {
+      width: 55rpx;
+      height: 26rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 36rpx;
+      font-family: DIN-Medium;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+      margin: 36rpx 0 0 42rpx;
+    }
+    .icon_2 {
+      width: 23rpx;
+      height: 14rpx;
+      margin: 42rpx 0 0 21rpx;
+    }
+    .text_4 {
+      width: 185rpx;
+      height: 26rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 36rpx;
+      font-family: DIN-Medium;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+      margin: 36rpx 289rpx 0 39rpx;
+    }
+  }
+  .text_5 {
+    width: 177rpx;
+    height: 23rpx;
+    overflow-wrap: break-word;
+    color: rgba(161, 45, 62, 1);
+    font-size: 24rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+    margin: 20rpx 0 0 46rpx;
+  }
+  .button_1 {
+    background-color: rgba(245, 213, 90, 1);
+    border-radius: 10px;
+    height: 98rpx;
+    width: 654rpx;
+    margin: 49rpx 0 0 48rpx;
+    .text_6 {
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 32rpx;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+  }
+  .image_1 {
+    width: 654rpx;
+    height: 1rpx;
+    margin: 74rpx 0 0 48rpx;
+  }
+  .button_2 {
+    background-color: rgba(235, 236, 240, 1);
+    border-radius: 10px;
+    height: 98rpx;
+    width: 654rpx;
+    margin: 65rpx 0 0 48rpx;
+    .image-text_1 {
+      width: 256rpx;
+      height: 32rpx;
+      margin: 33rpx 0 0 199rpx;
+      .label_1 {
+        width: 32rpx;
+        height: 32rpx;
+      }
+      .text-group_1 {
+        width: 203rpx;
+        height: 29rpx;
+        overflow-wrap: break-word;
+        color: rgba(0, 0, 0, 1);
+        font-size: 28rpx;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        text-align: left;
+        white-space: nowrap;
+        line-height: 34rpx;
+        margin-top: 2rpx;
+      }
+    }
+  }
+  .button_3 {
+    background-color: rgba(235, 236, 240, 1);
+    border-radius: 10px;
+    height: 98rpx;
+    width: 654rpx;
+    justify-content: flex-center;
+    margin: 30rpx 0 0 48rpx;
+    .icon_3 {
+      width: 29rpx;
+      height: 35rpx;
+      margin: 31rpx 0 0 209rpx;
+    }
+    .text_7 {
+      width: 183rpx;
+      height: 29rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 28rpx;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+      margin: -34rpx 0 31rpx 262rpx;
+    }
+  }
+  .text_8 {
+    width: 87%;
+    height: 26rpx;
+    overflow-wrap: break-word;
+    color: rgba(210, 145, 36, 1);
+    font-size: 28rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+    margin: 48rpx 0 249rpx 45rpx;
+	display: flex;
+	justify-content: space-between;
+  }
+  .text_9 {
+    position: absolute;
+    left: 344rpx;
+    top: 703rpx;
+    width: 62rpx;
+    height: 31rpx;
+    overflow-wrap: break-word;
+    color: rgba(101, 106, 117, 1);
+    font-size: 32rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+  }
+}

@@ -1,0 +1,115 @@
+.page {
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  width: 750rpx;
+  height: 1334rpx;
+  overflow: hidden;
+  .icon_1 {
+    width: 30rpx;
+    height: 30rpx;
+    margin: 67rpx 0 0 674rpx;
+  }
+  .text-group_1 {
+    width: 253rpx;
+    height: 110rpx;
+    margin: 68rpx 0 0 46rpx;
+    .text_1 {
+      width: 205rpx;
+      height: 50rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 52rpx;
+      font-family: PingFang-SC-Bold;
+      font-weight: 700;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+    }
+    .text_2 {
+      width: 253rpx;
+      height: 35rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 36rpx;
+      font-family: PingFang-SC-Bold;
+      font-weight: 700;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+      margin-top: 25rpx;
+    }
+  }
+  .group_1 {
+    width: 617rpx;
+    height: 26rpx;
+    margin: 87rpx 0 0 50rpx;
+    .text_3 {
+      width: 53rpx;
+      height: 26rpx;
+      overflow-wrap: break-word;
+      color: rgba(101, 106, 117, 1);
+      font-size: 28rpx;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+    }
+    .icon_2 {
+      width: 39rpx;
+      height: 26rpx;
+    }
+  }
+  .input_1 {
+    background-color: rgba(246, 246, 246, 1);
+    border-radius: 10px;
+    width: 654rpx;
+    height: 98rpx;
+    margin: 15rpx 0 0 48rpx;
+    .icon_3 {
+      width: 30rpx;
+      height: 30rpx;
+      margin: 34rpx 0 0 530rpx;
+    }
+    .label_1 {
+      width: 38rpx;
+      height: 31rpx;
+      margin: 34rpx 36rpx 0 20rpx;
+    }
+  }
+  .button_1 {
+    background-color: rgba(245, 213, 90, 1);
+    border-radius: 10px;
+    height: 98rpx;
+    width: 654rpx;
+    margin: 46rpx 0 0 48rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    .text_4 {
+      // width: 61rpx;
+      // height: 30rpx;
+      overflow-wrap: break-word;
+      color: rgba(0, 0, 0, 1);
+      font-size: 32rpx;
+      font-family: PingFang-SC-Medium;
+      font-weight: 500;
+      white-space: nowrap;
+      // line-height: 41rpx;
+      // margin: 34rpx 0 0 297rpx;
+    }
+  }
+  .text_5 {
+    width: 124rpx;
+    height: 26rpx;
+    overflow-wrap: break-word;
+    color: rgba(210, 145, 36, 1);
+    font-size: 28rpx;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    line-height: 41rpx;
+    margin: 71rpx 0 592rpx 46rpx;
+  }
+}

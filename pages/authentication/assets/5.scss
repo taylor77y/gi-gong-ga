@@ -1,0 +1,93 @@
+.page {
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  width: 750rpx;
+  height: 100vh;
+  overflow: hidden;
+  .group_1 {
+    background-color: rgba(24, 24, 32, 1);
+    width: 750rpx;
+    height: 100vh;
+    .nav-bar_3 {
+      width: 750rpx;
+      height: 74rpx;
+      margin-top: 48rpx;
+      .icon_2 {
+        width: 45rpx;
+        height: 31rpx;
+        margin: 21rpx 0 0 29rpx;
+      }
+      .icon_1 {
+        width: 30rpx;
+        height: 30rpx;
+        margin: 21rpx 24rpx 0 622rpx;
+      }
+    }
+    .text_1 {
+      width: 165rpx;
+      height: 40rpx;
+      overflow-wrap: break-word;
+      color: rgba(255, 255, 255, 1);
+      font-size: 42rpx;
+      font-family: PingFang-SC-Bold;
+      font-weight: 700;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 41rpx;
+      margin: 36rpx 0 0 25rpx;
+    }
+    .text_2 {
+      // width: 445rpx;
+	  width: 100%;
+      overflow-wrap: break-word;
+      color: rgba(255, 255, 255, 1);
+      font-size: 28rpx;
+      font-family: PingFang-SC-Light;
+      font-weight: 300;
+      text-align: left;
+      overflow-wrap: break-word;
+      padding: 24rpx;
+	  display: flex;
+	  flex-wrap: wrap;
+    }
+    .image_2 {
+      width: 424rpx;
+      height: 297rpx;
+      margin: 76rpx 0 0 163rpx;
+    }
+    .image-text_3 {
+      width: 407rpx;
+      height: 188rpx;
+      margin: 117rpx 0 0 26rpx;
+      .image_3 {
+        width: 10rpx;
+        height: 175rpx;
+        margin-top: 7rpx;
+      }
+      .text-group_1 {
+        width: 381rpx;
+        height: 188rpx;
+        overflow-wrap: break-word;
+        color: rgba(255, 255, 255, 1);
+        font-size: 24rpx;
+        font-family: PingFang-SC-Light;
+        font-weight: 300;
+        text-align: left;
+        line-height: 55rpx;
+      }
+    }
+    .button_1 {
+      background-color: rgba(245, 213, 90, 1);
+      border-radius: 3px;
+      height: 75rpx;
+      width: 702rpx;
+      margin: 139rpx 0 185rpx 24rpx;
+      .text_3 {
+       font-size: 28rpx;
+       color: rgba(0, 0, 0, 1);
+       font-family: PingFang-SC-Heavy;
+       font-weight: 900;
+      }
+    }
+  }
+}
