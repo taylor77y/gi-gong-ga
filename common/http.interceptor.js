@@ -19,7 +19,7 @@ const install = (Vue, vm) => {
 	});
 	 // 上传图片路径
 	// uni.setStorageSync('imgPath', 'http://wap.adbaa3011.cc/upfile')
-	uni.setStorageSync('imgPath', 'https://db23app.vip/wap/api/upfile')
+	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
 	// 客服连接地址
 	uni.setStorageSync('wssURL', 'ws://qcim.obk3.com/service/message/')
 	// 图片拼接路径

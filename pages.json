@@ -1331,6 +1331,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/login/finish",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",
