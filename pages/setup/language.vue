@@ -41,7 +41,7 @@
           }
 		},
         onShow() {
-			 const cur = uni.getStorageSync('lang') || 'en'
+			 const cur = uni.getStorageSync('lang') || 'zh'
 			 this.listInfo.forEach((item, key) => {
 				 if (item.val === cur) {
 					 this.current = key

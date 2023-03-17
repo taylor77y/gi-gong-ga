@@ -79,7 +79,8 @@ export default {
 		hasNoData: '没有更多数据了',
 		audioError: '音频文件出错',
 		toLong: '字符过长',
-		selectLang: '选择语言'
+		selectLang: '选择语言',
+		tytk: '请同意服务条款'
 	},
 	about: {
 		yszc: '隐私政策',
@@ -132,7 +133,7 @@ export default {
 		yrz: '已认证',
 		shz: '审核中',
 		wrz: '未认证',
-		hyldba: '欢迎来到币安',
+		hyldba: '欢迎来到示例',
 		qqzdjypt: '加入全球最大的区块链资产交易平台',
 		zc: '注册',
 		dl: '登录',
@@ -495,11 +496,15 @@ export default {
 		mm: "密码",
 		szmm: "设置密码",
 		szmmts: "密码（6-12个字符）",
+		wyydbty: '我已阅读并同意',
+		fwtk: '服务条款',
+		qdl: '去登录',
 		
 		qrmm: "确认密码",
 		smrz: "实名认证",
 		aqbd: "安全绑定",
 		yjy: "云交易",
+		qjy: '去交易',
 		yqm: "邀请码",
 		yqmxt: "邀请码（选填）",
 		qsryqm: "请输入邀请码",

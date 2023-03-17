@@ -1,13 +1,13 @@
 <template>
 	<view class="container">
-		<view class="f-head">
-			<image @click="back()" class="icon_1" referrerpolicy="no-referrer"
-				src="/static/lanhu_querenmima/ps2495rpr92seqakcpyfbbjuasmb353tg5d13ee66-88f7-4c8e-80de-307ef55cf92f.png" />
-			<view class="right">
-				<!-- <image style="margin-right: 40rpx;" src="../../static/image/setting/1.png"></image> -->
-				<image @click="goCustomer()" src="../../static/image/setting/2.png"></image>
-			</view>
-		</view>
+		<xl-header>
+			<template #right>
+				<view class="right">
+					<!-- <image style="margin-right: 40rpx;" src="../../static/image/setting/1.png"></image> -->
+					<image @click="goCustomer()" src="../../static/image/setting/2.png" style="width: 40rpx; height: 40rpx;"></image>
+				</view>
+			</template>
+		</xl-header>
 		<view class="user-box" v-if="loginCode">
 			<view class="left" @click="getEdtUser()">
 				<view class="user-img">
@@ -73,7 +73,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="set-btn" @click="signOut()">
+		<view class="set-btn" @click="signOut()" v-if="loginCode">
 			{{ i18n.tcdl }}
 		</view>
 		<view class="tips">
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+	import XlHeader from '../../components/xl-header/xl-header.vue'
 	export default {
 		data() {
 			return {
@@ -233,8 +234,6 @@
 			}
 			if(lauInfo){
 				this.listInfo[0].val = lauInfo;
-			} else {
-				this.listInfo[0].val = 'English'
 			}
 		},
 		computed: {
