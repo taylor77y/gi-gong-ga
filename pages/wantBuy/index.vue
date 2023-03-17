@@ -18,7 +18,7 @@
 			<view class="select-container">
 				<view class="selects">
 					<view :class="{'choose': firstTab === 'Buy'}" class="mr-40" @click="firstTab = 'Buy'">{{i18n.wym}}</view>
-					<view :class="{'choose': firstTab === 'Sell'}" @click="firstTab = 'Sell'">{{i18n.wym}}</view>
+					<view :class="{'choose': firstTab === 'Sell'}" @click="firstTab = 'Sell'">{{i18n.wymai}}</view>
 				</view>
 				<view class="right-icon">
 					<u-icon name="file-text-fill" size="30" color="#868c9a"></u-icon>
@@ -134,7 +134,7 @@
 			</view>
 			<view class="divline mt-10"></view>
 			<view class="content">
-				<u-empty text="暂无广告" mode="data" class="empty"></u-empty>
+				<u-empty :text=i18n.zwgg   mode="data" class="empty"></u-empty>
 			</view>
 		</view>
 	</view>
@@ -158,7 +158,7 @@
 				motBntList: ['All', 'Bank Card ', 'Virtual Currency ','WeChat ','Alipay ','PayPal ','Western Union ','SWIFT','Others '],
 				motBnt: 'All',
 				total: null,
-				numList: ['100','10000', '5000','1万','1万','1万'],
+				numList: ['100','10000', '5000',this.$t("wantBuy").w,this.$t("wantBuy").w,this.$t("wantBuy").w],
 				num: null,
 				showFilter: false,
 				total_usd: null,

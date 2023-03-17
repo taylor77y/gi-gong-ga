@@ -69,7 +69,7 @@
 							<view class="num">{{currentBiType.high}}</view>
 						</u-col>
 						<u-col span="6" class="right-col mb-20">
-							<view class="label">24h{{i18n.cjl}}(BTC)</view>
+							<view class="label">24h{{i18n.cjl}}</view>
 							<view class="num">{{currentBiType.amount}}</view>
 						</u-col>
 						<u-col span="6" class="right-col mt-20">
@@ -77,7 +77,7 @@
 							<view class="num">{{currentBiType.low}}</view>
 						</u-col>
 						<u-col span="6" class="right-col mt-20">
-							<view class="label">24h {{i18n.cje}}(U)</view>
+							<view class="label">24h {{i18n.cje}}</view>
 							<view class="num">{{currentBiType.volume}}</view>
 						</u-col>
 					</u-row>
@@ -120,10 +120,10 @@
 							<view class="title">{{i18n.mr}}</view>
 							<u-row gutter="6">
 								<u-col span="6" style="padding: 0;">
-									<p>{{i18n.jg}}(USDT)</p>
+									<p>{{i18n.jg}}</p>
 								</u-col>
 								<u-col span="6" class="right-col">
-									<p>{{i18n.sl}}(BTC)</p>
+									<p>{{i18n.sl}}</p>
 								</u-col>
 							</u-row>
 						</view>
@@ -144,10 +144,10 @@
 							<view class="title">{{i18n.mc}}</view>
 							<u-row gutter="6">
 								<u-col span="6" style="padding: 0;">
-									<p>{{i18n.jg}}(USDT)</p>
+									<p>{{i18n.jg}}</p>
 								</u-col>
 								<u-col span="6" class="right-col">
-									<p>{{i18n.sl}}(BTC)</p>
+									<p>{{i18n.sl}}</p>
 								</u-col>
 							</u-row>
 						</view>
@@ -208,47 +208,47 @@
 				isStar: false, // 收藏
 				activetedTab: '0',
 				timeOptions: [{
-								name: '分时',
+								name: this.$t("trendDetails").fs,
 								value: '1min',
 								time: 1
 							},
 							{
-								name: '5分',
+								name: this.$t("trendDetails").f,
 								value: '5min',
 								time: 5
 							},
 							{
-								name: '15分',
+								name: this.$t("trendDetails").f,
 								value: '15min',
 								time: 15
 							},
 							{
-								name: '30分',
+								name: this.$t("trendDetails").f,
 								value: '30min',
 								time: 30
 							},
 							{
-								name: '1小时',
+								name: this.$t("trendDetails").xs,
 								value: '60min',
 								time: 60
 							},
 							{
-								name: '4小时',
+								name: this.$t("trendDetails").xz,
 								value: '4hour',
 								time: 240
 							},
 							{
-								name: '1天',
+								name: this.$t("trendDetails").t,
 								value: '1D',
 								time: 1440
 							},
 							{
-								name: '1周',
+								name: this.$t("trendDetails").z,
 								value: '1week',
 								time: 10080
 							},
 							{
-								name: '1月',
+								name: this.$t("trendDetails").y,
 								value: '1mon',
 								time: 145800
 							}
