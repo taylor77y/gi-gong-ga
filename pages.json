@@ -796,6 +796,16 @@
 		    }
 		    
 		},
+
+        {
+		    "path" : "pages/login/gooleVerify",
+		    "style" :
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+
+		},
 		{
 		    "path" : "pages/login/verification",
 		    "style" :                                                                               
