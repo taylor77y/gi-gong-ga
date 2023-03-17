@@ -9,7 +9,7 @@
 			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a" :current="currentIndex" @change="tabClickHanlder" />
 			<u-line color="info" class="line" />
 			<view class="empty">
-				<u-empty mode="search" text="No History"></u-empty>
+				<u-empty mode="search" text="暂无记录"></u-empty>
 			</view>
 		</view>
 	</view>
@@ -19,12 +19,12 @@
 	export default {
 		data() {
 			return {
-				title: 'USD-M History',
+				title: 'U本位合约历史',
 				tabList: [
 					{
-						name: ' Open orders',
+						name:'当前委托',
 					}, {
-						name: 'Historical position',
+						name: '历史仓位',
 					}
 				],
 				currentIndex: 0
@@ -37,7 +37,8 @@
 			tabClickHanlder(index) {
 				this.currentIndex = index
 			}
-		}
+		},
+		
 	}
 </script>
 
