@@ -10,7 +10,9 @@
 		<view class="step">
 			<u-steps :list="numList" :current="0" mode="number" active-color="#00EE76"></u-steps>
 		</view>
+		<!-- 创建个人用户 -->
 		<text class="text_1">{{i18n.cjgrzh}}</text>
+		<!-- 选项卡 -->
 		<view class="group_1 flex-row justify-between">
 			<view class="f-flex-center">
 				<text @click="getChenk(index)" class="text_2" :class="{'f-bg': chenk === index}"
@@ -19,6 +21,7 @@
 		</view>
 		<text class="text_4">{{i18n.gr}}{{ tagBtn[chenk] }}</text>
 		<view class="register-input">
+			<!-- 手机号码 -->
 			<view v-if="chenk === 2" class="d-flex align-items-center">
 				<!-- <view class="register-img">
 				<image class="label_1" referrerpolicy="no-referrer"
@@ -62,28 +65,28 @@
 		</view>
 		<view class="register-input">
 			<view class="r-input">
-				<u-input v-if="!isInput" :placeholder="$t('member').qqrmm" :password-icon="false"
+				<u-input v-if="!isComfirmInput" :placeholder="$t('member').qqrmm" :password-icon="false"
 				 type="password" v-model="confirmUserPass" class="f-input"
 				 placeholder-style="color: #B0B3BA;font-size: 32rpx"
 				 height="30"
 				  />
-				<u-input v-else placeholder="" v-model="confirmUserPas" class="f-input" />
+				<u-input v-else placeholder="" v-model="confirmUserPasss" class="f-input" />
 			</view>
-			<view class="right" v-if="!isInput" @click="getImg()">
+			<view class="right" v-if="!isComfirmInput" @click="getComfirmImg()()">
 				<image referrerpolicy="no-referrer"
 					src="/static/lanhu_zhuce2/psnludfthhx5r591i5piefselpogssibjgfdd84f54-6a57-4ec7-8cfa-188f91077e9f.png" />
 			</view>
-			<view class="rights" v-else @click="getImg()">
+			<view class="rights" v-else @click="getComfirmImg()">
 				<image referrerpolicy="no-referrer"
 					src="/static/lanhu_zhuce2/psmj530dxyeb01sxe7y15ux6nsv9g9g39ooc04e8282-fee3-4d6e-9231-af44d41bd42d.png" />
 			</view>
 		
 		</view>
 		
-		<view class="common flex-row justify-between">
+		<view class="common flex-row justify-between" v-if="!chenk == 0">
 			<text class="text_7">{{ $t('newFy').yzm }}</text>
 		</view>
-		<view class="register-input">
+		<view class="register-input" v-if="!chenk == 0">
 			<view class="f-in-box">
 				<u-input type="number" style="width: 200rpx;" v-model="verification"
 					:placeholder="$t('common').plsInputCode" placeholder-style="color: #B0B3BA;font-size: 32rpx" />
@@ -116,12 +119,12 @@
 			</view>
 		</view> -->
 		<view class="check">
-			<u-checkbox>我已阅读并同意<text class="link">服务条款</text></u-checkbox>
+			<u-checkbox v-model="isChecked">{{i18n.wyydbty}}<text class="link">{{i18n.fwtk}}</text></u-checkbox>
 		</view>
 		<button class="button_1 flex-col" @click="getPath()" style="background-color: #2979ff;">
 			<text class="text_13">{{i18n.zc}}</text>
 		</button>
-		<view class="text-login">已有账号?<text class="link">去登录</text></view>
+		<view class="text-login">{{i18n.yyzh}}<text class="link">{{i18n.qdl}}</text></view>
 		<!-- <view class="text-wrapper_2">
 			<text class="text_14">并非想创建个人账户？</text>
 			<text class="text_15"></text>
@@ -135,11 +138,14 @@
 		data() {
 			return {
 				isInput: false,
+				isComfirmInput: false,
 				userPhone: '',
 				userPass: '',
 				confirmUserPass: '',
+				isChecked: false,
 				chenk: 0,
 				code: '',
+				verification: '',
 				newTimer: null,
 				min: 60,
 				timeCode: true,
@@ -151,7 +157,7 @@
 								}, {
 									name: this.$t('member').aqbd
 								}, {
-									name: "去交易"
+									name: this.$t('member').qjy
 								}, ],
 			};
 		},
@@ -163,7 +169,7 @@
 				return [this.i18n.zh,this.i18n.yx, this.i18n.sjhm]
 			},
 			getPlaceholder() {
-				return [this.i18n.qsrzh,this.i18n.qsryx,this.skjkjkhd]
+				return [this.i18n.qsrzh,this.i18n.qsryx,this.i18n.skjkjkhd]
 			},
 			countryCode() {
 				return this.$store.state.countryCode || 86;
@@ -195,14 +201,19 @@
 					chenk,
 					userPhone
 				} = this
-				if (chenk === 1) {
+				if (chenk === 2) {
 					if (!userPhone) {
 						this.$utils.showToast(this.i18n.skjkjkhd)
 						return
 					}
-				} else {
+				} else if(chenk == 1) {
 					if (this.$utils.testEmail(userPhone)) {
 						this.$utils.showToast(this.i18n.hujkjkh)
+						return
+					}
+				} else {
+					if (!userPhone) {
+						this.$utils.showToast(this.i18n.skjkjkhd)
 						return
 					}
 				}
@@ -213,7 +224,7 @@
 				const member = uni.getStorageSync('userId') || ''
 				const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode') 
 				const phone = chooseCode + userPhone
-				if (chenk === 1) {
+				if (chenk === 2) {
 					this.$u.api.user.sendPhone(phone, member).then(res => {
 						if (res.status == "SUCCEED") {
 							this.$utils.showToast(this.$t('security').fscg)
@@ -225,7 +236,7 @@
 							this.$utils.showToast(res.errorMessage)
 						}
 					})
-				} else {
+				} else if(chenk == 1) {
 					this.$u.api.user.sendMail(userPhone).then(res => {
 						if (res.status == "SUCCEED") {
 							this.$utils.showToast(this.$t('security').fscg)
@@ -237,6 +248,8 @@
 							this.$utils.showToast(res.errorMessage)
 						}
 					})
+				} else {
+					
 				}
 				
 			},
@@ -267,7 +280,15 @@
 				this.isInput = !this.isInput
 
 			},
+			getComfirmImg() {
+				this.isComfirmInput = !this.isComfirmInput
+			},
 			getChenk(index) {
+				this.userPhone = ''
+				this.userPass = ''
+				this.verification = ''
+				this.confirmUserPass = ''
+				this.isChecked = false
 				this.timeCode = true
 				console.log(index)
 				if (this.newTimer) { //注销定时器
@@ -285,21 +306,23 @@
 					chenk,
 					userPhone,
 					userPass,
+					confirmUserPass,
 					countryCode: areaCode,
-					code,
 					verification
 				} = this
 				const phoneData = {
 					phone: userPhone,
 					password: md5Libs.md5(userPass),
-					payPassword: md5Libs.md5(code),
+					re_password: md5Libs.md5(confirmUserPass),
+					// payPassword: md5Libs.md5(code),
 					areaCode,
 					regType: "PHONE"
 				}
 				const mailData = {
 					mail: userPhone,
 					password: md5Libs.md5(userPass),
-					payPassword: md5Libs.md5(code),
+					re_password: md5Libs.md5(confirmUserPass),
+					// payPassword: md5Libs.md5(code),
 					areaCode,
 					regType: "MAIL"
 				}
@@ -307,16 +330,16 @@
 					this.$utils.showToast(this.i18n.qsrdlmm)
 					return
 				}
-				if (!code) {
-					this.$utils.showToast(this.i18n.qsrjymmaaa)
+				if (!verification) {
+					this.$utils.showToast(this.$t('common').emailcodePlaceholder)
 					return
 				}
-				if (chenk === 1 && !userPhone) {
+				if (chenk === 2 && !userPhone) {
 					this.$utils.showToast(this.i18n.skjkjkhd)
 					return
 
 				}
-				if (chenk === 0 && this.$utils.testEmail(userPhone)) {
+				if (chenk === 1 && this.$utils.testEmail(userPhone)) {
 					this.$utils.showToast(this.i18n.hujkjkh)
 					return
 				}
@@ -324,14 +347,17 @@
 					this.$utils.showToast(this.$t('about').qsrymm)
 					return
 				}
-				const type = chenk === 1 ? 'PHONEYANZEN':''
+				if(this.isChecked == false) {
+					this.$utils.showToast(this.$t('common').tytk)
+					return
+				}
+				const type = chenk === 2 ? 'PHONEYANZEN':''
 				const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode')
-				const phone = chenk === 1 ? `${chooseCode}${userPhone}`:userPhone
-				
+				const phone = chenk === 2 ? `${chooseCode}${userPhone}`:userPhone
 				// 先校验验证码是否正确 在调用登录
 				this.$u.api.user.checkSmsCode(phone, verification, type).then(res => {
-					if (res.status == "SUCCEED") {
-						this.$u.api.user.register(chenk === 1 ? phoneData : mailData).then(res => {
+					if (res.status == "SUCCEED" && this.isChecked == true) {
+						this.$u.api.user.register(chenk === 2 ? phoneData : mailData).then(res => {
 							console.log("注册结果", res)
 							if (res.status == "SUCCEED") {
 								this.$utils.showToast(this.i18n.zccg)
