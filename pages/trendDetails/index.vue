@@ -498,11 +498,7 @@
 						},
 					},
 				},
-				tabList: [{
-					name: this.$t("trendDetails").wtdd,
-				}, {
-					name: this.$t("trendDetails").zxjy,
-				}],
+				
 
 				activetedTime: { name: 'Line',value: '1min',	time: 1 }, // 图表选项
 				klineData: [],
