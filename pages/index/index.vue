@@ -98,7 +98,7 @@
 
 			</view>
 		</u-popup> -->
-      <tabar-com />
+		<tabar-com />
 	</view>
 </template>
 

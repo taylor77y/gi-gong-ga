@@ -174,7 +174,6 @@
 				</swiper-item>
 			</swiper>
 		</view>
-
 		<tool-bar class="mt-20"/>
 	</view>
 </template>
@@ -214,10 +213,6 @@
 
 				activetedTime: { name: 'Line',value: '1min',	time: 1 }, // 图表选项
 				klineData: [],
-				tabList: [
-					{name: 'Open orders',value: 0}, 
-					{name: 'Latest deal', value: 1},
-				],
 
 				currentIndex: 0,
 				
@@ -236,6 +231,12 @@
 			},
 			i18n() {
 				return this.$t("trendDetails")
+			},
+			tabList() {
+				return [
+					{ name: this.i18n.wtdd},
+					{ name: this.i18n.zxjy}
+				];
 			},
 			getMotBntList() {
 				return [this.i18n.qb, this.i18n.yhk, this.i18n.xnhb, this.i18n.wx, this.i18n.zfb, this.i18n.pp, this.i18n
