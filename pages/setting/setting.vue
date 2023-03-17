@@ -234,8 +234,6 @@
 			}
 			if(lauInfo){
 				this.listInfo[0].val = lauInfo;
-			} else {
-				this.listInfo[0].val = 'English'
 			}
 		},
 		computed: {
