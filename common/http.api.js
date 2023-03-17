@@ -3,7 +3,7 @@ const install = (Vue, vm) => {
 	// 合约交易
 	const trendDetails = {
 		getExchangerateuserconfig: () => vm.$u.get(`https://db23app.vip/wap//api/exchangerateuserconfig!get.action`),
-		getRealtime: () => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz`),
+		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
 		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
 	//币币交易

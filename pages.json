@@ -1331,6 +1331,10 @@
             }
             
         }
+        ,{
+            "path" : "pages/login/my-identity",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

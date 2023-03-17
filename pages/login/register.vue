@@ -15,11 +15,12 @@
 		<!-- 选项卡 -->
 		<view class="group_1 flex-row justify-between">
 			<view class="f-flex-center">
-				<text @click="getChenk(index)" class="text_2" :class="{'f-bg': chenk === index}"
-					v-for="(item, index) in tagBtn" :key="index">{{ item }}</text>
+				<text @click="getChenk(item.value)" class="text_2" :class="{'f-bg': chenk === index}"
+					v-for="(item, index) in tagBtn" :key="index">{{ item.name }}</text>
 			</view>
 		</view>
-		<text class="text_4">{{i18n.gr}}{{ tagBtn[chenk] }}</text>
+		<text class="text_4">{{i18n.gr}}{{ tagBtn[chenk].name }}</text>
+		<!-- 个人账户 -->
 		<view class="register-input">
 			<!-- 手机号码 -->
 			<view v-if="chenk === 2" class="d-flex align-items-center">
@@ -121,6 +122,7 @@
 		<view class="check">
 			<u-checkbox v-model="isChecked">{{i18n.wyydbty}}<text class="link">{{i18n.fwtk}}</text></u-checkbox>
 		</view>
+		<!-- 注册 -->
 		<button class="button_1 flex-col" @click="getPath()" style="background-color: #2979ff;">
 			<text class="text_13">{{i18n.zc}}</text>
 		</button>
@@ -143,7 +145,7 @@
 				userPass: '',
 				confirmUserPass: '',
 				isChecked: false,
-				chenk: 0,
+				chenk: 0, // 注册方式
 				code: '',
 				verification: '',
 				newTimer: null,
@@ -166,7 +168,11 @@
 				return this.$t("member")
 			},
 			tagBtn() {
-				return [this.i18n.zh,this.i18n.yx, this.i18n.sjhm]
+				return [
+					{ name: this.i18n.zh, value: 0},
+					{ name: this.i18n.yx, value: 1},
+					{ name: this.i18n.sjhm, value: 2}
+				]
 			},
 			getPlaceholder() {
 				return [this.i18n.qsrzh,this.i18n.qsryx,this.i18n.skjkjkhd]
@@ -296,7 +302,7 @@
 					this.newTimer = null;
 				}
 				this.min = 60,
-					this.chenk = index
+				this.chenk = index
 			},
 			back() {
 				uni.navigateBack(1)

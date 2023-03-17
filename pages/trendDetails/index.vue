@@ -50,7 +50,7 @@
 				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '1'}">{{i18n.jghy}}</view>
 			</u-col>
 		</u-row>
-
+		
 		<view class="container">
 			<u-row gutter="16" justify="space-betweent">
 				<u-col span="5">
@@ -271,10 +271,10 @@
 			});
 			this.getKlineData()
 			if(this.socketObj || this.socketObj1){
+				this.socketObj ? this.socketObj.destroy() : null;
+				this.socketObj1 ? this.socketObj1.destroy() : null;
 				this.socketObj = null
 				this.socketObj1 = null
-				this.socketObj.destroy();
-				this.socketObj1.destroy();
 			}
 			this.getSocketData()
 		},
@@ -285,14 +285,16 @@
 					const {
 						code,
 						data
-					} = await this.$u.api.trendDetails.getRealtime();
+					} = await this.$u.api.trendDetails.getRealtime(this.currentBiType.symbol);
 					if (code == '0') {
 						this.realTimeList = data
 					}
 				}, 2000)
 			},
 			turnBack() {
-				uni.navigateBack()
+				uni.navigateTo({
+					url:"/pages/transaction/index"
+				})
 			},
 			turnTo() {
 				uni.navigateTo({
@@ -349,7 +351,6 @@
 					code,
 					data
 				} = await this.$u.api.trendDetails.getKline(symbol, line);
-
 				if (code == 0) {
 					this.klineData = data
 				}

@@ -132,8 +132,16 @@
 							text: {
 								size: 10,
 								marginLeft: 0,
-								marginRight: 2,
+								marginRight: 0,
 							}
+						}
+					},
+					indicator: {
+						showRule: 'follow_cross',
+						text: {
+							size: 10,
+							marginLeft: 0,
+							marginRight: 0,
 						}
 					}
 				})

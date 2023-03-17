@@ -104,7 +104,7 @@ const navigateTo = (url,needToken = true)=>{
 			timer = 1200
 		}
 	}
-	
+
 	setTimeout(()=>{
 		uni.navigateTo({
 			url
