@@ -760,11 +760,7 @@
 			clearInterval(this.getInterval)
 			this.getInterval = null
 		},
-		mounted() {
-			this.$u.api.bibi.getTest().then(res => {
-				console.log(res)
-			})
-		},
+		mounted() {},
 		methods: {
 			// 获取类型的币值 实时数据
 			async getRealtime() {
