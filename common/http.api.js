@@ -2,13 +2,12 @@
 const install = (Vue, vm) => {
 	// 合约交易
 	const trendDetails = {
-		getExchangerateuserconfig: () => vm.$u.get(`/exchangerateuserconfig!get.action`),
-		getRealtime: () => vm.$u.get(`/hobi!getRealtime.action?symbol=btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz`),
-		getKline: (symbol='btc', line='1min') => vm.$u.get(`hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
+		getExchangerateuserconfig: () => vm.$u.get(`https://db23app.vip/wap//api/exchangerateuserconfig!get.action`),
+		getRealtime: () => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz`),
+		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
 	//币币交易
 	const bibi = {
-		getTest: () => vm.$u.get(`/newOnlinechat!unread.action`),
 		getPairs: (mainCur,type) => vm.$u.get(`/data/data/getPairsByMainCur?mainCur=${mainCur}&type=${type}`),
 		getCoinInfo: (pairsName) => vm.$u.get(`/data/data/getCoinInfo?pairsName=${pairsName}`),
 		getEntrustList: (member,pairsName) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=${pairsName}`),
