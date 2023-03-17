@@ -111,7 +111,7 @@
 			<image class="checkbox_1" referrerpolicy="no-referrer"
 				src="/static/lanhu_zhuce2/psvllkh63q38wa0dgba621bzym3masywc8ef575d-89a3-49d2-ac3e-27b69c12f98d.png" />
 			<view class="text-group_1">
-				<text class="text_8">我已阅读并同意币安的</text>
+				<text class="text_8">我已阅读并同意MXO的</text>
 				<text class="text_9">服务条款</text>
 				<text class="text_10">和</text>
 				<text class="text_11">隐私政策</text>
@@ -401,7 +401,7 @@
 						this.$utils.showToast(res.errorMessage)
 					}
 				})
-			}	
+			}	
 		}
 	};
 </script>
@@ -451,7 +451,7 @@
 		.r-input {
 			width: 90%;		
 		
-}
+}
 		.f-in-box {
 			display: flex;
 			align-items: center;
