@@ -132,16 +132,8 @@
 							text: {
 								size: 10,
 								marginLeft: 0,
-								marginRight: 0,
+								marginRight: 2,
 							}
-						}
-					},
-					indicator: {
-						showRule: 'follow_cross',
-						text: {
-							size: 10,
-							marginLeft: 0,
-							marginRight: 0,
 						}
 					}
 				})
@@ -165,20 +157,3 @@
 		}
 	}
 </script>
-
-<style lang="scss">
-	.time-options {
-		width: 100%;
-		font-size: 12px;
-		font-weight: 400;
-	}
-
-	.time-row {
-		text-align: center;
-		color: inherit;
-	}
-
-	.text-gray {
-		color: #868c9a;
-	}
-</style>

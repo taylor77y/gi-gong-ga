@@ -4,25 +4,25 @@
 		<view class="fm">
 			<view class="top">
 				<view class="title">
-					Financial
+					{{i18n.lc}}
 				</view>
 				<view class="desc">
-					Simple and safe search for popular coins and earn money instantly.
+					{{i18n.jdaq}}
 				</view>
 			</view>
 			<view class="content">
 				<view class="title">
-					High-yield type
+					{{i18n.gsyx}}
 				</view>
 				<view class="card">
 					<view class="list-item" @tap="toPage('/pages/fund/index')">
 						<view class="text">
 							<view class="title">
-								Fund management
+								{{i18n.jjlc}}
 							</view>
 							<view class="desc">
-								<text class="line">Steady value-added, flexible cycle</text>
-								<text class="line2">Safe financial management</text>
+								<text class="line">{{i18n.wjzz}}</text>
+								<view class="line2">{{i18n.axzz}}</view>
 							</view>
 						</view>
 						<image src="https://db23app.vip/wap/img/f-bg.4c1afd1b.png" class="bg"></image>
@@ -30,11 +30,11 @@
 					<view class="list-item" @tap="toPage('/pages/machine/index')">
 						<view class="text">
 							<view class="title">
-								Smart Pool
+								{{i18n.znkc}}
 							</view>
 							<view class="desc">
-								<text class="line">Real mining machine rental, flexible package options</text>
-								<text class="line2">Reliable mining machine sharing platform.</text>
+								<text class="line">{{i18n.zskjzl}}</text><br />
+								<text class="line2">{{i18n.zdxldkj}}</text>
 							</view>
 						</view>
 						<image src="https://db23app.vip/wap/img/l-bg.6251df80.png" class="bg"></image>
@@ -42,10 +42,11 @@
 					<view class="list-item" @tap="toPage('/pages/pledgeLoan/index')">
 						<view class="text">
 							<view class="title">
-								Pledge loan
+								{{i18n.zyjb}}
 							</view>
 							<view class="desc">
-								<text class="line">Repay anytime, with hourly interest</text>
+								<text class="line">{{i18n.sshk}}</text><br />
+								<text>{{i18n.xxsxf}}</text>
 							</view>
 						</view>
 						<image src="https://db23app.vip/wap/img/p-bg.4773be7e.png" class="bg"></image>
@@ -63,18 +64,18 @@
 
 			}
 		},
-		// computed: {
-		// 	i18n() {
-		// 		return this.$t("machineIndex")
-		// 	}
-		// },
 		methods: {
 			toPage(page) {
 				uni.navigateTo({
 					url: page
 				})
 			}
-		}
+		},
+		computed: {
+			i18n() {
+				return this.$t("fmHome")
+			},
+		},
 	}
 </script>
 
