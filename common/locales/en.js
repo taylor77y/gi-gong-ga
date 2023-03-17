@@ -260,8 +260,10 @@ export default {
 		mc: 'name',
 		zxj: 'latest price',
 		zdf: 'change rate',
-		application: ['Fiat Currency', 'Recharge', 'Withdrawal', 'Flash Exchange', 'About Us'],
-		homeTitle: ['Growth List', 'Turnover List', 'New Coin List']
+		application: ['Exchange', 'c2c', 'Contract', 'Financial', 'Spot','Fund management','Smart Pool','Pledge loan','Consume Record','More'],
+		homeTitle: ['Growth List', 'Turnover List', 'New Coin List'],
+		kscb:'Deposit',
+		kstb:'Withdrawal'
 	},
 	kLine: {
 		zgj: 'Highest price',
@@ -322,6 +324,15 @@ export default {
 				name: 'Delivery contract',
 			},
 		],
+		tagBtnFour: [{
+			name: 'Hot'
+		}, {
+			name: ' Gainers '
+		}, {
+			name: ' Losers '
+		}, {
+			name: ' 24h Vol '
+		}],	
 		liang: 'quantity'
 	},
 	transaction: {
@@ -339,7 +350,8 @@ export default {
 			name: 'current delegate'
 		}],
 		topName: [
-			'Currency'
+			'Exchange',
+			'c2c'
 		]
 	},
 	fack: {
@@ -1919,14 +1931,16 @@ export default {
 		zxkf: ' Arrival within 12 hours after submitting the withdrawal request. If you do not arrive after the expected withdrawal time, please consult the online customer service.',
 		tx: ' Withdraw'
 	},
-	recharge: {
-		qxzczbz: 'Please select the deposit crypto',
-		cztd: 'Deposit channel',
-		usdtcz: 'USDT deposit',
-		btccz: 'BTC deposit',
-		ethcz: 'ETH deposit',
-		gfcztd: 'Official recharge channel'
-	},
+		
+		recharge: {
+			qxzczbz: 'Please select the deposit crypto',
+			cztd: 'Deposit channel',
+			usdtcz: 'USDT deposit',
+			btccz: 'BTC deposit',
+			ethcz: 'ETH deposit',
+			gfcztd: 'Official recharge channel'
+		},
+	
 	fundRule: {
 		gz: 'Rules',
 		lcgz: 'Financial rules',

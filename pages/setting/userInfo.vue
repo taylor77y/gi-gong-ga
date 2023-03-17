@@ -97,6 +97,7 @@
 				});
 			},
 			async uploadAvatar(){
+				console.log('进来了')
 				const ret = await this.$utils.uploadImage()
 				
 				this.$u.api.setting.uploadAvatar(ret).then(res=>{

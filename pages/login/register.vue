@@ -33,7 +33,8 @@
 					src="/static/lanhu_denglu/ps04twdt13087chpihojawqbuipb5dvmfz1068353f9-a9e8-4434-9048-6cb91bdf69d9.png" />
 			</view>
 
-			<u-input :placeholder="getPlaceholder[chenk]" v-model="userPhone" class="f-input" height="30" placeholder-style="color: #B0B3BA;font-size: 32rpx" />
+			<u-input :placeholder="getPlaceholder[chenk]" v-model="userPhone" class="f-input" height="30"
+				placeholder-style="color: #B0B3BA;font-size: 32rpx" />
 
 		</view>
 		<!-- 密码 -->
@@ -42,11 +43,9 @@
 		</view>
 		<view class="register-input">
 			<view class="r-input">
-				<u-input v-if="!isInput" :placeholder="$t('member').qsrmm" :password-icon="false"
-				 type="password" v-model="userPass" class="f-input"
-				 placeholder-style="color: #B0B3BA;font-size: 32rpx"
-				 height="30"
-				  />
+				<u-input v-if="!isInput" :placeholder="$t('member').qsrmm" :password-icon="false" type="password"
+					v-model="userPass" class="f-input" placeholder-style="color: #B0B3BA;font-size: 32rpx"
+					height="30" />
 				<u-input v-else placeholder="" v-model="userPass" class="f-input" />
 			</view>
 			<view class="right" v-if="!isInput" @click="getImg()">
@@ -65,11 +64,9 @@
 		</view>
 		<view class="register-input">
 			<view class="r-input">
-				<u-input v-if="!isComfirmInput" :placeholder="$t('member').qqrmm" :password-icon="false"
-				 type="password" v-model="confirmUserPass" class="f-input"
-				 placeholder-style="color: #B0B3BA;font-size: 32rpx"
-				 height="30"
-				  />
+				<u-input v-if="!isComfirmInput" :placeholder="$t('member').qqrmm" :password-icon="false" type="password"
+					v-model="confirmUserPass" class="f-input" placeholder-style="color: #B0B3BA;font-size: 32rpx"
+					height="30" />
 				<u-input v-else placeholder="" v-model="confirmUserPasss" class="f-input" />
 			</view>
 			<view class="right" v-if="!isComfirmInput" @click="getComfirmImg()()">
@@ -80,13 +77,13 @@
 				<image referrerpolicy="no-referrer"
 					src="/static/lanhu_zhuce2/psmj530dxyeb01sxe7y15ux6nsv9g9g39ooc04e8282-fee3-4d6e-9231-af44d41bd42d.png" />
 			</view>
-		
+
 		</view>
-		
+
 		<view class="common flex-row justify-between" v-if="!chenk == 0">
 			<text class="text_7">{{ $t('newFy').yzm }}</text>
 		</view>
-		<view class="register-input" v-if="!chenk == 0">
+		<!-- 		<view class="register-input" v-if="!chenk == 0">
 			<view class="f-in-box">
 				<u-input type="number" style="width: 200rpx;" v-model="verification"
 					:placeholder="$t('common').plsInputCode" placeholder-style="color: #B0B3BA;font-size: 32rpx" />
@@ -98,7 +95,7 @@
 						:show-hours="false" :show-minutes="false" :timestamp="min"></u-count-down> s
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!-- <view class="common flex-row justify-between">
 			<text class="text_7">{{i18n.jymma}}</text>
 		</view>
@@ -151,14 +148,14 @@
 				timeCode: true,
 				verification: '',
 				numList: [{
-									name: this.$t('member').zhzc
-								}, {
-									name: this.$t('member').smrz
-								}, {
-									name: this.$t('member').aqbd
-								}, {
-									name: this.$t('member').qjy
-								}, ],
+					name: this.$t('member').zhzc
+				}, {
+					name: this.$t('member').smrz
+				}, {
+					name: this.$t('member').aqbd
+				}, {
+					name: this.$t('member').qjy
+				}, ],
 			};
 		},
 		computed: {
@@ -166,10 +163,10 @@
 				return this.$t("member")
 			},
 			tagBtn() {
-				return [this.i18n.zh,this.i18n.yx, this.i18n.sjhm]
+				return [this.i18n.zh, this.i18n.yx, this.i18n.sjhm]
 			},
 			getPlaceholder() {
-				return [this.i18n.qsrzh,this.i18n.qsryx,this.i18n.skjkjkhd]
+				return [this.i18n.qsrzh, this.i18n.qsryx, this.i18n.skjkjkhd]
 			},
 			countryCode() {
 				return this.$store.state.countryCode || 86;
@@ -206,7 +203,7 @@
 						this.$utils.showToast(this.i18n.skjkjkhd)
 						return
 					}
-				} else if(chenk == 1) {
+				} else if (chenk == 1) {
 					if (this.$utils.testEmail(userPhone)) {
 						this.$utils.showToast(this.i18n.hujkjkh)
 						return
@@ -222,7 +219,7 @@
 				}
 				// const type = chenk === 1 ? 'PHONEYANZEN':''
 				const member = uni.getStorageSync('userId') || ''
-				const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode') 
+				const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode')
 				const phone = chooseCode + userPhone
 				if (chenk === 2) {
 					this.$u.api.user.sendPhone(phone, member).then(res => {
@@ -236,7 +233,7 @@
 							this.$utils.showToast(res.errorMessage)
 						}
 					})
-				} else if(chenk == 1) {
+				} else if (chenk == 1) {
 					this.$u.api.user.sendMail(userPhone).then(res => {
 						if (res.status == "SUCCEED") {
 							this.$utils.showToast(this.$t('security').fscg)
@@ -249,9 +246,9 @@
 						}
 					})
 				} else {
-					
+
 				}
-				
+
 			},
 			//定时器没过1秒参数减1
 			Time() {
@@ -310,50 +307,90 @@
 					countryCode: areaCode,
 					verification
 				} = this
-				const phoneData = {
-					phone: userPhone,
-					password: md5Libs.md5(userPass),
-					re_password: md5Libs.md5(confirmUserPass),
-					// payPassword: md5Libs.md5(code),
-					areaCode,
-					regType: "PHONE"
-				}
-				const mailData = {
-					mail: userPhone,
-					password: md5Libs.md5(userPass),
-					re_password: md5Libs.md5(confirmUserPass),
-					// payPassword: md5Libs.md5(code),
-					areaCode,
-					regType: "MAIL"
-				}
-				if (!userPass) {
-					this.$utils.showToast(this.i18n.qsrdlmm)
-					return
-				}
-				if (!verification) {
-					this.$utils.showToast(this.$t('common').emailcodePlaceholder)
-					return
-				}
-				if (chenk === 2 && !userPhone) {
-					this.$utils.showToast(this.i18n.skjkjkhd)
-					return
+				// const phoneData = {
+				// 	phone: userPhone,
+				// 	password: md5Libs.md5(userPass),
+				// 	re_password: md5Libs.md5(confirmUserPass),
+				// 	// payPassword: md5Libs.md5(code),
+				// 	areaCode,
+				// 	regType: "PHONE"
+				// }
+				// const mailData = {
+				// 	mail: userPhone,
+				// 	password: md5Libs.md5(userPass),
+				// 	re_password: md5Libs.md5(confirmUserPass),
+				// 	// payPassword: md5Libs.md5(code),
+				// 	areaCode,
+				// 	regType: "MAIL"
+				// }
+				// if (!userPass) {
+				// 	this.$utils.showToast(this.i18n.qsrdlmm)
+				// 	return
+				// }
+				// if (!verification) {
+				// 	this.$utils.showToast(this.$t('common').emailcodePlaceholder)
+				// 	return
+				// }
+				// if (chenk === 2 && !userPhone) {
+				// 	this.$utils.showToast(this.i18n.skjkjkhd)
+				// 	return
 
-				}
-				if (chenk === 1 && this.$utils.testEmail(userPhone)) {
-					this.$utils.showToast(this.i18n.hujkjkh)
-					return
-				}
-				if (this.$utils.testCode(verification)) {
-					this.$utils.showToast(this.$t('about').qsrymm)
-					return
-				}
+				// }
+				// if (chenk === 1 && this.$utils.testEmail(userPhone)) {
+				// 	this.$utils.showToast(this.i18n.hujkjkh)
+				// 	return
+				// }
+				// if (this.$utils.testCode(verification)) {
+				// 	this.$utils.showToast(this.$t('about').qsrymm)
+				// 	return
+				// }
 				if(this.isChecked == false) {
 					this.$utils.showToast(this.$t('common').tytk)
 					return
 				}
-				const type = chenk === 2 ? 'PHONEYANZEN':''
-				const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode')
-				const phone = chenk === 2 ? `${chooseCode}${userPhone}`:userPhone
+				console.log('chenk', chenk)
+				// return
+				// const type = chenk === 2 ? 'PHONEYANZEN' : ''
+				// const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode')
+				// const phone = chenk === 2 ? `${chooseCode}${userPhone}` : userPhone
+				let type = 3
+				if (chenk == 0) {
+					type = 3
+				} else if (chenk == 1) {
+					type = 2
+				} else if (chenk == 2) {
+					type = 1
+				}
+				this.$u.api.newRegister.accountReg(userPhone, userPass, confirmUserPass, type).then(res => {
+					console.log("注册结果", res)
+					if (res.code == 0) {
+						this.$utils.showToast(this.i18n.zccg)
+						setTimeout(() => {
+							uni.navigateTo({
+								url: '/pages/login/login'
+							})
+						}, 500)
+						return
+					}
+					this.$utils.showToast(res.msg)
+					return
+					if (res.status == "SUCCEED") {
+						this.$utils.showToast(this.i18n.zccg)
+						const temp = {
+							phMail: userPhone,
+							password: md5Libs.md5(userPass),
+							areaCode
+						}
+						if (!this.$utils.testEmail(userPhone)) {
+							delete temp.areaCode
+						}
+						this.loginFn(temp)
+					} else {
+						this.$utils.showToast(res.errorMessage)
+					}
+				})
+				return
+
 				// 先校验验证码是否正确 在调用登录
 				this.$u.api.user.checkSmsCode(phone, verification, type).then(res => {
 					if (res.status == "SUCCEED" && this.isChecked == true) {
@@ -401,7 +438,7 @@
 						this.$utils.showToast(res.errorMessage)
 					}
 				})
-			}	
+			}
 		}
 	};
 </script>
@@ -415,13 +452,16 @@
 		border-radius: 6rpx;
 		padding: 21rpx 26rpx;
 	}
+
 	.step {
 		margin-top: 50rpx;
 	}
-	.common{
+
+	.common {
 		margin-left: 50rpx;
 		margin-top: 20rpx;
 	}
+
 	.register-input {
 		background: #F6F6F6;
 		border-radius: 10rpx;
@@ -449,9 +489,10 @@
 		}
 
 		.r-input {
-			width: 90%;		
-		
-}
+			width: 90%;
+
+		}
+
 		.f-in-box {
 			display: flex;
 			align-items: center;
@@ -486,15 +527,18 @@
 			margin-left: 30rpx;
 		}
 	}
+
 	.check {
 		margin-left: 45rpx;
 		margin-top: 10rpx;
 	}
-	.text-login{
+
+	.text-login {
 		margin-left: 45rpx;
 		margin-top: 20rpx;
 	}
-	.link{
+
+	.link {
 		color: #2979ff;
 	}
 </style>
