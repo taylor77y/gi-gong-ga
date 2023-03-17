@@ -34,7 +34,7 @@ flashCash: {
 		zjzh: '资金账户',
 		ksljzjzh: '快速了解资金账户，学习使用教程',
 		zclb: '资产列表',
-		listBtn: ['C2C', '支付', '礼品卡', '币安矿池'],
+		listBtn: ['C2C', '支付', '礼品卡', 'MXO矿池'],
 		btnInfo: ['充值', '提现', '闪兑'],
 		keyong: '可用',
 		dongjie: '冻结'
@@ -90,7 +90,7 @@ flashCash: {
 		dizhi: '地址',
 		czwl: '充值网络',
 		xzzw: '请选择主网',
-		chonzhitishi: '当您充值该币种时，请仅限于通过下方币安支持的网络充值，如您通过其他网络充值会造成资金丢失。',
+		chonzhitishi: '当您充值该币种时，请仅限于通过下方MXO支持的网络充值，如您通过其他网络充值会造成资金丢失。',
 		hbjl: '货币记录',
 		bgq: '变更前',
 		bgh: '变更后',

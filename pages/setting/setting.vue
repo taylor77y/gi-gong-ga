@@ -242,7 +242,7 @@
 			}
 			// listInfo() {
 			// 	return [{
-			// 			name: '币安Pro',
+			// 			name: 'MXOPro',
 			// 			img: '../../static/image/setting/3.png',
 			// 			border: true,
 			// 			isNews: false
@@ -341,7 +341,7 @@
 			// 			path: '/pages/setup/help'
 			// 		},
 			// 		{
-			// 			name: '分享币安APP',
+			// 			name: '分享MXOAPP',
 			// 			img: '../../static/image/setting/15.png',
 			// 			border: false,
 			// 			isNews: false
