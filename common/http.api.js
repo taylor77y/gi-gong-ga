@@ -10,6 +10,10 @@ const install = (Vue, vm) => {
 		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
 		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
+	const wantBuy = {
+		// language 语言
+		getC2cPaymentMethod: (language='en') => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!method_type.action?language=${language}`),
+	}
 	//币币交易
 	const bibi = {
 		getPairs: (mainCur,type) => vm.$u.get(`/data/data/getPairsByMainCur?mainCur=${mainCur}&type=${type}`),
@@ -406,7 +410,8 @@ const install = (Vue, vm) => {
 		yx,
 		sd,
 		trendDetails,
-		newRegister
+		newRegister,
+		wantBuy
 	};
 }
 export default {
