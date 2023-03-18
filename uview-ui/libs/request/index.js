@@ -64,14 +64,15 @@ class Request {
 							resolve(response.data);
 						}
 					} else {
-						store.commit('setTabarCode', 0)
+						// console.log('我特么回来了',response.data.errorCode)
+						// store.commit('setTabarCode', 0)
 						// 不返回原始数据的情况下，服务器状态码不为200，modal弹框提示
-						if (response.data.errorCode === 'SYS.0015') {
-							uni.navigateTo({
-								url:'/pages/login/login'
-							})
-                            return
-						}
+						// if (response.data.errorCode === 'SYS.0015') {
+						// 	uni.navigateTo({
+						// 		url:'/pages/login/login'
+						// 	})
+      //                       return
+						// }
 						// if(response.errMsg) {
 						// 	uni.showModal({
 						// 		title: response.errMsg

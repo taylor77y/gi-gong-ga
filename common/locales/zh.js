@@ -133,7 +133,7 @@ export default {
 		yrz: '已认证',
 		shz: '审核中',
 		wrz: '未认证',
-		hyldba: '欢迎来到示例',
+		hyldba: '欢迎来到mox交易所',
 		qqzdjypt: '加入全球最大的区块链资产交易平台',
 		zc: '注册',
 		dl: '登录',

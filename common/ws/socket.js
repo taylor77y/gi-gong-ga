@@ -352,7 +352,7 @@ class socket {
 			setData(d)
 		} catch(e){
 			//TODO handle the exception
-			console.error('error:', e)
+			// console.error('error:', e)
 		}
 		
 		let blob = message

@@ -167,6 +167,7 @@
 		},
 		destroyed() {
 		    console.log('我离开了 ')	
+				this.timer = null
 		},
 		computed: {
 			i18n() {

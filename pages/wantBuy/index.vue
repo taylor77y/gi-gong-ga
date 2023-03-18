@@ -27,12 +27,57 @@
 				</view>
 			</view>
 		</u-popup>
-				
-		<view class="container">
+		
+		<!-- 快捷区 -->
+		<view v-if="title == i18n.kjq" class="container scoped-css">
 			<view class="select-container">
 				<view class="selects">
-					<view :class="{'choose': firstTab === 'Buy'}" class="mr-40" @click="firstTab = 'Buy'">{{i18n.wym}}</view>
-					<view :class="{'choose': firstTab === 'Sell'}" @click="firstTab = 'Sell'">{{i18n.wymai}}</view>
+					<view :class="{'choose': firstTab === 'buy'}" class="mr-40" @click="firstTab = 'buy'">{{i18n.wym}}</view>
+					<view class="col-line"></view>
+					<view :class="{'choose': firstTab === 'sell'}" @click="firstTab = 'sell'">{{i18n.wymai}}</view>
+				</view>
+			</view>
+			<view class="scoped-css-flex">
+				<view v-for="(item,index) in kjq_typeList" :key="index" class="scoped-css-box" :class="{'active': kjq_currency.value == item.value }" @click="kjq_currency=item">
+					<p>{{item.name}}</p>
+					<p>{{item.direction}}</p>
+				</view>
+			</view>
+			<view class="card">
+				<uni-card :is-shadow="true" :border="true">
+					<view class="niner-content">
+						<view class="label">购买金额</view>
+						<view v-if="kjq_buyMethod == 0" class="card-input mt-10">
+							<text class="card-icon">$</text>
+							<u-input v-model="total" type="number" placeholder="最小金额 100" :border="false"  />
+						</view>
+						<view v-else class="card-input mt-10">
+							<u-input v-model="total" type="number" placeholder="最小金额 100" :border="false"  />
+							<text class="card-icon">{{kjq_currency.name}}</text>
+						</view>
+						<view class="card-flex card-flex-sb mt-20">
+							<text>参考单价 $1</text>
+							<view class="card-flex" @click="changeBuyMethod">
+								<text class="card-label" v-show="kjq_buyMethod === 0">按金额购买</text>
+								<text class="card-label" v-show="kjq_buyMethod === 1">按数量购买</text>
+								<image src="../../static/img/4.png" mode="" class='card-img'></image>
+							</view>
+						</view>
+						
+						<view class="mt-100">
+							<u-button type="success" @click="buy">0手续费购买 </u-button>
+						</view>
+					</view>
+				</uni-card>
+			</view>
+		</view>
+		
+		<!-- 自选区 -->
+		<view v-else class="container">
+			<view class="select-container">
+				<view class="selects">
+					<view :class="{'choose': firstTab === 'buy'}" class="mr-40" @click="firstTab = 'buy'">{{i18n.wym}}</view>
+					<view :class="{'choose': firstTab === 'sell'}" @click="firstTab = 'sell'">{{i18n.wymai}}</view>
 				</view>
 				<view class="right-icon">
 					<u-icon name="file-text-fill" size="30" color="#868c9a"></u-icon>
@@ -66,7 +111,7 @@
 					<u-dropdown-item :title="i18n.jyfs">
 						<u-row gutter="16" class="list-box">
 							<u-col span="4" v-for="(bnt, index) in motBntList" :key="index">
-								<u-button size="medium" class="mb-20 bnt" :class="{'bnt-primary': methodType == bnt}" @click="handleBut(bnt)">{{bnt}}</u-button>
+								<u-button size="medium" class="mb-20 bnt" :class="{'bnt-primary': methodType == index}" @click="handleBut(index)">{{bnt}}</u-button>
 							</u-col>
 						</u-row>
 					</u-dropdown-item>
@@ -84,7 +129,7 @@
 					<view class="box mt-60">
 						<view class="label">{{i18n.ze}}</view>
 						<u-row class="box-row">
-							<u-input v-model="total_usd" type="number" :placeholder="i18n.qsrze" :border="false"  />
+							<u-input v-model="total" type="number" :placeholder="i18n.qsrze" :border="false"  />
 							<text>USD</text>
 						</u-row>
 					</view>
@@ -100,8 +145,8 @@
 						</u-row>
 						<view class="select-wrapper" :class="{'max-height': showAll1 === true}">
 							<u-row gutter="16">
-								<u-col span="4" v-for="item in motBntList" :key="item">
-									<u-button size="medium" class="mb-20 bnt">{{item}}</u-button>
+								<u-col span="4" v-for="(item, index) in motBntList" :key="item">
+									<u-button size="medium" class="mb-20 bnt" @click="methodType = index">{{item}}</u-button>
 								</u-col>
 							</u-row>
 						</view>
@@ -133,15 +178,25 @@
 								<u-switch v-model="checked"></u-switch>
 							</u-col>
 						</u-row>
+						<view v-show="checked" @click="openPane = !openPane" class="card mt-50 mb-50">
+							<u-icon name="info-circle-fill" size="30"></u-icon>
+							<text class="mr-10">广告筛选说明</text>
+							<u-icon v-if="openPane" name="arrow-up" size="30"></u-icon>
+							<u-icon v-else name="arrow-down" size="30"></u-icon>
+						</view>
+						<view class="pane" v-show="checked && openPane">
+							<view>交易方式：<span style="font-weight: bolder;">仅显示可用的交易方式</span></view>
+							<view>国家/地区<span style="font-weight: bolder;">仅显示可用的国家 / 地区</span></view>
+						</view>
 					</view>
 					<view class="divline"></view>
 					<view class="box mt-60">
 						<u-row justify="space-between" class="row1 mt-30">
 							<u-row gutter="16" span="6">
-								<u-button type="primary" size="medium" class="bnt-3">{{i18n.zz}}</u-button>
+								<u-button type="primary" size="medium" class="bnt-3" @click="resetFillter">{{i18n.zz}}</u-button>
 							</u-row>
 							<u-row span="6">
-								<u-button type="primary" size="medium" class="bnt-3">{{i18n.qr}}</u-button>
+								<u-button type="primary" size="medium" class="bnt-3" @click="getList">{{i18n.qr}}</u-button>
 							</u-row>
 						</u-row>
 					</view>
@@ -165,19 +220,23 @@
 				showToPop: false, // 顶部弹窗
 				title: '',
 				
-				firstTab: 'Buy', // buy or sell
+				firstTab: 'buy', // buy or sell --direction
 				currentIndex: 0,
+				currency: 'BTC',
 				tabList: [
 					{
 						name: 'BTC',
+						value: 'btc'
 					}, {
 						name: 'USDT',
+						value: 'usdt'
 					}, {
-						name: 'ETH'
+						name: 'ETH',
+						value: 'eth'
 					},
 				],
-				motBntList: {0: 'ALL'},
-				methodType: 'ALL', // 交易方式
+				motBntList: { 0: 'ALL' },
+				methodType: 0, // 交易方式 --- method_type
 				
 				total: null,
 				numList: [
@@ -191,11 +250,21 @@
 								
 				showFilter: false,
 				total_usd: null,
-				checked: false,
+				checked: false, // 显示广告
+				openPane: false,
 				showAll1: false,
 				showAll2: false,
 				
 				isEmpty: true,
+				page_no: 1,
+				
+				kjq_currency: { name: 'USDT', direction: '计价币种', value: 0} ,// 快捷区 类型
+				kjq_typeList:[
+					{ name: 'USDT', direction: '计价币种', value: 0},
+					{ name: 'BTC', direction: '最知名币种', value: 1},
+					{ name: 'ETH', direction: '以太坊', value: 2},
+				],
+				kjq_buyMethod: 0, // 0 按金额购买， 1 按 数量购买
 			}
 		},
 		computed: {
@@ -210,6 +279,7 @@
 		onReady(){},
 		created() {
 			this.getMethodsType()
+			this.getList()
 		},
 		methods: {
 			// 切换 快捷区或自选区
@@ -222,11 +292,15 @@
 			},
 			tabClickHanlder(index) {
 				this.currentIndex = index
+				this.currency = this.tabList[index].name
 			},
+			// change 交易方式 
 			handleBut(value){
 				this.methodType = value
 				this.$refs.uDropdown.close();
+				this.getList()
 			},
+			// change 金额
 			handleNumBut(value) {
 				this.total = value
 			},
@@ -234,16 +308,50 @@
 				this.total = null
 			},
 			confirm() {
-				
+				this.getList()
 			},
+			resetFillter() {
+				this.total = null
+				this.methodType = 0
+				this.checked = false
+				this.openPane = false
+			},
+			// 获取列表数据
+			async getList() {
+				let param = {
+					page_no: this.page_no,
+					direction: this.firstTab,
+					currency: this.currency,
+					amount: this.total?this.total:'',
+					symbol: 'bct',
+					token: '',
+					method_type: this.methodType,
+					language: uni.getStorageSync('lang')
+				}
+				const { code, data } = await this.$u.api.wantBuy.getC2cList(param);
+				console.log(code,data)
+			},
+			// 获取交易方式
 			async getMethodsType() {
-				const { code, data } = await this.$u.api.wantBuy.getC2cPaymentMethod(uni.getStorageSync('lang'))
+				console.log(uni.getStorageSync('lang'))
+				let lang = uni.getStorageSync('lang')
+				const { code, data } = await this.$u.api.wantBuy.getC2cPaymentMethod(lang)
 				if(code == 0) {
 					let obj = {}
 					Object.assign(obj,this.motBntList, data)
 					this.motBntList = obj
 					console.log(this.methodType)
 				}
+			},
+			// 切换购买方式
+			changeBuyMethod(){
+				this.kjq_buyMethod = this.kjq_buyMethod == 0 ? 1 : 0
+			},
+			// 购买
+			buy() {
+				uni.navigateTo({
+					url:'/pages/wantBuy/paymentMethod'
+				})
 			}
 		}
 	}
@@ -312,6 +420,61 @@
 			background: #fff;
 			border-radius: 70rpx 70rpx 0 0;
 			height: 100%;
+			.col-line {
+				transform: rotate(90deg);
+				background: rgb(234, 235, 238);
+				height: 1px;
+				width: 30rpx;
+			}
+		}
+		.scoped-css {
+			.scoped-css-flex {
+				padding: 20rpx 30rpx;
+				display: flex;
+				justify-content: space-between;
+			}
+			.scoped-css-box {
+				padding: 5px 25px;
+				border-radius: 10rpx;
+				background: #f5f5f5;
+				text-align: center;
+			}
+			.active {
+				color: #1a6ebd;
+			}
+			.card {
+				padding: 0 10rpx;
+				.niner-content {
+					padding: 20rpx;
+					.card-input {
+						height: 100rpx;
+						background: #f5f5f5;
+						border-radius: 20rpx;
+						display: flex;
+						justify-content: flex-start;
+						align-items: center;
+						padding: 0 30rpx;
+						.card-icon {
+							width: 100rpx;
+							font-size: 20px;
+						}
+					}
+					.card-flex {
+						display: flex;
+					}
+					.card-flex-sb {
+						justify-content: space-between;
+					}
+					.card-label {
+						color: #2c78f8;
+					}
+					.card-img {
+						margin-left: 5rpx;
+						width: 20rpx;
+						height: 20rpx;
+					}
+				}
+			}
 		}
 		.select-container {
 			padding: 30rpx;
@@ -381,6 +544,13 @@
 			border-color: #2979ff;
 			color: #fff;
 		}
+		.card {
+			font-size: 12px;
+			color: #868c9a;
+			.pane {
+				transition: all .2s ease; 
+			}
+		}
 		.divline {
 			height: 2px;
 			background: #f3f3f3;
@@ -424,6 +594,10 @@
 		}
 		.popup-view {
 			overflow-y: scroll;
+			/deep/ .u-drawer-content {
+				height: 93%!important;
+				border-radius: 40px 40px 0px 0px!important;
+			}
 		}
 		.box {
 			padding: 20rpx 30rpx;

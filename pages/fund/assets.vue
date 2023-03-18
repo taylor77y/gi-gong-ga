@@ -85,10 +85,18 @@
 				this.current = e
 			},
 			getUserInfo(member){
-				this.$u.api.user.getMember(member).then(res => {
+				this.$u.api.user.getMember(member)
+				.then(res => {
 					this.list = res.result
 					console.log(res)
 					// console.log("用户信息",res)
+				}).catch(err => {
+					if(err.data.errorCode === 'SYS.0015') {
+						uni.navigateTo({
+								url:'/pages/login/login'
+						})
+						return
+					}
 				})
 			},
 			getBalances(member){
@@ -96,6 +104,14 @@
 					this.balances = res.result.balances;
 					this.cnyPrice = res.result.cnyPrice;
 					this.usdtPrice = res.result.usdtPrice;
+				}).catch(err => {
+					console.log(err)
+					if(err.data.errorCode === 'SYS.0015') {
+							uni.navigateTo({
+									url:'/pages/login/login'
+							})
+							return
+					}
 				})
 			}
 

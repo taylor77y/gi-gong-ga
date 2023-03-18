@@ -74,11 +74,11 @@ const install = (Vue, vm) => {
 			// },1200)
 			const jump = uni.getStorageSync('jump')
 			if (!jump) {
-				setTimeout(()=>{
-					uni.navigateTo({
-						url:'/pages/login/login'
-					})
-				},2000)
+				// setTimeout(()=>{
+				// 	uni.navigateTo({
+				// 		url:'/pages/login/login'
+				// 	})
+				// },2000)
 			}
 			uni.getStorageSync('jump', 'true')
 		       //  if (errorMessage != '密码有误') { //修改用户支付密码报这个错

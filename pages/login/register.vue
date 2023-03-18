@@ -120,7 +120,7 @@
 			<u-checkbox v-model="isChecked">{{i18n.wyydbty}}<text class="link">{{i18n.fwtk}}</text></u-checkbox>
 		</view>
 		<!-- 注册 -->
-		<button class="button_1 flex-col" @click="getPath()" style="background-color: #2979ff;">
+		<button type="primary" class="button_1 flex-col" @click="getPath()" style="background-color: #2979ff;">
 			<text class="text_13">{{i18n.zc}}</text>
 		</button>
 		<view class="text-login">{{i18n.yyzh}}<text class="link">{{i18n.qdl}}</text></view>
@@ -140,9 +140,9 @@
 				isComfirmInput: false,
 				userPhone: '',
 				userPass: '',
-				confirmUserPass: '',
+				confirmUserPass: '', // 确认密码
 				isChecked: false,
-				chenk: 0, // 注册方式
+				chenk: 0, // 注册方式 0: 账号， 1：邮箱 ； 2：手机号
 				code: '',
 				verification: '',
 				newTimer: null,
@@ -304,6 +304,7 @@
 			back() {
 				uni.navigateBack(1)
 			},
+			// 注册
 			getPath() {
 				const {
 					chenk,
@@ -313,26 +314,26 @@
 					countryCode: areaCode,
 					verification
 				} = this
-				// const phoneData = {
-				// 	phone: userPhone,
-				// 	password: md5Libs.md5(userPass),
-				// 	re_password: md5Libs.md5(confirmUserPass),
-				// 	// payPassword: md5Libs.md5(code),
-				// 	areaCode,
-				// 	regType: "PHONE"
-				// }
-				// const mailData = {
-				// 	mail: userPhone,
-				// 	password: md5Libs.md5(userPass),
-				// 	re_password: md5Libs.md5(confirmUserPass),
-				// 	// payPassword: md5Libs.md5(code),
-				// 	areaCode,
-				// 	regType: "MAIL"
-				// }
-				// if (!userPass) {
-				// 	this.$utils.showToast(this.i18n.qsrdlmm)
-				// 	return
-				// }
+				if(!userPhone) {
+					this.$utils.showToast(this.getPlaceholder[chenk])
+					return;
+				}
+				if (!userPass) {
+					this.$utils.showToast(this.i18n.qsrdlmm)
+					return;
+				}
+				if(userPass.length < 6 || userPass.lenth > 12) {
+					this.$utils.showToast(this.i18n.szmmts)
+					return;
+				}
+				if(!confirmUserPass) {
+					this.$utils.showToast(this.i18n.qqrmm)
+					return;
+				}
+				if(userPass !== confirmUserPass) {
+					this.$utils.showToast("密码不正确")
+					return;
+				}
 				// if (!verification) {
 				// 	this.$utils.showToast(this.$t('common').emailcodePlaceholder)
 				// 	return
@@ -340,7 +341,6 @@
 				// if (chenk === 2 && !userPhone) {
 				// 	this.$utils.showToast(this.i18n.skjkjkhd)
 				// 	return
-
 				// }
 				// if (chenk === 1 && this.$utils.testEmail(userPhone)) {
 				// 	this.$utils.showToast(this.i18n.hujkjkh)
@@ -355,45 +355,47 @@
 					return
 				}
 				console.log('chenk', chenk)
-				// return
-				// const type = chenk === 2 ? 'PHONEYANZEN' : ''
-				// const chooseCode = this.$store.state.countryCode || uni.getStorageSync('chooseCode')
-				// const phone = chenk === 2 ? `${chooseCode}${userPhone}` : userPhone
-				let type = 3
-				if (chenk == 0) {
-					type = 3
-				} else if (chenk == 1) {
-					type = 2
-				} else if (chenk == 2) {
-					type = 1
+					
+				let params = {
+					password: this.userPass,
+					// 2: 账号， 0：邮箱 ； 1：手机号
+					regType: this.chenk == 0 ? 2 : this.chenk == 1 ? 0 : this.chenk == 2 ? 1 : '',
+					areaCode: 1
 				}
-				this.$u.api.newRegister.accountReg(userPhone, userPass, confirmUserPass, type).then(res => {
+				if(params.regType == 0) {
+					params.mail = this.userPhone
+					
+					if(!/^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/.test(this.userPhone)) {
+						this.$utils.showToast(this.$t('common').hujkjkh)
+						return;
+					}
+				} else if(params.regType == 1) {
+					params.phone = this.userPhone
+					
+					if(!/^1[3-9]\d{9}$/.test(this.userPhone)) {
+						this.$utils.showToast(this.$t('common').skjkjkhd)
+						return;
+					}
+				} else {
+					params.account = this.userPhone
+				}
+				
+				
+				this.$u.api.user.register(params).then(res => {
 					console.log("注册结果", res)
-					if (res.code == 0) {
+					if(res.status == "SUCCEED") {
 						this.$utils.showToast(this.i18n.zccg)
+						
 						setTimeout(() => {
 							uni.navigateTo({
 								url: '/pages/login/login'
 							})
 						}, 500)
-						return
-					}
-					this.$utils.showToast(res.msg)
-					return
-					if (res.status == "SUCCEED") {
-						this.$utils.showToast(this.i18n.zccg)
-						const temp = {
-							phMail: userPhone,
-							password: md5Libs.md5(userPass),
-							areaCode
-						}
-						if (!this.$utils.testEmail(userPhone)) {
-							delete temp.areaCode
-						}
-						this.loginFn(temp)
 					} else {
-						this.$utils.showToast(res.errorMessage)
+						this.$utils.showToast(res.errorCode, res.errorMessage)
 					}
+				}).catch(error => {
+					this.$utils.showToast(error)
 				})
 				return
 
@@ -421,8 +423,6 @@
 						this.$utils.showToast(res.errorMessage)
 					}
 				})
-
-
 			},
 			loginFn(temp) {
 				this.$u.api.user.login(temp).then(res => {
@@ -453,6 +453,9 @@
 	@import './assets/3.scss';
 </style>
 <style lang='scss' scoped>
+	::v-deep .text_13 {
+		color: #fff!important;
+	}
 	.f-bg {
 		background: #F6F6F6;
 		border-radius: 6rpx;
