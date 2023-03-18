@@ -51,6 +51,9 @@
           <a href="#" style="color: #4D7CF5;  text-decoration : none" >粘贴</a>
         </view>
       </view>
+	  <view>
+	  		<u-message-input :maxlength="6" :focus="true" :breathe="false" :dot-fill="true" ></u-message-input>
+	  </view>
     </view>
 
     <view class="mattersNeedingAttentionBox">
@@ -85,6 +88,7 @@
         }, {
           name: this.$t('member').qjy
         }, ],
+		ggnum:'',
       }
     },
     created() { },
