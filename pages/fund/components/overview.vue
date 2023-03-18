@@ -18,7 +18,7 @@
       {{ isInput ? assetsAmount : '*********' }}
     </view>
     <view class="zhehe">
-      {{ isInput ? '≈ $ 99 ' : '*********' }}
+      {{ isInput ? '≈ $ 0 ' : '*********' }}
 <!--      <image referrerpolicy="no-referrer" src="/static/image/my/4.png"/>-->
     </view>
 <!--    <view class="a-img">-->
@@ -87,7 +87,7 @@ export default {
         {name:'Withdraw',img:'/static/image/assets/2.png',},
         {name:'Exchange',img:'/static/image/assets/3.png',},
       ],
-      assetsAmount: 9999, //资产金额
+      assetsAmount: 0, //资产金额
       isInput: true,
       listFn: [{
         name: 'Spot',

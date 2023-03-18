@@ -1,9 +1,9 @@
 {
     "name" : "WooCloud",
-    "appid" : "__UNI__FBB6199",
+    "appid" : "__UNI__CA68F90",
     "description" : "测试",
-    "versionName" : "0.8.0",
-    "versionCode" : 80,
+    "versionName" : "0.8.1",
+    "versionCode" : 81,
     "transformPx" : false,
     "app-plus" : {
         // APP-VUE分包，可提APP升启动速度，2.7.12开始支持，兼容微信小程序分包方案，默认关闭
@@ -57,7 +57,9 @@
                 "minSdkVersion" : 26,
                 "targetSdkVersion" : 30
             },
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             "sdkConfigs" : {
                 "ad" : {}
             },

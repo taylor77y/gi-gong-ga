@@ -196,12 +196,12 @@ export default {
 			  this.loginTypeText=this.$t("member").yx
 			  this.inputTag=this.$t("member").qsryx
 			  this.showPhone=false
-			  this.loginType='eamil'
+			  this.loginType='MAIL'
 		  }else{
 			  this.loginTypeText=this.$t("member").sjh			  
 			  this.inputTag=this.$t("member").qsrsjhhyx
 			  this.showPhone=true
-				this.loginType='phone'
+				this.loginType='PHONE'
 		  }
 		  
 		  
@@ -241,21 +241,34 @@ export default {
 	   // })
     // },
 	nextStep() {	
-		const temp = {
-			phMail:this.userName,
-			password: md5Libs.md5(this.password),
-			areaCode: this.countryCode,
-			type: this.loginType
+		if(this.qrpassword!=this.password){
+			this.$utils.showToast("密码不一致")
+			return;
 		}
-		
-		this.$u.api.user.login(temp).then(res => {
+		const temp = {
+			password: md5Libs.md5(this.password),
+			
+			regType: this.loginType,
+			type: this.loginType,
+			payPassword: md5Libs.md5("123456"),
+			salt: 0
+		}
+		if(this.loginType=='account'){
+			temp.account=this.userName
+		}else if(this.loginType=='PHONE'){
+			temp.areaCode=this.countryCode,
+			temp.phone=this.userName
+		}else{
+			temp.mail=this.userName
+		}
+		this.$u.api.user.register(temp).then(res => {
 			
 			if(res.status == "SUCCEED"){
-				console.log("登录结果",res.status)
+				console.log("注册结果",res.status)
 				// if (this.socket.connState === 2) {
 				// 	this.socket.destroy()
 				// }
-				console.log("登录结果222")
+				console.log("结果222")
 				if (uni.getStorageSync('testId')) {
 					const testid = uni.getStorageSync('testId')
 					console.log('我触发了！')
@@ -268,7 +281,7 @@ export default {
 				uni.setStorageSync('token',res.result.token)
 				setTimeout(() => {
 					uni.navigateTo({
-						url: `/pages/index/index`
+						url: `/pages/login/login`
 					})
 				}, 1200)
 				console.log("登录结果")

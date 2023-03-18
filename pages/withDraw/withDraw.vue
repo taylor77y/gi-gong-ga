@@ -116,6 +116,26 @@
 			},
 			back() {
 				uni.navigateBack(1)
+			},
+			handleFn() {
+
+				// let data = new Object();
+				// data.balance = this.num;
+				// data.currency = this.item.currency;
+				// data.member = uni.getStorageSync("userId");
+				// data.type = this.withdrawalType === 0 ? 1: 2 ;
+				// data.baId = this.couponInfo[this.radios].id
+				// console.log("提币提交", data)
+				// this.$u.api.user.extractCoin(data).then(res => {
+				// 	if (res.status === "SUCCEED") {
+				// 		this.num = null;
+				// 		this.$utils.showToast(this.i18n.tjshcg)
+				// 		this.getPath()
+				// 	} else {
+				// 		this.$utils.showToast(res.errorMessage)
+				// 	}
+				// })
+
 			}
 		},
 		computed: {

@@ -21,7 +21,7 @@
 		</view>
 		<view class="zhehe">
 <!--			{{ setRate.mark }}{{ isInput ? '******':usdtPrice * setRate.rate | SubString(5) }}-->
-      {{ !isInput ? '≈ $ 99 ' : '*********' }}
+      {{ !isInput ? '≈ $ 0 ' : '*********' }}
 		</view>
 
     <!-- 注册-->
