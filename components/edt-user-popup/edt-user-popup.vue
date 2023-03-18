@@ -35,7 +35,7 @@
 			return {
 
 				// action: uni.getStorageSync('imgPath') + '?member=' + uni.getStorageSync('userId'),
-				action: '/api/member/upload',
+				action:  uni.getStorageSync('imgPath') + '/member/upload/new',
 				code: false,
 				value: '',
 				header: {
@@ -69,7 +69,7 @@
 			onSus(response, index, lists, name) {
 				this.$utils.showToast(this.i18n.sccg)
 				console.log("上传成功", response)
-				this.img = response.name;
+				this.img = response.result.url;
 			},
 			close() {
 				this.$emit('update:showPup', false)

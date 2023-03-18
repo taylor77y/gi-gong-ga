@@ -159,6 +159,7 @@ const install = (Vue, vm) => {
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息
 		updateMember: (member,name,avatar) => vm.$u.post(`/member/member/updateMember?member=${member}&nikeName=${name}&avatarAddress=${avatar}`),
+		updateMemberNew: (member,name,avatar) => vm.$u.post(`/member/member/updateMember`,{member:member,nikeName:name,avatarAddress:avatar}),
 		// 忘记密码
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
