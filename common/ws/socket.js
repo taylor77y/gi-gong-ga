@@ -3,6 +3,9 @@ import {
 } from "crypto";
 import pako  from './pako.min.js'
 const wsURL = "ws://qcapi.obk3.com/wss";
+
+import { setData } from '@/common/hooks/socketData.js'
+
 class socket {
 	// constructor(url = 'ws://192.168.101.53/', options) { 
 	constructor(url = wsURL, options) {
@@ -12,6 +15,7 @@ class socket {
 		this.connState = 0
 		this.socket = null
 		this.url = url
+		this.data = null
 	}
 	// 解压方法
 	unzip(b64Data) {
@@ -341,7 +345,11 @@ class socket {
 	}
 	onMessage(message) {
 		// console.error('解压前时间戳：' +  new Date().getTime());
-
+		
+		// 拿不到数据，展示先存store
+		var d = JSON.parse(message)
+		setData(d)
+		
 		let blob = message
 		if (typeof blob == 'string') {
 			return

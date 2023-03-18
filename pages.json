@@ -796,6 +796,16 @@
 		    }
 		    
 		},
+
+        {
+		    "path" : "pages/login/gooleVerify",
+		    "style" :
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+
+		},
 		{
 		    "path" : "pages/login/verification",
 		    "style" :                                                                               
@@ -1330,6 +1340,18 @@
                 "enablePullDownRefresh": false
             }
             
+        }
+        ,{
+            "path" : "pages/login/my-identity",
+            "style" : {}
+					},
+					{
+            "path" : "pages/login/finish",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {

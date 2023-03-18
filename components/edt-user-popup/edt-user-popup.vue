@@ -34,7 +34,8 @@
 		data() {
 			return {
 
-				action: uni.getStorageSync('imgPath') + '?member=' + uni.getStorageSync('userId'),
+				// action: uni.getStorageSync('imgPath') + '?member=' + uni.getStorageSync('userId'),
+				action: '/api/member/upload',
 				code: false,
 				value: '',
 				header: {

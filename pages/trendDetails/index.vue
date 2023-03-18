@@ -85,101 +85,103 @@
 			</u-row>
 			<!-- 图表 -->
 			<view class="echart mt-20">
-				<!-- <u-row gutter="4" class="time-options" justify="space-betweent">
-					<u-col span="1" v-for="(item, index) in timeOptions" :key="item" class="time-row" :class="{'text-gray': activetedTime !== item}"
-					 @click="changeTime(item)">{{item}}</u-col>
-				</u-row> -->
 				<view class="charts-box">
 					<!-- k线图 -->
-					<my-klinechart id="klinechart1" :options="options2" :themeVal="theme" :applyNewData="klineData">
+					<my-klinechart :themeVal="theme" :activetedTime="activetedTime" :applyNewData="klineData" @changeTime="changeTime">
 					</my-klinechart>
 				</view>
-				<view class="bg-black"></view>
-				<view class="echart mt-20">
-					<!-- <u-row gutter="4" class="time-options" justify="space-betweent">
-						<u-col span="1" v-for="(item, index) in typeOptions" :key="item" class="time-row" :class="{'text-gray': activetedType !== item}"
-						 @click="changeType(item)">{{item}}</u-col>
-					</u-row> -->
-					<my-klinechart id="klinechart2" :options="options1" :applyNewData="klineData"
-						:activetedTime="activetedType" :timeOptions="typeOptions" :themeVal="theme"></my-klinechart>
-				</view>
 			</view>
 		</view>
-		<view class="bg-black"></view>
+		<view class="bg-black" :style="{backgroundColor: isNight ? '#1e2030' : '#eaedf2'}"></view>
 		<!-- 列表数据 -->
 		<view class="list-tab">
-			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a"
-				:current="currentIndex" @change="tabClickHanlder" />
-			<view v-show="currentIndex === 0" class="table-list">
-				<u-row gutter="16" justify="space-betweent">
-					<!-- 左边列表数据 -->
-					<u-col span="6">
-						<!-- 头部标题 -->
-						<view class="text-gray mb-20">
-							<view class="title">Buy</view>
-							<u-row gutter="6">
-								<u-col span="6" style="padding: 0;">
-									<p>Price(USDT)</p>
-								</u-col>
-								<u-col span="6" class="right-col">
-									<p>Number(BTC)</p>
-								</u-col>
-							</u-row>
-						</view>
-						<u-row gutter="16" v-for="(item,index) in leftList" :key="index" justify="space-betweent"
-							class="list-row">
+			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a" :current="currentIndex"
+			 @change="tabClickHanlder" />
+			 <u-line style="position:relative;bottom: 6rpx;"></u-line>
+			<swiper :current="currentIndex">
+				<swiper-item>
+					<scroll-view :scroll-y="true">
+						<u-row gutter="16" justify="space-betweent">
+							<!-- 左边列表数据 -->
 							<u-col span="6">
-								<text>{{item.price}}</text>
+								<!-- 头部标题 -->
+								<view class="text-gray mb-20">
+									<view class="title">Buy</view>
+									<u-row gutter="6">
+										<u-col span="6" style="padding: 0;">
+											<p>Price(USDT)</p>
+										</u-col>
+										<u-col span="6" class="right-col">
+											<p>Number(BTC)</p>
+										</u-col>
+									</u-row>
+								</view>
+								<u-row gutter="16" v-for="(item,index) in leftList" :key="index" justify="space-betweent"
+									class="list-row">
+									<u-col span="6">
+										<text>{{item.price}}</text>
+									</u-col>
+									<u-col span="6" class="text-green right-col">
+										<text>{{item.amount}}</text>
+									</u-col>
+								</u-row>
 							</u-col>
-							<u-col span="6" class="text-green right-col">
-								<text>{{item.number}}</text>
+							<!-- 右边列表数据 -->
+							<u-col span="6">
+								<!-- 头部标题 -->
+								<view class="text-gray mb-20">
+									<view class="title">Sell</view>
+									<u-row gutter="6">
+										<u-col span="6" style="padding: 0;">
+											<p>Price(USDT)</p>
+										</u-col>
+										<u-col span="6" class="right-col">
+											<p>Number(BTC)</p>
+										</u-col>
+									</u-row>
+								</view>
+								<u-row gutter="16" v-for="(item, index) in rightList" :key="index" justify="space-betweent"
+									class="list-row">
+									<u-col span="6"><text>{{item.price}}</text></u-col>
+									<u-col span="6" class="text-red right-col">
+										<text>{{item.amount}}</text>
+									</u-col>
+								</u-row>
 							</u-col>
 						</u-row>
-					</u-col>
-					<!-- 右边列表数据 -->
-					<u-col span="6">
-						<!-- 头部标题 -->
-						<view class="text-gray mb-20">
-							<view class="title">Sell</view>
-							<u-row gutter="6">
-								<u-col span="6" style="padding: 0;">
-									<p>Price(USDT)</p>
-								</u-col>
-								<u-col span="6" class="right-col">
-									<p>Number(BTC)</p>
-								</u-col>
-							</u-row>
-						</view>
-						<u-row gutter="16" v-for="(item, index) in rightList" :key="index" justify="space-betweent"
+					</scroll-view>
+				</swiper-item>
+				<swiper-item>
+					<scroll-view :scroll-y="true">
+						<u-row gutter="16" justify="space-between" class="list-row text-gray">
+							<u-col span="3">Time</u-col>
+							<u-col span="3">Direction</u-col>
+							<u-col span="3">Price(USDT)</u-col>
+							<u-col span="3">Number(btc)</u-col>
+						</u-row>
+						<u-row gutter="16" v-for="(item,index) in dealData" :key="index" justify="space-between"
 							class="list-row">
-							<u-col span="6"><text>{{item.price}}</text></u-col>
-							<u-col span="6" class="text-red right-col">
-								<text>{{item.number}}</text>
+							<u-col span="3">{{item.current_time}}</u-col>
+							<u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+								{{item.direction}}
 							</u-col>
+							<u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+								{{item.price}}
+							</u-col>
+							<u-col span="3" >{{item.amount}}</u-col>
 						</u-row>
-					</u-col>
-				</u-row>
-			</view>
-			<view v-show="currentIndex === 1" class="table-list">
-				<u-row gutter="16" v-for="(item,index) in dealData" :key="index" justify="space-between"
-					class="list-row">
-					<u-col span="3">{{item.time}}</u-col>
-					<u-col span="3" class="text-green" :class="{'text-red': item.Direction === 'Sell'}">
-						{{item.Direction}}
-					</u-col>
-					<u-col span="3">{{item.Price}}</u-col>
-					<u-col span="3">{{item.Number}}</u-col>
-				</u-row>
-			</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
 		</view>
-
-		<tool-bar />
+		<tool-bar class="mt-20"/>
 	</view>
 </template>
 
 <script>
 	import toolBar from "./tool-bar.vue"
-
+	import socket from '../../common/ws/socket.js'
+	import { getData } from '@/common/hooks/socketData.js'
 	export default {
 		components: {
 			toolBar
@@ -203,486 +205,38 @@
 					"current_time": "2023-03-16 11:21:08",
 					"open": "24880",
 					"ts": 1678936868318
-				}, ],
-				getInterval: null,
+				}],
+				interval: null,
 
 				isStar: false, // 收藏
 				activetedTab: '0',
 
-				timeOptions: ['Line', '5m', '15m', '30m', '1h', '4h', '1D', '1W', 'M'],
-				activetedTime: 'Line', // 图表选项
-				typeOptions: [{
-						name: 'MA',
-						value: 'MA'
-					},
-					{
-						name: 'EMA',
-						value: 'EMA'
-					},
-					{
-						name: 'BOLL',
-						value: 'BOLL'
-					},
-					{
-						name: 'VOL',
-						value: 'VOL'
-					},
-					{
-						name: 'MACD',
-						value: 'MACD'
-					},
-					{
-						name: 'KDJ',
-						value: 'KDJ'
-					},
-					{
-						name: 'RSl',
-						value: 'RSl'
-					},
-				],
-				activetedType: {
-					name: 'MA',
-					value: 'MA'
-				}, // 图表选项
+				activetedTime: { name: 'Line',value: '1min',	time: 1 }, // 图表选项
 				klineData: [],
-				// 面积图
-				options1: {
-					candle: {
-						// 蜡烛图类型 'candle_solid'|'candle_stroke'|'candle_up_stroke'|'candle_down_stroke'|'ohlc'|'area'
-						type: 'area',
-						area: {
-							lineSize: 2,
-							lineColor: '#2196F3',
-							value: 'close',
-							backgroundColor: [{
-								offset: 0,
-								color: 'rgba(33, 150, 243, 0.01)'
-							}, {
-								offset: 1,
-								color: 'rgba(33, 150, 243, 0.2)'
-							}]
-						},
-						priceMark: {
-							show: true,
-							// 最高价标记
-							high: {
-								show: true,
-								color: '#D9D9D9',
-								textMargin: 5,
-								textSize: 10,
-								textFamily: 'Helvetica Neue',
-								textWeight: 'normal'
-							},
-							// 最低价标记
-							low: {
-								show: true,
-								color: '#D9D9D9',
-								textMargin: 5,
-								textSize: 10,
-								textFamily: 'Helvetica Neue',
-								textWeight: 'normal',
-							},
-							// 最新价标记
-							last: {
-								show: false,
-								upColor: '#26A69A',
-								downColor: '#EF5350',
-								noChangeColor: '#888888',
-								line: {
-									show: true,
-									// 'solid' | 'dashed'
-									style: 'dashed',
-									dashedValue: [4, 4],
-									size: 1
-								},
-								text: {
-									show: true,
-									// 'fill' | 'stroke' | 'stroke_fill'
-									style: 'fill',
-									size: 12,
-									paddingLeft: 4,
-									paddingTop: 4,
-									paddingRight: 4,
-									paddingBottom: 4,
-									// 'solid' | 'dashed'
-									borderStyle: 'solid',
-									borderSize: 1,
-									borderDashedValue: [2, 2],
-									color: '#FFFFFF',
-									family: 'Helvetica Neue',
-									weight: 'normal',
-									borderRadius: 2
-								},
-							}
-						},
-						// 提示
-						tooltip: {
-							// 'always' | 'follow_cross' | 'none'
-							showRule: 'follow_cross',
-							// 'standard' | 'rect'
-							showType: 'standard',
-							// 显示回调方法，返回数据格式类型需要时一个数组
-							// 数组的子项类型为 { title, value }
-							// title和value可以是字符串或者对象，对象类型为 { text, color }
-							custom: null,
-							defaultValue: 'n/a',
-							rect: {
-								paddingLeft: 0,
-								paddingRight: 0,
-								paddingTop: 0,
-								paddingBottom: 6,
-								offsetLeft: 8,
-								offsetTop: 8,
-								offsetRight: 8,
-								borderRadius: 4,
-								borderSize: 1,
-								borderColor: '#3f4254',
-								color: 'rgba(17, 17, 17, .3)'
-							},
-							text: {
-								size: 12,
-								family: 'Helvetica Neue',
-								weight: 'normal',
-								color: '#D9D9D9',
-								marginLeft: 10,
-								marginTop: 8,
-								marginRight: 6,
-								marginBottom: 0
-							},
-						},
-					}
-				},
-				// 蜡烛图
-				options2: {
-					candle: {
-						// 蜡烛图类型 'candle_solid'|'candle_stroke'|'candle_up_stroke'|'candle_down_stroke'|'ohlc'|'area'
-						type: 'candle_solid',
-						// 蜡烛柱
-						bar: {
-							upColor: '#26A69A',
-							downColor: '#EF5350',
-							noChangeColor: '#888888'
-						},
-						priceMark: {
-							show: true,
-							// 最高价标记
-							high: {
-								show: true,
-								color: '#D9D9D9',
-								textMargin: 5,
-								textSize: 10,
-								textFamily: 'Helvetica Neue',
-								textWeight: 'normal'
-							},
-							// 最低价标记
-							low: {
-								show: true,
-								color: '#D9D9D9',
-								textMargin: 5,
-								textSize: 10,
-								textFamily: 'Helvetica Neue',
-								textWeight: 'normal',
-							},
-							// 最新价标记
-							last: {
-								show: false,
-								upColor: '#26A69A',
-								downColor: '#EF5350',
-								noChangeColor: '#888888',
-								line: {
-									show: true,
-									// 'solid' | 'dashed'
-									style: 'dashed',
-									dashedValue: [4, 4],
-									size: 1
-								},
-								text: {
-									show: true,
-									// 'fill' | 'stroke' | 'stroke_fill'
-									style: 'fill',
-									size: 12,
-									paddingLeft: 4,
-									paddingTop: 4,
-									paddingRight: 4,
-									paddingBottom: 4,
-									// 'solid' | 'dashed'
-									borderStyle: 'solid',
-									borderSize: 1,
-									borderDashedValue: [2, 2],
-									color: '#FFFFFF',
-									family: 'Helvetica Neue',
-									weight: 'normal',
-									borderRadius: 2
-								},
-							}
-						},
-						// 提示
-						tooltip: {
-							// 'always' | 'follow_cross' | 'none'
-							showRule: 'follow_cross',
-							// 'standard' | 'rect'
-							showType: 'standard',
-							// 显示回调方法，返回数据格式类型需要时一个数组
-							// 数组的子项类型为 { title, value }
-							// title和value可以是字符串或者对象，对象类型为 { text, color }
-							custom: null,
-							defaultValue: 'n/a',
-							rect: {
-								paddingLeft: 0,
-								paddingRight: 0,
-								paddingTop: 0,
-								paddingBottom: 6,
-								offsetLeft: 8,
-								offsetTop: 8,
-								offsetRight: 8,
-								borderRadius: 4,
-								borderSize: 1,
-								borderColor: '#3f4254',
-								color: 'rgba(17, 17, 17, .3)'
-							},
-							text: {
-								size: 12,
-								family: 'Helvetica Neue',
-								weight: 'normal',
-								color: '#D9D9D9',
-								marginLeft: 10,
-								marginTop: 8,
-								marginRight: 6,
-								marginBottom: 0
-							},
-						},
-					},
-				},
-				tabList: [{
-					name: 'Open orders'
-				}, {
-					name: 'Latest deal'
-				}],
 
 				currentIndex: 0,
-
-				leftList: [{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-				],
-				rightList: [{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-					{
-						price: '24960.14',
-						number: '36.69'
-					},
-				],
-				dealData: [{
-						time: 'Time',
-						Direction: 'Direction',
-						Price: 'Price(USDT)',
-						Number: 'Number(BTC)'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Buy',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Buy',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Buy',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-					{
-						time: '20:21',
-						Direction: 'Sell',
-						Price: '24780.11',
-						Number: '0.36'
-					},
-				],
+				
+				socketObj: null,
+				socketObj1: null,
+				interval1: null,
+					
+				leftList: [],
+				rightList: [],
+				dealData: [],
 			}
 		},
 		computed: {
-
 			theme() {
 				return !this.isNight ? 'light' : 'dark';
 			},
 			i18n() {
 				return this.$t("trendDetails")
+			},
+			tabList() {
+				return [
+					{ name: this.i18n.wtdd},
+					{ name: this.i18n.zxjy}
+				];
 			},
 			getMotBntList() {
 				return [this.i18n.qb, this.i18n.yhk, this.i18n.xnhb, this.i18n.wx, this.i18n.zfb, this.i18n.pp, this.i18n
@@ -694,30 +248,35 @@
 			showTypePopUp(val) {
 				if (val == true) {
 					console.log(val)
-					this.getInterval = setInterval(() => {
+					this.interval = setInterval(() => {
 						this.getRealtime()
 					}, 2000)
 				} else {
 					console.log(val)
-					clearInterval(this.getInterval);
-					this.getInterval = null;
+					clearInterval(this.interval);
+					this.interval = null;
 				}
 			}
 		},
-		onReady() {
+		onReady() {},
+		onHide() {
+			clearInterval(this.interval)
+			this.interval = null
+			clearInterval(this.interval1)
+			this.interval1 = null
+		},
+		created() {
 			this.$u.api.trendDetails.getRealtime().then(res => {
 				this.currentBiType = res.data[0]
 			});
 			this.getKlineData()
-		},
-		onHide() {
-			clearInterval(this.getInterval)
-			this.getInterval = null
-		},
-		mounted() {
-			this.$u.api.bibi.getTest().then(res => {
-				console.log(res)
-			})
+			if(this.socketObj || this.socketObj1){
+				this.socketObj = null
+				this.socketObj1 = null
+				this.socketObj.destroy();
+				this.socketObj1.destroy();
+			}
+			this.getSocketData()
 		},
 		methods: {
 			// 获取类型的币值 实时数据
@@ -727,7 +286,6 @@
 						code,
 						data
 					} = await this.$u.api.trendDetails.getRealtime();
-					console.log(code, data)
 					if (code == '0') {
 						this.realTimeList = data
 					}
@@ -745,18 +303,45 @@
 				this.currentBiType = item
 				this.showTypePopUp = false
 			},
-			tabClickHanlder(val) {
+			async tabClickHanlder(val) {
 				this.currentIndex = val
+				
+				this.socketObj ? await this.socketObj.destroy() :null;
+				this.socketObj1 ? await this.socketObj1.destroy() :null;
+				clearInterval(this.interval1)
+				this.interval1 = null
+				if(val === 0) this.getSocketData();
+				else this.getDealData();
 			},
 			// 图表时间 改变
 			changeTime(time) {
 				this.activetedTime = time
+				this.getKlineData(this.currentBiType.symbol, this.activetedTime.value)
 			},
 			changeType(type) {
 				this.activetedType = type
 			},
-			getSocketData(res) {
-				console.log(res)
+			// 获取Socket的数据
+			getSocketData() {
+				this.socketObj = new socket('wss://thasjhdhjg.site/data/websocket/3/btc')
+				this.socketObj.doOpen()
+				this.interval1 = setInterval(()=> {
+					let {code, data} = getData()
+					if(code == '0') {
+						this.leftList = data.asks
+						this.rightList = data.bids
+					}
+				}, 3000)
+			},
+			// 获取Socket last deal 的数据
+			getDealData() {
+				this.dealData = [];
+				this.socketObj1 = new socket('wss://thasjhdhjg.site/data/websocket/2/btc')
+				this.socketObj1.doOpen()
+				this.interval1 = setInterval(()=> {
+					let { data } = getData()
+					this.dealData = data.data
+				}, 3000)
 			},
 			// 获取 图表数据
 			async getKlineData(symbol = 'btc', line = '1min') {
@@ -764,9 +349,9 @@
 					code,
 					data
 				} = await this.$u.api.trendDetails.getKline(symbol, line);
-				console.log(code, data)
+
 				if (code == 0) {
-					this.klineData = data.splice(0, 200)
+					this.klineData = data
 				}
 			}
 		}
@@ -902,7 +487,11 @@
 			::v-deep .u-tabs {
 				background: inherit !important;
 			}
-
+			uni-swiper {
+				min-height: 600px;
+				padding-bottom: 100px;
+			}
+			
 			.title {
 				font-size: 16px;
 			}
@@ -931,9 +520,9 @@
 	}
 
 	.bg-black {
-		background: #f3f3f3;
+		background-color: #eaedf2;
 		width: 100%;
-		height: 5rpx;
+		height: 10px;
 		margin: 0;
 		padding: 0;
 	}

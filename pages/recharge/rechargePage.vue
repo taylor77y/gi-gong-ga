@@ -34,7 +34,7 @@
 				<view class="title">
 					Deposit amount
 				</view>
-				<input type="text" class="input" placeholder="Enter amount"
+				<input type="text" v-model="amount" class="input" placeholder="Enter amount"
 					placeholder-style="color: #C0C0C0;font-size:26rpx">
 			</view>
 			<view class="chain-container">
@@ -83,7 +83,7 @@
 					official deposit address of the platform, and the loss of funds caused by incorrect deposit shall be
 					beared by yourself
 				</view>
-				<button class="btn" type="primary">Next step</button>
+				<button class="btn" @click="submit" type="primary">Next step</button>
 			</view>
 		</view>
 	</view>
@@ -98,11 +98,57 @@
 					'TRC20',
 					'OMNI'
 				],
-				btnIndex: 0
+				btnIndex: 0,
+				currency: "",
+				amount: 0
 			}
 		},
+		onLoad(){
+			// symbol
+			this.currency=this.$mp.query.symbol
+			console.log("symbol ",this.$mp.query.symbol)
+		},
 		methods: {
-			pasteClick() {}
+			pasteClick() {},
+			//提交
+			submit(){
+				// if(true){
+				// 	console.log("init...",this.btnList[this.btnIndex])
+				// 	return;
+				// }
+				const temp = {
+					currency: this.currency,
+					amount: this.amount,
+					status: 1,
+					memberId: uni.getStorageSync('userId'),
+					chainName: this.btnList[this.btnIndex]
+					
+				}
+				// const {amount,account,selectCoin,i18n} = this
+				// if(!this.$u.test.amount(amount)){
+				// 	this.$utils.showToast(i18n.plsIptCrtAmount)
+				// 	return
+				// }
+				// if(!account){
+				// 	this.$utils.showToast(i18n.plsUploadPaymentVoucher)
+				// 	return
+				// }
+				
+				// const {id:currency} = selectCoin
+					
+				this.$u.api.user.chongzhi(temp).then(res=>{
+					if(res.data.result==1){
+						this.$utils.showToast("申請成功")
+					}else{
+					this.$utils.showToast(res.message)
+					this.amount = ''
+					this.account = ''						
+					}
+
+				
+				})
+			
+			}
 		}
 	}
 </script>

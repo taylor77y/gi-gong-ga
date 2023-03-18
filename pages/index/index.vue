@@ -12,7 +12,7 @@
 					<image src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
 				</view>
 				<view style="line-height: 80rpx;">
-					快速充币
+					{{i18n.kscb}}
 				</view>
 			</view>
 			<view class="right" @click="toF()">
@@ -25,7 +25,7 @@
 					<image src="../../static/image/home/2/12.png" style="width: 100%;height: 100%;" />
 				</view>
 				<view style="line-height: 80rpx;">
-					快速提币
+					{{i18n.kstb}}
 				</view>
 			</view>
 			<view class="right" @click="toWith()">
@@ -98,7 +98,7 @@
 
 			</view>
 		</u-popup> -->
-      <tabar-com />
+		<tabar-com />
 	</view>
 </template>
 
@@ -246,6 +246,9 @@
 			i18n() {
 				return this.$t("home")
 			},
+			i18n2() {
+				return this.$t("market")
+			},
 			banner() {
 				return [{
 						pic: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
@@ -259,88 +262,62 @@
 				return [
 					 {
 					 	img: '../../static/image/home/2/1.png',
-					 	title: '闪兑',
+					 	title: this.i18n.application[0],
 					 	value: '/pages/flashCash/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/2.png',
-					 	title: 'c2c',
+					 	title: this.i18n.application[1],
 					 	value: '/pages/wantBuy/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/3.png',
-					 	title: '合约交易',
+					 	title: this.i18n.application[2],
 					 	value: '/pages/trendDetails/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/4.png',
-					 	title: '理财',
+					 	title: this.i18n.application[3],
 					 	value: '/pages/fm-home/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/5.png',
-					 	title: '现货账户',
+					 	title: this.i18n.application[4],
 					 	value: '/pages/fund/assets'
 					 },
 					 {
 					 	img: '../../static/image/home/2/6.png',
-					 	title: '基金理财',
+					 	title: this.i18n.application[5],
 					 	value: '/pages/fund/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/7.png',
-					 	title: '智能矿池',
+					 	title:this.i18n.application[6],
 					 	value: '/pages/machine/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/8.png',
-					 	title: '质押借贷',
+					 	title:this.i18n.application[7],
 					 	value: '/pages/pledgeLoan/index'
 					 },
 					 {
 					 	img: '../../static/image/home/2/9.png',
-					 	title: '账单记录',
+					 	title: this.i18n.application[8],
 					 	value: '/pages/recharge/recharge-record?code=3'
 					 },
 					 {
 					 	img: '../../static/image/home/2/10.png',
-					 	title: '更多',
+					 	title: this.i18n.application[9],
 					 	value: ''
 					 }
-				]
-				return [
-					 {
-					 	img: '../../static/image/home/18.png',
-					 	title: this.i18n.application[0],
-					 	value: '/pages/fIattributes/index'
-					 },
-					{
-						img: '../../static/image/home/19.png',
-						title: this.i18n.application[1],
-						// value: '/pages/recharge/index?code=1'
-						value: ''
-					},
-					{
-						img: '../../static/image/home/20.png',
-						title: this.i18n.application[2],
-						value: '/pages/recharge/index?code=2'
-					},
-					{
-						img: '../../static/image/home/21.png',
-						title: this.i18n.application[3],
-						value: '/pages/flashCash/index'
-					},
-					{
-						img: '../../static/image/home/22.png',
-						title: this.i18n.application[4],
-						value: '/pages/setup/about'
-					}
-
 				]
 			},
 			homeTitle() {
 				return [
-				 	'热门', '涨幅榜', '跌幅榜', '24小时交易额'
+				 	this.i18n2.tagBtnFour[0].name,
+					 this.i18n2.tagBtnFour[1].name,
+					 this.i18n2.tagBtnFour[2].name,
+					 this.i18n2.tagBtnFour[3].name
 				 ]
 				// return [
 				// 	'自选', '热门', '新币上线', '涨幅榜', '跌幅榜'

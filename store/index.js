@@ -84,8 +84,9 @@ const store = new Vuex.Store({
 		fackCur: uni.getStorageSync('fackCur') || {},
 		sellCode: 1, // 买入 卖出 状态
 		tabarCode: uni.getStorageSync('tabarCode') || 0,
-		rate: uni.getStorageSync('rate') || {}
+		rate: uni.getStorageSync('rate') || {},
 		
+		socketData: [],
 	},
 	actions: {
 		login({
@@ -129,6 +130,10 @@ const store = new Vuex.Store({
 		}
 	},
 	mutations: {
+		// 合约交易实时数据
+		setBtc(state, data) {
+			state.socketData = data
+		},
 		setLang(state, lang) {
 			state.lang = lang
 		},

@@ -54,13 +54,13 @@ export default {
           lanhuimage0:
             'https://lanhu.oss-cn-beijing.aliyuncs.com/psog1a76nhxce93jpyc5vl90l36c30zy3d7b99804a-e654-4a10-8213-4384fb3e308e',
           lanhutext0: '账户已创建',
-          lanhutext1: '验证身份，即享币安之旅'
+          lanhutext1: '验证身份，即享MXO之旅'
         },
         {
           lanhuimage0:
             'https://lanhu.oss-cn-beijing.aliyuncs.com/psgjpyjk10q3oi9u7uz510zc39f6whlfxf7885fe0-3e8f-472a-b7e0-42e34adeecfd',
           lanhutext0: '账户已创建',
-          lanhutext1: '验证身份，即享币安之旅'
+          lanhutext1: '验证身份，即享MXO之旅'
         }
       ],
       constants: {}

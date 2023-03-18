@@ -2,12 +2,16 @@
 	<view>
 		<!-- 头部 -->
 		<u-row gutter="4" class="time-options" justify="space-betweent">
-			<u-col span="1" v-for="(item, index) in timeOptions" :key="index" class="time-row"
-				:class="{'text-gray': activetedTime.name !== item.name}" @click="changeTime(item)">
+			<u-col span="1" v-for="(item, index) in timeOptions" :key="index" class="time-row" :class="{'text-gray': activetedTime.name !== item.name}"
+			 @click="changeTime(item)">
 				{{item.name}}
 			</u-col>
 		</u-row>
-		<view :id="id" style="width:100%;height:300px"></view>
+		<view id="klinechart" style="width:100%;height:500px"></view>
+		<u-row gutter="4" class="time-options" justify="space-betweent">
+			<u-col span="1" v-for="(item, index) in typeOptions" :key="index" class="time-row" :class="{'text-gray': type !== item.name}"
+			 @click="changeType(item)">{{item.name}}</u-col>
+		</u-row>
 	</view>
 </template>
 
@@ -19,10 +23,6 @@
 	import theme from '../klinechart/theme.js'
 	export default {
 		props: {
-			id: {
-				type: String,
-				default: 'klinechart'
-			},
 			timeOptions: {
 				type: Array,
 				default: function() {
@@ -94,18 +94,29 @@
 					return [];
 				}
 			},
-			options: {
-				type: Object
-			}
 		},
 		data() {
 			return {
 				chart: null,
+				type: 'MA',
+				typeOptions: [
+					{ name: 'MA',value: 'MA'},
+					{ name: 'EMA',value: 'EMA'},
+					{ name: 'BOLL',value: 'BOLL'},
+					{ name: 'VOL',value: 'VOL'},
+					{ name: 'MACD',value: 'MACD'},
+					{ name: 'KDJ',value: 'KDJ'},
+					{ name: 'RSl',value: 'RSl'},
+				],
+				klineData: [],
+				technicallndictor: null,
 			}
 		},
 		watch: {
-			applyNewData() {
-				this.chart.applyNewData(this.applyNewData);
+			applyNewData(val){
+				this.klineData = this.applyNewData
+				this.chart.clearData()
+				this.chart.applyNewData(this.klineData);
 			}
 		},
 		mounted() {
@@ -114,30 +125,35 @@
 		methods: {
 			initChart() {
 				dispose('klineChart')
-				this.chart = init(this.id, this.options)
+				this.chart = init('klinechart', {
+					grid: {show:false},
+					candle: {
+						tooltip: {
+							text: {
+								size: 10,
+								marginLeft: 0,
+								marginRight: 2,
+							}
+						}
+					}
+				})
 				//设置黑色主题
 				this.chart.setStyleOptions(theme(this.themeVal))
-				this.chart.applyNewData(this.applyNewData);
+				this.chart.createTechnicalIndicator('MA', true, {id: 'candle_pane'})
+				this.chart.createTechnicalIndicator(this.type)
+				this.chart.applyNewData(this.klineData);
 			},
 			changeTime(item) {
 				this.$emit('changeTime', item)
+			},
+			// type 旧值， val 新的
+			changeType(val) {
+				console.log(this.type, val)
+				if(this.type != val.name) {
+					this.chart.createTechnicalIndicator(val)
+					this.type = val.name
+				}
 			}
 		}
 	}
 </script>
-
-<style lang="scss">
-	.time-options {
-		width: 100%;
-		font-size: 12px;
-		font-weight: 400;
-	}
-
-	.time-row {
-		text-align: center;
-	}
-
-	.text-gray {
-		color: #868c9a;
-	}
-</style>
