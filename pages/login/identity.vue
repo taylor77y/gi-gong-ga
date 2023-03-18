@@ -1,6 +1,7 @@
 <template>
 </template>
-
+<view class="">
+</view>
 <script>
 </script>
 
