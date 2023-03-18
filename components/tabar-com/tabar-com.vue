@@ -70,8 +70,11 @@
 			i18n() {
 				return this.$t("nav");
 			},
-			current() {
-				return this.$store.state.tabarCode;
+			current: {
+				get() {
+					return this.$store.state.tabarCode;
+				},
+				set(){}
 			}
 		},
 		watch: {
