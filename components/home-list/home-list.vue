@@ -2,7 +2,7 @@
 	<view class="home-list">
 		<view class="item" v-for="(item, index) in list" :key="index" @click="getPath(item.pairsName)">
 			<view class="left" v-if="code === 0">
-				<image :src="baseUrl + item.image"  />
+				<image :src="item.image"  />
 				{{item.pairsName}}
 			</view>
 			<view class="lefts" v-else>
