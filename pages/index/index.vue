@@ -33,14 +33,16 @@
 			</view>
 		</view>
 		</view>
-		<home-hot-list :list="fList" />
+		<!-- <home-hot-list :list="fList" /> -->
+		<home-hot-list :list="coinListT" />
 		<home-list-btn @getCode="getCode" :list="homeTitle" />
 		<view class="list-title-box">
 			<view class="name">{{ i18n.mc }}</view>
 			<view class="money">{{ i18n.zxj }}</view>
 			<view class="right">24h{{ i18n.zdf }}</view>
 		</view>
-		<home-list :list="bList" :state="0" :curType="cur" />
+		<!-- <home-list :list="bList" :state="0" :curType="cur" /> -->
+		<home-list :list="coinList" :state="0" :curType="cur" />
 		<!-- <view class="find-box">
 			<view class="left">
 				<find-title :list="findTitle" />
@@ -133,13 +135,16 @@
 				showDownload: true,
 				hasClickDown: false, //是否已经点击过下载,
 				timer: null,
+				coinList:[],
+				coinListT:[]
 			};
 		},
 
 		onLoad() {
 			uni.setStorageSync('ossUrl','http://oss.obk3.com/')
-			this.getBList("UPDOWN");
-			this.getFList("TOP");
+			// this.getBList("UPDOWN");
+			// this.getFList("TOP");
+			this.getCoinData()
 			uni.setNavigationBarTitle({
 				title: this.$store.state.site_name
 			})
@@ -161,11 +166,39 @@
 		onShow() {
 			this.getNotice()
 			this.timer = setInterval(() => {
-				this.getBList(this.cur);
-				this.getFList("TOP");
+				// this.getBList(this.cur);
+				// this.getFList("TOP");
+				this.getCoinData()
 			}, 5000);
 		},
 		methods: {
+			getCoinData(){
+				this.$u.api.common.getCoinData().then(res => {
+					// console.log('getCoinData',res)
+					if(res.result){
+						try{
+							let data = JSON.parse(res.result)
+							console.log('getCoinData-data',data.data)
+							if(data.code == 0){
+								this.coinList = data.data
+								let arr = []
+								data.data.forEach(e=>{
+									if(e.name == 'BTC/USDT'){
+										arr[0] = e
+									}else if(e.name == 'ETH/USDT'){
+										arr[1] = e
+									}else if(e.name == 'ETC/USDT'){
+										arr[2] = e
+									}
+								})
+								this.coinListT = arr
+							}
+						}catch(e){
+							
+						}
+					}
+				})
+			},
 			getHY(){
 				this.$u.api.fack.getCurrencyConfiguration().then(res=>{
 					this.$store.commit('setRate', res.result[0])
