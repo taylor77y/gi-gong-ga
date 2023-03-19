@@ -5,12 +5,12 @@
     <view class="headBox">
       <view class="titleBox" :class="{ 'btn-primary': isPrimaryActive }" @click="activatePrimary(1)">
         <view>
-          <text>{{ current === 2 ? 'Perpetual' : 'Money management ' }}</text>
+          <text>{{ current === 2 ? i18n.hy.yxhy : i18n.lc.hblc }}</text>
         </view>
       </view>
       <view class="titleBox" :class="{ 'btn-primary': isSecondaryActive }" @click="activateSecondary(2)">
         <view>
-          <text>{{ current === 2 ? 'Delivery contract' : 'Mining pool ' }}</text>
+          <text>{{ current === 2 ? i18n.hy.jghe : i18n.lc.kclc }}</text>
         </view>
       </view>
     </view>
@@ -18,7 +18,7 @@
     <view class="container">
       <view class="containerBox">
         <view class="t-left">
-          Total assets (USDT)
+          {{ i18n.zzc}}
           <view class="left1" v-if="isInput" @click="getImg()">
             <image referrerpolicy="no-referrer" src="/static/image/my/2.png"/>
           </view>
@@ -33,10 +33,10 @@
       </view>
       <view class="amount">
         <view class="money">
-          {{ isInput ? '******' : 9999 | SubString(5) }}
+          {{ isInput ? '******' : 0.00 | SubString(5) }}
         </view>
         <view class="zhehe">
-          {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 99.00 ' | SubString(5) }}
+          {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
         </view>
       </view>
 
@@ -44,47 +44,63 @@
 
         <view class="usdtList">
           <view class="usdtListText" v-if="current === 2">
-            {{ isShow === 1 ? '  Margin balance (USDT)' : 'All unrealized profit and loss(USDT)' }}
+            {{ isShow === 1 ? i18n.hy.bzjye :  i18n.hy.bzjye }}
           </view>
           <view class="usdtListText" v-else>
-            {{ isShow === 1 ? ' Est. DIY (USDT)' : 'Est. DIY (USDT)' }}
+            {{ isShow === 1 ? i18n.lc.yjrsy : i18n.lc.yjrsy }}
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 9999 | SubString(5) }}
+              {{ isInput ? '******' : 0.00 | SubString(5) }}
             </view>
             <view class="zhehe">
-              {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 99.00 ' | SubString(5) }}
+              {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
             </view>
           </view>
         </view>
 
         <view class="usdtList">
           <view class="usdtListText" v-if="current === 2">
-            {{ isShow === 1 ? 'Wallet balance(USDT)' : 'Wallet balance(USDT)' }}
+            {{ isShow === 1 ? i18n.hy.qbye : i18n.hy.qbye }}
           </view>
           <view v-else class="usdtListText">
-            {{ isShow === 1 ? 'Revenue (USDT)' : 'Revenue (USDT)' }}
+            {{ isShow === 1 ? i18n.lc.ljsy : i18n.lc.ljsy }}
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 9999 | SubString(5) }}
+              {{ isInput ? '******' : 0.00 | SubString(5) }}
             </view>
             <view class="zhehe">
-              {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 99.00 ' | SubString(5) }}
+              {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
             </view>
           </view>
         </view>
 
       </view>
 
+      <view class="usdtList">
+        <view class="usdtListText" v-if="current === 2 && isShow === 1">
+       {{i18n.hy.qbwsxyk}}
+        </view>
+        <view v-else class="usdtListText">
+         <text v-if="current !== 2"> {{i18n.lc.tgzzdd}}</text>
+        </view>
+        <view class="amount" v-if="current === 2 && isShow === 1 || current === 3">
+          <view class="money" style="color: #707070">
+            {{ isInput ? '******' : 0.00 | SubString(5) }}
+          </view>
+          <view  style="color: #707070">
+            {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
+          </view>
+        </view>
+      </view>
 
     </view>
     <view class="allFnanceBox" v-if="current === 3">
       <view class="allFnanceList">
-        <text> {{ isShow === 1 ? 'All finance' : 'All miners' }}</text>
-        <a href="#" style="text-decoration : none" v-if="isShow === 1" @tap='toRules(1)'>Rules</a>
-        <a href="#" style="text-decoration : none" v-else @tap='toRules(-1)'>Rules</a>
+        <text> {{ isShow === 1 ? i18n.lc.sylc : i18n.lc.sykj }}</text>
+        <a href="#" style="text-decoration : none" v-if="isShow === 1" @tap='toRules(1)'>{{i18n.lc.gz}}</a>
+        <a href="#" style="text-decoration : none" v-else @tap='toRules(-1)'>{{i18n.lc.gz}}</a>
       </view>
     </view>
   </view>
@@ -96,7 +112,7 @@ export default {
   props: {
     current: {
       type: Number,
-      default: 2
+      default: 2 //默认是合约
     }
   },
   data() {
@@ -106,6 +122,11 @@ export default {
       isPrimaryActive: true,
       isSecondaryActive: false
     }
+  },
+  computed:{
+    i18n() {
+      return this.$t("assets")
+    },
   },
   created() {
   },
@@ -232,7 +253,7 @@ export default {
     height: 120rpx;
     border-radius: 20rpx;
     //border: 1rpx solid #d3d3d3;
-    padding: 18rpx;
+    //padding: 18rpx;
 
     .money {
       font-size: 38rpx;
@@ -263,7 +284,6 @@ export default {
     .usdtListText {
       margin: 20rpx 0;
       color: #707070;
-
     }
   }
 
@@ -275,6 +295,13 @@ export default {
       display: flex;
       justify-content: space-between;
     }
+  }
+
+
+  .usdtListText {
+    margin: 20rpx 0;
+    color: #707070;
+
   }
 }
 </style>
