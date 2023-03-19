@@ -91,7 +91,7 @@
     data() {
       return {
         fileList: [],//参数(数组，元素为对象)
-        chargeMoneyValue: '',//充币数
+        chargeMoneyValue: 0,//充币数
         selectCoin: '',
         btnList: [
           'ERC20',
@@ -117,7 +117,7 @@
     methods: {
 
       nextStep() {
-        if (this.chargeMoneyValue == '') {
+        if (this.chargeMoneyValue === 0 ) {
           uni.showToast({
             icon: 'none',
             title: '请输入数量'

@@ -53,7 +53,7 @@
     </view>
 
     <view class="combination-title">
-      Portfolio
+      {{i18n.tzzh.title}}
     </view>
     <view style="height: 20rpx;"></view>
     <view class="list">
@@ -85,48 +85,14 @@ export default {
   data() {
     return {
       walletResult: {},//钱包
-      btnInfo: [
-        {name:'Deposit',img:'/static/image/assets/1.png',},
-        {name:'Withdraw',img:'/static/image/assets/2.png',},
-        {name:'Exchange',img:'/static/image/assets/3.png',},
-      ],
       assetsAmount: 0, //资产金额
       isInput: true,
-      listFn: [{
-        name: 'Spot',
-        img: '/static/image/my/8.png',
-        path: '',
-        val: '0 ',
-		    rate:'0.00',
-      },
-        {
-          name: 'Contract',
-          img: '/static/image/my/9.png',
-          path: '',
-          val: '0 ',
-		      rate:'0.00',
-        },
-        {
-          name: 'Delivery contract account',
-          img: '/static/image/my/10.png',
-          path: '',
-          val: '0 ',
-		      rate:'0.00',
-        },
-        {
-          name: 'Financial account）',
-          img: '/static/image/my/11.png',
-          path: '',
-          val: '0 ',
-		      rate:'0.00',
-        },
-        {
-          name: 'Miner assets',
-          img: '/static/image/my/12.png',
-          path: '',
-          val: '0 ',
-          rate:'0.00',
-        },
+      listFn: [
+        {name:'Spot', img: '/static/image/my/8.png', path: '', val: '0 ', rate:'0.00', key:'xhzh',},
+        {name: 'Contract', img: '/static/image/my/9.png', path: '', val: '0 ', rate:'0.00', key:'hyzh',},
+        {name: 'Delivery contract account', img: '/static/image/my/10.png', path: '', val: '0 ', rate:'0.00', key:'jghyzh',},
+        {name: 'Financial account）', img: '/static/image/my/11.png', path: '', val: '0 ', rate:'0.00', key:'lczh',},
+        {name: 'Miner assets', img: '/static/image/my/12.png', path: '', val: '0 ', rate:'0.00', key:'kjzc',},
       ]
     }
   },
@@ -140,7 +106,10 @@ export default {
   },
   created(){
     this.getBalances()
-    // this.getPortfolio()
+    let listFn = this.listFn.map(e=>{
+      e.name = this.i18n.tzzh[e.key]
+    })
+
   },
   methods: {
     //投资

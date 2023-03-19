@@ -26,7 +26,7 @@
 		},
 		data() {
 			return {
-        assetsList:[{name:'Overview'}, {name:'Spot'}, {name:'Contract'},{name:'Financial'},],
+        assetsList:[{name:'Overview',key:'Overview'}, {name:'Spot',key:'Spot'}, {name:'Contract',key:"Contract"},{name:'Financial',key:'Financial'},],
 				isInput: false,
 				current: 0,
 				balances:[],
@@ -51,7 +51,9 @@
 			}
 		},
 		onLoad() {
-
+    let assetsList = this.assetsList.map(e=>{
+      e.name = this.i18n.assetsList[e.key]
+    })
 		},
 		onShow() {
 			if (this.timer) { //注销定时器

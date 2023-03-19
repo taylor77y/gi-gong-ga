@@ -496,13 +496,44 @@ export default {
 		ksljzjzh: 'Quickly understand the fund account, learn how to use the tutorial',
 		zclb: 'asset list',
 		listBtn: ['C2C', 'Payment', 'Gift Card', 'Binance Mining Pool'],
-		// btnInfo: ['Recharge', 'Withdraw', 'Flash'],
 		btnInfo: [{
 			 name:'Recharge',img:'/static/image/assets/1.png',},
 			{name:'Withdraw',img:'/static/image/assets/2.png',},
 			{name:'Flash',img:'/static/image/assets/3.png',},],
 		keyong: 'Available',
-		dongjie: 'freeze'
+		dongjie: 'freeze',
+		tzzh:{
+			title:'Spot',
+			xhzh:'Contract',
+			hyzh:'Delivery contract account',
+			jghyzh:'Financial account',
+			lczh:'Financial account',
+			kjzc:'Miner assets',
+		},
+		hy:{
+			yxhy:'Perpetual',
+			jghe:'Delivery contract',
+			bzjye:'Margin balance (USDT)',
+			qbye:'Wallet' + 'balance(USDT)',
+			qbwsxyk:'QBYK(USDT)',
+		},
+		lc:{
+			title:'Financial',
+			hblc:'Money management',
+			kclc:'Mining pool',
+			yjrsy:'Est. DIY (USDT)',
+			ljsy:'Revenue (USDT)',
+			tgzzdd:'All holdings',
+			sylc:'All fnance',
+			sykj:'All miners',
+			gz:'Rules',
+		},
+		assetsList:{
+			Overview:'Overview',
+			Spot:'Spot',
+			Contract:'Contract',
+			Financial:'Financial',
+		},
 
 	},
 	entrust: {
@@ -1961,7 +1992,7 @@ export default {
 		tx: ' Withdraw'
 	},
 		
-		recharge: {
+		// recharge: {
 			// qxzczbz: 'Please select the deposit crypto',
 			// cztd: 'Deposit channel',
 			// usdtcz: 'USDT deposit',
@@ -1978,7 +2009,7 @@ export default {
 			// 	shuomingwenzi6:'.• The above deposit address is the official paymentaddress of the platform, please look for the officialdeposit address of the platform, and the loss of fundscaused by incorrect deposit shall be beared byyourself',
 			//
 			// }
-		},
+		// },
 	
 	fundRule: {
 		gz: 'Rules',

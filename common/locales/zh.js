@@ -1521,24 +1521,14 @@ export default {
 
 	},
 	assets: {
-		tagBtn: [{
-				name: '总览'
-			},
-			{
-				name: '现货'
-			},
-			{
-				name: '资金',
-			},
-			{
-				name: '杠杆',
-			},
-			{
-				name: '合约',
-			},
-			{
-				name: '理财',
-			}
+		tagBtn: [
+			{name: '总览'},
+			{name: '现货'},
+			{name: '资金',},
+			{name: '杠杆',},
+			{name: '合约',},
+			{name: '理财',
+		}
 		],
 		zzc: '总资产',
 		zjzh: '资金账户',
@@ -1551,7 +1541,39 @@ export default {
 			  {name:'闪兑',img:'/static/image/assets/3.png',},
 		],
 		keyong: '可用',
-		dongjie: '冻结'
+		dongjie: '冻结',
+		tzzh:{
+			title:'投资组合',
+			xhzh:'现货账户',
+			hyzh:'合约账户（U本位）',
+			jghyzh:'交割合约账户',
+			lczh:'理财账户',
+			kjzc:'矿机资产',
+		},
+		hy:{
+			yxhy:'永续合约',
+			jghe:'交割合约',
+			bzjye:'保证金余额 (USDT)',
+			qbye:'钱包余额(USDT)',
+			qbwsxyk:'全部未实现盈亏(USDT)',
+
+		},
+		lc:{
+			hblc:'货币理财',
+			kclc:'矿池理财',
+			yjrsy:'预计日收益 (USDT)',
+			ljsy:'累计收益 (USDT)',
+			tgzzdd:'托管中总订单',
+			sylc:'所有理财',
+			sykj:'所有矿机',
+			gz:'规则',
+		},
+		assetsList:{
+			Overview:'总览',
+			Spot:'现货账户',
+			Contract:'合约',
+			Financial:'理财',
+		},
 
 	},
 	entrust: {
