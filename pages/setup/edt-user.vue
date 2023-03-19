@@ -4,7 +4,8 @@
 		<head-title :title="i18n.zhxx" />
 		<view class="user-box">
 			<view class="use-img">
-				<image :src="user.handLink ? `${baseURL}/${user.handLink}` : '../../static/image/setting/18.png'"></image>
+				<!-- <image :src="user.handLink ? `${baseURL}/${user.handLink}` : '../../static/image/setting/18.png'"></image> -->
+				<image :src="user.handLink ? user.handLink : '../../static/image/setting/18.png'"></image>
 			</view>
 			<view class="user-name" @click="showPup = true">
 				{{user.nickName}} <image src="../../static/image/setting/19.png"></image>
@@ -81,7 +82,7 @@ import th from '../../common/locales/th';
 				// 	return
 				// }
 				let member = uni.getStorageSync('userId')
-				this.$u.api.user.updateMember(member,val,img).then(res=>{
+				this.$u.api.user.updateMemberNew(member,val,img).then(res=>{
 					if(res.status === 'SUCCEED'){
 						this.showPup = false
 						this.$utils.showToast(this.i18n.xgcc)

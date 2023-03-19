@@ -85,6 +85,12 @@ export default {
   data() {
     return {
       walletResult: {},//钱包
+      btnInfo: [
+        {name:'Deposit',img:'/static/image/assets/1.png',},
+        {name:'Withdraw',img:'/static/image/assets/2.png',},
+        {name:'Exchange',img:'/static/image/assets/3.png',},
+      ],
+      assetsAmount: 0, //资产金额
       isInput: true,
       listFn: [{
         name: 'Spot',

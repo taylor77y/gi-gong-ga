@@ -1353,6 +1353,14 @@
                 "enablePullDownRefresh": false
             }
         }
+        ,{
+            "path" : "pages/wantBuy/paymentMethod",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/wantBuy/addPaymentMethod",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

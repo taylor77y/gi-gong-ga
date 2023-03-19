@@ -9,7 +9,7 @@
 		</u-row>
 		<view id="klinechart" style="width:100%;height:500px"></view>
 		<u-row gutter="4" class="time-options" justify="space-betweent">
-			<u-col span="1" v-for="(item, index) in typeOptions" :key="index" class="time-row" :class="{'text-gray': type !== item.name}"
+			<u-col span="1.5" v-for="(item, index) in typeOptions" :key="index" class="time-row" :class="{'text-gray': type !== item.name}"
 			 @click="changeType(item)">{{item.name}}</u-col>
 		</u-row>
 	</view>
@@ -157,3 +157,19 @@
 		}
 	}
 </script>
+<style lang="scss">
+	.time-options {
+		width: 100%;
+		font-size: 12px;
+		font-weight: 400;
+	}
+
+	.time-row {
+		text-align: center;
+		color: inherit;
+	}
+
+	.text-gray {
+		color: #868c9a;
+	}
+</style>

@@ -12,7 +12,7 @@
 					<image src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
 				</view>
 				<view style="line-height: 80rpx;">
-					{{i18n.kscb}}
+					{{i18n.kauisuchongbi}}
 				</view>
 			</view>
 			<view class="right" @click="toF()">
@@ -25,7 +25,7 @@
 					<image src="../../static/image/home/2/12.png" style="width: 100%;height: 100%;" />
 				</view>
 				<view style="line-height: 80rpx;">
-					{{i18n.kstb}}
+					{{i18n.kuaisutibi}}
 				</view>
 			</view>
 			<view class="right" @click="toWith()">

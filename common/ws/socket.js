@@ -346,9 +346,14 @@ class socket {
 	onMessage(message) {
 		// console.error('解压前时间戳：' +  new Date().getTime());
 		
-		// 拿不到数据，展示先存store
-		var d = JSON.parse(message)
-		setData(d)
+		try{
+			// 拿不到数据，展示先存store
+			var d = JSON.parse(message)
+			setData(d)
+		} catch(e){
+			//TODO handle the exception
+			// console.error('error:', e)
+		}
 		
 		let blob = message
 		if (typeof blob == 'string') {

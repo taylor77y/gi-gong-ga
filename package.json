@@ -23,7 +23,6 @@
     "vue-i18n": "^8.20.0"
   },
   "devDependencies": {
-    "browserslist": "^4.21.5",
-    "caniuse-lite": "^1.0.30001466"
+    "browserslist": "^4.21.5"
   }
 }

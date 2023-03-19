@@ -130,7 +130,7 @@ export default {
 		yrz: 'Authenticated',
 		shz: 'Under review',
 		wrz: 'unauthenticated',
-		hyldba: 'Welcome to Binance',
+		hyldba: 'Welcome to the MOX Exchange',
 		qqzdjypt: 'Join the worlds largest blockchain asset trading platform',
 		zc: 'Register',
 		dl: 'login',

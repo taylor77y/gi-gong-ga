@@ -10,6 +10,13 @@ const install = (Vue, vm) => {
 		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
 		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
+	const wantBuy = {
+		// language 语言
+		getC2cPaymentMethod: (language='en') => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!method_type.action?language=${language}`),
+		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`https://db23app.vip/wap/api/c2cAdvert!list.action?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
+	}
+	
+	
 	//币币交易
 	const bibi = {
 		getPairs: (mainCur,type) => vm.$u.get(`/data/data/getPairsByMainCur?mainCur=${mainCur}&type=${type}`),
@@ -46,7 +53,7 @@ const install = (Vue, vm) => {
 	}
 	//永续合约
 	const yx = {
-		
+
 		getTransaction: (pairsName={}) => vm.$u.get(`/contract/contractMul/getContractMul?pairsName=${pairsName}`),
 		//普通委托
 		getEntrustOrder: (params={}) => vm.$u.post(`/contract/contract/getEntrustOrder?pairsName=${params.pairsName}&member=${params.member}`),
@@ -55,13 +62,13 @@ const install = (Vue, vm) => {
 		getHistoryOrders: (params = {}) => vm.$u.get(`/contract/contract/getHistoryOrders?orderState=${params.orderState}&pageNum=${params.page}&pageSize=${params.size}&member=${params.member}`),
 		//倍数
 		getLevers: (pairsName) => vm.$u.get(`/contract/contractMul/getLevers?pairsName=${pairsName}`),
-		
+
 		getRisk: (member) => vm.$u.get(`/contract/contract/getRisk?member=${member}`),
-		
+
 		getWarehouses: (pairsName,member) => vm.$u.get(`/contract/contract/getWarehouses?pairsName=${pairsName}&member=${member}`),
 
 		setContractOrder: (params = {}) => vm.$u.post(`/contract/contract/setContractOrder`,params, {'Content-Type': 'application/json' }),
-		//止盈(TRIGGER)止损(ORD) 
+		//止盈(TRIGGER)止损(ORD)
 		setOrdTriggerMatch: (params = {}) => vm.$u.post(`/contract/contract/setOrdTriggerMatch?id=${params.id}&price=${params.price}&matchType=${params.matchType}`),
 		//一键平仓
 		setAllContractMatch: (member,pairsName) => vm.$u.post(`/contract/contract/setAllContractMatch?memberId=${member}&pairsName=${pairsName}`)
@@ -77,7 +84,7 @@ const install = (Vue, vm) => {
 		getCurrencys: (getCoinType) => vm.$u.get("/data/data/getIndexCoin?getCoinType="+getCoinType),
 		getNotices: (params={}) => vm.$u.get(`/data/data/getNotices?noticeType=${params.noticeType}&global=${params.global}`),
 		getRechargeMethod: (member) => vm.$u.get(`/member/balance/getRechargeMethod?member=${member}`)
-		
+
 	}
 	//行情页面
 	const quato = {
@@ -87,7 +94,7 @@ const install = (Vue, vm) => {
 
 		placeAnOrder: (params={}) => vm.$u.post(`/otc/order/placeAnOrder?userId=${params.userId}&orderId=${params.orderId}&type=${params.type}&num=${params.num}&mccId=${params.mccId}`)
 	}
-	
+
 	//法币模块
 	const fack = {
 		getCurrencyConfiguration: () => vm.$u.get("/contract/contract/getCurrencyConfiguration"),
@@ -147,17 +154,20 @@ const install = (Vue, vm) => {
 		sendMail: (mailbox, type) => vm.$u.post(`/data/sms/sendMail?mailbox=${mailbox}&type=${type ? type:'SETPHMAIL'}`),
 		// 手机信息发送
 		sendPhone: (mailbox, member) => vm.$u.post(`/data/sms/sendSmsNew?phone=${mailbox}&type=PHONEYANZEN&member=${member ? member: ''}`),
-		
+
 		// 邮箱校验
 		checkSmsCode: (phMail, code, type) => vm.$u.post(`/member/member/checkSmsCode?phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}`),
-		
+
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息
 		updateMember: (member,name,avatar) => vm.$u.post(`/member/member/updateMember?member=${member}&nikeName=${name}&avatarAddress=${avatar}`),
+		updateMemberNew: (member,name,avatar) => vm.$u.post(`/member/member/updateMember`,{member:member,nikeName:name,avatarAddress:avatar}),
 		// 忘记密码
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
+		// 充值
+		chongzhi: (params) => vm.$u.post("/member/member/chongzhi",params),
 	}
 	const setting = {
 		//刷新用户信息
@@ -199,7 +209,7 @@ const install = (Vue, vm) => {
 		//绑定手机号
 		bindMobile: (mobile,code) => vm.$u.post("/safe/mobile",{mobile,code}),
 	}
-	
+
 	const index = {
 		//获取首页的弹窗广告
 		getPopupAd: () => vm.$u.get("/news/index_pop"),
@@ -210,7 +220,7 @@ const install = (Vue, vm) => {
 		// 获取首页轮播图
 		getBanner: () => vm.$u.post("/news/list",{c_id:5}),
 		//获取首页行情
-		getQuotation: () => vm.$u.get("/currency/quotation_new"),	
+		getQuotation: () => vm.$u.get("/currency/quotation_new"),
 		//获取首页的菜单
 		getMenu: () => vm.$u.get("/menu"),
 		getFAQ: () => vm.$u.get("/faq"),
@@ -218,18 +228,18 @@ const install = (Vue, vm) => {
 		getAboutUs: () => vm.$u.get("/aboutus"),
 		getOperationalCompliance: () => vm.$u.get('/operational_compliance')
 	}
-	
+
 	const wallet = {
 		// 获取转换成人民币的汇率
-		getRateCurrency: (id) => vm.$u.get("/wallet/getRateCurrency",{id}),	
+		getRateCurrency: (id) => vm.$u.get("/wallet/getRateCurrency",{id}),
 		// 钱包一些相关信息
-		getWalletInfo: (currency) => vm.$u.post("/wallet/get_info",{currency}),	
+		getWalletInfo: (currency) => vm.$u.post("/wallet/get_info",{currency}),
 		// 获取钱包充值地址
-		getInAddress: (currency,user_id) => vm.$u.post("/wallet/get_in_address",{currency,user_id}),	
+		getInAddress: (currency,user_id) => vm.$u.post("/wallet/get_in_address",{currency,user_id}),
 		//充值
-		recharge: (account,amount,currency,type=0) => vm.$u.post("/wallet/charge_req",{account,amount,currency,type}),	
+		recharge: (account,amount,currency,type=0) => vm.$u.post("/wallet/charge_req",{account,amount,currency,type}),
 		// 获取充值明细
-		getRechargeLog: (page = 1,limit = 10) => vm.$u.get("/recharge/log",{page,limit}),	
+		getRechargeLog: (page = 1,limit = 10) => vm.$u.get("/recharge/log",{page,limit}),
 		// 总资产列表
 		getWalletList: () => vm.$u.post("/wallet/list"),
 		// 获取特定币种在币币合约法币秒合约中的余额
@@ -251,42 +261,42 @@ const install = (Vue, vm) => {
 		//提现
 		withdraw: (params) => vm.$u.post("/wallet/out",params),
 		//提现记录
-		getWithdrawList: (page = 1,limit = 10) => vm.$u.get("/user/withdraw/list",{page,limit}),	
-		
+		getWithdrawList: (page = 1,limit = 10) => vm.$u.get("/user/withdraw/list",{page,limit}),
+
 	}
-	
+
 	const market = {
 		//获取行情的历史数据，x天前的时间戳
-		getHistoryData: (from,to,symbol,period) => vm.$u.get("/currency/new_timeshar",{from,to,symbol,period}),	
+		getHistoryData: (from,to,symbol,period) => vm.$u.get("/currency/new_timeshar",{from,to,symbol,period}),
 		//添加自选
-		addOptional: (currency_id) => vm.$u.post("/optional/add",{currency_id}),	
+		addOptional: (currency_id) => vm.$u.post("/optional/add",{currency_id}),
 		//删除自选
-		delOptional: (id) => vm.$u.post("/optional/del",{id}),	
+		delOptional: (id) => vm.$u.post("/optional/del",{id}),
 		//获取自选列表
-		getOptionalList: () => vm.$u.get("/optional/list"),	
+		getOptionalList: () => vm.$u.get("/optional/list"),
 		//获取杠杆的一些信息吗，及持仓列表
-		getLeverDeal: (currency_id,legal_id) => vm.$u.post("/lever/deal",{currency_id,legal_id}),	
+		getLeverDeal: (currency_id,legal_id) => vm.$u.post("/lever/deal",{currency_id,legal_id}),
 		//提交合约交易,share:0,
-		submitLever: (obj) => vm.$u.post("lever/submit",obj),	
+		submitLever: (obj) => vm.$u.post("lever/submit",obj),
 		//获取固定币种的持仓列表,按分页显示
-		getLeverDealByPage: (currency_id,legal_id,page) => vm.$u.post("/lever/dealall",{currency_id,legal_id,page}),	
+		getLeverDealByPage: (currency_id,legal_id,page) => vm.$u.post("/lever/dealall",{currency_id,legal_id,page}),
 		//平仓
-		cover: (id) => vm.$u.post("/lever/close",{id}),	
+		cover: (id) => vm.$u.post("/lever/close",{id}),
 		//设置止盈止损
-		setStop: (id,target_profit_price,stop_loss_price) => vm.$u.post("/lever/setstop",{id,target_profit_price,stop_loss_price}),	
+		setStop: (id,target_profit_price,stop_loss_price) => vm.$u.post("/lever/setstop",{id,target_profit_price,stop_loss_price}),
 		//全部平仓，0：全部，1：只平多单，2：只平空单
 		coverAll: (type) => vm.$u.post("/lever/batch_close",{type}),
 		// 获取已购买的秒合约列表和余额
-		getPayable: () => vm.$u.get("/microtrade/payable_currencies"),	
+		getPayable: () => vm.$u.get("/microtrade/payable_currencies"),
 		//获取已购买的秒合约列表
-		getSecondsList: (match_id,status,page = 1,limit = 5) => vm.$u.get("/microtrade/lists",{match_id,status,page,limit}),	
+		getSecondsList: (match_id,status,page = 1,limit = 5) => vm.$u.get("/microtrade/lists",{match_id,status,page,limit}),
 		//获取秒合约的秒数
-		getSecondsSeconds: () => vm.$u.get("/microtrade/seconds"),	
+		getSecondsSeconds: () => vm.$u.get("/microtrade/seconds"),
 		//购买秒合约
-		buySeconds: (match_id,currency_id,type,seconds,number) => vm.$u.post("/microtrade/submit",{match_id,currency_id,type,seconds,number}),	 
+		buySeconds: (match_id,currency_id,type,seconds,number) => vm.$u.post("/microtrade/submit",{match_id,currency_id,type,seconds,number}),
 		getResult: (id) => vm.$u.get('/microtrade/get_result', {id}),
 		// 获取币币交易中的资产
-		getWalletDetail: (currency,type = "change") => vm.$u.post("/wallet/detail",{currency,type}),	
+		getWalletDetail: (currency,type = "change") => vm.$u.post("/wallet/detail",{currency,type}),
 		// 币币交易
 		coinTrade: (amount,target_price,currency_id,legal_id,type) => vm.$u.post("/coin/trade",{amount,target_price,currency_id,legal_id,type}),
 		//获取币币交易列表
@@ -298,52 +308,52 @@ const install = (Vue, vm) => {
 
 	const ieo = {
 		// 获取ieo认购列表
-		getIEOProject: (page,limit) => vm.$u.get("/project",{page,limit}),	
+		getIEOProject: (page,limit) => vm.$u.get("/project",{page,limit}),
 		// 获取ieo认购详情
-		getIEOProjectDetail: (project_id) => vm.$u.get("/project/detail",{project_id}),	
+		getIEOProjectDetail: (project_id) => vm.$u.get("/project/detail",{project_id}),
 		// 申请认购
-		subscribeIEO: (project_id,amount,pay_currency,price) => vm.$u.post("/project/order",{project_id,amount,pay_currency,price}),	
+		subscribeIEO: (project_id,amount,pay_currency,price) => vm.$u.post("/project/order",{project_id,amount,pay_currency,price}),
 		// 已申购列表
-		getIEOOrder: (page,limit) => vm.$u.get("/user/project/order",{page,limit}),	
+		getIEOOrder: (page,limit) => vm.$u.get("/user/project/order",{page,limit}),
 	}
-	
+
 	const lockming = {
 		// 获取锁仓挖矿列表
-		getLockming: () => vm.$u.get("/lh/deposit/config"),	
+		getLockming: () => vm.$u.get("/lh/deposit/config"),
 		// 获取锁仓挖矿的订单
-		getLockmingOrder: (page,limit) => vm.$u.get("/lh/deposit/order",{page,limit}),	
+		getLockmingOrder: (page,limit) => vm.$u.get("/lh/deposit/order",{page,limit}),
 		// 认购锁仓挖矿
-		lockming: (config_id,amount) => vm.$u.post("/lh/deposit",{config_id,amount}),	
+		lockming: (config_id,amount) => vm.$u.post("/lh/deposit",{config_id,amount}),
 		// 提前赎回
-		redemption: (id) => vm.$u.post("/lh/deposit/order/cancel",{id}),	
+		redemption: (id) => vm.$u.post("/lh/deposit/order/cancel",{id}),
 	}
-	
+
 	const follow = {
 		//获取交易员列表
-		getTraderList: (page) => vm.$u.get("/follow/index?page="+page),	
+		getTraderList: (page) => vm.$u.get("/follow/index?page="+page),
 		//跟随,type:1固定比例跟随，2固定手数跟随
-		follow: (trader_user_id,number,type) => vm.$u.post("/follow/follow",{trader_user_id,number,type}),	
+		follow: (trader_user_id,number,type) => vm.$u.post("/follow/follow",{trader_user_id,number,type}),
 		//取消跟随
-		cancelFollow: (follow_user_id) => vm.$u.post("/follow/cancel",{follow_user_id}),	
+		cancelFollow: (follow_user_id) => vm.$u.post("/follow/cancel",{follow_user_id}),
 		//获取交易员详情
-		getTraderInfo: (trader_user_id) => vm.$u.get("/follow/traderDetail",{trader_user_id}),	
+		getTraderInfo: (trader_user_id) => vm.$u.get("/follow/traderDetail",{trader_user_id}),
 		//转自持
-		selfHold: (transaction_id) => vm.$u.post("/follow/selfHolding",{transaction_id}),	
+		selfHold: (transaction_id) => vm.$u.post("/follow/selfHolding",{transaction_id}),
 		//获取历史订单
-		getHistoryTrade: (trader_user_id) => vm.$u.get("/follow/historyTrade",{trader_user_id}),	
+		getHistoryTrade: (trader_user_id) => vm.$u.get("/follow/historyTrade",{trader_user_id}),
 	}
-	
+
 	const invest = {
 		//获取产品列表,currency_id :1BTC,2ETH,type:callBTC理财，put：USDT理财
-		getList: (currency_id = 1,type = 'call') => vm.$u.get("/dual/index",{currency_id,type}),	
+		getList: (currency_id = 1,type = 'call') => vm.$u.get("/dual/index",{currency_id,type}),
 		//获取产品详情
-		getDetail: (id) => vm.$u.get("/dual/detail",{id}),	
+		getDetail: (id) => vm.$u.get("/dual/detail",{id}),
 		//购买理财产品
-		purchase: (id,num) => vm.$u.post("/dual/buyDual",{id,num}),	
+		purchase: (id,num) => vm.$u.post("/dual/buyDual",{id,num}),
 		//已购买列表
-		order: (params) => vm.$u.post("/dual/dual_list",params),	
+		order: (params) => vm.$u.post("/dual/dual_list",params),
 	}
-	
+
 	const nft = {
 		//获取nft的产品列表
 		getArtwork: (params) => vm.$u.get("/bind_box/getBoxList",params),
@@ -382,11 +392,11 @@ const install = (Vue, vm) => {
 		//支付订单
 		payOrder: (id) => vm.$u.post("/bind_box/payNFTOrder",{id}),
 	}
-	
+
 	const game = {
-		
+
 	}
-	
+
 	vm.$u.api = {
 		common,
 		user,
@@ -406,7 +416,8 @@ const install = (Vue, vm) => {
 		yx,
 		sd,
 		trendDetails,
-		newRegister
+		newRegister,
+		wantBuy
 	};
 }
 export default {
