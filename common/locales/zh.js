@@ -1542,7 +1542,11 @@ export default {
 		ksljzjzh: '快速了解资金账户，学习使用教程',
 		zclb: '资产列表',
 		listBtn: ['C2C', '支付', '礼品卡', 'MXO矿池'],
-		btnInfo: ['充值', '提现', '闪兑'],
+		btnInfo:[
+			  {name:'充币',img:'/static/image/assets/1.png',},
+			  {name:'提币',img:'/static/image/assets/2.png',},
+			  {name:'闪兑',img:'/static/image/assets/3.png',},
+		],
 		keyong: '可用',
 		dongjie: '冻结'
 
@@ -1691,7 +1695,28 @@ export default {
 			loading: '努力加载中',
 			nomore: '实在没有了'
 		},
+		beizhu:{
+			zyts:'重要提示',
+			shuomingwenzi1:'.说明文字，待改请勿向上述地址充值任何非USDT-ERC20资\n' + '产，否则资产将不可找回。',
+			shuomingwenzi2:'.若您已充币完成，请在页面中点击“我己充币”按钮，提交回执，否则充币无法上帐。',
+			shuomingwenzi3:'.USDT充币仅支持simple send的方法，使用其它方法(sendall)的充币暂时无法上帐，请您谅解。',
+			shuomingwenzi4:'.您充值至上述地址后，需要整个网络节点的确认后方可到账。',
+			shuomingwenzi5:'.请务必确认电脑及浏览器安全，防止信息被篡改或泄露。',
+			shuomingwenzi6:'.以上充币地址为平台官方收款地址，请认准平台官方充币地\n' + '址，误充造成资金损失需自行承担；',
 
+		},
+			qxzczbz: '请选择充值币种',
+			cztd: '充值通道',
+			usdtcz: 'USDT充值',
+			btccz: 'BTC充值',
+			ethcz: 'ETH充值',
+			gfcztd: '官方充值通道',
+			fkpz:'付款凭证（上传支付详情截图）',
+			lmc:'链名称',
+			cbsl:'充币数量',
+			zcdz:'转出地址（选填）',
+			fzdz:'复制地址',
+			bcewm:'保存二维码',
 	},
 	edtUser: {
 		zhxx: '账户信息',
@@ -1991,14 +2016,14 @@ export default {
 		zxkf: '提交提币申请后12h内到账，如预计提币时间后未到账请咨询在线客服。',
 		tx: '提现'
 	},
-	recharge: {
-		qxzczbz: '请选择充值币种',
-		cztd: '充值通道',
-		usdtcz: 'USDT充值',
-		btccz: 'BTC充值',
-		ethcz: 'ETH充值',
-		gfcztd: '官方充值通道'
-	},
+	// recharge: {
+	// 	qxzczbz: '请选择充值币种',
+	// 	cztd: '充值通道',
+	// 	usdtcz: 'USDT充值',
+	// 	btccz: 'BTC充值',
+	// 	ethcz: 'ETH充值',
+	// 	gfcztd: '官方充值通道'
+	// },
 	fundRule: {
 		gz: '规则',
 		lcgz: '理财规则',

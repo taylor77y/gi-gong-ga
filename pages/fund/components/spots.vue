@@ -2,7 +2,7 @@
 	<view class="overflow-box">
 		<view class="total d-flex-between-center">
 			<view class="t-left">
-        <text style="font-size: 30rpx"> Total assets (USDT)</text>
+        <text style="font-size: 30rpx"> {{ i18n.zzc}}</text>
 				<view class="left1" v-if="isInput" @click="getImg()">
 					<image referrerpolicy="no-referrer" src="/static/image/my/2.png" />
 				</view>
@@ -17,11 +17,12 @@
 
 		<view class="money">
 <!--			{{ isInput ? '******':usdtPrice | SubString(5) }}-->
-      {{ !isInput ? ' 999 ' : '*********' }}
+      {{ !isInput ? walletResult.cnyPrice : '*********' }}
 		</view>
 		<view class="zhehe">
 <!--			{{ setRate.mark }}{{ isInput ? '******':usdtPrice * setRate.rate | SubString(5) }}-->
-      {{ !isInput ? '≈ $ 99 ' : '*********' }}
+<!--      {{ !isInput ? '≈ $ 99 ' : '*********' }}-->
+      {{ !isInput ? '≈ $  ' + walletResult.usdtPrice : '*********' }}
 		</view>
 
     <!-- 注册-->
@@ -83,20 +84,19 @@
 			},
 			usdtPrice:{
 				type: Number,
-				default: 999.99
+				default: 0.00
 			},
 		},
 		data() {
 			return {
-        btnInfo: [
-          {name:'Deposit',img:'/static/image/assets/1.png',},
-          {name:'Withdraw',img:'/static/image/assets/2.png',},
-          {name:'Exchange',img:'/static/image/assets/3.png',},
-        ],
+        walletResult: {},//钱包
 				isInput: false,
 				list: []
 			}
 		},
+    created(){
+      this.getBalances()
+    },
 		computed: {
 			i18n() {
 				return this.$t("assets")
@@ -126,16 +126,31 @@
 				}]
 				
 			},
-			// btnInfo() {
-			// 	return this.i18n.btnInfo
-			// }
+			btnInfo() {
+				return this.i18n.btnInfo
+			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+      //钱包
+      getBalances() {
+        let member = uni.getStorageSync('userId')
+        this.$u.api.user.getBalanceList(member).then(res => {
+          this.walletResult = res.result
+          // let leftCurrency = ''
+          // let nowAmount = ''
+          // res.result.balances.map(item => {
+          //   if (item.currency === leftCurrency) {
+          //     nowAmount = item.assetsBalance;
+          //   }
+          // })
+        })
+      },
+
+
 			toPage(){
-					  console.log('点击了')
 					  uni.navigateTo({
 					  	url:'/pages/exchangeHistory/exchangeHistory'
 					  })

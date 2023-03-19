@@ -2,7 +2,7 @@
   <view class="overflow-box">
     <view class="total d-flex-between-center">
       <view class="t-left">
-       <text style="font-size: 30rpx"> Total assets (USDT)</text>
+       <text style="font-size: 30rpx">{{ i18n.zzc}}</text>
         <view class="left1" v-if="!isInput" @click="getImg()">
           <image referrerpolicy="no-referrer" src="/static/image/my/2.png"/>
         </view>
@@ -15,18 +15,18 @@
       </view>
     </view>
     <view class="money">
-      {{ isInput ? assetsAmount : '*********' }}
+      {{ isInput ? walletResult.cnyPrice : '*********' }}
     </view>
     <view class="zhehe">
-      {{ isInput ? '≈ $ 99 ' : '*********' }}
+      {{ isInput ? '≈ $  ' + walletResult.usdtPrice : '*********' }}
 <!--      <image referrerpolicy="no-referrer" src="/static/image/my/4.png"/>-->
     </view>
 <!--    <view class="a-img">-->
 <!--      <image referrerpolicy="no-referrer" src="/static/image/my/5.png"/>-->
 <!--    </view>-->
-    <view class="tips" v-if="!assetsAmount">
-      您的账户内尚无资产。立即充值或购买，获得您的第一笔 数字资产。
-    </view>
+<!--    <view class="tips" v-if="walletResult.cnyPrice !== 0">-->
+<!--      您的账户内尚无资产。立即充值或购买，获得您的第一笔 数字资产。-->
+<!--    </view>-->
 <!--    <view class="ly-produts">-->
 <!--      <view class="ly-produts__list">-->
 <!--        <view class="ly-produts__item">-->
@@ -44,7 +44,7 @@
 <!--      </view>-->
 <!--    </view>-->
 
-<!-- 注册-->
+<!-- 充值-->
     <view class="other-box">
       <view class="item" @click="getPath(index)" v-for="(item, index) in btnInfo" :key="index">
         <image :src="item.img"></image>
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import {u} from "caniuse-lite/data/browserVersions";
+
 export default {
   props: {
     title: {
@@ -82,80 +84,43 @@ export default {
   },
   data() {
     return {
-      btnInfo: [
-        {name:'Deposit',img:'/static/image/assets/1.png',},
-        {name:'Withdraw',img:'/static/image/assets/2.png',},
-        {name:'Exchange',img:'/static/image/assets/3.png',},
-      ],
-      assetsAmount: 9999, //资产金额
+      walletResult: {},//钱包
       isInput: true,
       listFn: [{
         name: 'Spot',
         img: '/static/image/my/8.png',
         path: '',
         val: '0 ',
-		rate:'0.00',
+		    rate:'0.00',
       },
         {
           name: 'Contract',
           img: '/static/image/my/9.png',
           path: '',
           val: '0 ',
-		  rate:'0.00',
+		      rate:'0.00',
         },
         {
           name: 'Delivery contract account',
           img: '/static/image/my/10.png',
           path: '',
           val: '0 ',
-		  rate:'0.00',
+		      rate:'0.00',
         },
         {
           name: 'Financial account）',
           img: '/static/image/my/11.png',
           path: '',
           val: '0 ',
-		  rate:'0.00',
+		      rate:'0.00',
         },
         {
           name: 'Miner assets',
           img: '/static/image/my/12.png',
           path: '',
           val: '0 ',
-		    rate:'0.00',
+          rate:'0.00',
         },
-        // {
-        //   name: '合约账户（币本位）',
-        //   img: '/static/image/my/13.png',
-        //   path: '',
-        //   val: '0 USDT'
-        // },
-        // {
-        //   name: '理财账户',
-        //   img: '/static/image/my/14.png',
-        //   path: '',
-        //   val: '0 USDT',
-        //   code: true
-        // },
-        // {
-        //   name: '期权账户',
-        //   img: '/static/image/my/15.png',
-        //   path: '',
-        //   val: '0 USDT'
-        // },
-        // {
-        //   name: 'DeFi钱包',
-        //   img: '/static/image/my/16.png',
-        //   path: '',
-        //   val: '0 USDT',
-        //   code: true
-        // },
-        // {
-        //   name: '第三方钱包',
-        //   img: '/static/image/my/16.png',
-        //   path: '',
-        //   val: '0 USDT'
-        // }
       ]
     }
   },
@@ -163,14 +128,37 @@ export default {
     i18n() {
       return this.$t("assets")
     },
-    // btnInfo() {
-    //   return this.i18n.btnInfo
-    // }
+    btnInfo() {
+      return this.i18n.btnInfo
+    }
   },
-  onLoad() {
-
+  created(){
+    this.getBalances()
+    // this.getPortfolio()
   },
   methods: {
+    //投资
+    // getPortfolio(){
+    //   this.$u.api.wallet.getPortfolio().then(res=>{
+    //     console.info("🇨🇳🇨🇳:res --", res)
+    //   })
+    // },
+    //钱包
+    getBalances() {
+      let member = uni.getStorageSync('userId')
+      this.$u.api.user.getBalanceList(member).then(res => {
+        this.walletResult = res.result
+
+        // let leftCurrency = ''
+        // let nowAmount = ''
+        // res.result.balances.map(item => {
+        //   if (item.currency === leftCurrency) {
+        //     nowAmount = item.assetsBalance;
+        //   }
+        // })
+      })
+    },
+
     getPath(index) {
       // if (index === 0) {
       //   this.getRechargeMethod() //后续判断 是否有登录
