@@ -42,7 +42,7 @@
 			<view class="right">24h{{ i18n.zdf }}</view>
 		</view>
 		<!-- <home-list :list="bList" :state="0" :curType="cur" /> -->
-		<home-list :list="coinList" :state="0" :curType="cur" />
+		<home-list :list="coinList" :state="0" :curType="cur" :tabIndex="tabIndex" />
 		<!-- <view class="find-box">
 			<view class="left">
 				<find-title :list="findTitle" />
@@ -136,7 +136,8 @@
 				hasClickDown: false, //是否已经点击过下载,
 				timer: null,
 				coinList:[],
-				coinListT:[]
+				coinListT:[],
+				tabIndex:0
 			};
 		},
 
@@ -234,6 +235,7 @@
 				})
 			},
 			getCode(index) {
+				this.tabIndex = index
 				switch (index) {
 					case 0:
 						this.getBList("UPDOWN");

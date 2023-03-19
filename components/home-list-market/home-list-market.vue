@@ -64,7 +64,7 @@
 		watch: {
 			list(val){
 				this.renderList = val.concat()
-				// console.log('tabIndex',this.tabIndex)
+				console.log('tabIndex',this.tabIndex)
 				this.sortList()
 			},
 			tabIndex(val) {
@@ -101,7 +101,6 @@
 						return v2.volume - v1.volume
 					})
 				}
-				this.renderList = this.renderList.slice(0,10)
 			},
 			getPath(name) {
 				uni.navigateTo({
