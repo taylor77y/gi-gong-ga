@@ -2,18 +2,19 @@
 	<view class="home-hot-list">
 		<view class="title">
 			{{ title }}
+			
 		</view>
 		<view class="like-list">
-			<view class="like-list-item" @click="getPathDet(item.name)" v-for="(item, index) in list" :key="index">
+			<view class="like-list-item" @click="getPathDet(item.pairsName)" v-for="(item, index) in list" :key="index">
 				<view class="d-flex-between-center f-title">
-					{{item.name}}
+					{{item.pairsName}} <image :src=" baseUrl + item.image" />
 				</view>
-				<view class="rate1">{{item.change_ratio}}%</view>
+				<view :class="item.updown < 0 ? 'rate1' :'rate' ">{{item.updown*100|SubString(2)}}%</view>
 				<view class="money">
-					{{item.close}}
+					{{item.price|SubString(4)}}
 				</view>
 				<view class="equivalent">
-					{{ setRate.mark }} {{item.close}}
+					{{ setRate.mark }} {{item.price * setRate.rate |SubString(4)}}
 				</view>
 			</view>
 		</view>
@@ -26,6 +27,7 @@
 			list: {
 				type: Array,
 				default: () => []
+				
 			},
 			title: {
 				type: [String, Number],

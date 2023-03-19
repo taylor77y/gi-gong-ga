@@ -5,7 +5,7 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
-		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
+		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/",
 		// baseUrl: 'https://qcapi.obk3.com',
 		// baseUrl: 'http://wap.mxoexchange.vip/',
 		// 如果将此值设置为true，拦截回调中将会返回服务端返回的所有数据response，而不是response.data
@@ -19,11 +19,11 @@ const install = (Vue, vm) => {
 	});
 	 // 上传图片路径
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
-	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/")
+	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
 	// 客服连接地址
 	uni.setStorageSync('wssURL', 'ws://qcim.obk3.com/service/message/')
 	// 图片拼接路径
-
+	
 	// uni.setStorageSync('domainPay', 'http://oss.obk3.com/')
 	// uni.setStorageSync('ossUrl','http://wap.mxoexchange.vip/')
 	uni.setStorageSync('ossUrl','https://db23app.vip/wap/api')
