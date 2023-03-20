@@ -19,12 +19,12 @@
       <text class="text_1">{{i18n.aqbd}}</text>
     </view>
 
-    <vie class="qrCode">
+    <view class="qrCode">
       <view class="imageBox">
 <!--       <view class="image">二维码</view>-->
         <image @click="cancel()" class="image" referrerpolicy="no-referrer"  :src="src" />
       </view>
-    </vie>
+    </view>
 
     <!--地址 备注-->
     <view class="remarks">

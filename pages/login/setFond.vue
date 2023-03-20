@@ -3,7 +3,7 @@
 		<view class="out">
 			<view style="display: flex; justify-content: space-between;">
 				<u-icon  class="left" name="arrow-left" size="30" @click="back" ></u-icon>
-				<text class=""  @click="skip()" style="margin-right: 90rpx;">{{i18n.tg}}</text>
+				<text class=""  @click="skip()" style="margin-right: 60rpx;">{{i18n.tg}}</text>
 			</view>
 		</view>
 		<text class="text_1" style="margin-bottom: 10%;">{{i18n.szzjmm}}</text>
@@ -30,7 +30,7 @@
 			<text class="text_2" v-text="i18n.mm"></text>
 			<view v-if="!showPhone" class="login-input" :class="{'f-border': verificationCode}">
 				<!-- <input :placeholder="i18n.zjmm" placeholder-style="color: #999" v-model="userName" class="inputCum"/> -->
-				<u-input :placeholder="i18n.zjmm" v-model="userName" type="password" ></u-input>
+				<u-input :placeholder="i18n.zjmm" v-model="userName" type="password"></u-input>
 			</view>
 
 			<view v-else class="login-input" :class="{'f-border': verificationCode}">
@@ -43,18 +43,15 @@
 				<input  :placeholder="inputTag" placeholder-style="color: #999" v-model="userName" class="inputCum" />
 			</view>
 
-			<text class="text_2" v-text="i18n.qrmm"></text>
+			<text class="text_2" v-text="i18n.qrmm"  style="margin-top: 20r;"></text>
 			<view class="login-input" :class="{'f-border': verificationCode}">
-                 <u-input :placeholder="i18n.qsrmm" v-model="password" type="password"></u-input>
+                 <u-input :placeholder="i18n.qsrmm" v-model="password" type="password" style="size:20rpx"></u-input>
 				<!-- <input :placeholder="i18n.qsrmm" placeholder-style="color: #999" type="password" v-model="password"
 					class="inputCum" /> -->
 			</view>
-			<button style="background: #2c78ff;" class="button_1 f-flex-center flex-col" @click="nextStep()">
+			<button style="background: #2c78ff;" class="button_1" @click="nextStep()" type="primary">
 				<text style="color: #f5f5f5;" class="text_6">{{i18n.qr}}</text>
 			</button>
-            
-
-
 		</view>
 
 		<!--    <image
