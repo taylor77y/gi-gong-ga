@@ -161,7 +161,10 @@ const install = (Vue, vm) => {
 		// 邮箱校验
 		checkSmsCode: (phMail, code, type) => vm.$u.post(`/member/member/checkSmsCode?phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}`),
 		//实名认证
-		setAuthenWithArea: (member,areaCode,name,cardNo) => vm.$u.post(`/member/setAuthenWithArea?member=${member}&areaCode=${areaCode}&name=${name}&cardNo=${cardNo}`),
+		setAuthenWithArea: (member,areaCode,sideFile,cardNo) => vm.$u.post(`/member/member/setAuthenWithArea?member=${member}&areaCode=${areaCode}&name=${name}&cardNo=${cardNo}`),
+		//上传证件图片
+		setCardImg: (member,positiveFile,sideFile,handLink) => vm.$u.post(`/member/setCardImg?member=${member}&positiveFile=${positiveFile}&sideFile=${sideFile}&handLink=${handLink}`),
+		
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息

@@ -109,6 +109,9 @@
 			});
 			return ;  
 		  }
+		  this.$u.api.user.checkSmsCode(phMail,code,type).then(res=>{
+			  console.log(res);
+		  })
 		  uni.navigateTo({
 		  	url:'/pages/login/finish'
 		  })

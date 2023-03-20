@@ -115,7 +115,7 @@
 				}],
 				//国籍
 				national: '美国',
-				nationalnum:'',
+				nationalnum:'1',
 				//真实姓名
 				realName: '',
 				// 护照号码
@@ -212,10 +212,20 @@
 					name :this.realName,
 					cardNo :this.number,
 				}
-				console.log(member)
+				//console.log(member)
+				//上传 国籍 真实姓名 证件号码
 				this.$u.api.user.setAuthenWithArea(member,this.nationalnum,this.realName,this.number).then(res=>{
 					console.log(res);
 				})
+				//上传照片
+				// console.log(member,files[0],files[1],files[2]);
+				// let positiveFile = new FileReader(files[0])
+				// console.log(positiveFile)
+				
+				// this.$u.api.user.setCardImg(member,files[0],files[1],files[2]).then(res=>{
+				// 	console.log(res);
+				// })
+
 				//跳转
 				uni.navigateTo({
 					url:'/pages/login/gooleVerify'
