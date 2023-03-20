@@ -147,7 +147,6 @@
 				newTimer: null,
 				min: 60,
 				timeCode: true,
-				verification: '',
 				numList: [{
 					name: this.$t('member').zhzc
 				}, {
