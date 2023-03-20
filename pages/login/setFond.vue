@@ -8,24 +8,7 @@
 		</view>
 		<text class="text_1" style="margin-bottom: 10%;">{{i18n.szzjmm}}</text>
 
-		<!-- <text class="text_2" v-text="loginTypeText"></text> -->
-		<!-- <view class="login-input" :class="{'f-border': verificationCode}">
-		<view @click="getAreaCode()" v-if="!emailCode">
-		 
-		 <text class="">+{{ countryCode }}</text>
-		 <image
-		   referrerpolicy="no-referrer"
-		   src="/static/lanhu_denglu/ps04twdt13087chpihojawqbuipb5dvmfz1068353f9-a9e8-4434-9048-6cb91bdf69d9.png"
-		 />
-		 </view>
-		 <input :placeholder="i18n.qsryxsjh" placeholder-style="color: #999" v-model="userName" class="f-input"/>
-		 
-	</view>
-    <text class="text_5" v-if="verificationCode">{{i18n.wzdbazh}}</text>
-    <button class="button_1 f-flex-center flex-col" @click="nextStep()">
-      <text class="text_6">{{i18n.xyb}}</text>
-    </button> -->
-		<view style="height: 200%;">
+    <view style="height: 200%;">
 
 			<text class="text_2" v-text="i18n.mm"></text>
 			<view v-if="!showPhone" class="login-input" :class="{'f-border': verificationCode}">
@@ -45,47 +28,13 @@
 
 			<text class="text_2" v-text="i18n.qrmm" style="margin-top: 20r;"></text>
 			<view class="login-input" :class="{'f-border': verificationCode}">
-				<u-input :placeholder="i18n.qsrmm" v-model="password" type="password" style="size:20rpx"></u-input>
-				<!-- <input :placeholder="i18n.qsrmm" placeholder-style="color: #999" type="password" v-model="password"
-					class="inputCum" /> -->
+        <u-input :placeholder="i18n.qsrmm" v-model="password" type="password" style="size:20rpx"></u-input>
 			</view>
+
 			<button style="background: #2c78ff;" class="button_1" @click="nextStep()" type="primary">
 				<text style="color: #f5f5f5;" class="text_6">{{i18n.qr}}</text>
 			</button>
 		</view>
-
-		<!--    <image
-      class="image_1"
-      referrerpolicy="no-referrer"
-      src="/static/lanhu_denglu/psnfqsm0fdtwwg8jiqrldqltzbi1pje2532456e3-3832-41a9-858f-25ef095cd967.png" -->
-		<!-- /> -->
-		<!-- <button class="button_2 flex-col" @click="onClick_2">
-      <view class="image-text_1 flex-row justify-between">
-        <image
-          class="label_1"
-          referrerpolicy="no-referrer"
-          src="/static/lanhu_denglu/psyctf1zbje21yzzf5s14l2zk88qnnzgen95ebccf2-00e9-4b0b-a585-9ef7485ad7c0.png"
-        />
-        <text class="text-group_1">通过Google继续</text>
-      </view>
-    </button>
-    <button class="button_3 flex-col" @click="onClick_3">
-      <image
-        class="icon_3"
-        referrerpolicy="no-referrer"
-        src="/static/lanhu_denglu/ps86urj9cg9j6wooljvz84fbave115ipe30a78ceb-f738-48f7-9864-25685405c0c4.png"
-      />
-      <text class="text_7">通过Apple继续</text>
-    </button> -->
-		<!-- <text class="text_8" @click="getPath()">
-	{{i18n.cjygbazh}}
-	<text style="margin-left: auto">忘记密码</text>
-	</text> -->
-		<!-- <view class="text_8"> -->
-		<!-- <text @click="getPath(1)"> {{i18n.cjygbazh}}</text> -->
-		<!-- <text style="margin-left: auto" @click="getPath(2)">{{ $t('common').forgetPassword }}</text> -->
-		<!-- </view> -->
-		<!-- <text class="text_9">或者</text> -->
 	</view>
 </template>
 <script>
@@ -283,10 +232,6 @@
 	/* *{
 		border: 1px solid red;
 	} */
-
-	.button_1 {
-		width: 100%;
-	}
 
 	.out {
 		margin-top: 30rpx;

@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<view class="mgt20">	
+		<view class="mgt20">
 		</view>
 		<u-row gutter="16" justify="justify-between" class="header">
 			<u-col span="10">
@@ -124,7 +124,7 @@
 				keyword:'',
 				// 证件正面
 				fromfront:[],
-				
+
 				sc:[],
 				value:'美国',
 				valuecode:'',
@@ -192,11 +192,11 @@
 				if(this.$refs.fm.lists.length>0){
 					files.push(this.$refs.fm.lists[0].url);
 				}
-				
+
 				if(this.$refs.hc.lists.length>0){
 					files.push(this.$refs.hc.lists[0].url);
 				}
-				
+
 				if(files.length < 3){
 					uni.showToast({
 						icon:'none',
@@ -221,7 +221,7 @@
 				// console.log(member,files[0],files[1],files[2]);
 				// let positiveFile = new FileReader(files[0])
 				// console.log(positiveFile)
-				
+
 				// this.$u.api.user.setCardImg(member,files[0],files[1],files[2]).then(res=>{
 				// 	console.log(res);
 				// })
@@ -230,6 +230,7 @@
 				uni.navigateTo({
 					url:'/pages/login/gooleVerify'
 				})
+
 			},
 			next(){
 				uni.navigateTo({
@@ -260,7 +261,7 @@
 	.mgt20{
 		margin-top: 40rpx;
 	}
-	
+
 	.pop{
 		margin: 40rpx 20rpx 0 20rpx;
 		display: flex;
