@@ -6,7 +6,7 @@
 			<u-col span="10">
 				<u-icon name="arrow-left" size="30" @click="back"></u-icon>
 			</u-col>
-			<u-col span="2" class="right-col">
+			<u-col span="2" class="right-col" @click="next">
 				<text>跳过</text>
 			</u-col>
 		</u-row>
@@ -91,7 +91,7 @@
 				</view>
 			</view>
 			<view class="item mt-50">
-				<u-button type="primary" @click="next">下一步</u-button>
+				<u-button type="primary" @click="nextup">下一步</u-button>
 			</view>
 		</view>
 	</view>
@@ -112,8 +112,11 @@
 					}, {
 						name: this.$t('member').qjy
 				}],
+				//国籍
 				national: '',
+				//真实姓名
 				realName: '',
+				// 护照号码
 				number:'',
 				//国籍下拉列表数据
 				keyword:'',
@@ -154,10 +157,14 @@
 					item.text.indexOf(e) != -1
 				)
 			},
-			clearInput() {
-				
+			// 下一步
+			nextup(){
+				console.log();
 			},
-			next() {
+			next(){
+				console.log(111);
+			},
+			clearInput() {
 				
 			},
 			back() {
