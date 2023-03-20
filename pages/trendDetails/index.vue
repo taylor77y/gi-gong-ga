@@ -44,10 +44,10 @@
 		</u-popup>
 		<u-row :gutter="16" justify="space-between" class="tab">
 			<u-col span="6" @click="activetedTab='0'">
-				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '0'}">{{i18n.yxhy}}</view>
+				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '0'}">{{i18n.jghy}}</view>
 			</u-col>
-			<u-col span="6" @click="activetedTab='1'">
-				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '1'}">{{i18n.jghy}}</view>
+			<u-col span="6" @click="jumpToEternity">
+				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '1'}">{{i18n.yxhy}}</view>
 			</u-col>
 		</u-row>
 
@@ -279,8 +279,16 @@
 			this.getSocketData()
 		},
 		methods: {
+      //跳转永续
+      jumpToEternity(){
+        this.activetedTab='1'
+        uni.navigateTo({
+              // url: `/pages/financial/delivery`
+          url:`/pages/financial/index`
+            })
+      },
 			// 获取类型的币值 实时数据
-			async getRealtime() {
+			async getRealtime(symbol) {
 				this.$u.throttle(async () => {
 					const {
 						code,
@@ -292,7 +300,9 @@
 				}, 2000)
 			},
 			turnBack() {
-				uni.navigateBack()
+				uni.navigateTo({
+					url: '/pages/financial/index'
+				})
 			},
 			turnTo() {
 				uni.navigateTo({

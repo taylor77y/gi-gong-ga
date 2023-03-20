@@ -1,12 +1,13 @@
 <template>
 	<view class="page">
-		<view class="">	
+		<view class="mgt20">
 		</view>
 		<u-row gutter="16" justify="justify-between" class="header">
 			<u-col span="10">
-				<u-icon name="arrow-left" size="30" @click="back"></u-icon>
+				<image @click="back()" class="icon_1" referrerpolicy="no-referrer"
+					src="/static/lanhu_zhuce2/psp7pfts61abml9bqfww31ud54m8lwlnff9c1d27e1-8110-48ab-824d-24b76b7c6231.png" />
 			</u-col>
-			<u-col span="2" class="right-col">
+			<u-col span="2" class="right-col" @click="next">
 				<text>跳过</text>
 			</u-col>
 		</u-row>
@@ -24,7 +25,7 @@
 				</view>
 				<u-search placeholder="请输入需要搜索的国家名称" v-model="keyword" shape="square" :show-action="false" @change="search"></u-search>
 				<view v-for="(item,index) in actionSheetList" :key="index">
-					<view class="pop" @click="country(item.text)">
+					<view class="pop" @click="country(item.text,item.num)">
 						<text>{{ item.text }}</text>
 						<text>{{ item.num }}</text>
 					</view>
@@ -40,7 +41,7 @@
 				<view class="input mt-20">
 					<!-- <u-input  v-model="value" :type="type" :border="false" @click="show = true" class="input-align"/>
 					<u-action-sheet :list="actionSheetList" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
-					<u-input v-model="national" :clearable="true" placeholder="美国" placeholder-style="color: #868c9a;" class="uni-input"  @click="show = true"/>
+					<u-input v-model="national" :clearable="true"  placeholder-style="color: #868c9a;" class="uni-input"  @click="show = true"/>
  			</view>
 			</view>
 			<view class="iteeem mt-50">
@@ -59,7 +60,7 @@
 				<view class="label">证件照/上传护照</view>
 				<u-row gutter="16" justify="space-between" class="mt-20">
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload">
+						<u-upload max-count="1" :custom-btn="true" class="upload" ref='zm'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
@@ -67,7 +68,7 @@
 						<view class="label mt-10 u-margin-left-38">证件正面</view>
 					</u-col>
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload">
+						<u-upload max-count="1" :custom-btn="true" class="upload" ref='fm'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
@@ -75,7 +76,7 @@
 						<view class="label mt-10 u-margin-left-40">证件反面</view>
 					</u-col>
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload">
+						<u-upload max-count="1" :custom-btn="true" class="upload" ref='hc'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
@@ -91,7 +92,7 @@
 				</view>
 			</view>
 			<view class="item mt-50">
-				<u-button type="primary" @click="next">下一步</u-button>
+				<u-button type="primary" @click="nextup">下一步</u-button>
 			</view>
 		</view>
 	</view>
@@ -112,13 +113,21 @@
 					}, {
 						name: this.$t('member').qjy
 				}],
-				national: '',
+				//国籍
+				national: '美国',
+				nationalnum:'1',
+				//真实姓名
 				realName: '',
+				// 护照号码
 				number:'',
 				//国籍下拉列表数据
 				keyword:'',
+				// 证件正面
+				fromfront:[],
+
 				sc:[],
 				value:'美国',
+				valuecode:'',
 				type:'select',
 				show: false,
 				actionSheetList:[],
@@ -138,8 +147,10 @@
 		},
 		methods:{
 			// 选择输入框赋值
-			country(v){
+			country(v,t){
+				console.log(v,t)
 				this.national = v;
+				this.nationalnum = t;
 				this.show = false;
 			},
 			// 关闭弹出框
@@ -154,10 +165,79 @@
 					item.text.indexOf(e) != -1
 				)
 			},
-			clearInput() {
-				
+			// 下一步
+			nextup(){
+			// 校验
+				// 姓名
+				if(!this.realName){
+					uni.showToast({
+						icon:'none',
+						title: '请输入姓名',
+					});
+					return ;
+				}else if(!this.number){
+					uni.showToast({
+						icon:'none',
+						title: '请输入证件号码',
+					});
+					return ;
+				}
+				//验证3张照片是否全部上传
+				let files = [];
+				//console.log(this.$refs.fm.lists[0].url);
+				//验证正面
+				if(this.$refs.zm.lists.length>0){
+					files.push(this.$refs.zm.lists[0].url);
+				}
+				if(this.$refs.fm.lists.length>0){
+					files.push(this.$refs.fm.lists[0].url);
+				}
+
+				if(this.$refs.hc.lists.length>0){
+					files.push(this.$refs.hc.lists[0].url);
+				}
+
+				if(files.length < 3){
+					uni.showToast({
+						icon:'none',
+						title: '请上传完整证件信息',
+					});
+					return ;
+				}
+				//上传数据
+				let member = uni.getStorageSync("userId");
+				const setAu = {
+					member,
+					areaCode :this.nationalnum,
+					name :this.realName,
+					cardNo :this.number,
+				}
+				//console.log(member)
+				//上传 国籍 真实姓名 证件号码
+				this.$u.api.user.setAuthenWithArea(member,this.nationalnum,this.realName,this.number).then(res=>{
+					console.log(res);
+				})
+				//上传照片
+				// console.log(member,files[0],files[1],files[2]);
+				// let positiveFile = new FileReader(files[0])
+				// console.log(positiveFile)
+
+				// this.$u.api.user.setCardImg(member,files[0],files[1],files[2]).then(res=>{
+				// 	console.log(res);
+				// })
+
+				//跳转
+				uni.navigateTo({
+					url:'/pages/login/gooleVerify'
+				})
+
 			},
-			next() {
+			next(){
+				uni.navigateTo({
+					url:'/pages/login/gooleVerify'
+				})
+			},
+			clearInput() {
 				
 			},
 			back() {
@@ -173,6 +253,15 @@
 </script>
 
 <style lang="scss" scoped>
+	image {
+		width: 40rpx;
+		height: 30rpx;
+		margin-left: 40rpx;
+	}
+	.mgt20{
+		margin-top: 40rpx;
+	}
+
 	.pop{
 		margin: 40rpx 20rpx 0 20rpx;
 		display: flex;

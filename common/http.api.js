@@ -9,7 +9,9 @@ const install = (Vue, vm) => {
 	const wantBuy = {
 		// language 语言
 		getC2cPaymentMethod: (language='en') => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!method_type.action?language=${language}`),
+		c2cPaymentMethodList: (language='en', token) => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!list.action?language=${language}&token=${token}`),
 		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`https://db23app.vip/wap/api/c2cAdvert!list.action?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
+		c2cPaymentMethod:(param={}) => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
 	}
 	
 	
@@ -145,15 +147,20 @@ const install = (Vue, vm) => {
 		//设置登录密码
 		resetPassword: (member,oldPass,newPass) => vm.$u.post(`/member/member/resetPassword?member=${member}&oldPass=${oldPass}&newPass=${newPass}`),
 		//设置支付密码
-		resetPayPass: (member,oldPass,password) => vm.$u.post(`/member/member/resetPayPass?member=${member}&oldPass=${oldPass}&password=${password}`),
-		//邮箱发送
+		// resetPayPass: (member,oldPass,password) => vm.$u.post(`/member/member/resetPayPass?member=${member}&oldPass=${oldPass}&password=${password}`),
+		// //邮箱发送
+		setPayPass: (member,password) => vm.$u.post(`/member/member/resetPayPassFirst?member=${member}&password=${password}`),
 		sendMail: (mailbox, type) => vm.$u.post(`/data/sms/sendMail?mailbox=${mailbox}&type=${type ? type:'SETPHMAIL'}`),
 		// 手机信息发送
 		sendPhone: (mailbox, member) => vm.$u.post(`/data/sms/sendSmsNew?phone=${mailbox}&type=PHONEYANZEN&member=${member ? member: ''}`),
 
 		// 邮箱校验
 		checkSmsCode: (phMail, code, type) => vm.$u.post(`/member/member/checkSmsCode?phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}`),
-
+		//实名认证
+		setAuthenWithArea: (member,areaCode,sideFile,cardNo) => vm.$u.post(`/member/member/setAuthenWithArea?member=${member}&areaCode=${areaCode}&name=${name}&cardNo=${cardNo}`),
+		//上传证件图片
+		setCardImg: (member,positiveFile,sideFile,handLink) => vm.$u.post(`/member/setCardImg?member=${member}&positiveFile=${positiveFile}&sideFile=${sideFile}&handLink=${handLink}`),
+		
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息

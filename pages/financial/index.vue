@@ -23,6 +23,11 @@
 				</view>
 			</view>
 		</view>
+<!--  切换仓库-->
+    <view class="warehouse">
+      <u-subsection :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%" ></u-subsection>
+    </view>
+
 		<view class="x-box">
 			<view class="fee-box">
 				<view @click="showBond = true" class="left-selset d-flex-between-center">
@@ -46,7 +51,7 @@
 					</view>
 				</view> -->
 			</view>
-			<view class="d-flex-between-center">
+			<view class="d-flex-between-center" v-if="cuBond == 0 || cuBond == 1">
 				<view class="left">
 					<view class="d-flex-between-center">
 						<view>{{ i18n.shuliang }}</view>
@@ -80,21 +85,21 @@
 				<view class="right">
 					<view class="r-img" v-if="!sellState">
 						<view class="l-sell">
-							{{ cuBond === 0 ? i18n.kaiduo:i18n.pingduo }}
+							{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
 						</view>
 
 						<view class="r-sell" @click="sellState = true">
-							{{ cuBond === 0 ? i18n.kaikong:i18n.pingkong }}
+							{{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
 						</view>
 
 					</view>
 					<view class="r-img" v-else>
 						<view class="l-sell1" @click="sellState = false">
-							{{ cuBond === 0 ? i18n.kaiduo:i18n.pingduo }}
+							{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
 						</view>
 
 						<view class="r-sell1">
-							{{ cuBond === 0 ? i18n.kaikong:i18n.pingkong }}
+							{{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
 						</view>
 
 					</view>
@@ -194,11 +199,11 @@
 
 					<view class="f-btn" :class="{'f-btn1': sellState}" @click="sub()">
 						<text v-if="sellState">
-							{{ cuBond === 0 ? i18n.kaikong:i18n.pingkong }}
+							{{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
 
 						</text>
 						<text v-else>
-							{{ cuBond === 0 ? i18n.kaiduo:i18n.pingduo }}
+							{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
 						</text>
 					</view>
 				</view>
@@ -216,7 +221,8 @@
 			</view>
 		</view>
 		<view class="yx-title">
-			<view>{{ i18n.cclb }}</view>
+<!--			<view>{{ i18n.cclb }}</view>-->
+      <view></view>
 			<view class="right" @click="isPosition = true">{{ i18n.yjpc }}</view>
 		</view>
 		<view v-if="current === 0">
@@ -392,6 +398,10 @@
 
 		},
 		methods: {
+      //切换开仓
+      sectionChange(i){
+        this.cuBond = i
+      },
 			//撤单
 			chedan(item) {
 				console.log(item,'我是永续撤单--------')
@@ -517,7 +527,7 @@
 						currentGangganType = item.lever
 					}
 				})
-				console.log(this.pairsItem)
+				console.log(this.pairsItem,'this.pairsItem')
 				const {
 					pairsName,
 					tokenCur,
@@ -773,7 +783,8 @@
 			getTopBtn(index) {
 				if (index === 0) {
 					uni.navigateTo({
-						url: `/pages/financial/delivery`
+						// url: `/pages/financial/delivery`
+						url: `/pages/trendDetails/index`
 					})
 				} 
 				// else {
@@ -803,7 +814,10 @@
 			},
 			topName() {
 				return this.i18n.topName
-			}
+			},
+      warehouse(){
+        return this.i18n.warehouse
+      }
 		}
 
 	}
@@ -1217,12 +1231,12 @@
 		.top-btn {
 			margin: 0 24rpx;
 			border: 1rpx solid #B0B3BA;
-			border-radius: 6rpx;
+			border-radius: 15rpx;
 			display: flex;
 			align-items: center;
 			overflow-x: scroll;
 
-			padding: 0 30rpx;
+			//padding: 0 30rpx;
 
 			::-webkit-scrollbar {
 				display: none
@@ -1255,12 +1269,26 @@
 			.item1 {
 				position: relative;
 				color: #1F222B;
-				font-size: 26rpx;
+				font-size: 28rpx;
 				font-weight: 600;
 				border-radius: 6rpx;
-				padding: 10rpx 33rpx;
-				background: #fff;
+				padding: 10rpx 0;
+				//background: #fff;
+         border-radius: 25rpx;
+        background: #2c78f8;
+        color: #fff;
+        border: none;
 			}
 		}
+
+    .warehouse {
+      width: 100%;
+      //margin: 0 26rpx;
+      //border-radius: 6rpx;
+      display: flex;
+      align-items: center;
+      //overflow-x: scroll;
+      padding: 26rpx 30rpx;
+    }
 	}
 </style>

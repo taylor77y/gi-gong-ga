@@ -7,9 +7,14 @@
 		</view>
 		<view class="bi-title d-flex-between-center">
 			<view class="left" @click="showSpec = true">
-				<image src="../../static/image/new/1.png" /> {{pairsItem.pairsName}}
-				<text class="num">
-					{{pairsItem.updown*100|SubString(2)}}%
+				<image src="../../static/image/new/1.png" />
+				{{pairsItem.name}}
+				<!-- {{pairsItem.pairsName}} -->
+				<text class="num" :class="{'text-red': pairsItem.change_ratio < 0}">
+					<text v-show="pairsItem.change_ratio > 0 "> + </text>
+					<text v-show="pairsItem.change_ratio < 0 "> - </text>
+					{{ pairsItem.change_ratio }}%
+					<!-- {{pairsItem.updown*100|SubString(2)}}% -->
 				</text>
 			</view>
 			<view class="right" @click="getLine">
@@ -30,10 +35,12 @@
 				</view>
 				<right-area :max-buy="maxBuy" :code="0" :openup="buyData" />
 				<view class="money">
-					{{nowData.nowPrice}}
+					<!-- {{nowData.nowPrice}} -->
+					{{pairsItem.close}}
 				</view>
 				<view class="zhehe">
-					≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}
+					<!-- ≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }} -->
+					≈ {{ rate.mark }} {{ pairsItem.close * rate.rate |SubString(4) }}
 				</view>
 				<right-area :max-buy="maxSell" :code="1" :openup="sellData" />
 				<view class="d-flex align-items-center">
@@ -118,7 +125,7 @@
 				</view>
 				<view class="available d-flex-between-center">
 					<view>{{ i18n.ky }}</view>
-					<view style="color: #000;">{{kyPrice |SubString(5) }}{{ pairsItem.tokenCur }}</view>
+					<view style="color: #000;">{{kyPrice |SubString(5) }}{{ pairsItem.symbol | upperCase }}</view>
 				</view>
 				<view class="available d-flex-between-center">
 					<view>{{ $t('newFy').yiyou }}</view>
@@ -148,16 +155,17 @@
 		</view>
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
 		</u-action-sheet>
-		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
+		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo"  :coinList ='coinList' />
 		<tabar-com />
 	</view>
 </template>
 <script>
-	import th from '../../common/locales/th';
 	import socket from "../../common/ws/socket.js";
+	import { getData } from '@/common/hooks/socketData.js'
 	export default {
 		data() {
 			return {
+        coinList:[],//币种数据
 				list: [],
 				showSpec: false,
 				magnification: false, // 0.01 倍率
@@ -186,12 +194,12 @@
 				search: 0,
 				searchs: null,
 				search1: '',
-				btnCode: 0,
+				btnCode: 1,
 				pairs: [],
 				pairsItem: {},
 				usdtPrice: 0.00, // 已有
 				kyPrice: 0, // 可用
-				socket: new socket(),
+				socket: null,
 				entrustRecords: [],
 				buyData: [],
 				sellData: [],
@@ -215,20 +223,40 @@
 						val: '100%',
 						code: false
 					}
-				]
+				],
+				
+				interval: null,
+				interval1: null,
+				interval2: null,
+				rate: {},
 			};
 		},
+		created() {
+			// 获取 汇率
+			this.$u.api.fack.getCurrencyConfiguration().then(res=>{
+				this.rate = res.result[0]
+			})
+			
+			this.interval = setInterval(() => {
+				if(this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+				else this.getRealTimeOne();
+			}, 5000)
+		},
+		onReady() {},
 		onLoad() {},
 		onShow() {
+      this.btnCode = 1;
 			let member = uni.getStorageSync("userId") || '';
 			this.getPairsList();
-			// this.getBalances(member);
+			this.getBalances(member);
 			this.getNowList();
 			if (member) {
 				this.timer = setInterval(() => {
 					if (member) {
-						this.getPairsList();
-						// this.getBalances(member);
+						this.getRealtime()
+						
+						// this.getPairsList();
+						this.getBalances(member);
 						this.getNowList();
 					} else {
 						clearInterval(this.timer);
@@ -240,9 +268,24 @@
 			this.sellState = this.setSellCode === 1 ? false : true
 		},
 		beforeDestroy() {
-			this.socket.toClose();
+			if(this.socket)
+				this.socket.toClose();
+			this.socket = null;
+			
+			clearInterval(this.interval)
+			this.interval = null
+			clearInterval(this.interval2)
+			this.interval2 = null
 		},
 		watch: {
+			// 打开类型切换
+			showSpec(val) {
+				if(val == true) this.getRealtime();
+				else {
+					clearInterval(this.interval1)
+					this.interval1 = null
+				}
+			},
 			sellState() {
 				this.emptyFn()
 			},
@@ -256,7 +299,34 @@
 
 			}	
 		},
+		filters:{
+			upperCase(str) {
+				if(str)
+					return str.toLocaleUpperCase();
+			}
+		},
 		methods: {
+			// 获取类型的币值 实时数据
+			async getRealtime() {
+				this.$u.throttle(async () => {
+					const { code,	data } = await this.$u.api.trendDetails.getRealtime();
+					if (code == '0') {
+						this.pairs = data
+					}
+				}, 2000)
+			},
+			// 获取当前币值
+			async getRealTimeOne(symbol) {
+				const { code, data } = await this.$u.api.trendDetails.getRealtime(symbol);
+				if (code == '0') {
+					this.pairsItem = data[0]
+					if(!this.socket) {
+						this.socket = null
+						this.socketFn()
+					}
+				}
+			},
+			
 			//撤单
 			chedan(item) {
 				this.$u.api.bibi.closeEntrust(item.id).then(res => {
@@ -269,10 +339,19 @@
 				})
 			},
 			socketFn() {
+				if(!this.pairsItem.symbol) return;
+				this.socket = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.pairsItem.symbol}`)
 				this.socket.doOpen();
-				this.socket.on("open", () => {
-					this.socket.send("PING");
-					this.socket.send(`initEntrust-${this.pairsItem.pairsName}`);
+				this.interval2 = setInterval(()=> {
+					let {code, data} = getData()
+					if(code == '0') {
+						this.buyData = data.asks.slice(0, 5);
+						this.sellData = data.bids.slice(0, 5);
+					}
+				}, 3000)
+				this.socket.on("open", (res) => {
+					// this.socket.send("PING");
+					// this.socket.send(`initEntrust-${this.pairsItem.pairsName}`);
 				});
 				this.socket.on("message", this.onMessage);
 			},
@@ -358,9 +437,10 @@
 	
 				})
 			},
-			getTo(item) {
+			getTo(item) {				
 				this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
+				this.socketFn()
 				this.getBalances()
 			},
 			//币种
@@ -677,7 +757,9 @@
 	.container {
 		background: #F6F6F6;
 		height: 400rpx;
-
+		.text-red{
+			color: #f6465d!important;
+		}
 		.r-icon1 {
 			transform: rotate(180deg);
 			transform-origin: center center;
@@ -999,13 +1081,13 @@
 			}
 
 			.item1 {
-				width: 200rpx;
-				color: #1F222B;
-				font-size: 26rpx;
-				font-weight: 600;
-				border-radius: 6rpx;
-				padding: 10rpx 30rpx;
-				background: #fff;
+        width: 150rpx;
+        color: #FFF;
+        font-size: 26rpx;
+        font-weight: 700;
+        border-radius: 6rpx;
+        padding: 10rpx 30rpx;
+        background-color: #4A7AF5;
 
 
 			}

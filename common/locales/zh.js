@@ -53,6 +53,8 @@ export default {
 		success: "成功",
 		plsInput: "请输入",
 		click: "点击",
+		coinName:'币名',
+		latestPrice:'最新价格/24H涨跌',
 		quotation: "行情",
 		edit: "编辑",
 		second: '秒',
@@ -279,7 +281,7 @@ export default {
 		sl: '数量',
 		mairu: '买入',
 		maichu: '卖出',
-		zwgdsj: '暂无更多数据',
+		zwgdsj: '当前无委托',
 		gd: '更多',
 		tx: '提醒',
 		wg: '网格',
@@ -354,7 +356,7 @@ export default {
 		}],
 		topName: [
 			'闪兑',
-			'币币',
+			'现货',
 			'c2c',
 
 		]
@@ -501,7 +503,8 @@ export default {
 		wyydbty: '我已阅读并同意',
 		fwtk: '服务条款',
 		qdl: '去登录',
-		
+		mmbyz:'密码不一致',
+		zjmm:'资金密码（6位数字）',
 		qrmm: "确认密码",
 		smrz: "实名认证",
 		aqbd: "安全绑定",
@@ -514,18 +517,14 @@ export default {
 		fwtk: "服务条款",
 		tg: "跳过",
 		szzjmm: "设置资金密码",
-		zjmm: "资金密码(6位数字)",
 		qrmm: "确认密码",
 		qqrmm: "请确认密码",
-		
-		qr: "确认",
-		
-		zhzc: "账户注册",
-		
+		qr: "确定",		
+		zhzc: "账户注册",		
 		wjmm: "忘记密码？",
 		qsrzh: "请输入账号",
 		qsryx: "请输入邮箱",
-		qsrmm: "请输入密码",
+		qsrmm: "请确认密码",
 		hmyzh: "还没有账户？",
 		yyzh: "已有账户？",
 		qdl: "去登录",
@@ -1799,6 +1798,8 @@ export default {
 		shuliang: '数量',
 		jiage: '价格',
 		kaiduo: '开仓',
+		kd:'开多',
+		kk:'开空',
 		pingduo: '平多',
 		kaikong: '平仓',
 		pingkong: '平空',
@@ -1822,6 +1823,11 @@ export default {
 		],
 		topName: [
 			'交割合约', '永续合约'
+		],
+		warehouse:[
+			{name:'开仓',id:'0'},
+			{name:'平仓',id:'1'},
+			{name:'持仓',id:'2'},
 		],
 		btnInfo: ['开仓', '平仓'],
 		bzjzdqtsx: '调整保证金模式仅对当前合约生效。',
@@ -1918,7 +1924,9 @@ export default {
 		qb:'全部',
 		ggsx:'广告筛选',
 		qxssjfbdgg:'仅显示商家发布的广告',
-		zwgg:'暂无广告'
+		zwgg:'暂无广告',
+		ddzt: '订单状态',
+		jylx: '交易类型'
 	},
 	trendDetails:{
 		yxhy:'永续合约',

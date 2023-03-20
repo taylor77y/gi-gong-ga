@@ -1,19 +1,46 @@
 <template>
 	<view class="page">
-		<!-- <head-title :title="i18n.title" /> -->
 		<view class="header">
 			<u-icon name="arrow-left" size="30" @click="turnBack"></u-icon>
 			<view class="middle" @click="showToPop = true">
-				<text>{{title ? title : i18n.title }}</text>
+				<text class="header-title">{{title ? title : i18n.title }}</text>
 				<u-icon name="arrow-down" size="30" class="ml-10"></u-icon>
 			</view>
 			<view class="right">
-				<view class="mr-10">USD</view>
-				<image class="icon-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAdCAYAAAC5UQwxAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACGSURBVHgB7dTBCYAgGMXxFzRIo7RJbtAI2iaN0ihtYngoPsS62Hsd8g9BeehXKgKtFikPYQmLEHViEtBir4Ed7rGQjS2oK+ABi4Sr2EzCiuBExC7QruEAbjt+kZ3SEdy2fIC5YVzpC6QYC3Q50pv72qPLZ8/pfSuI2T8LECTFoMagxlrfdQAS6JwCrD5tegAAAABJRU5ErkJggg==" mode=""></image>
+				<view class="mr-10" @click="changeType">{{currency}}</view>
+				<image class="icon-img" @click="changeType" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAdCAYAAAC5UQwxAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAACGSURBVHgB7dTBCYAgGMXxFzRIo7RJbtAI2iaN0ihtYngoPsS62Hsd8g9BeehXKgKtFikPYQmLEHViEtBir4Ed7rGQjS2oK+ABi4Sr2EzCiuBExC7QruEAbjt+kZ3SEdy2fIC5YVzpC6QYC3Q50pv72qPLZ8/pfSuI2T8LECTFoMagxlrfdQAS6JwCrD5tegAAAABJRU5ErkJggg==" mode=""></image>
 				<view class="line"></view>
-				<u-icon name="more-dot-fill" size="30" class="ml-10"></u-icon>
+				<view class="ml-10">
+					<u-icon name="more-dot-fill" size="30" @click="showPopover = !showPopover"></u-icon>
+					<view v-show="showPopover" class="popover">
+						<view class="popover-content">
+							<view class="arrow">
+								<u-icon name="arrow-up-fill" size="30" color="#4a4a4a" class="arrow-icon"></u-icon>
+							</view>
+							<view class="popover-row" @click="turnTo('/pages/wantBuy/paymentMethod')">
+								<u-icon name="setting-fill" size="30"></u-icon>
+								<text class="ml-10">收款方式</text>
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</view>
+		<u-popup v-model="showLeft" mode="left">
+			<scroll-view style="height: 100%;" scroll-y="true" class="scroll-view">
+				<view class="">可选法币</view>
+				<u-line></u-line>
+				<view v-for="(item,index) in currencyList" :key="index" class="view-row" @click="changeCurrency(item)">
+					<view class="left-col">
+						{{item.currencyName}}
+					</view>
+					<view class="right-col" v-show="currency===item.currencyName">
+						<u-icon name="checkbox-mark" size="30" color="#d4b02d"></u-icon>
+					</view>
+				</view>
+			</scroll-view>
+		</u-popup>
+		
 		<!-- 顶部弹窗 -->
 		<u-popup v-model="showToPop" mode="top" :closeable="true">
 			<view class="row">
@@ -65,7 +92,8 @@
 						</view>
 						
 						<view class="mt-100">
-							<u-button type="success" @click="buy">0手续费购买 </u-button>
+							<u-button v-show="firstTab === 'buy'" type="success" @click="buy">0手续费购买 </u-button>
+							<u-button v-show="firstTab === 'sell'" type="error" @click="sell">0手续费出售 </u-button>
 						</view>
 					</view>
 				</uni-card>
@@ -80,7 +108,7 @@
 					<view :class="{'choose': firstTab === 'sell'}" @click="firstTab = 'sell'">{{i18n.wymai}}</view>
 				</view>
 				<view class="right-icon">
-					<u-icon name="file-text-fill" size="30" color="#868c9a"></u-icon>
+					<u-icon name="file-text-fill" size="30" color="#868c9a" @click="turnTo('/pages/wantBuy/order')"></u-icon>
 				</view>
 			</view>
 			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a" :current="currentIndex" @change="tabClickHanlder" />
@@ -219,10 +247,14 @@
 			return {
 				showToPop: false, // 顶部弹窗
 				title: '',
+				showLeft: false, // 左侧弹窗
+				currencyList: [],
+				showPopover: false, // 显示 收款方式
 				
 				firstTab: 'buy', // buy or sell --direction
 				currentIndex: 0,
-				currency: 'BTC',
+				currency: 'USD',
+				symbol: 'btc',
 				tabList: [
 					{
 						name: 'BTC',
@@ -265,6 +297,7 @@
 					{ name: 'ETH', direction: '以太坊', value: 2},
 				],
 				kjq_buyMethod: 0, // 0 按金额购买， 1 按 数量购买
+				
 			}
 		},
 		computed: {
@@ -280,8 +313,28 @@
 		created() {
 			this.getMethodsType()
 			this.getList()
+			this.getCurrencyConfiguration()
 		},
 		methods: {
+			// 可交换的法币
+			async getCurrencyConfiguration(){
+				const res = await this.$u.api.fack.getCurrencyConfiguration()
+				console.log(res)
+				this.currencyList = res.result
+			},
+			changeCurrency(item) {
+				this.currency = item.currencyName
+				this.showLeft = false
+				this.getList()
+			},
+			// 切换币种
+			changeType() {
+				this.showLeft = true
+			},
+			closeDrawer() {
+				this.showLeft = false
+			},
+						
 			// 切换 快捷区或自选区
 			changeTitle(title){
 				this.title = title
@@ -290,9 +343,15 @@
 			turnBack(){
 				uni.navigateBack()
 			},
+			turnTo(url) {
+				uni.navigateTo({
+					url
+				})
+			},
 			tabClickHanlder(index) {
 				this.currentIndex = index
-				this.currency = this.tabList[index].name
+				this.symbol = this.tabList[index].name.toLowerCase()
+				this.getList()
 			},
 			// change 交易方式 
 			handleBut(value){
@@ -319,17 +378,22 @@
 			// 获取列表数据
 			async getList() {
 				let param = {
-					page_no: this.page_no,
+					// pageNum: this.page_no,
+					// member: uni.getStorageSync('userId'),
+					// pageSize: 10,
+					// pairsName: ''
+					page_no:this.page_no,
 					direction: this.firstTab,
 					currency: this.currency,
-					amount: this.total?this.total:'',
-					symbol: 'bct',
-					token: '',
-					method_type: this.methodType,
+					amount: this.total ? this.total : '',
+					symbol: this.symbol,
+					token: uni.getStorageSync('userId'),
+					method_type: this.methodType?this.methodType:'',
 					language: uni.getStorageSync('lang')
 				}
-				const { code, data } = await this.$u.api.wantBuy.getC2cList(param);
-				console.log(code,data)
+				const res = await this.$u.api.wantBuy.getC2cList(param)
+				// const res = await this.$u.api.bibi.getHistoryEntrust(param);
+				console.log(res)
 			},
 			// 获取交易方式
 			async getMethodsType() {
@@ -352,6 +416,10 @@
 				uni.navigateTo({
 					url:'/pages/wantBuy/paymentMethod'
 				})
+			},
+			// 出售
+			sell(){
+				
 			}
 		}
 	}
@@ -371,6 +439,9 @@
 			color: #fff;
 			.middle {
 				font-weight: bolder;
+				.header-title {
+					font-size: 16px;
+				}
 			}
 			.right {
 				padding: 5rpx 0;
@@ -394,6 +465,44 @@
 					background: #000;
 					margin-left: 5rpx;
 					margin-right: 5rpx;
+				}
+			}
+		}
+		.scroll-view {
+			width: 200rpx;
+			height: 100%;
+			overflow-y: scroll;
+			padding: 30rpx 30px;
+			.view-row {
+				height: 80rpx;
+				line-height: 80rpx;
+				display: flex;
+				justify-content: space-between;
+			}
+		}
+		.popover {
+			position: absolute;
+			right: 20rpx;
+			color: #fff;
+			transition: opacity .15s,transform .15s,-webkit-transform .15s;
+			z-index: 99;
+			.popover-content {
+				position: relative;
+				top: 20rpx;
+				background-color: #4a4a4a;
+				border-radius: 8px;
+				.arrow {
+					position: absolute;
+				}
+				.arrow-icon {
+					position: relative;
+					bottom: 38rpx;
+					left: 130rpx;
+				}
+				.popover-row {
+					background-color: transparent;
+					width: 200rpx;
+					padding: 10rpx 20rpx;
 				}
 			}
 		}
@@ -461,6 +570,7 @@
 					}
 					.card-flex {
 						display: flex;
+						align-items: center;
 					}
 					.card-flex-sb {
 						justify-content: space-between;
