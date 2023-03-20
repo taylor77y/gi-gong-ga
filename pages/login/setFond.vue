@@ -2,8 +2,8 @@
 	<view class="page flex-col">
 		<view class="out">
 			<view style="display: flex; justify-content: space-between;">
-				<u-icon  class="left" name="arrow-left" size="30" @click="back" ></u-icon>
-				<text class=""  @click="skip()" style="margin-right: 60rpx;">{{i18n.tg}}</text>
+				<u-icon class="left" name="arrow-left" size="30" @click="back"></u-icon>
+				<text class="" @click="skip()" style="margin-right: 60rpx;">{{i18n.tg}}</text>
 			</view>
 		</view>
 		<text class="text_1" style="margin-bottom: 10%;">{{i18n.szzjmm}}</text>
@@ -40,12 +40,12 @@
 					<image referrerpolicy="no-referrer"
 						src="/static/lanhu_denglu/ps04twdt13087chpihojawqbuipb5dvmfz1068353f9-a9e8-4434-9048-6cb91bdf69d9.png" />
 				</view>
-				<input  :placeholder="inputTag" placeholder-style="color: #999" v-model="userName" class="inputCum" />
+				<input :placeholder="inputTag" placeholder-style="color: #999" v-model="userName" class="inputCum" />
 			</view>
 
-			<text class="text_2" v-text="i18n.qrmm"  style="margin-top: 20r;"></text>
+			<text class="text_2" v-text="i18n.qrmm" style="margin-top: 20r;"></text>
 			<view class="login-input" :class="{'f-border': verificationCode}">
-                 <u-input :placeholder="i18n.qsrmm" v-model="password" type="password" style="size:20rpx"></u-input>
+				<u-input :placeholder="i18n.qsrmm" v-model="password" type="password" style="size:20rpx"></u-input>
 				<!-- <input :placeholder="i18n.qsrmm" placeholder-style="color: #999" type="password" v-model="password"
 					class="inputCum" /> -->
 			</view>
@@ -195,12 +195,6 @@
 			// })
 			// },
 			nextStep() {
-				const temp = {
-					phMail: this.userName,
-					password: md5Libs.md5(this.password),
-					areaCode: this.countryCode,
-					type: this.loginType
-				}
 				//密码校验不为空
 				if (!this.userName || !this.password) {
 					this.$utils.showToast(this.i18n.qsrmm)
@@ -211,41 +205,73 @@
 					this.$utils.showToast(this.i18n.mmbyz)
 					return;
 				}
-               //密码校验为6位
+				//密码校验为6位
 				if (6 !== this.userName.length || 6 !== this.password.length) {
 					this.$utils.showToast(this.i18n.zjmm)
 					return;
 				}
+				let member = uni.getStorageSync('userId');
 
-				this.$u.api.user.login(temp).then(res => {
-
+				this.$u.api.user.setPayPass(member, this.password).then(res => {
 					if (res.status == "SUCCEED") {
-						console.log("登录结果", res.status)
-						// if (this.socket.connState === 2) {
-						// 	this.socket.destroy()
-						// }
-						console.log("登录结果222")
-						if (uni.getStorageSync('testId')) {
-							const testid = uni.getStorageSync('testId')
-							console.log('我触发了！')
-							uni.setStorageSync('testId', testid)
-						}
-						console.log("登录结果333")
-						this.$utils.showToast(this.i18n.dlcg)
-						uni.setStorageSync('userId', res.result.id)
-						//保存token至缓存
-						uni.setStorageSync('token', res.result.token)
-						setTimeout(() => {
-							uni.navigateTo({
-								url: `/pages/login/my-identity`
-							})
-						}, 1200)
-						console.log("登录结果")
-					} else {
-						this.$utils.showToast(res.errorMessage)
+						uni.navigateTo({
+							url: '/pages/login/my-identity'
+						})
 					}
 				})
-			}
+			},
+			// nextStep() {
+			// 	const temp = {
+			// 		phMail: this.userName,
+			// 		password: md5Libs.md5(this.password),
+			// 		areaCode: this.countryCode,
+			// 		type: this.loginType
+			// 	}
+			// 	//密码校验不为空
+			// 	if (!this.userName || !this.password) {
+			// 		this.$utils.showToast(this.i18n.qsrmm)
+			// 		return;
+			// 	}
+			// 	//密码校验不相等
+			// 	if (!(this.userName === this.password)) {
+			// 		this.$utils.showToast(this.i18n.mmbyz)
+			// 		return;
+			// 	}
+			//             //密码校验为6位
+			// 	if (6 !== this.userName.length || 6 !== this.password.length) {
+			// 		this.$utils.showToast(this.i18n.zjmm)
+			// 		return;
+			// 	}
+
+			// 	this.$u.api.user.login(temp).then(res => {
+
+			// 		if (res.status == "SUCCEED") {
+			// 			console.log("登录结果", res.status)
+			// 			// if (this.socket.connState === 2) {
+			// 			// 	this.socket.destroy()
+			// 			// }
+			// 			console.log("登录结果222")
+			// 			if (uni.getStorageSync('testId')) {
+			// 				const testid = uni.getStorageSync('testId')
+			// 				console.log('我触发了！')
+			// 				uni.setStorageSync('testId', testid)
+			// 			}
+			// 			console.log("登录结果333")
+			// 			this.$utils.showToast(this.i18n.dlcg)
+			// 			uni.setStorageSync('userId', res.result.id)
+			// 			//保存token至缓存
+			// 			uni.setStorageSync('token', res.result.token)
+			// 			setTimeout(() => {
+			// 				uni.navigateTo({
+			// 					url: `/pages/login/my-identity`
+			// 				})
+			// 			}, 1200)
+			// 			console.log("登录结果")
+			// 		} else {
+			// 			this.$utils.showToast(res.errorMessage)
+			// 		}
+			// 	})
+			// }
 		}
 	};
 </script>
@@ -257,22 +283,26 @@
 	/* *{
 		border: 1px solid red;
 	} */
-	
+
 	.button_1 {
 		width: 100%;
 	}
+
 	.out {
 		margin-top: 30rpx;
 		color: #868c9a;
 	}
+
 	.left {
 		margin-left: 45rpx;
 	}
+
 	.right {
 		margin-left: 480rpx;
 		color: #000;
 		/* float: right; */
 	}
+
 	.wjmm {
 		font-size: 0.5rem;
 		line-height: 1.75rem;
