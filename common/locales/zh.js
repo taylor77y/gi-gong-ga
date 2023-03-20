@@ -53,6 +53,8 @@ export default {
 		success: "成功",
 		plsInput: "请输入",
 		click: "点击",
+		coinName:'币名',
+		latestPrice:'最新价格/24H涨跌',
 		quotation: "行情",
 		edit: "编辑",
 		second: '秒',
@@ -354,7 +356,7 @@ export default {
 		}],
 		topName: [
 			'闪兑',
-			'币币',
+			'现货',
 			'c2c',
 
 		]
