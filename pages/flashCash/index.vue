@@ -3,6 +3,7 @@
 		<!-- <heder-box :title="i18n.sd" /> -->
 		<xl-header :title="i18n.sd"></xl-header>
 		<view class="f-m-24">
+			<!-- 从 -->
 			<view class="wallet-name">
 				<view>{{ i18n.co }}</view>
 				<view>{{ i18n.xhqb }}
@@ -11,7 +12,9 @@
 			</view>
 			<view class="exchange-input">
 				<view class="left">
-					<view class="img-box"></view>
+					<view class="img-box">
+						<image :src="`${baseUrl}/symbol/${leftCurrency.toLowerCase()}.png`" class="bi-icon" />
+					</view>
 					<view class="">
 						<picker @change="bindPickerChange('left', $event)" :value="leftCurrencyIndex" :range="typeList">
 							<view class="uni-input">{{typeList[leftCurrencyIndex]}}</view>
@@ -22,7 +25,7 @@
 					</view>
 					<view class="ex-line"></view>
 					<view>
-						<input focus type="number" @input="checkNum" value="leftNum"
+						<input focus type="number" @input="checkNum" v-model="leftNum"
 							placeholder-style="background: #F6F6F6;color:#CACDD1;font-weight: 400;" class="f-input"
 							:placeholder="i18n.qsrdhje" />
 					</view>
@@ -44,12 +47,15 @@
 					<image :class="{'f-rotate': switchCode}" src="../../static/image/k-line/1.png" />
 				</view>
 			</view>
+			<!-- 至 -->
 			<view class="wallet-name">
 				<view>{{ i18n.zhi }}</view>
 			</view>
 			<view class="exchange-input">
 				<view class="left">
-					<view class="img-box img-box1"></view>
+					<view class="img-box">
+						<image :src="`${baseUrl}/symbol/${rightCurrency.toLowerCase()}.png`" class="bi-icon" />
+					</view>
 					<view class="">
 						<picker @change="bindPickerChange('right', $event)" :value="rightCurrencyIndex" :range="typeList">
 							<view class="uni-input">{{typeList[rightCurrencyIndex]}}</view>
@@ -88,6 +94,7 @@
 		},
 		data() {
 			return {
+				baseUrl: uni.getStorageSync('imgPath'),
 				leftCode: 0,
 				rightCode: 0,
 				leftNum: '',
@@ -95,8 +102,6 @@
 				letImgCode: false,
 				rightImgCode: false,
 				leftCurrencyIndex: 0,
-				// leftCurrency: 'USDT',
-				// rightCurrency: 'BTC',
 				rightCurrencyIndex: 8,
 				typeList: ['USDT','IOTA','DOT','EOS','LINK', 'MX','CHR','MLN','BTC','SAND','SOL','MANA','CHZ','ETC','XRP','ETH','NEO','LTC','YFI','AXS','ALGO','BHD'], // cash类型
 				rfItem: {},
@@ -119,11 +124,21 @@
 			i18n() {
 				return this.$t("flashCash")
 			},
-			leftCurrency(){
-				return this.typeList[this.leftCurrencyIndex];
+			leftCurrency: {
+				get(val) {
+					return this.typeList[this.leftCurrencyIndex];
+				},
+				set(){
+					return this.typeList[this.leftCurrencyIndex];
+				}
 			},
-			rightCurrency() {
-				return this.typeList[this.rightCurrencyIndex];
+			rightCurrency: {
+				get(val) {
+					return this.typeList[this.rightCurrencyIndex];
+				},
+				set(){
+					return this.typeList[this.leftCurrencyIndex];
+				}
 			}
 		},
 		methods: {
@@ -217,7 +232,7 @@
 			},
 			// 限价 输入限制
 			checkNum() {
-				console.log(this.rate)
+				console.log(this.rate, '自己', this.leftNum)
 				this.rightNum = this.$utils.SubString(this.leftNum * this.rate, 4)
 				this.$nextTick(() => {
 					let val = this.leftNum;
@@ -362,15 +377,15 @@
 				font-weight: 900;
 
 				.img-box {
-					width: 40rpx;
-					height: 40rpx;
-					background: #000;
-					border-radius: 50%;
+					width: 45rpx;
+					height: 45rpx;
 					margin-right: 14rpx;
-				}
-
-				.img-box1 {
-					background: #F19231 !important;
+					.bi-icon {
+						width: 45rpx;
+						height: 45rpx;
+						background: #fff;
+						border-radius: 50%;
+					}
 				}
 
 				.down-icon {
@@ -394,7 +409,7 @@
 				}
 
 				.max {
-					// width: 100rpx;
+					width: 80rpx;
 					color: #D1A037;
 					font-weight: 500;
 					margin-left: 0 auto;

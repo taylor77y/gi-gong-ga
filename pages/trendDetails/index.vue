@@ -292,7 +292,9 @@
 				}, 2000)
 			},
 			turnBack() {
-				uni.navigateBack()
+				uni.navigateTo({
+					url: '/pages/financial/index'
+				})
 			},
 			turnTo() {
 				uni.navigateTo({

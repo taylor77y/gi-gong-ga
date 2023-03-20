@@ -51,6 +51,8 @@ export default {
 		success: "Success",
 		plsInput: "Please input",
 		click: "click",
+		coinName:'Coin name',
+		latestPrice:'The latest price /24 h rise and fall',
 		quotation: "Quote",
 		edit: "Edit",
 		second: 'second',

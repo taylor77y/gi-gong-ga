@@ -67,17 +67,27 @@ class Request {
 						// console.log('我特么回来了',response.data.errorCode)
 						// store.commit('setTabarCode', 0)
 						// 不返回原始数据的情况下，服务器状态码不为200，modal弹框提示
-						// if (response.data.errorCode === 'SYS.0015') {
-						// 	uni.navigateTo({
-						// 		url:'/pages/login/login'
-						// 	})
-      //                       return
-						// }
-						// if(response.errMsg) {
-						// 	uni.showModal({
-						// 		title: response.errMsg
-						// 	});
-						// }
+						
+						let routes = window.location.hash.slice(2)
+						// 这三个路由跳过验证
+						const router = [
+							'pages/market/market',
+							'pages/transaction/index',
+							'pages/financial/index'
+						]
+						if(!router.includes(routes)) {
+							if (response.data.errorCode === 'SYS.0015') {
+								uni.navigateTo({
+									url:'/pages/login/login'
+								})
+							  return
+							}
+							if(response.errMsg) {
+								uni.showModal({
+									title: response.errMsg
+								});
+							}
+						}
 						reject(response)
 					}
 				}
