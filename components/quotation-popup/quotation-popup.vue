@@ -39,18 +39,19 @@
 				<view class="item" v-for="(item, index) in list" :key="index" @click="getTo(item)">
 					<view class="top">
 						<view class="left">
-							<text>{{item.tokenCur}}</text>
-							<text>/{{item.mainCur}}</text>
-<!--              <text>/{{item.name}}</text>-->
-							<text>3x</text>
+							<!-- <text>{{item.tokenCur}}</text>
+							<text>/{{item.mainCur}}</text> -->
+             <text>{{item.name}}</text>
+							<!-- <text>3x</text> -->
 						</view>
 						<view class="right">
-							{{item.price|SubString3(2,4)}}
+							{{item.close}}
+							<!-- {{item.price|SubString3(2,4)}} -->
 						</view>
 					</view>
-					<view class="lower">
-<!--            {{item.close|SubString(2)}}%-->
-						{{item.updown*100|SubString(2)}}%
+					<view class="lower" :class="{'text-red': item.change_ratio < 0}">
+           {{item.change_ratio}}%
+						<!-- {{item.updown*100|SubString(2)}}% -->
 					</view>
 				</view>
 			</view>
@@ -108,6 +109,9 @@
 			showSpec(val) {
 				this.IsShowPage = val
 
+			},
+			list(val) {
+				// console.log(val)
 			}
 		},
     created(){},
@@ -273,5 +277,8 @@
       margin-top: 60rpx;
       padding: 0 24rpx;
     }
+	}
+	.text-red{
+		color: #f6465d!important;
 	}
 </style>
