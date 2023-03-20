@@ -21,7 +21,7 @@ const install = (Vue, vm) => {
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
 	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
 	// 客服连接地址
-	uni.setStorageSync('wssURL', 'ws://qcim.obk3.com/service/message/')
+	uni.setStorageSync('wssURL', 'ws://wap.adbaa3011.cc/socket/im/')
 	// 图片拼接路径
 	
 	// uni.setStorageSync('domainPay', 'http://oss.obk3.com/')
