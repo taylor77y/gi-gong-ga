@@ -517,7 +517,6 @@ export default {
 		fwtk: "服务条款",
 		tg: "跳过",
 		szzjmm: "设置资金密码",
-		zjmm: "资金密码(6位数字)",
 		qrmm: "确认密码",
 		qqrmm: "请确认密码",
 		qr: "确定",		
