@@ -1,18 +1,19 @@
 <template>
 	<u-popup v-model="IsShowPage" @close="onClose" mode="left" border-radius="40">
 		<view class="cancel-box">
-			<view class="title">
-				{{ $t('common').quotation }}
+			<view class="titleList">
+			  <view>{{ $t('common').coinName }}</view>
+        <view>{{$t('common').latestPrice }}</view>
 			</view>
 			<view class="search-input-box">
 				<view class="f-search-icon">
-					<view class="f-icon">
-						<image class="f-icon-img" src="../../static/image/home/2.png" />
-					</view>
-					<view>
-						<input v-model="search" placeholder-style="color: #9399A2;background: #F6F6F6" class="search-input"
-							:placeholder="$t('common').search" />
-					</view>
+<!--					<view class="f-icon">-->
+<!--						<image class="f-icon-img" src="../../static/image/home/2.png" />-->
+<!--					</view>-->
+<!--					<view>-->
+<!--						<input v-model="search" placeholder-style="color: #9399A2;background: #F6F6F6" class="search-input"-->
+<!--							:placeholder="$t('common').search" />-->
+<!--					</view>-->
 				</view>
 			
 			</view>
@@ -40,13 +41,15 @@
 						<view class="left">
 							<text>{{item.tokenCur}}</text>
 							<text>/{{item.mainCur}}</text>
+<!--              <text>/{{item.name}}</text>-->
 							<text>3x</text>
 						</view>
 						<view class="right">
-							{{item.price|SubString3(2,4)}}	
+							{{item.price|SubString3(2,4)}}
 						</view>
 					</view>
 					<view class="lower">
+<!--            {{item.close|SubString(2)}}%-->
 						{{item.updown*100|SubString(2)}}%
 					</view>
 				</view>
@@ -68,6 +71,12 @@
 				default: false
 			},
 			list:{
+				type:Array,
+				default: () => {
+					return []
+				}
+			},
+      coinList:{//这个是请求的真实数据
 				type:Array,
 				default: () => {
 					return []
@@ -101,6 +110,8 @@
 
 			}
 		},
+    created(){},
+
 		methods: {
 			getAdd() {
 				
@@ -253,12 +264,14 @@
 			}
 		
 		}
-		.title {
-			color: #1F222B;
-			font-size: 48rpx;
-			font-weight: 500;
-			margin-top: 130rpx;
-			padding: 0 24rpx;
-		}
+    .titleList {
+      display: flex;
+      justify-content: space-between;
+      color: #c0c4cc;
+      font-size: 26rpx;
+      font-weight: 500;
+      margin-top: 60rpx;
+      padding: 0 24rpx;
+    }
 	}
 </style>

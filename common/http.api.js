@@ -13,7 +13,9 @@ const install = (Vue, vm) => {
 	const wantBuy = {
 		// language 语言
 		getC2cPaymentMethod: (language='en') => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!method_type.action?language=${language}`),
+		c2cPaymentMethodList: (language='en', token) => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!list.action?language=${language}&token=${token}`),
 		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`https://db23app.vip/wap/api/c2cAdvert!list.action?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
+		c2cPaymentMethod:(param={}) => vm.$u.get(`https://db23app.vip/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
 	}
 	
 	

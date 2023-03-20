@@ -33,7 +33,16 @@
 				<view class="right">24h{{ i18n.zdf }}</view>
 			</view>
 			<!-- <home-list :code="1" :state="current" :list="coinQuotations" /> -->
-			<home-list-market :list="coinList" :state="0" :tabIndex="tabIndex" />
+		  <view>
+        <view v-if="current == 1 || current == 2">
+          <home-list-market :list="coinList" :state="0" :tabIndex="tabIndex"  />
+        </view>
+        <view v-else class="noDate">
+          <image referrerpolicy="no-referrer" src="/static/image/assets/4.png" style="width: 154rpx;height: 154rpx;"/>
+          <view class="text">暂无数据</view>
+        </view>
+
+      </view>
 		</view>
 		<suspension-btn />
 		<tabar-com />
@@ -44,6 +53,7 @@
 	export default {
 		data() {
 			return {
+        src: 'https://cdn.uviewui.com/uview/album/1.jpg',
 				search: '',
 				curList: [],
 				coinQuotations: [],
@@ -98,24 +108,13 @@
 		methods: {
 			getCoinData(){
 				this.$u.api.common.getCoinData().then(res => {
-					// console.log('getCoinData',res)
+					// console.log('11111111',res)
 					if(res.result){
 						try{
 							let data = JSON.parse(res.result)
 							console.log('getCoinData-data',data.data)
 							if(data.code == 0){
 								this.coinList = data.data
-								let arr = []
-								data.data.forEach(e=>{
-									if(e.name == 'BTC/USDT'){
-										arr[0] = e
-									}else if(e.name == 'ETH/USDT'){
-										arr[1] = e
-									}else if(e.name == 'ETC/USDT'){
-										arr[2] = e
-									}
-								})
-								this.coinListT = arr
 							}
 						}catch(e){
 							
@@ -139,7 +138,6 @@
 				}
 			},
       changeFour(e){
-		  console.log('进来了卧槽',e)
 		  this.tabIndex = e
         this.currentFour = e
         switch (e) {
@@ -308,5 +306,16 @@
 			}
 
 		}
+
+    .noDate {
+      height: 500rpx;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .text {
+        color: #c0c4cc;
+      }
+    }
 	}
 </style>

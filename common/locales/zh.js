@@ -53,6 +53,8 @@ export default {
 		success: "成功",
 		plsInput: "请输入",
 		click: "点击",
+		coinName:'币名',
+		latestPrice:'最新价格/24H涨跌',
 		quotation: "行情",
 		edit: "编辑",
 		second: '秒',
@@ -354,7 +356,7 @@ export default {
 		}],
 		topName: [
 			'闪兑',
-			'币币',
+			'现货',
 			'c2c',
 
 		]
@@ -501,7 +503,8 @@ export default {
 		wyydbty: '我已阅读并同意',
 		fwtk: '服务条款',
 		qdl: '去登录',
-		
+		mmbyz:'密码不一致',
+		zjmm:'资金密码（6位数字）',
 		qrmm: "确认密码",
 		smrz: "实名认证",
 		aqbd: "安全绑定",
@@ -517,15 +520,12 @@ export default {
 		zjmm: "资金密码(6位数字)",
 		qrmm: "确认密码",
 		qqrmm: "请确认密码",
-		
-		qr: "确认",
-		
-		zhzc: "账户注册",
-		
+		qr: "确定",		
+		zhzc: "账户注册",		
 		wjmm: "忘记密码？",
 		qsrzh: "请输入账号",
 		qsryx: "请输入邮箱",
-		qsrmm: "请输入密码",
+		qsrmm: "请确认密码",
 		hmyzh: "还没有账户？",
 		yyzh: "已有账户？",
 		qdl: "去登录",
@@ -1918,7 +1918,9 @@ export default {
 		qb:'全部',
 		ggsx:'广告筛选',
 		qxssjfbdgg:'仅显示商家发布的广告',
-		zwgg:'暂无广告'
+		zwgg:'暂无广告',
+		ddzt: '订单状态',
+		jylx: '交易类型'
 	},
 	trendDetails:{
 		yxhy:'永续合约',

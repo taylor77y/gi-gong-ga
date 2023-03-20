@@ -1,4 +1,5 @@
 <template>
+	<!-- 选择添加收款方式 -->
 	<view class="page">
 		<view class="header">
 			<u-icon name="arrow-left" size="40" @click="turnBack" class="left"></u-icon>

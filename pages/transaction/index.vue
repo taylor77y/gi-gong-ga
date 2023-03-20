@@ -148,16 +148,16 @@
 		</view>
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
 		</u-action-sheet>
-		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
+		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo"  :coinList ='coinList'   />
 		<tabar-com />
 	</view>
 </template>
 <script>
-	import th from '../../common/locales/th';
 	import socket from "../../common/ws/socket.js";
 	export default {
 		data() {
 			return {
+        coinList:[],//币种数据
 				list: [],
 				showSpec: false,
 				magnification: false, // 0.01 倍率
@@ -186,7 +186,7 @@
 				search: 0,
 				searchs: null,
 				search1: '',
-				btnCode: 0,
+				btnCode: 1,
 				pairs: [],
 				pairsItem: {},
 				usdtPrice: 0.00, // 已有
@@ -220,6 +220,8 @@
 		},
 		onLoad() {},
 		onShow() {
+      this.getCoinData()
+      this.btnCode = 1;
 			let member = uni.getStorageSync("userId") || '';
 			this.getPairsList();
 			// this.getBalances(member);
@@ -257,6 +259,18 @@
 			}	
 		},
 		methods: {
+      //真实数据接口
+      getCoinData(){
+        this.$u.api.common.getCoinData().then(res => {
+          if(res.result){
+            let data = JSON.parse(res.result)
+            if(data.code == 0){
+              this.coinList = data.data
+            }
+          }
+        })
+      },
+
 			//撤单
 			chedan(item) {
 				this.$u.api.bibi.closeEntrust(item.id).then(res => {
@@ -999,13 +1013,13 @@
 			}
 
 			.item1 {
-				width: 200rpx;
-				color: #1F222B;
-				font-size: 26rpx;
-				font-weight: 600;
-				border-radius: 6rpx;
-				padding: 10rpx 30rpx;
-				background: #fff;
+        width: 150rpx;
+        color: #FFF;
+        font-size: 26rpx;
+        font-weight: 700;
+        border-radius: 6rpx;
+        padding: 10rpx 30rpx;
+        background-color: #4A7AF5;
 
 
 			}
