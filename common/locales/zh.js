@@ -1918,7 +1918,9 @@ export default {
 		qb:'全部',
 		ggsx:'广告筛选',
 		qxssjfbdgg:'仅显示商家发布的广告',
-		zwgg:'暂无广告'
+		zwgg:'暂无广告',
+		ddzt: '订单状态',
+		jylx: '交易类型'
 	},
 	trendDetails:{
 		yxhy:'永续合约',

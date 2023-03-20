@@ -1361,6 +1361,10 @@
             "path" : "pages/wantBuy/addPaymentMethod",
             "style" : {}
         }
+        ,{
+            "path" : "pages/wantBuy/order",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

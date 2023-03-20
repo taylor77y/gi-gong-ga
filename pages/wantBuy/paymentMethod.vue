@@ -13,6 +13,7 @@
 		<view class="footer">
 			<u-button type="primary" @click="open">添加收款方式</u-button>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -20,10 +21,27 @@
 	export default {
 		data() {
 			return {
-				
+				list: []
 			};
 		},
+		onReady() {
+			this.getList()
+		},
 		methods: {
+			async getList() {
+				const language = uni.getStorageSync('lang')
+				const token = uni.getStorageSync('token')
+				const {code, data, msg} = await this.$u.api.wantBuy.c2cPaymentMethodList(language, token)
+				if(code == 0) {
+					this.list = data
+				} else {
+					this.$refs.uToast.show({
+						title: msg,
+						type: 'error',
+						// url: '/pages/login/login',
+					})
+				}
+			},
 			turnBack(){
 				uni.navigateBack()
 			},
