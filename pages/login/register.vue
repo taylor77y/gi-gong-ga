@@ -386,8 +386,9 @@
 						this.$utils.showToast(this.i18n.zccg)
 						
 						setTimeout(() => {
+							console.log(1)
 							uni.navigateTo({
-								url: '/pages/login/login'
+								url: '/pages/login/setFond'
 							})
 						}, 500)
 					} else {
@@ -413,7 +414,7 @@
 								if (!this.$utils.testEmail(userPhone)) {
 									delete temp.areaCode
 								}
-								this.loginFn(temp)
+								//this.loginFn(temp)
 							} else {
 								this.$utils.showToast(res.errorMessage)
 							}
