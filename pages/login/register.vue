@@ -83,6 +83,7 @@
 		<view class="common flex-row justify-between" v-if="!chenk == 0">
 			<text class="text_7">{{ $t('newFy').yzm }}</text>
 		</view>
+		
 		<!-- 		<view class="register-input" v-if="!chenk == 0">
 			<view class="f-in-box">
 				<u-input type="number" style="width: 200rpx;" v-model="verification"
@@ -116,13 +117,13 @@
 			</view>
 		</view> -->
 		<view class="check">
-			<u-checkbox v-model="isChecked">{{i18n.wyydbty}}<text class="link">{{i18n.fwtk}}</text></u-checkbox>
+			<u-checkbox v-model="isChecked">{{i18n.wyydbty}}<text class="link" @click="gologin('fwtk')">{{i18n.fwtk}}</text></u-checkbox>
 		</view>
 		<!-- 注册 -->
 		<button type="primary" class="button_1 flex-col" @click="getPath()" style="background-color: #2979ff;">
 			<text class="text_13">{{i18n.zc}}</text>
 		</button>
-		<view class="text-login">{{i18n.yyzh}}<text class="link">{{i18n.qdl}}</text></view>
+		<view class="text-login" @click="gologin('login')">{{i18n.yyzh}}<text class="link">{{i18n.qdl}}</text></view>
 		<!-- <view class="text-wrapper_2">
 			<text class="text_14">并非想创建个人账户？</text>
 			<text class="text_15"></text>
@@ -140,6 +141,7 @@
 				userPhone: '',
 				userPass: '',
 				confirmUserPass: '', // 确认密码
+				yzm:'', //验证码
 				isChecked: false,
 				chenk: 0, // 注册方式 0: 账号， 1：邮箱 ； 2：手机号
 				code: '',
@@ -358,7 +360,7 @@
 					password: this.userPass,
 					// 2: 账号， 0：邮箱 ； 1：手机号
 					regType: this.chenk == 0 ? 2 : this.chenk == 1 ? 0 : this.chenk == 2 ? 1 : '',
-					areaCode: 1
+					areaCode: 86
 				}
 				if(params.regType == 0) {
 					params.mail = this.userPhone
@@ -377,19 +379,28 @@
 				} else {
 					params.account = this.userPhone
 				}
-				
+				console.log('params',params);
 				
 				this.$u.api.user.register(params).then(res => {
 					console.log("注册结果", res)
 					if(res.status == "SUCCEED") {
 						this.$utils.showToast(this.i18n.zccg)
-						
-						setTimeout(() => {
-							console.log(1)
-							uni.navigateTo({
-								url: '/pages/login/setFond'
-							})
-						}, 500)
+						const temp = {
+							phMail: this.userPhone,
+							// password: md5Libs.md5(userPass),
+							password: params.password,
+							areaCode :params.areaCode
+						}
+						// if (!this.$utils.testEmail(userPhone)) {
+						// 	delete temp.areaCode
+						// }
+						this.loginFn(temp)
+						// setTimeout(() => {
+						// 	console.log(1)
+						// 	uni.navigateTo({
+						// 		url: '/pages/login/setFond'
+						// 	})
+						// }, 500)
 					} else {
 						this.$utils.showToast(res.errorCode, res.errorMessage)
 					}
@@ -398,30 +409,40 @@
 				})
 				return
 
-				// 先校验验证码是否正确 在调用登录
-				this.$u.api.user.checkSmsCode(phone, verification, type).then(res => {
-					if (res.status == "SUCCEED" && this.isChecked == true) {
-						this.$u.api.user.register(chenk === 2 ? phoneData : mailData).then(res => {
-							console.log("注册结果", res)
-							if (res.status == "SUCCEED") {
-								this.$utils.showToast(this.i18n.zccg)
-								const temp = {
-									phMail: userPhone,
-									password: md5Libs.md5(userPass),
-									areaCode
-								}
-								if (!this.$utils.testEmail(userPhone)) {
-									delete temp.areaCode
-								}
-								//this.loginFn(temp)
-							} else {
-								this.$utils.showToast(res.errorMessage)
-							}
-						})
-					} else {
-						this.$utils.showToast(res.errorMessage)
-					}
-				})
+				// // 先校验验证码是否正确 在调用登录
+				// this.$u.api.user.checkSmsCode(phone, verification, type).then(res => {
+				// 	if (res.status == "SUCCEED" && this.isChecked == true) {
+				// 		this.$u.api.user.register(chenk === 2 ? phoneData : mailData).then(res => {
+				// 			console.log("注册结果", res)
+				// 			if (res.status == "SUCCEED") {
+				// 				this.$utils.showToast(this.i18n.zccg)
+				// 				const temp = {
+				// 					phMail: userPhone,
+				// 					// password: md5Libs.md5(userPass),
+				// 					password: userPass,
+				// 					areaCode :1
+				// 				}
+				// 				// if (!this.$utils.testEmail(userPhone)) {
+				// 				// 	delete temp.areaCode
+				// 				// }
+				// 				this.loginFn(temp)
+				// 			} else {
+				// 				this.$utils.showToast(res.errorMessage)
+				// 			}
+				// 		})
+				// 	} else {
+				// 		this.$utils.showToast(res.errorMessage)
+				// 	}
+				// })
+			},
+			gologin(u){
+				if(u == 'login'){
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+				}else if(u == 'fwtk'){
+					console.log('fwtk');
+				}
 			},
 			loginFn(temp) {
 				this.$u.api.user.login(temp).then(res => {
@@ -437,7 +458,7 @@
 						//保存token至缓存
 						uni.setStorageSync('token', res.result.token)
 						uni.reLaunch({
-							url: "/pages/index/index"
+							url: "/pages/login/setFond"
 						})
 					} else {
 						this.$utils.showToast(res.errorMessage)
@@ -549,4 +570,5 @@
 	.link {
 		color: #2979ff;
 	}
+	
 </style>

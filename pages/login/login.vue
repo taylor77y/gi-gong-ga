@@ -203,7 +203,8 @@ export default {
 	nextStep() {	
 		const temp = {
 			phMail:this.userName,
-			password: md5Libs.md5(this.password),
+			// password: md5Libs.md5(this.password),
+			password:this.password,
 			areaCode: this.countryCode,
 			type: this.loginType
 		}
