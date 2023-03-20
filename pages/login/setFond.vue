@@ -8,7 +8,7 @@
       referrerpolicy="no-referrer"
       src="/static/lanhu_denglu/psht05ne0tptggl0vjpct7gvpqmqj6zqxrk6770d574-f47f-4d3c-9830-1bea20947b10.png"
     />
-	<text style="margin: 23px 0 0 280px;">{{i18n.tg}}</text>
+	<text style="margin: 23px 0 0 280px;" @click="skip()">{{i18n.tg}}</text>
 	</view>
     <text class="text_1" style="margin-bottom: 10%;">{{i18n.szzjmm}}</text>
 
@@ -161,6 +161,12 @@ export default {
 		  }
 		  
 		  
+	  },
+	  //跳过跳转
+	  skip() {
+		  uni.navigateTo({
+		  			  url:'/pages/login/assets/setFound'
+		  })
 	  },
 	// 选择区号
 	getAreaCode() {

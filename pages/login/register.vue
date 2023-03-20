@@ -36,7 +36,6 @@
 
 			<u-input :placeholder="getPlaceholder[chenk]" v-model="userPhone" class="f-input" height="30"
 				placeholder-style="color: #B0B3BA;font-size: 32rpx" />
-
 		</view>
 		<!-- 密码 -->
 		<view class="common flex-row justify-between">
