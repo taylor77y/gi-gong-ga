@@ -12,17 +12,17 @@
 				</image>
 			</view>
 			<view class="save-btn-container">
-				<button type="primary" class="save-btn">Save QR code</button>
+				<button type="primary" class="save-btn">{{ i18n.bcewm}}</button>
 			</view>
 			<view class="address">
 				0xbA4D6b22908F1b6e3074204AC9A0Af4b04E1F78F
 			</view>
 			<view class="copy-btn-container">
-				<button type="primary" class="copy-btn">Copy address</button>
+				<button type="primary" class="copy-btn">  {{ i18n.fzdz}}</button>
 			</view>
 			<view class="input-container">
 				<view class="title" style="margin: 10rpx 0;">
-					Outgoing address (optional)
+          {{ i18n.zcdz}}
 				</view>
 				<input type="text" class="input" style="padding-right: 160rpx;" placeholder="Enter amount"
 					placeholder-style="color: #C0C0C0;font-size:26rpx">
@@ -32,14 +32,16 @@
 			</view>
 			<view class="input-container">
 				<view class="title">
-					Deposit amount
+          {{ i18n.cbsl}}
 				</view>
-				<input type="text" v-model="amount" class="input" placeholder="Enter amount"
-					placeholder-style="color: #C0C0C0;font-size:26rpx">
+				<input type="text" class="input" placeholder="Enter amount"
+					placeholder-style="color: #C0C0C0;font-size:26rpx" v-model="chargeMoneyValue">
+<!--				<input type="text" v-model="amount" class="input" placeholder="Enter amount"-->
+<!--					placeholder-style="color: #C0C0C0;font-size:26rpx">-->
 			</view>
 			<view class="chain-container">
 				<view class="title">
-					Chain name
+          {{ i18n.lmc}}
 				</view>
 				<view class="btn-list">
 					<view class="btn" :class="{active:btnIndex==index}" v-for="(item,index) in btnList" :key="index"
@@ -51,106 +53,127 @@
 
 			<view class="upload-container">
 				<view class="title">
-					Payment voucher (upload a screenshot of payment details)
+					{{ i18n.fkpz}}
 				</view>
 				<view class="upload">
-					<u-upload max-count="1" upload-text="">
+					<u-upload max-count="1" upload-text="" :fileList="fileList">
 					</u-upload>
 				</view>
 			</view>
 
 			<view class="hint-box">
 				<view class="title">
-					IMPORTANT
+          {{ i18n.beizhu.zyts }}
 				</view>
 				<view class="content">
-					Explain text, please do not recharge any non-USDT-ERC20 assets to the above address until you change
-					it, otherwise the asset bonus cannot be retrieved.
+          {{ i18n.beizhu.shuomingwenzi1 }}
 					<br />
-					·If you have completed the deposit, please click the "I have deposited" button on the page and
-					submit the receipt, otherwise the deposit cannot be posted.
+          {{ i18n.beizhu.shuomingwenzi2 }}
 					<br />
-					·USDT deposit only supports the simple send method, and the deposit using other methods (send all)
-					cannot be posted temporarily. Please understand.
+          {{ i18n.beizhu.shuomingwenzi3 }}
 					<br />
-					·After you recharge to the above address, you need to confirm the entire network node before it can
-					be credited.
+          {{ i18n.beizhu.shuomingwenzi4 }}
 					<br />
-					·Please make sure that your computer and browser are safe to prevent information from being tampered
-					with or leaked.
+          {{ i18n.beizhu.shuomingwenzi5 }}
 					<br />
-					·The above deposit address is the official payment address of the platform, please look for the
-					official deposit address of the platform, and the loss of funds caused by incorrect deposit shall be
-					beared by yourself
+          {{ i18n.beizhu.shuomingwenzi6 }}
 				</view>
-				<button class="btn" @click="submit" type="primary">Next step</button>
+				<button class="btn" type="primary" @click="nextStep">下一步</button>
+<!--				<button class="btn" @click="submit" type="primary">Next step</button>-->
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				btnList: [
-					'ERC20',
-					'TRC20',
-					'OMNI'
-				],
-				btnIndex: 0,
-				currency: "",
-				amount: 0
-			}
-		},
-		onLoad(){
-			// symbol
-			this.currency=this.$mp.query.symbol
-			console.log("symbol ",this.$mp.query.symbol)
-		},
-		methods: {
-			pasteClick() {},
-			//提交
-			submit(){
-				// if(true){
-				// 	console.log("init...",this.btnList[this.btnIndex])
-				// 	return;
-				// }
-				const temp = {
-					currency: this.currency,
-					amount: this.amount,
-					status: 1,
-					memberId: uni.getStorageSync('userId'),
-					chainName: this.btnList[this.btnIndex]
-					
-				}
-				// const {amount,account,selectCoin,i18n} = this
-				// if(!this.$u.test.amount(amount)){
-				// 	this.$utils.showToast(i18n.plsIptCrtAmount)
-				// 	return
-				// }
-				// if(!account){
-				// 	this.$utils.showToast(i18n.plsUploadPaymentVoucher)
-				// 	return
-				// }
-				
-				// const {id:currency} = selectCoin
-					
-				this.$u.api.user.chongzhi(temp).then(res=>{
-					if(res.data.result==1){
-						this.$utils.showToast("申請成功")
-					}else{
-					this.$utils.showToast(res.message)
-					this.amount = ''
-					this.account = ''						
-					}
 
-				
-				})
-			
-			}
-		}
-	}
+  export default {
+    data() {
+      return {
+        fileList: [],//参数(数组，元素为对象)
+        chargeMoneyValue: 0,//充币数
+        selectCoin: '',
+        btnList: [
+          'ERC20',
+          'TRC20',
+          'OMNI'
+        ],
+        btnIndex: 0,
+        currency: "",
+        amount: 0
+      }
+    },
+    computed: {
+      i18n() {
+        return this.$t('recharge')
+      }
+    },
+
+    onLoad() {
+      // symbol
+      this.currency = this.$mp.query.symbol
+      console.log("symbol ", this.$mp.query.symbol)
+    },
+    methods: {
+
+      nextStep() {
+        if (this.chargeMoneyValue === 0 ) {
+          uni.showToast({
+            icon: 'none',
+            title: '请输入数量'
+          })
+        }
+        if (this.fileList.length <= 0) {
+          uni.showToast({
+            icon: 'none',
+            title: '请上传图片'
+          })
+        }
+      },
+
+      pasteClick() {
+      },
+      //提交
+      submit() {
+        // if(true){
+        // 	console.log("init...",this.btnList[this.btnIndex])
+        // 	return;
+        // }
+        const temp = {
+          currency: this.currency,
+          amount: this.amount,
+          status: 1,
+          memberId: uni.getStorageSync('userId'),
+          chainName: this.btnList[this.btnIndex]
+
+        }
+        // const {amount,account,selectCoin,i18n} = this
+        // if(!this.$u.test.amount(amount)){
+        // 	this.$utils.showToast(i18n.plsIptCrtAmount)
+        // 	return
+        // }
+        // if(!account){
+        // 	this.$utils.showToast(i18n.plsUploadPaymentVoucher)
+        // 	return
+        // }
+
+        // const {id:currency} = selectCoin
+
+        this.$u.api.user.chongzhi(temp).then(res => {
+          if (res.data.result == 1) {
+            this.$utils.showToast("申請成功")
+          } else {
+            this.$utils.showToast(res.message)
+            this.amount = ''
+            this.account = ''
+          }
+
+        })
+
+      },
+
+    }
+  }
 </script>
 
 <style lang="scss" scoped>

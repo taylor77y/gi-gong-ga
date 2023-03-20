@@ -491,14 +491,49 @@ export default {
 				name: 'financial management',
 			}
 		],
-		zzc: 'total assets',
+		zzc: 'Total assets (USDT)',
 		zjzh: 'fund account',
 		ksljzjzh: 'Quickly understand the fund account, learn how to use the tutorial',
 		zclb: 'asset list',
 		listBtn: ['C2C', 'Payment', 'Gift Card', 'Binance Mining Pool'],
-		btnInfo: ['Recharge', 'Withdraw', 'Flash'],
+		btnInfo: [{
+			 name:'Recharge',img:'/static/image/assets/1.png',},
+			{name:'Withdraw',img:'/static/image/assets/2.png',},
+			{name:'Flash',img:'/static/image/assets/3.png',},],
 		keyong: 'Available',
-		dongjie: 'freeze'
+		dongjie: 'freeze',
+		tzzh:{
+			title:'Spot',
+			xhzh:'Contract',
+			hyzh:'Delivery contract account',
+			jghyzh:'Financial account',
+			lczh:'Financial account',
+			kjzc:'Miner assets',
+		},
+		hy:{
+			yxhy:'Perpetual',
+			jghe:'Delivery contract',
+			bzjye:'Margin balance (USDT)',
+			qbye:'Wallet' + 'balance(USDT)',
+			qbwsxyk:'QBYK(USDT)',
+		},
+		lc:{
+			title:'Financial',
+			hblc:'Money management',
+			kclc:'Mining pool',
+			yjrsy:'Est. DIY (USDT)',
+			ljsy:'Revenue (USDT)',
+			tgzzdd:'All holdings',
+			sylc:'All fnance',
+			sykj:'All miners',
+			gz:'Rules',
+		},
+		assetsList:{
+			Overview:'Overview',
+			Spot:'Spot',
+			Contract:'Contract',
+			Financial:'Financial',
+		},
 
 	},
 	entrust: {
@@ -645,6 +680,31 @@ export default {
 			loading: 'Working hard to load',
 			nomore: 'There is really no more'
 		},
+		beizhu:{
+			zyts:'IMPORTANT',
+			shuomingwenzi1:'.Explain text, please do not recharge any non-USDT-ERC20 assets to the above address until you changeit， otherwise the asset bonus cannot be retrieved.',
+			shuomingwenzi2:'.If you have completed the deposit, please click the "1\n' + 'have deposited" button on the page and submit the\n' + 'receipt, otherwise the deposit cannot be posted.',
+			shuomingwenzi3:'.USDT deposit only supports the simple send method,\n' + 'and the deposit using other methods (send all) cannot\n' + 'be posted temporarily. Please understand.',
+			shuomingwenzi4:'.After you recharge to the above address, you need\n' + 'to confirm the entire network node before it can be\n' + 'credited.',
+			shuomingwenzi5:'.Please make sure that your computer and browser\n' + 'are safe to prevent information from being tampered\n' + 'with or leaked.',
+			shuomingwenzi6:'.• The above deposit address is the official paymentaddress of the platform, please look for the officialdeposit address of the platform, and the loss of fundscaused by incorrect deposit shall be beared byyourself',
+
+		},
+		qxzczbz: 'Please select the deposit crypto',
+		cztd: 'Deposit channel',
+		usdtcz: 'USDT deposit',
+		btccz: 'BTC deposit',
+		ethcz: 'ETH deposit',
+		gfcztd: 'Official recharge channel',
+		fkpz:'Payment voucher (upload a screenshot of payment\n' + 'details)',
+		lmc:'Chain name',
+		cbsl:'Deposit amount',
+		zcdz:'Outgoing address (optional)',
+		fzdz:'Copy address',
+		bcewm:'Save QR code',
+
+
+
 	},
 	edtUser: {
 		zhxx: 'Account Information',
@@ -1932,14 +1992,24 @@ export default {
 		tx: ' Withdraw'
 	},
 		
-		recharge: {
-			qxzczbz: 'Please select the deposit crypto',
-			cztd: 'Deposit channel',
-			usdtcz: 'USDT deposit',
-			btccz: 'BTC deposit',
-			ethcz: 'ETH deposit',
-			gfcztd: 'Official recharge channel'
-		},
+		// recharge: {
+			// qxzczbz: 'Please select the deposit crypto',
+			// cztd: 'Deposit channel',
+			// usdtcz: 'USDT deposit',
+			// btccz: 'BTC deposit',
+			// ethcz: 'ETH deposit',
+			// gfcztd: 'Official recharge channel',
+			// beizhu:{
+			// 	zyts:'IMPORTANT',
+			// 	shuomingwenzi1:'.Explain text, please do not recharge any non-USDT-ERC20 assets to the above address until you changeit， otherwise the asset bonus cannot be retrieved.',
+			// 	shuomingwenzi2:'.If you have completed the deposit, please click the "1\n' + 'have deposited" button on the page and submit the\n' + 'receipt, otherwise the deposit cannot be posted.',
+			// 	shuomingwenzi3:'.USDT deposit only supports the simple send method,\n' + 'and the deposit using other methods (send all) cannot\n' + 'be posted temporarily. Please understand.',
+			// 	shuomingwenzi4:'.After you recharge to the above address, you need\n' + 'to confirm the entire network node before it can be\n' + 'credited.',
+			// 	shuomingwenzi5:'.Please make sure that your computer and browser\n' + 'are safe to prevent information from being tampered\n' + 'with or leaked.',
+			// 	shuomingwenzi6:'.• The above deposit address is the official paymentaddress of the platform, please look for the officialdeposit address of the platform, and the loss of fundscaused by incorrect deposit shall be beared byyourself',
+			//
+			// }
+		// },
 	
 	fundRule: {
 		gz: 'Rules',

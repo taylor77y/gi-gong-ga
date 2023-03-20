@@ -32,7 +32,8 @@
 				<view class="money">{{ i18n.zxj }}</view>
 				<view class="right">24h{{ i18n.zdf }}</view>
 			</view>
-			<home-list :code="1" :state="current" :list="coinQuotations" />
+			<!-- <home-list :code="1" :state="current" :list="coinQuotations" /> -->
+			<home-list-market :list="coinList" :state="0" :tabIndex="tabIndex" />
 		</view>
 		<suspension-btn />
 		<tabar-com />
@@ -51,10 +52,13 @@
 				sot:"SPOT",
 				timer: null,
 				newcoinQuotations: [],
-        currentFour: 0
+        currentFour: 0,
+		coinList:[],
+		tabIndex:0
 			};
 		},
 		onLoad() {
+			this.getCoinData()
 			this.getCoinQuotationList(this.nameDom,this.sot);
 			
 		},
@@ -88,9 +92,37 @@
 				// this.getMainCursList();
 				// this.getCoinQuotationList(this.nameDom,this.sot);
 				this.changeFour(this.currentFour)
+				this.getCoinData()
 			}, 5000);
 		},
 		methods: {
+			getCoinData(){
+				this.$u.api.common.getCoinData().then(res => {
+					// console.log('getCoinData',res)
+					if(res.result){
+						try{
+							let data = JSON.parse(res.result)
+							console.log('getCoinData-data',data.data)
+							if(data.code == 0){
+								this.coinList = data.data
+								let arr = []
+								data.data.forEach(e=>{
+									if(e.name == 'BTC/USDT'){
+										arr[0] = e
+									}else if(e.name == 'ETH/USDT'){
+										arr[1] = e
+									}else if(e.name == 'ETC/USDT'){
+										arr[2] = e
+									}
+								})
+								this.coinListT = arr
+							}
+						}catch(e){
+							
+						}
+					}
+				})
+			},
 			change(e) {
 				this.current = e
 				this.getMainCursList();
@@ -107,6 +139,8 @@
 				}
 			},
       changeFour(e){
+		  console.log('进来了卧槽',e)
+		  this.tabIndex = e
         this.currentFour = e
         switch (e) {
           case 0:

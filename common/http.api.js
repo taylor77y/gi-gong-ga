@@ -83,8 +83,8 @@ const install = (Vue, vm) => {
 		//币的行情
 		getCurrencys: (getCoinType) => vm.$u.get("/data/data/getIndexCoin?getCoinType="+getCoinType),
 		getNotices: (params={}) => vm.$u.get(`/data/data/getNotices?noticeType=${params.noticeType}&global=${params.global}`),
-		getRechargeMethod: (member) => vm.$u.get(`/member/balance/getRechargeMethod?member=${member}`)
-
+		getRechargeMethod: (member) => vm.$u.get(`/member/balance/getRechargeMethod?member=${member}`),
+		getCoinData: () => vm.$u.get("/data/data/getIndexCoinNew")
 	}
 	//行情页面
 	const quato = {

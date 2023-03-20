@@ -1,32 +1,32 @@
 <template>
 	<view class="home-list">
-		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
+		<view class="item" v-for="(item, index) in list" :key="index" @click="getPath(item.pairsName)">
 			<view class="left" v-if="code === 0">
-				<image :src="baseUrl + '/symbol/'+item.symbol+'.png'" />
-				{{item.name}}
+				<image :src="item.image"  />
+				{{item.pairsName}}
 			</view>
 			<view class="lefts" v-else>
 				<view class="b-name">
-					<text class="name">{{item.name}}</text>
+					<text class="name">{{item.pairsName}}</text>
 					<!-- /<text>xxx</text> <text class="b-btn">10x</text> -->
 				</view>
 				<view>
-					24H{{ i18n.liang }} {{parseInt(item.amount)}}
+					24H{{ i18n.liang }} {{parseInt(item.volume)}}
 				</view>
 			</view>
 			<view class="cont">
 				<view class="top">
-					{{item.close}}
+					{{item.price|SubString(2)}}
 				</view>
 				<view class="money">
-					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
+					{{ setRate.mark }} {{item.price * setRate.rate |SubString(2)}}
 				</view>
 			</view>
 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
 				{{item.volume|SubString1(2)}}
 			</view>
 			<view v-else class="right" :class="item.updown>0?'right1':''">
-				{{item.change_ratio}}%
+				{{item.updown*100|SubString(2)}}%
 			</view>
 		</view>
 	</view>
@@ -56,53 +56,23 @@
 			state: {
 				type: Number,
 				default: 0
-			},
-			tabIndex: {
-				type: Number
 			}
-		},
-		watch: {
-			list(val){
-				this.renderList = val.concat()
-				// console.log('tabIndex',this.tabIndex)
-				this.sortList()
-			},
-			tabIndex(val) {
-				// console.log('我进来了 ', val)
-				this.sortList()
-			}
+
 		},
 		computed: {
 			i18n() {
 				return this.$t("market")
 			},
-			setRate() {
-				return this.$store.state.rate || {}
-			}
+		    setRate() {
+		       return this.$store.state.rate || {}
+		    }
 		},
 		data() {
 			return {
-				baseUrl: uni.getStorageSync('imgPath'),
-				renderList:[]
+				baseUrl: uni.getStorageSync('ossUrl')
 			}
 		},
 		methods: {
-			sortList(){
-				if(this.tabIndex == 1){
-					this.renderList.sort((v1,v2)=>{
-						return v2.change_ratio - v1.change_ratio
-					})
-				}else if(this.tabIndex == 2){
-					this.renderList.sort((v1,v2)=>{
-						return v1.change_ratio - v2.change_ratio
-					})
-				}else if(this.tabIndex == 3){
-					this.renderList.sort((v1,v2)=>{
-						return v2.volume - v1.volume
-					})
-				}
-				this.renderList = this.renderList.slice(0,10)
-			},
 			getPath(name) {
 				uni.navigateTo({
 					url: `/pages/kLine/index?name=${name}&code=${this.state}`

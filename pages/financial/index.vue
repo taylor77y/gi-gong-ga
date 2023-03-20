@@ -603,6 +603,8 @@
 				);
 			},
 			getTo(item) {
+				console.log('选中了',item)
+				this.search = item.open
 				this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
 				this.getLeverList();
