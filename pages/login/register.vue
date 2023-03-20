@@ -36,7 +36,6 @@
 
 			<u-input :placeholder="getPlaceholder[chenk]" v-model="userPhone" class="f-input" height="30"
 				placeholder-style="color: #B0B3BA;font-size: 32rpx" />
-
 		</view>
 		<!-- 密码 -->
 		<view class="common flex-row justify-between">
@@ -148,7 +147,6 @@
 				newTimer: null,
 				min: 60,
 				timeCode: true,
-				verification: '',
 				numList: [{
 					name: this.$t('member').zhzc
 				}, {
@@ -387,8 +385,9 @@
 						this.$utils.showToast(this.i18n.zccg)
 						
 						setTimeout(() => {
+							console.log(1)
 							uni.navigateTo({
-								url: '/pages/login/login'
+								url: '/pages/login/setFond'
 							})
 						}, 500)
 					} else {
@@ -414,7 +413,7 @@
 								if (!this.$utils.testEmail(userPhone)) {
 									delete temp.areaCode
 								}
-								this.loginFn(temp)
+								//this.loginFn(temp)
 							} else {
 								this.$utils.showToast(res.errorMessage)
 							}
