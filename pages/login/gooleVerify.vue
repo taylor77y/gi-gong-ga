@@ -52,11 +52,11 @@
         </view>
       </view>
 	  <view>
-	  		<u-message-input :maxlength="6" :focus="true" :breathe="false" :dot-fill="true" ></u-message-input>
+	  		<u-message-input :maxlength="6" :focus="true" :breathe="false" :dot-fill="true" ref="inputmsg"></u-message-input>
 	  </view>
     </view>
 
-    <view class="mattersNeedingAttentionBox">
+    <view class="mattersNeedingAttentionBox mg30">
       <view class="mattersNeedingAttention">
         <text>注意事项</text>
       </view>
@@ -67,13 +67,15 @@
         <text>2.扫描上图二维码输入验证码完成有定</text>
       </view>
     </view>
-
+	<view class="item mt-50 mg30">
+		<u-button type="primary" @click="nextup">确认</u-button>
+	</view>
   </view>
 </template>
 
 <script>
   export default {
-    name:'gooleVerify',
+    //name:'gooleVerify',
     props: {},
     data() {
       return {
@@ -88,7 +90,7 @@
         }, {
           name: this.$t('member').qjy
         }, ],
-		ggnum:'',
+		//ggnum:'',
       }
     },
     created() { },
@@ -99,12 +101,24 @@
       },
     },
     methods: {
+	  nextup(){
+		  if(this.$refs.inputmsg.valueModel.length != 6){
+			uni.showToast({
+				icon:'none',
+				title: '请输入验证码',
+			});
+			return ;  
+		  }
+		  uni.navigateTo({
+		  	url:'/pages/login/finish'
+		  })
+	  },
       back() {
         uni.navigateBack(1)
       },
       cancel() {
         uni.navigateTo({
-          url:'/pages/login/register'
+          url:'/pages/login/finish'
         })
       },
     }
@@ -212,5 +226,8 @@
         margin: 30rpx;
       }
     }
+  }
+  .mg30{
+	  margin: 0 30rpx;
   }
 </style>

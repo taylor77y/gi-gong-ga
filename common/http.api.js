@@ -149,15 +149,17 @@ const install = (Vue, vm) => {
 		//设置登录密码
 		resetPassword: (member,oldPass,newPass) => vm.$u.post(`/member/member/resetPassword?member=${member}&oldPass=${oldPass}&newPass=${newPass}`),
 		//设置支付密码
-		resetPayPass: (member,oldPass,password) => vm.$u.post(`/member/member/resetPayPass?member=${member}&oldPass=${oldPass}&password=${password}`),
-		//邮箱发送
+		setPayPass: (member,password) => vm.$u.post(`/member/member/resetPayPassFirst?member=${member}&password=${password}`),
+		// resetPayPass: (member,oldPass,password) => vm.$u.post(`/member/member/resetPayPass?member=${member}&oldPass=${oldPass}&password=${password}`),
+		// //邮箱发送
 		sendMail: (mailbox, type) => vm.$u.post(`/data/sms/sendMail?mailbox=${mailbox}&type=${type ? type:'SETPHMAIL'}`),
 		// 手机信息发送
 		sendPhone: (mailbox, member) => vm.$u.post(`/data/sms/sendSmsNew?phone=${mailbox}&type=PHONEYANZEN&member=${member ? member: ''}`),
 
 		// 邮箱校验
 		checkSmsCode: (phMail, code, type) => vm.$u.post(`/member/member/checkSmsCode?phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}`),
-
+		//实名认证
+		setAuthenWithArea: (member,areaCode,name,cardNo) => vm.$u.post(`/member/setAuthenWithArea?member=${member}&areaCode=${areaCode}&name=${name}&cardNo=${cardNo}`),
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息

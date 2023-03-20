@@ -196,43 +196,53 @@ export default {
 	   // 	  url: `/pages/login/welcome?userName=${userName}`
 	   // })
     // },
-	nextStep() {	
-		const temp = {
-			phMail:this.userName,
-			password: md5Libs.md5(this.password),
-			areaCode: this.countryCode,
-			type: this.loginType
-		}
+	nextStep(){
+		let member = uni.getStorageSync('userId'); 
+		  this.$u.api.user.setPayPass(member,this.password).then(res=>{
+		   if(res.status == "SUCCEED"){
+		    uni.navigateTo({
+		     url:'/pages/login/my-identity'
+		    })
+		   }
+		  })
+	},
+	// nextStep() {	
+	// 	const temp = {
+	// 		phMail:this.userName,
+	// 		password: md5Libs.md5(this.password),
+	// 		areaCode: this.countryCode,
+	// 		type: this.loginType
+	// 	}
 		
-		this.$u.api.user.login(temp).then(res => {
+	// 	this.$u.api.user.login(temp).then(res => {
 			
-			if(res.status == "SUCCEED"){
-				console.log("登录结果",res.status)
-				// if (this.socket.connState === 2) {
-				// 	this.socket.destroy()
-				// }
-				console.log("登录结果222")
-				if (uni.getStorageSync('testId')) {
-					const testid = uni.getStorageSync('testId')
-					console.log('我触发了！')
-					uni.setStorageSync('testId', testid)
-				}
-				console.log("登录结果333")
-				this.$utils.showToast(this.i18n.dlcg)
-				uni.setStorageSync('userId',res.result.id)
-				//保存token至缓存
-				uni.setStorageSync('token',res.result.token)
-				setTimeout(() => {
-					uni.navigateTo({
-						url: `/pages/index/index`
-					})
-				}, 1200)
-				console.log("登录结果")
-			} else {
-				this.$utils.showToast(res.errorMessage)
-			}
-		})
-    }
+	// 		if(res.status == "SUCCEED"){
+	// 			console.log("登录结果",res.status)
+	// 			// if (this.socket.connState === 2) {
+	// 			// 	this.socket.destroy()
+	// 			// }
+	// 			console.log("登录结果222")
+	// 			if (uni.getStorageSync('testId')) {
+	// 				const testid = uni.getStorageSync('testId')
+	// 				console.log('我触发了！')
+	// 				uni.setStorageSync('testId', testid)
+	// 			}
+	// 			console.log("登录结果333")
+	// 			this.$utils.showToast(this.i18n.dlcg)
+	// 			uni.setStorageSync('userId',res.result.id)
+	// 			//保存token至缓存
+	// 			uni.setStorageSync('token',res.result.token)
+	// 			setTimeout(() => {
+	// 				uni.navigateTo({
+	// 					url: `/pages/index/index`
+	// 				})
+	// 			}, 1200)
+	// 			console.log("登录结果")
+	// 		} else {
+	// 			this.$utils.showToast(res.errorMessage)
+	// 		}
+	// 	})
+ //    }
   }
 };
 </script>
