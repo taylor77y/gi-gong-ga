@@ -267,16 +267,7 @@
 
 			this.sellState = this.setSellCode === 1 ? false : true
 		},
-		beforeDestroy() {
-			if(this.socket)
-				this.socket.toClose();
-			this.socket = null;
-			
-			clearInterval(this.interval)
-			this.interval = null
-			clearInterval(this.interval2)
-			this.interval2 = null
-		},
+		beforeDestroy() {},
 		watch: {
 			// 打开类型切换
 			showSpec(val) {
@@ -740,6 +731,14 @@
 				clearInterval(this.timer);
 				this.timer = null;
 			}
+			
+			clearInterval(this.interval)
+			this.interval = null
+			clearInterval(this.interval2)
+			this.interval2 = null
+			
+			if(this.socket) this.socket.toClose();
+			this.socket = null
 			// this.$store.state.socket.removeListener('daymarket')
 		},
 		onUnload() {
