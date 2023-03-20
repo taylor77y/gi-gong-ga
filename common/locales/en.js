@@ -1776,6 +1776,11 @@ export default {
 		topName: [
 			'Delivery Contract', 'Perpetual Contract'
 		],
+		warehouse:[
+			{name:'kc',id:'0'},
+			{name:'pc',id:'1'},
+			{name:'cc',id:'2'},
+		],
 		btnInfo: ['open position', 'close position'],
 		bzjzdqtsx: 'The margin adjustment mode is only effective for the current contract. ',
 		bzjms: 'margin mode',

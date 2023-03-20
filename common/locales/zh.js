@@ -281,7 +281,7 @@ export default {
 		sl: '数量',
 		mairu: '买入',
 		maichu: '卖出',
-		zwgdsj: '暂无更多数据',
+		zwgdsj: '当前无委托',
 		gd: '更多',
 		tx: '提醒',
 		wg: '网格',
@@ -1799,6 +1799,8 @@ export default {
 		shuliang: '数量',
 		jiage: '价格',
 		kaiduo: '开仓',
+		kd:'开多',
+		kk:'开空',
 		pingduo: '平多',
 		kaikong: '平仓',
 		pingkong: '平空',
@@ -1822,6 +1824,11 @@ export default {
 		],
 		topName: [
 			'交割合约', '永续合约'
+		],
+		warehouse:[
+			{name:'开仓',id:'0'},
+			{name:'平仓',id:'1'},
+			{name:'持仓',id:'2'},
 		],
 		btnInfo: ['开仓', '平仓'],
 		bzjzdqtsx: '调整保证金模式仅对当前合约生效。',
