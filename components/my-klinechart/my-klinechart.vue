@@ -16,10 +16,7 @@
 </template>
 
 <script>
-	import {
-		init,
-		dispose
-	} from '../klinechart/klinecharts.min.js'
+	import {init, dispose } from 'klinecharts'
 	import theme from '../klinechart/theme.js'
 	export default {
 		props: {
@@ -112,35 +109,53 @@
 				technicallndictor: null,
 			}
 		},
+		computed: {
+			isLine() {
+				return this.activetedTime.name === 'Line' ? true : false;
+			},
+		},
 		watch: {
 			applyNewData(val){
 				this.klineData = this.applyNewData
 				this.chart.clearData()
-				this.chart.applyNewData(this.klineData);
+				this.initChart()
+			},
+			// 配置图标类型 area | candle_solid
+			isLine(val) {
+				if(val === true) {
+					this.chart.setStyleOptions({
+						grid: {show:false},
+						candle: {
+							type: 'area',
+						}
+					})
+				} else {
+					this.chart.setStyleOptions({
+						grid: {show:false},
+						candle: {
+							type: 'candle_solid',
+						}
+					})
+				}
 			}
 		},
 		mounted() {
+			dispose('klineChart')
+			this.chart = init('klinechart', {
+				grid: {show:false},
+				candle: {
+					// 蜡烛图类型 'candle_solid'|'candle_stroke'|'candle_up_stroke'|'candle_down_stroke'|'ohlc'|'area'
+					type: this.isLine === true ? 'area' : 'candle_solid',
+				}
+			})
 			this.initChart()
 		},
 		methods: {
 			initChart() {
-				dispose('klineChart')
-				this.chart = init('klinechart', {
-					grid: {show:false},
-					candle: {
-						tooltip: {
-							text: {
-								size: 10,
-								marginLeft: 0,
-								marginRight: 2,
-							}
-						}
-					}
-				})
 				//设置黑色主题
 				this.chart.setStyleOptions(theme(this.themeVal))
-				this.chart.createTechnicalIndicator('MA', true, {id: 'candle_pane'})
-				this.chart.createTechnicalIndicator(this.type)
+				this.chart.createTechnicalIndicator('MA', false, {id: 'candle_pane'})
+				this.chart.createTechnicalIndicator(this.type, false, {id: 'tech'})
 				this.chart.applyNewData(this.klineData);
 			},
 			changeTime(item) {
@@ -148,11 +163,8 @@
 			},
 			// type 旧值， val 新的
 			changeType(val) {
-				console.log(this.type, val)
-				if(this.type != val.name) {
-					this.chart.createTechnicalIndicator(val)
-					this.type = val.name
-				}
+				this.type = val.name
+				this.chart.createTechnicalIndicator(this.type, false, {id: 'tech'})
 			}
 		}
 	}
