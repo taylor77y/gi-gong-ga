@@ -4,12 +4,14 @@ const {common} = i18n.messages[i18n.locale];
 const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
 
-
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/",
 
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/",
 		// baseUrl: 'https://qcapi.obk3.com',
 		// baseUrl: 'http://wap.mxoexchange.vip/',
 		// 如果将此值设置为true，拦截回调中将会返回服务端返回的所有数据response，而不是response.data
