@@ -236,6 +236,8 @@
 			this.$u.api.fack.getCurrencyConfiguration().then(res=>{
 				this.rate = res.result[0]
 			})
+			if(this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+			else this.getRealTimeOne();
 			
 			this.interval = setInterval(() => {
 				if(this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);

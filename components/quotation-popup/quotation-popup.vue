@@ -52,9 +52,9 @@
 							<text v-else>{{item.price|SubString3(2,4)}}</text>
 						</view>
 					</view>
-					<view class="lower" :class="{'text-red': item.change_ratio < 0}">
-           <!-- {{item.change_ratio}}% -->
-						{{item.updown*100|SubString(2)}}%
+					<view class="lower">
+						<text v-if="item.change_ratio"  :class="{'text-red': item.change_ratio < 0}"> {{item.change_ratio}}%</text>
+						<text v-else>{{item.updown*100|SubString(2)}}%</text>
 					</view>
 				</view>
 			</view>
