@@ -1,9 +1,5 @@
 // 此处第二个参数vm，就是我们在页面使用的this
 const install = (Vue, vm) => {
-	//type 3 账户，2邮箱，1号码
-	const newRegister = {
-		accountReg:(username,password,re_password,type,usercode='')=> vm.$u.get(`https://db23app.vip/wap/api/localuser!registerNoVerifcode.action?username=${username}&password=${password}&re_password=${re_password}&type=${type}&usercode=${usercode}`)
-	}
 	// 合约交易
 	const trendDetails = {
 		getExchangerateuserconfig: () => vm.$u.get(`https://db23app.vip/wap//api/exchangerateuserconfig!get.action`),
@@ -403,6 +399,10 @@ const install = (Vue, vm) => {
 	const game = {
 
 	}
+	
+	const kefu = {
+		getContactLink: (type) => vm.$u.get("/member/member/getContactLink?type="+type),
+	}
 
 	vm.$u.api = {
 		common,
@@ -423,8 +423,8 @@ const install = (Vue, vm) => {
 		yx,
 		sd,
 		trendDetails,
-		newRegister,
-		wantBuy
+		wantBuy,
+		kefu
 	};
 }
 export default {

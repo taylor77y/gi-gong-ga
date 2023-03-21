@@ -27,11 +27,16 @@ class socket {
     this.url = ''
 
   }
-  handleUrl(id) {
-    console.log(id)
+  handleUrl(url,id) {
+    console.log('连接客服',url,id)
     // this.id = id
-    this.url = uni.getStorageSync('wssURL') + id
+    this.url = url + id
   }
+  // handleUrl(id) {
+  //   console.log(id)
+  //   // this.id = id
+  //   this.url = uni.getStorageSync('wssURL') + id
+  // }
   doOpen() {
     console.log('999999999999', this.connState)
 
@@ -61,7 +66,6 @@ class socket {
 
       this.heartBeatTimer = setInterval(this.checkHeartbeat.bind(this), 15000)
     }
-
     this.handlerCallback('open', evt)
   }
   checkOpen() {

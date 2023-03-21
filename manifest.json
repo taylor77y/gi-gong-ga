@@ -149,6 +149,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
+                    // "target" : "http://wap.adbaa3011.cc/",
                     "target" : "http://192.168.2.13/",
                     "changeOrigin" : true,
                     "secure" : false,
