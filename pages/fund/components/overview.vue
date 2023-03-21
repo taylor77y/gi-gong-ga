@@ -121,7 +121,6 @@ export default {
     //钱包
     getBalances() {
       let member = uni.getStorageSync('userId')
-      console.info("🇨🇳🇨🇳:member --", member)
       this.$u.api.user.getBalanceList(member).then(res => {
         this.walletResult = res.result
 
