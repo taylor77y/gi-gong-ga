@@ -175,7 +175,7 @@ export default {
 	getPath(index) {
 		if (index === 1) {
 			uni.navigateTo({
-				url: `/pages/login/create-login`
+				url: `/pages/login/register`
 			})
 		} else {
 			uni.navigateTo({

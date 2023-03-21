@@ -25,22 +25,24 @@
 		</view>
 <!--  切换仓库-->
     <view class="warehouse">
-      <u-subsection :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%" ></u-subsection>
+      <u-subsection :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%"></u-subsection>
     </view>
 
 		<view class="x-box">
-			<view class="fee-box">
-				<view @click="showBond = true" class="left-selset d-flex-between-center">
+			<view class="fee-box" v-if="cuBond !=2">
+				<view @click="showBond = false" class="left-selset d-flex-between-center">
 					{{ cuBond === 0 ? i18n.kaican:i18n.pingcan }}
-					<image style="width: 18rpx;height: 10rpx;" src="../../static/image/new/6.png" />
+<!--					<image style="width: 18rpx;height: 10rpx;" src="../../static/image/new/6.png" />-->
 				</view>
-				<view class="cont-selset d-flex-between-center" @click="leversState = true">
+				<view class="cont-selset d-flex-between-center" @click="leversState = false">
 					{{ leversCode }}
-					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"
-						src="../../static/image/new/6.png" />
+<!--					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"-->
+<!--						src="../../static/image/new/6.png" />-->
 				</view>
-				<view class="left-selset" style="width: auto;text-align: center;margin: 0;">
-					{{ i18n.dan }}
+				<view class="left-selset d-flex-between-center"  @click="entrustShow = true">
+          {{entrustText}}
+          <image :class="{'r-icon1' : entrustShow}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"
+                 src="../../static/image/new/6.png" />
 				</view>
 				<!-- <view class="right-name">
 					<view>
@@ -63,10 +65,10 @@
 					</view>
 					<right-area :code="0" :openup="buyData" />
 					<view class="money">
-						{{nowData.nowPrice}}
+<!--						{{nowData.nowPrice}}-->
 					</view>
 					<view class="zhehe">
-						≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}
+<!--						≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}-->
 					</view>
 					<right-area :code="1" :openup="sellData" />
 					<view class="d-flex align-items-center">
@@ -241,17 +243,19 @@
 				<u-empty :text="$t('kLine').zwgdsj" mode="order"></u-empty>
 			</view>
 		</view>
-		<bond-popup @getAdd="getBondAdd" :show-spec.sync="showBond" />
+<!--		<bond-popup @getAdd="getBondAdd" :show-spec.sync="showBond" />-->
 		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
 		</u-action-sheet>
-		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLevers" :list="levers" v-model="leversState">
+<!--		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLevers" :list="levers" v-model="leversState">-->
+<!--		</u-action-sheet>-->
+    <u-action-sheet :cancel-text="$t('fack').qx" @click="onClickEntust" :list="entrustList" v-model="entrustShow">
 		</u-action-sheet>
 		<yx-add-popup @getAdd="sub" :show-pup.sync="ydAddCode" :current-dta="currentDta" />
 		<u-modal :title="$t('common').hint" :confirm-text="$t('common').confirm" :cancel-text="$t('common').cancel"
 			@confirm="confirmPosition" confirm-color="#D1A037" :show-cancel-button="true" v-model="isPosition"
 			:content="content"></u-modal>
-		<yx-stop-popup @getAdd="stopAdd" :money="nowData.nowPrice" :show-pup.sync="isStop" :curCode="isStopCode" />
+<!--		<yx-stop-popup @getAdd="stopAdd" :money="nowData.nowPrice" :show-pup.sync="isStop" :curCode="isStopCode" />-->
 		<tabar-com />
 	</view>
 </template>
@@ -284,8 +288,14 @@
 						text: '100x'
 					}
 				],
-				leversCode: '20X',
+				leversCode: '1X',
 				leversState: false,
+        entrustList:[
+          {text:'市价委托'},
+          {text:'限价委托'},
+        ],
+        entrustShow:false,//限价委托
+        entrustText:'市价委托',//限价委托
 				showBond: false,
 				cuBond: 0, // 0 是全仓
 				stop1: '',
@@ -652,13 +662,13 @@
 					url: `/pages/record/index?code=3`
 				})
 			},
-			getBondAdd(index) {
-				this.cuBond = index
-				this.showBond = false
-			},
-			// 点击的是第几个杠杆
-			onClickLevers(index) {
-				this.leversCode = this.levers[index].text
+			// getBondAdd(index) {
+			// 	this.cuBond = index
+			// 	this.showBond = false
+			// },
+			// 点击的是第几个z
+      onClickEntust(index) {
+				this.entrustText = this.entrustList[index].text
 			},
 			// 点击
 			onClickLever(index) {
