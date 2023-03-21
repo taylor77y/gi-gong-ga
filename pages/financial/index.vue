@@ -1,31 +1,34 @@
 <template>
 	<view class="container">
-		<view style="height: 56rpx;"></view>
-
-		<view class="bi-title d-flex-between-center">
-			<view class="left" @click="showSpec = true">
-				<image src="../../static/image/new/1.png" /> {{pairsItem.pairsName}}
-				<text class="num num1">
-					{{pairsItem.updown*100|SubString(2)}}%
-				</text>
+		<!-- <view style="height: 56rpx;"></view> -->
+		<view class="white">
+			<view class="top-btn">
+				<view class="item" @click="getTopBtn(index)" :class="{'item1': btnCode === index}"
+					v-for="(item, index) in topName" :key="index">{{ item }}
+					<view class="bot" v-if="btnCode === index"></view>
+					<view class="btn-tag" v-if="index === 2">
+						new
+					</view>
+				</view>
 			</view>
-			<view class="right" @click="getLine">
-				<image src="../../static/image/new/2.png" />
-				<!-- <image src="../../static/image/new/3.png" />
-				<image src="../../static/image/new/4.png" /> -->
-			</view>
-		</view>
-		<view class="top-btn">
-			<view class="item" @click="getTopBtn(index)" :class="{'item1': btnCode === index}"
-				v-for="(item, index) in topName" :key="index">{{ item }}
-				<view class="btn-tag" v-if="index === 2">
-					new
+			<view class="bi-title d-flex-between-center">
+				<view class="left" @click="showSpec = true">
+					<image src="../../static/image/new/1.png" /> {{pairsItem.pairsName}}
+					<text class="num num1">
+						{{pairsItem.updown*100|SubString(2)}}%
+					</text>
+				</view>
+				<view class="right" @click="getLine">
+					<image src="../../static/image/new/2.png" />
+					<!-- <image src="../../static/image/new/3.png" />
+					<image src="../../static/image/new/4.png" /> -->
 				</view>
 			</view>
 		</view>
+
 <!--  切换仓库-->
     <view class="warehouse">
-      <u-subsection :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%" ></u-subsection>
+      <u-subsection2 mode="subsection" :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%" ></u-subsection2>
     </view>
 
 		<view class="x-box">
@@ -400,6 +403,7 @@
 		methods: {
       //切换开仓
       sectionChange(i){
+		  // console.log('切换开仓',i)
         this.cuBond = i
       },
 			//撤单
@@ -824,6 +828,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.white{
+		background-color: #fff;
+	}
 	.yx-title {
 		display: flex;
 		align-items: center;
@@ -887,7 +894,7 @@
 
 		.x-box {
 			background: #fff;
-			border-radius: 40rpx 40rpx 0 0;
+			// border-radius: 40rpx 40rpx 0 0;
 			padding: 40rpx 24rpx;
 
 			.fee-box {
@@ -1230,11 +1237,18 @@
 
 		.top-btn {
 			margin: 0 24rpx;
-			border: 1rpx solid #B0B3BA;
+			// border: 1rpx solid #B0B3BA;
+			color: #000;
 			border-radius: 15rpx;
 			display: flex;
 			align-items: center;
 			overflow-x: scroll;
+			
+			.bot{
+				margin-top: 6rpx;
+				width: 40rpx;
+				border-bottom: 5rpx solid #BE1852;
+			}
 
 			//padding: 0 30rpx;
 
@@ -1262,7 +1276,11 @@
 				flex-basis: auto;
 				flex-shrink: 0;
 				font-size: 26rpx;
-				color: #8D9099;
+				color: #333;
+				justify-content: center;
+				align-items: center;
+				display: flex;
+				flex-direction: column;
 				// margin-right: 50rpx;
 			}
 
@@ -1273,10 +1291,15 @@
 				font-weight: 600;
 				border-radius: 6rpx;
 				padding: 10rpx 0;
+				
+				justify-content: center;
+				align-items: center;
+				display: flex;
+				flex-direction: column;
 				//background: #fff;
-         border-radius: 25rpx;
-        background: #2c78f8;
-        color: #fff;
+         // border-radius: 25rpx;
+        // background: #2c78f8;
+        color: #BE1852;
         border: none;
 			}
 		}
@@ -1288,7 +1311,9 @@
       display: flex;
       align-items: center;
       //overflow-x: scroll;
-      padding: 26rpx 30rpx;
+      // padding: 26rpx 30rpx;
+	  margin-top: 20rpx;
+
     }
 	}
 </style>
