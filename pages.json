@@ -1377,37 +1377,5 @@
 			"background":"#333333"
 		}
 	}
-	// "tabBar": {
-	// 	"color": "#B0B3BA",
-	// 	"selectedColor": "#D4B02D",
-	// 	"backgroundColor": "#fff",
-	// 	"borderStyle": "black",
-	// 	"list": [{
-	// 		"pagePath": "pages/index/index",
-	// 		"iconPath": "static/image/nav/nav-1.png",
-	// 		"selectedIconPath": "static/image/nav/nav-1-active.png",
-	// 		"text": "首页"
-	// 	}, {
-	// 		"pagePath": "pages/market/market",
-	// 		"iconPath": "static/image/nav/nav-2.png",
-	// 		"selectedIconPath": "static/image/nav/nav-2-active.png",
-	// 		"text": "行情"
-	// 	}, {
-	// 		"pagePath": "pages/transaction/index",
-	// 		"iconPath": "static/image/nav/nav-3.png",
-	// 		"selectedIconPath": "static/image/nav/nav-3-active.png",
-	// 		"text": "交易"
-	// 	}, {
-	// 		"pagePath": "pages/financial/index",
-	// 		"iconPath": "static/image/nav/nav-4.png",
-	// 		"selectedIconPath": "static/image/nav/nav-4-active.png",
-	// 		// "text": "金融",
-	// 		"text": "合约"
-	// 	}, {
-	// 		"pagePath": "pages/fund/assets",
-	// 		"iconPath": "static/image/nav/nav-5.png",
-	// 		"selectedIconPath": "static/image/nav/nav-5-active.png",
-	// 		"text": "资金"
-	// 	}]
-	// }
+
 }
