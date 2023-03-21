@@ -1762,9 +1762,9 @@ export default {
 		jgbnwk: 'The price cannot be empty',
 		jgbxxydqjg: 'The price must be less than the current price',
 		jgbxdydqjg: 'The price must be greater than the current price',
-		qsrsl: 'Please enter the quantity',
+		qsrsl: 'Please enter the number of contracts',
 		kyzjbz: 'Insufficient funds available',
-		limit: ['limit price', 'market price'],
+		limit: [ 'market price','limit price'],
 		tagBtn: [{
 				name: 'position'
 			},
@@ -1801,6 +1801,11 @@ export default {
 		mhycg: 'The second contract is successful',
 		maizhang: 'buy up',
 		maidie: 'Buy or sell',
+		zhang:'copies',
+		hyje:'Contract amount',
+		bzj:'deposit',
+		jcsxf:'Opening charge',
+		denglu:'Log in and make the transaction',
 	},
 	delivery: {
 		ddqr: 'Order Confirmation',

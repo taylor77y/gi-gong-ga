@@ -42,11 +42,6 @@
 <!--					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"-->
 <!--						src="../../static/image/new/6.png" />-->
 				</view>
-				<view class="left-selset d-flex-between-center"  @click="entrustShow = true">
-          {{entrustText}}
-          <image :class="{'r-icon1' : entrustShow}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"
-                 src="../../static/image/new/6.png" />
-				</view>
 				<!-- <view class="right-name">
 					<view>
 						资金费率/倒计时
@@ -115,8 +110,8 @@
 							<!-- 	<image src="../../static/image/new/14.png" /> -->
 						</view>
 					</view>
+          <!--限价委托金额 -->
 					<view class="limit-box">
-
 						<image style="width: 26rpx;height: 26rpx;" src="../../static/image/new/5.png" />
 						<view class="l-cont" @click="getFixedPrice()">
 							{{ limitFn[priceCode] }}
@@ -128,14 +123,14 @@
 							<view class="item" :class="{'item1': priceCode === index}" v-for="(item, index) in limitFn"
 								:key="index" @click="getLimit(index)">{{ item }}</view>
 						</view>
-
+        <!--金额-->
 					</view>
 					<view class="l-sum">
-						<image src="../../static/image/new/9.png" @click="getReduce(1)" />
-						<input type="number" v-model="search" placeholder-style="background: #F6F6F6;"
+<!--						<image src="../../static/image/new/9.png" @click="getReduce(1)" />-->
+						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;"
 							class="f-input" />
 						<view class="r-icon" @click="getAdd(1)">
-							<image src="../../static/image/new/8.png" />
+							<text>{{i18n.zhang}}</text>
 						</view>
 					</view>
 					<view style="height: 14rpx;"></view>
@@ -156,12 +151,29 @@
 					<view class="percent d-flex align-items-center">
 						<view class="item" v-for="(item, index) in numberFn" :key="index">{{ item.val }}</view>
 					</view>
-					<view class="money-input">
 
-						<input type="number" :placeholder="i18n.shuliang" v-model="search1"
-							placeholder-style="background: #F6F6F6;color: #B0B3BA" class="f-input" />
+<!--					<view class="money-input">-->
 
-					</view>
+<!--						<input type="number" :placeholder="i18n.shuliang" v-model="search1"-->
+<!--							placeholder-style="background: #F6F6F6;color: #B0B3BA" class="f-input" />-->
+
+<!--					</view>-->
+
+<!--          展示的 合约金额 保证金 建仓手续费-->
+          <view class="amountDisplayBox" v-if="userId">
+            <view class="amountList">
+              <view class="text">{{i18n.hyje}}</view>
+              <view class="amount">{{search1 * 1000}}</view>
+            </view>
+            <view class="amountList">
+              <view class="text">{{i18n.bzj}}</view>
+              <view class="amount">{{search1 * 1000}}</view>
+            </view>
+            <view class="amountList">
+              <view class="text">{{i18n.jcsxf }}</view>
+              <view class="amount">{{search1 * 30}}</view>
+            </view>
+          </view>
 					<view style="height: 40rpx;"></view>
 					<!-- <view class="stop" @click="stopCode = !stopCode">
 						<view class="circular" v-if="!stopCode"></view>
@@ -202,14 +214,19 @@
 						</view>
 					</view> -->
 
-					<view class="f-btn" :class="{'f-btn1': sellState}" @click="sub()">
-						<text v-if="sellState">
-							{{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
+					<view class="f-btn" :class="{'f-btn1': sellState}" @click="sub(1)">
+            <view v-if="userId">
+              <text v-if="sellState">
+                {{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
 
-						</text>
-						<text v-else>
-							{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
-						</text>
+              </text>
+              <text v-else>
+                {{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
+              </text>
+            </view>
+            <view v-if="!userId" @click="toLogin">
+              {{i18n.denglu }}
+            </view>
 					</view>
 				</view>
 			</view>
@@ -250,9 +267,7 @@
 		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
 		</u-action-sheet>
-<!--		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLevers" :list="levers" v-model="leversState">-->
-<!--		</u-action-sheet>-->
-    <u-action-sheet :cancel-text="$t('fack').qx" @click="onClickEntust" :list="entrustList" v-model="entrustShow">
+		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLevers" :list="levers" v-model="leversState">
 		</u-action-sheet>
 		<yx-add-popup @getAdd="sub" :show-pup.sync="ydAddCode" :current-dta="currentDta" />
 		<u-modal :title="$t('common').hint" :confirm-text="$t('common').confirm" :cancel-text="$t('common').cancel"
@@ -268,6 +283,7 @@
 	export default {
 		data() {
 			return {
+        userId : uni.getStorageSync('userId'),
 				isStop: false, // 止盈 止损 弹窗
 				isStopCode: false, // false 止盈 true 止损
 				stopMoney: 0,
@@ -293,12 +309,6 @@
 				],
 				leversCode: '1X',
 				leversState: false,
-        entrustList:[
-          {text:'市价委托'},
-          {text:'限价委托'},
-        ],
-        entrustShow:false,//限价委托
-        entrustText:'市价委托',//限价委托
 				showBond: false,
 				cuBond: 0, // 0 是全仓
 				stop1: '',
@@ -329,9 +339,9 @@
 				sellState: false, // false 买入 true 卖出
 				percentCode: [],
 				current: 0,
-				search: 0,
+				search: 1,
 				searchs: 56,
-				search1: null,
+				search1: 1,
 				btnCode: 1,
 				pairs: [],
 				pairsItem: {},
@@ -411,6 +421,12 @@
 
 		},
 		methods: {
+      //登录
+      toLogin () {
+        uni.navigateTo({
+          url: `/pages/login/login`
+        })
+      },
       //切换开仓
       sectionChange(i){
 		  // console.log('切换开仓',i)
@@ -519,7 +535,7 @@
 			},
 			sub(code) {
 				const {
-					search1,
+					search1,//张数
 					usdtPrice,
 					sellState,
 					contractMulId,
@@ -529,10 +545,10 @@
 					this.$utils.showToast(this.i18n.qsrsl)
 					return
 				}
-				if (usdtPrice <= 0) {
-					this.$utils.showToast(this.i18n.kyzjbz)
-					return
-				}
+				// if (usdtPrice <= 0) {
+				// 	this.$utils.showToast(this.i18n.kyzjbz)
+				// 	return
+				// }
 				let leverId = ''
 				let currentGangganType = 0
 				this.levers.forEach(item => {
@@ -549,18 +565,29 @@
 				} = this.pairsItem
 				let obj = new Object();
 				obj.coinName = tokenCur
-				obj.contractHands = search1
+				obj.contractHands = this.search1 //合约乘数
 				obj.contractMulId = contractMulId // 交易配置id
-				obj.leverId = leverId
+				// obj.leverId = leverId
+				obj.leverId = 'f25d2c1dcd6f74037f61ae681fc34fc4'//杠杆ID
 				obj.mainCur = pairsName.split("/")[1]
 				obj.member = uni.getStorageSync('userId')
 				obj.pairsName = pairsName
-				obj.price = this.priceCode == 0 ? this.search:this.nowData.nowPrice
+				// obj.price = this.priceCode == 0 ? this.search:this.nowData?.nowPrice
+				obj.price = this.search1 * 1000//金额
 				obj.priceType = this.priceCode == 0 ? "MARKET_PRICE" : "CUSTOM_PRICE" // 0市价 1限价
-				obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP"
-				this.currentDta = {
+				// obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
+        obj.tradeType = this.cuBond == 1 ? 'CLOSE_UP' : 'CLOSE_DOWN'
+        if(this.cuBond == 0){
+          obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
+        }else if(this.cuBond == 1){
+          obj.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP" //多开 多空 或者 平多 平空
+        }
+
+        // OPEN_UP、OPEN_DOWN、CLOSE_UP、CLOSE_DOWN",
+
+        this.currentDta = {
 					pairsName,
-					price: this.nowData.nowPrice,
+					price: this.nowData?.nowPrice,
 					num: search1,
 					lever: currentGangganType,
 					bond: search1 * contractMul * price / currentGangganType,
@@ -578,11 +605,11 @@
 						} else {
 							this.$utils.showToast(res.errorMessage)
 						}
+            this.search1 = 1
 					})
 				} else {
 					this.ydAddCode = true
 				}
-
 
 			},
 			// 交易配置id
@@ -670,10 +697,6 @@
 			// 	this.cuBond = index
 			// 	this.showBond = false
 			// },
-			// 点击的是第几个z
-      onClickEntust(index) {
-				this.entrustText = this.entrustList[index].text
-			},
 			// 点击
 			onClickLever(index) {
 				this.leverCode = this.lever[index].text
@@ -785,7 +808,6 @@
 					this.newList = res.result;
 
 				})
-				console.log(this.list, '测试9999999999999999')
 			},
 			getWarehousesList() {
 				let pairsName = this.pairsItem.pairsName;
@@ -1024,19 +1046,31 @@
 					}
 				}
 
-				.money-input {
-					background: #F6F6F6;
-					border-radius: 6rpx;
-					margin: 30rpx 0;
-					padding: 18rpx 0;
+				//.money-input {
+				//	background: #F6F6F6;
+				//	border-radius: 6rpx;
+				//	margin: 30rpx 0;
+				//	padding: 18rpx 0;
+        //
+				//	.f-input {
+				//		text-align: center;
+				//		color: #1F222B;
+				//		font-size: 32rpx;
+				//		font-weight: bold;
+				//	}
+				//}
 
-					.f-input {
-						text-align: center;
-						color: #1F222B;
-						font-size: 32rpx;
-						font-weight: bold;
-					}
-				}
+        .amountDisplayBox {
+          padding: 20rpx ;
+          .amountList {
+            padding: 10rpx 0 ;
+            display: flex;
+            justify-content: space-between;
+            color: #747884;
+            font-size: 24rpx;
+
+          }
+        }
 
 				.percent {
 					color: #B0B3BA;
@@ -1139,7 +1173,7 @@
 					.f-input {
 						// display:block;
 						// margin:0 auto;
-						text-align: center;
+						text-align: left;
 						color: #1F222B;
 						font-size: 32rpx;
 						font-weight: bold;
@@ -1147,6 +1181,7 @@
 
 					.r-icon {
 						margin-left: auto;
+            color: #7A7E89;
 					}
 
 					& image {

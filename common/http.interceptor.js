@@ -19,7 +19,8 @@ const install = (Vue, vm) => {
 	});
 	 // 上传图片路径
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
-	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
+	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
+	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/")
 	// 客服连接地址
 	uni.setStorageSync('wssURL', 'ws://wap.adbaa3011.cc/socket/im/')
 	// 图片拼接路径

@@ -1810,9 +1810,9 @@ export default {
 		jgbnwk: '价格不能为空',
 		jgbxxydqjg: '价格必须小于当前价格',
 		jgbxdydqjg: '价格必须大于当前价格',
-		qsrsl: '请输入数量',
+		qsrsl: '请输入合约数',
 		kyzjbz: '可用资金不足',
-		limit: ['限价', '市价'],
+		limit: ['市价委托', '限价委托'],
 		tagBtn: [{
 				name: '持仓'
 			},
@@ -1849,6 +1849,11 @@ export default {
 		mhycg: '秒合约成功',
 		maizhang: '买涨',
 		maidie: '买跌',
+		zhang:'张',
+		hyje:'合约金额',
+		bzj:'保证金',
+		jcsxf:'建仓手续费',
+		denglu:'登录后进行交易',
 	},
 	delivery: {
 		ddqr: '订单确认',
