@@ -314,12 +314,12 @@
 					<text>
 					</text>
 				</view>
-				<view class="conta" @click="zhiyin(item,1)">
+<!-- 				<view class="conta" @click="zhiyin(item,1)">
 					<u-tag :text="i18n.zhiyin" size="mini" type="success" />
 				</view>
 				<view class="right" @click="zhiyin(item,2)">
 					<u-tag :text="i18n.zhixsun" size="mini" type="warning" />
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>

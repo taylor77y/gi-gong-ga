@@ -128,7 +128,7 @@
 					<view class="l-sum">
 <!--						<image src="../../static/image/new/9.png" @click="getReduce(1)" />-->
 						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;"
-							class="f-input" />
+							class="f-input" @input="inputHandler"/>
 						<view class="r-icon" @click="getAdd(1)">
 							<text>{{i18n.zhang}}</text>
 						</view>
@@ -163,15 +163,15 @@
           <view class="amountDisplayBox" v-if="userId">
             <view class="amountList">
               <view class="text">{{i18n.hyje}}</view>
-              <view class="amount">{{search1 * 1000}}</view>
+              <view class="amount">{{search1 * 1000 }}</view>
             </view>
             <view class="amountList">
               <view class="text">{{i18n.bzj}}</view>
-              <view class="amount">{{search1 * 1000}}</view>
+              <view class="amount">{{search1 * 1000  }}</view>
             </view>
             <view class="amountList">
               <view class="text">{{i18n.jcsxf }}</view>
-              <view class="amount">{{search1 * 30}}</view>
+              <view class="amount">{{search1 * 1000 * 0.03}}</view>
             </view>
           </view>
 					<view style="height: 40rpx;"></view>
@@ -280,6 +280,7 @@
 <script>
 	import th from '../../common/locales/th';
 	import socket from "../../common/ws/socket.js";
+import { nextTick } from "vue";
 	export default {
 		data() {
 			return {
@@ -421,6 +422,24 @@
 
 		},
 		methods: {
+			inputHandler(e){
+				console.log('inputHandler',Number(e.detail.value))
+				if(Number(e.detail.value) < 1){
+					// console.log('进来了')
+					// this.search1 = 1
+					this.$nextTick(()=>{
+						this.search1 = 1
+					})
+				}
+				if(Number(e.detail.value) > (this.usdtPrice/1030)){
+					console.log('最大数',Number((this.usdtPrice/1030)).toFixed(0))
+					
+					this.$nextTick(()=>{
+						this.search1 = Number((this.usdtPrice/1030)).toFixed(0)
+					})
+				}
+				// console.log('inputHandler',e.detail.value)
+			},
       //登录
       toLogin () {
         uni.navigateTo({
@@ -756,16 +775,16 @@
 				let amount = this.usdtPrice / 4;
 				switch (index) {
 					case 0:
-						this.search1 = index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5);
+						this.search1 = Number((index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5)) / 1030).toFixed(0);
 						break;
 					case 1:
-						this.search1 = this.getFloat(amount * 2, 6);
+						this.search1 = Number(this.getFloat(amount * 2, 6) / 1030).toFixed(0);
 						break;
 					case 2:
-						this.search1 = this.getFloat(amount * 3, 6);
+						this.search1 =Number(this.getFloat(amount * 3, 6) / 1030).toFixed(0);
 						break;
 					case 3:
-						this.search1 = this.getFloat(amount * 4, 6);
+						this.search1 = Number(this.getFloat(amount * 4, 6) / 1030).toFixed(0);
 						break;
 				}
 				this.numberFn.forEach((item, key) => {
