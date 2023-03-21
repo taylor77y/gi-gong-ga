@@ -41,7 +41,7 @@
 				</view>
 				<view class="wantBuiness">
 					去交易
-					<image type="image" class="arrowhead" src="../../static/img/下载.png" alt=""/>
+					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish2.png" style="margin-top: 40rpx;"></image>
@@ -53,7 +53,7 @@
 				</view>
 				<view class="wantBuiness">
 					去充值
-					<image type="image" class="arrowhead" src="../../static/img/下载.png" alt=""/>
+					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish.png" style="margin-top: 40rpx;"></image>
