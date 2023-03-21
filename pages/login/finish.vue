@@ -41,7 +41,11 @@
 				</view>
 				<view class="wantBuiness">
 					去交易
+<<<<<<< HEAD
 					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
+=======
+					<image type="image" class="arrowhead" src="../../static/img/dowm.png" alt=""/>
+>>>>>>> 98df7430d92729aa850f0079da58ebf7c883f9a5
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish2.png" style="margin-top: 40rpx;"></image>
@@ -53,7 +57,11 @@
 				</view>
 				<view class="wantBuiness">
 					去充值
+<<<<<<< HEAD
 					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
+=======
+					<image type="image" class="arrowhead" src="../../static/img/dowm.png" alt=""/>
+>>>>>>> 98df7430d92729aa850f0079da58ebf7c883f9a5
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish.png" style="margin-top: 40rpx;"></image>

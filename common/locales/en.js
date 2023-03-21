@@ -312,6 +312,7 @@ export default {
 
 	},
 	market: {
+		zwsj:'No data for the time being',
 		sshy: 'Search currency/currency pair/contract',
 		cjl: 'Name/Volume',
 		zxj: 'latest price',
@@ -1752,9 +1753,11 @@ export default {
 		shuliang: 'quantity',
 		jiage: 'price',
 		kaiduo: 'open long',
-		pingduo: 'Pingduo',
+		kd:'Open Long',
+		kk:'Open Short',
+		pingduo: 'Close Long',
 		kaikong: 'open empty',
-		pingkong: 'Pingkong',
+		pingkong: 'Close Short',
 		keyong: 'Available',
 		cclb: 'position list',
 		yjpc: 'One-click liquidation',
@@ -1777,9 +1780,9 @@ export default {
 			'Delivery Contract', 'Perpetual Contract'
 		],
 		warehouse:[
-			{name:'kc',id:'0'},
-			{name:'pc',id:'1'},
-			{name:'cc',id:'2'},
+			{name:'Open',id:'0'},
+			{name:'Close',id:'1'},
+			{name:'Positions',id:'2'},
 		],
 		btnInfo: ['open position', 'close position'],
 		bzjzdqtsx: 'The margin adjustment mode is only effective for the current contract. ',

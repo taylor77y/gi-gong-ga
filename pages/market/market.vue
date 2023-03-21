@@ -39,7 +39,7 @@
         </view>
         <view v-else class="noDate">
           <image referrerpolicy="no-referrer" src="/static/image/assets/4.png" style="width: 154rpx;height: 154rpx;"/>
-          <view class="text">暂无数据</view>
+          <view class="text">{{i18n.zwsj}}</view>
         </view>
 
       </view>
