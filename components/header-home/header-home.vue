@@ -22,7 +22,7 @@
 			<!-- <image src="../../static/image/home/3.png">
 			<image src="../../static/image/home/4.png"> -->
 			<image @click="goCustomer()" src="../../static/image/home/5.png">
-			<!-- <image src="../../static/image/home/6.png"> -->
+				<!-- <image src="../../static/image/home/6.png"> -->
 		</view>
 	</view>
 </template>
@@ -37,7 +37,8 @@
 		},
 		data() {
 			return {
-				search: ''
+				search: '',
+				contactLink: ''
 			}
 		},
 		computed: {
@@ -46,7 +47,7 @@
 		watch: {
 			search() {
 				this.$u.throttle(async () => {
-					
+
 					// const Letter = new RegExp('[A-Za-z]+') //字母
 					// let arr = this.newcoinQuotations
 					// if (Letter.test(this.search)) {
@@ -60,18 +61,32 @@
 					// 	  return flag
 					// 	})
 					//   }
-				}, 200)	
-				
+				}, 200)
+
 			}
 		},
 		onLoad() {
-
+			goCustomer()
 		},
 		methods: {
-            goCustomer() {
-				uni.navigateTo({
-					url: `/pages/kefu/customerService?type=service`
-				})
+			async goCustomer() {
+				if (!this.contactLink) {
+					let res = await this.$u.api.kefu.getContactLink(1)
+					console.log('getContactLink', res)
+					this.contactLink = res?.result?.contactLink ?? this.contactLink
+				}
+				// 跳转外部链接h5
+				// #ifdef H5
+				window.location.href = this.contactLink
+				// #endif
+				// #ifdef APP-PLUS
+				plus.runtime.openURL(this.contactLink) //不需要拼接
+				// plus.runtime.openURL(`http://${jumpUrl}`)//需要拼接
+				// #endif
+
+				// uni.navigateTo({
+				// 	url: `/pages/kefu/customerService?type=service`
+				// })
 			}
 		}
 	}
@@ -91,21 +106,25 @@
 			background: #f4f4f6;
 			border-radius: 50%;
 		}
-        .right {
-		    display: flex;
+
+		.right {
+			display: flex;
 			align-items: center;
+
 			& image {
 				width: 44rpx;
 				height: 44rpx;
 				margin-right: 20rpx;
 			}
 		}
+
 		.search-input-box {
 			background: #F4F4F6;
 			border-radius: 32rpx;
 			padding: 0 30rpx;
 			margin-left: 20rpx;
-            margin-right: 20rpx;
+			margin-right: 20rpx;
+
 			.f-search-icon {
 				display: flex;
 				align-items: center;

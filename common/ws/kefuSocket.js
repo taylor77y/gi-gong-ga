@@ -27,11 +27,10 @@ class socket {
     this.url = ''
 
   }
-  handleUrl(url,id,call) {
+  handleUrl(url,id) {
     console.log('连接客服',url,id)
     // this.id = id
     this.url = url + id
-	call()
   }
   // handleUrl(id) {
   //   console.log(id)

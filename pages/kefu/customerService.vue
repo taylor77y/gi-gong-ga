@@ -123,14 +123,8 @@
 				await this.getLink()
 			}
 			// console.log('修改地址,,,,')
-			let id = uni.getStorageSync('userId') || uni.getStorageSync('testId')
-			let that = this
-			this.socket.handleUrl(this.contactLink,uni.getStorageSync('userId') || uni.getStorageSync('testId')
-			,function(){
-				console.log('进来了')
-			})
+			this.socket.handleUrl(this.contactLink,uni.getStorageSync('userId') || uni.getStorageSync('testId'))
 			// this.socket.handleUrl(uni.getStorageSync('userId') || uni.getStorageSync('testId'))
-			// this.socket.send("chatReg->"+id)
 			this.list = []
 			if (this.socket.connState !== 2) {
 
@@ -146,10 +140,26 @@
 			})
 
 			this.socket.on('message', (evt) => {
-				console.log('消息来了',evt)
-				this.list.push({
-					body:evt
-				})
+				// const res = JSON.parse(evt)
+				const res = evt
+				console.log(res)
+				if (res.cmd === 4) {
+					this.handleRecall(res.body.id)
+					return
+				}
+				if (res.body.source != this.type && res.cmd === 2 && res.flag === 1) {
+					return
+				}
+				// if (this.code === 0) {
+				// 	this.setServiceMsg(res.cmd === 2 && res.flag === 1 ? true : false)
+				// } else {
+				// 	this.setBusinessMsg(res.cmd === 2 && res.flag === 1 ? true : false)
+				// }
+				if (res.cmd === 3) {
+					this.list = res.body
+				} else {
+					this.list = this.list.concat(res.body) || []
+				}
 			})
 		},
 		onLoad(e) {
@@ -289,7 +299,7 @@
 
 					}
 				}
-				console.log('发送',body)
+
 				this.socket.send(body)
 				// this.getList()
 			},
