@@ -315,6 +315,7 @@ export default {
 
 	},
 	market: {
+		zwsj:'暂无数据',
 		sshy: '搜索币种/币对/合约',
 		cjl: '名称/成交量',
 		zxj: '最新价',

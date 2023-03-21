@@ -69,17 +69,17 @@
 <!--						≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}-->
 					</view>
 					<right-area :code="1" :openup="sellData" />
-					<view class="d-flex align-items-center">
-						<view class="left-input d-flex-between-center" @click="getLever()">
-							<view>{{ leverCode }}</view>
-							<view style="transition: all 0.3s;" :class="{'r-icon1' : magnification}">
-								<image src="../../static/image/new/6.png" />
-							</view>
-						</view>
-						<view>
-							<image style="width: 52rpx;height: 52rpx;" src="../../static/image/new/10.png" />
-						</view>
-					</view>
+<!--					<view class="d-flex align-items-center">-->
+<!--						<view class="left-input d-flex-between-center" @click="getLever()">-->
+<!--							<view>{{ leverCode }}</view>-->
+<!--							<view style="transition: all 0.3s;" :class="{'r-icon1' : magnification}">-->
+<!--								<image src="../../static/image/new/6.png" />-->
+<!--							</view>-->
+<!--						</view>-->
+<!--						<view>-->
+<!--							<image style="width: 52rpx;height: 52rpx;" src="../../static/image/new/10.png" />-->
+<!--						</view>-->
+<!--					</view>-->
 
 				</view>
 				<view class="right">
