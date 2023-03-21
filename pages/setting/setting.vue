@@ -11,7 +11,7 @@
 		<view class="user-box" v-if="loginCode">
 			<view class="left" @click="getEdtUser()">
 				<view class="user-img">
-					<image :src="user.handLink ? baseURL+user.handLink : '../../static/image/fIattributes/30.png'">
+					<image :src="user.handLink ? user.handLink : '../../static/image/fIattributes/30.png'">
 					</image>
 				</view>
 				<view>
