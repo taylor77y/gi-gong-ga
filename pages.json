@@ -1244,6 +1244,14 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/financial/details",
+            "style" :
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+
         }
 		,{
 		    "path" : "pages/exchangeHistory/exchangeHistory",

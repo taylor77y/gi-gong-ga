@@ -58,8 +58,6 @@
 						<view>{{ i18n.jiage }}</view>
 					</view>
 					<view class="d-flex-between-center" style="margin-bottom: 10rpx;">
-						<!-- <view>(BUSD)</view>
-						<view>(LINK)</view> -->
 					</view>
 					<right-area :code="0" :openup="buyData" />
 					<view class="money">
@@ -123,10 +121,13 @@
 							<view class="item" :class="{'item1': priceCode === index}" v-for="(item, index) in limitFn"
 								:key="index" @click="getLimit(index)">{{ item }}</view>
 						</view>
-        <!--金额-->
+        <!--限价点位-->
 					</view>
-					<view class="l-sum">
-<!--						<image src="../../static/image/new/9.png" @click="getReduce(1)" />-->
+          <view v-if="priceCode == 1">
+                <u-input placeholder="限价点位" border="border" type="number" v-model="priceLimitValue" @change="change" ></u-input>
+          </view>
+<!--          //数量-->
+          <view class="l-sum">
 						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;"
 							class="f-input" @input="inputHandler"/>
 						<view class="r-icon" @click="getAdd(1)">
@@ -134,14 +135,6 @@
 						</view>
 					</view>
 					<view style="height: 14rpx;"></view>
-					<!-- 	<view class="l-sum">
-						<image src="../../static/image/new/7.png" @click="getReduce(2)" />
-						<input type="number" placeholder="数量(LINK)" v-model="searchs"
-							placeholder-style="background: #F6F6F6;color: #B0B3BA" class="f-input" />
-						<view class="r-icon" @click="getAdd(2)">
-							<image src="../../static/image/new/8.png" />
-						</view>
-					</view> -->
 					<view class="stpes-list">
 						<!-- <view :class="{'item1': percentCode.includes(index)}" @click="getPercent(index)" class="item"
 							v-for="(item, index) in numberFn" :key="index"></view> -->
@@ -151,13 +144,6 @@
 					<view class="percent d-flex align-items-center">
 						<view class="item" v-for="(item, index) in numberFn" :key="index">{{ item.val }}</view>
 					</view>
-
-<!--					<view class="money-input">-->
-
-<!--						<input type="number" :placeholder="i18n.shuliang" v-model="search1"-->
-<!--							placeholder-style="background: #F6F6F6;color: #B0B3BA" class="f-input" />-->
-
-<!--					</view>-->
 
 <!--          展示的 合约金额 保证金 建仓手续费-->
           <view class="amountDisplayBox" v-if="userId">
@@ -231,6 +217,7 @@
 				</view>
 			</view>
 		</view>
+<!--    持仓 当前委托-->
 		<view class="d-flex-between-center" style="background: #fff;">
 			<view style="flex: 1">
 				<u-tabs :bold="true" font-size="34" gutter="50" bg-color="#fff" inactive-color="#8D9099" bar-height="8"
@@ -245,11 +232,12 @@
 		<view class="yx-title">
 <!--			<view>{{ i18n.cclb }}</view>-->
       <view></view>
+<!--      一件平仓-->
 			<view class="right" @click="isPosition = true">{{ i18n.yjpc }}</view>
 		</view>
 		<view v-if="current === 0">
 			<view v-if="list.length > 0">
-				<entrust-list :list="list" :mode="4" :state="3" @zhiyin="zhiyin" />
+				<entrust-list :list="list" :mode="4" :state="3" @zhiyin="zhiyin" @pingchang="pingchang" />
 			</view>
 			<view v-else style="background: #fff;padding-top: 100rpx;">
 				<u-empty :text="$t('kLine').zwgdsj" mode="order"></u-empty>
@@ -257,7 +245,7 @@
 		</view>
 		<view v-else>
 			<view v-if="newList.length > 0">
-				<entrust-list :list="newList" @chedan="chedan" :mode="3" :state="10"/>
+				<entrust-list :list="newList" @chedan="chedan" :mode="3" :state="10" />
 			</view>
 			<view v-else style="background: #fff;padding-top: 100rpx;">
 				<u-empty :text="$t('kLine').zwgdsj" mode="order"></u-empty>
@@ -335,14 +323,14 @@ import { nextTick } from "vue";
 						text: '100'
 					}
 				],
-				priceCode: 0, // 摸认 
+				priceCode: 0, // 摸认 市价
 				fixedPriceCode: false, // 限价单弹窗
 				sellState: false, // false 买入 true 卖出
 				percentCode: [],
 				current: 0,
 				search: 1,
-				searchs: 56,
-				search1: 1,
+				search1: 1,//数量 默认1
+        priceLimitValue:null,//限价点位
 				btnCode: 1,
 				pairs: [],
 				pairsItem: {},
@@ -423,10 +411,7 @@ import { nextTick } from "vue";
 		},
 		methods: {
 			inputHandler(e){
-				console.log('inputHandler',Number(e.detail.value))
 				if(Number(e.detail.value) < 1){
-					// console.log('进来了')
-					// this.search1 = 1
 					this.$nextTick(()=>{
 						this.search1 = 1
 					})
@@ -454,7 +439,15 @@ import { nextTick } from "vue";
 			//撤单
 			chedan(item) {
 				console.log(item,'我是永续撤单--------')
-				this.$u.api.bibi.closeEntrust(item.id).then(res => {
+				// this.$u.api.bibi.closeEntrust(item.id).then(res => {
+				// 	if (res.status == "SUCCEED") {
+				// 		this.$utils.showToast(this.$t('cdcg').cdcg)
+				// 	} else {
+				// 		this.$utils.showToast(res.errorMessage)
+				// 	}
+				// 	this.getEntrustOrderList();
+				// })
+        this.$u.api.bibi.closeEntrust1(item.id).then(res => {
 					if (res.status == "SUCCEED") {
 						this.$utils.showToast(this.$t('cdcg').cdcg)
 					} else {
@@ -463,6 +456,17 @@ import { nextTick } from "vue";
 					this.getEntrustOrderList();
 				})
 			},
+      // 单独平仓
+      pingchang(i){
+        let obj = {hands:i.hands,id : i.id}
+        this.$u.api.getContractorder.setOrderMatch(obj).then( res =>{
+          if (res.status == "SUCCEED") {
+            this.$utils.showToast(this.$t('entrust').pingchangchenggong)
+          } else {
+            this.$utils.showToast(res.errorMessage)
+          }
+        })
+      },
 			stopAdd(price) {
 				console.log(this.isStop)
 				if (price == '' && !price) {
@@ -592,7 +596,7 @@ import { nextTick } from "vue";
 				obj.member = uni.getStorageSync('userId')
 				obj.pairsName = pairsName
 				// obj.price = this.priceCode == 0 ? this.search:this.nowData?.nowPrice
-				obj.price = this.search1 * 1000//金额
+				obj.price = price//金额
 				obj.priceType = this.priceCode == 0 ? "MARKET_PRICE" : "CUSTOM_PRICE" // 0市价 1限价
 				// obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
         obj.tradeType = this.cuBond == 1 ? 'CLOSE_UP' : 'CLOSE_DOWN'
@@ -707,6 +711,7 @@ import { nextTick } from "vue";
 					this.getjiaoyipeizhi()
 				})
 			},
+      //查看委托记录
 			getRecord() {
 				uni.navigateTo({
 					url: `/pages/record/index?code=3`
@@ -739,23 +744,6 @@ import { nextTick } from "vue";
 			},
 			getFixedPrice() {
 				this.fixedPriceCode = !this.fixedPriceCode
-			},
-			// 减
-			getReduce(index) {
-				if (index === 1) {
-					this.search--
-				} else {
-					this.searchs--
-				}
-
-			},
-			// 加
-			getAdd(index) {
-				if (index === 1) {
-					this.search++
-				} else {
-					this.searchs++
-				}
 			},
 			getFloat(number, n) {
 				n = n ? parseInt(n) : 0;
@@ -1180,18 +1168,16 @@ import { nextTick } from "vue";
 				}
 
 				.l-sum {
-					padding: 20rpx 24rpx;
-					background: #F6F6F6;
+          margin-top: 10rpx;
+					padding: 16rpx 16rpx;
 					border-radius: 6rpx;
 					font-size: 28rpx;
-					color: #1F222B;
 					font-weight: bold;
-					display: flex;
+          border: 2rpx solid #dcdfe6;
+          display: flex;
 					align-items: center;
 
 					.f-input {
-						// display:block;
-						// margin:0 auto;
 						text-align: left;
 						color: #1F222B;
 						font-size: 32rpx;

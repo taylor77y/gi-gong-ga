@@ -1,6 +1,6 @@
 <template>
 	<view class="entrust-list" @click="getPath()">
-		<view class="item" v-for="(item, index) in list" :key="index">
+		<view class="item" v-for="(item, index) in list" :key="index" @click="goDetails(item)">
 			<view class="list-title" v-if="mode === 1">
 				<view class="left" >
 					<text>{{ item.ckType }}/{{item.ckName}}</text>
@@ -22,9 +22,9 @@
 			<view class="list-title" v-if="mode === 3">
 				<view class="left" :class="{'left1': item.tradeType!='CLOSE_UP'}">
 					{{item.tradeType=='CLOSE_UP' ? i18n.pd:i18n.dk}}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X	
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
 				</view>
-				<view class="right" v-if="state === 10" @click="chedan(item)">
+				<view class="right" v-if="state === 10 && state === 2" @click.stop="chedan(item)">
 					{{ i18n.chedan }}
 				</view>
 				<view class="right" v-else>
@@ -33,9 +33,13 @@
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='CLOSE_UP'}">
 					{{item.tradeType=='CLOSE_UP' ? i18n.pd:i18n.dk}}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X	
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
 				</view>
-				<view class="right"></view>
+				<view class="right">
+          <view class="right"  @click.stop="pingchang(item)">
+            {{ i18n.pingchang }}
+          </view>
+        </view>
 			</view>
 			<view class="f-row" v-if="mode === 1">
 				<view class="left">
@@ -362,8 +366,17 @@
 		},
 
 		methods: {
-            getPath(){
-				
+      //详情  
+      goDetails(item){
+        // console.info("🇨🇳🇨🇳:点击了详情 --", item)
+        if(this.mode == 3){
+          uni.navigateTo({
+            url:`/pages/financial/details?data=` + JSON.stringify(item)
+          })
+        }
+
+      },
+      getPath(){
 			},
 			xiangqing(item){
 				this.$emit('handleRecord', item)
@@ -374,6 +387,10 @@
 			chedan(item){
 				this.$emit('chedan', item)
 			},
+
+      pingchang(item) {
+        this.$emit('pingchang', item)
+      },
 			//止盈
 			zhiyin(item,index){
 				this.$emit('zhiyin', item,index)
@@ -442,10 +459,37 @@
 					margin-left: 12rpx;
 				}
 			}
-			.right {
-				
-				color: #6F7784;
-			}
+			//.right {
+      //  border: 2rpx solid $uni-color-black;
+			//	color: #bddd22;
+			//}
+
+      .right {
+        background-color: #937480; /* 按钮的背景颜色 */
+        border: none;
+        color: white; /* 按钮的字体颜色 */
+        padding: 3rpx 8rpx; /* 按钮内部的间距 */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 10rpx; /* 按钮字体的大小 */
+        margin: 4rpx 2rpx;
+        cursor: pointer;
+        border-radius: 4rpx;
+        transition-duration: 0.2s; /* 过渡动画的持续时间 */
+        box-shadow: 0 2rpx 0 rgba(0, 0, 0, 0.2); /* 阴影效果 */
+      }
+
+      .right:hover {
+        background-color: #0069D9; /* 鼠标悬停时的背景颜色 */
+      }
+
+      .right:active {
+        background-color: #007AFF; /* 点击时的背景颜色 */
+        transform: translateY(1rpx); /* 上移1个像素以模拟被点击效果 */
+        box-shadow: none; /* 去掉阴影效果 */
+      }
+
 		}
 	}
 }

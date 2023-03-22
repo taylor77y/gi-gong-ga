@@ -56,7 +56,7 @@
 					{{ i18n.fkpz}}
 				</view>
 				<view class="upload">
-					<u-upload max-count="1" upload-text="" :fileList="fileList">
+					<u-upload   max-count="1" upload-text="" :fileList="fileList">
 					</u-upload>
 				</view>
 			</view>
@@ -90,6 +90,7 @@
   export default {
     data() {
       return {
+        // action:,
         fileList: [],//参数(数组，元素为对象)
         chargeMoneyValue: 0,//充币数
         selectCoin: '',

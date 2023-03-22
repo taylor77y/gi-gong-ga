@@ -27,6 +27,7 @@ const install = (Vue, vm) => {
 		getEntrustList: (member) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=`),
 		//撤单
 		closeEntrust: (entrust) => vm.$u.post(`/entrust/entrust/closeEntrust?entrust=${entrust}`),
+		closeEntrust1: (id) => vm.$u.post(`/contract/contract/closeContractOrder?orderId=${id}`),
 	}
 	//闪兑
 	const sd = {
@@ -105,6 +106,7 @@ const install = (Vue, vm) => {
 		//校验支付密码
 		verifyFundPassword: (member,password) => vm.$u.post(`/member/member/verifyFundPassword?member=${member}&password=${password}`),
 	}
+		//用户
 	const user = {
 		//发送邮箱验证码
 		sendMailCode: (user_string) => vm.$u.post("/sms_mail", {user_string,scene:'register',area_code_id: 1,area_code: 86,lang: 'zh',email_code:''}),
@@ -169,8 +171,9 @@ const install = (Vue, vm) => {
 		// 忘记密码
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
-		// 充值
-		chongzhi: (params) => vm.$u.post("/member/member/chongzhi",params),
+		// 获取充值接口
+		// getRechargeConfiguration: (params) => vm.$u.get("/member/balance/getRechargeConfiguration",params),
+		getRechargeConfiguration: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
 	}
 	const setting = {
 		//刷新用户信息
@@ -403,6 +406,11 @@ const install = (Vue, vm) => {
 	const kefu = {
 		getContactLink: (type) => vm.$u.get("/member/member/getContactLink?type="+type),
 	}
+	//合约 订单
+	const getContractorder = {
+		getContactLink: (id) => vm.$u.post("/contract/contract/getContractOrder?orderId="+id),
+		setOrderMatch: (params) => vm.$u.post("/contract/contract/setOrderMatch?params",params),
+	}
 
 	vm.$u.api = {
 		common,
@@ -424,7 +432,8 @@ const install = (Vue, vm) => {
 		sd,
 		trendDetails,
 		wantBuy,
-		kefu
+		kefu,
+		getContractorder
 	};
 }
 export default {

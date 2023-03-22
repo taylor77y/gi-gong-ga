@@ -6,7 +6,7 @@
 			:list="tagBtn" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view v-if="list.length > 0">
 			<entrust-list :list="list" :mode="code" :state="state" :isCheDan="isCheDan" />
-		</view>	
+		</view>
 		<u-empty margin-top="100" v-if="list.length == 0" :text="$t('kLine').zwgdsj" mode="order"></u-empty>
 		<u-loadmore v-show="total > 0" :status="loadmoreStatus" :load-text="loadText" @loadmore="loadmore" />
 	</view>
@@ -192,6 +192,7 @@
 				obj.orderState = "FINAL";
 				obj.member = uni.getStorageSync('userId')
 				this.$u.api.yx.getHistoryOrders(obj).then(res => {
+          console.info("🇨🇳🇨🇳:res --", res.result.result.records)
 					this.list = this.list.concat(res.result.result.records)
 					this.handlePageFn(res.result.result.total)
 				})
