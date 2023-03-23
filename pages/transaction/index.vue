@@ -247,7 +247,7 @@
 		onReady() {},
 		onLoad() {},
 		onShow() {
-      this.btnCode = 1;
+			this.btnCode = 1;
 			let member = uni.getStorageSync("userId") || '';
 			this.getPairsList();
 			this.getBalances(member);
@@ -332,6 +332,7 @@
 				})
 			},
 			socketFn() {
+				console.log(this.pairsItem)
 				if(!this.pairsItem.symbol) return;
 				this.socket = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.pairsItem.symbol}`)
 				this.socket.doOpen();

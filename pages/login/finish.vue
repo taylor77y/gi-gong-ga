@@ -13,51 +13,52 @@
 		</view>
 		<view class="container">
 			<view class="suc u-margin-top-50 u-text-center">
-				<h2>注册成功</h2>
+				<h2>{{ i18n.zccg }}</h2>
 			</view>
 			<view class="sub u-margin-top-30 u-text-center">
-				<h3>开启您的数字货币之旅</h3>
+				<h3>{{ i18n.szhbzl }}</h3>
 			</view>
 			<view class="agreeOne u-margin-left-75 u-margin-top-35" >
 				<u-radio-group v-model="value1">
 					<u-radio name="1">
-						<text style="font-size:23rpx; color:#909399">我已同意授权调用系统信息通知权限</text>
+						<text style="font-size:23rpx; color:#909399">{{ i18n.tyxtxxtz }}</text>
 					</u-radio>
 				</u-radio-group>
 			</view>
 			<view class="agreeTwo u-margin-left-75 u-margin-top-25">
 				<u-radio-group v-model="value2">
 					<u-radio name="1">
-						<text style="font-size:23rpx; color:#909399">我已同意授权访问地址簿</text>
+						<text style="font-size:23rpx; color:#909399">{{ i18n.tyfwdzp }}</text>
 					</u-radio>
 				</u-radio-group>
 			</view>
 		</view>
 		
-		<view class="business u-margin-left-30 flex jcsb" @click="sell()">
+		<view class="business u-margin-left-30 flex jcsb" @click="toPage('/pages/transaction/index')">
 			<view class="">
 				<view class="wantBuy">
-					我想要买币
+					{{ i18n.wxymb }}
 				</view>
 				<view class="wantBuiness">
-					去交易
+					{{ i18n.qjy }}
 					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish2.png" style="margin-top: 40rpx;"></image>
 		</view>
-		<view class="business u-margin-left-30 flex jcsb" @click="sell()" style="margin-bottom: 30rpx;">
+		<view class="business u-margin-left-30 flex jcsb" @click="toPage('/pages/recharge/rechargeList')" style="margin-bottom: 30rpx;">
 			<view class="">
 				<view class="wantBuy">
-					我想要充值
+					{{ i18n.wxycz }}
 				</view>
 				<view class="wantBuiness">
+					{{ i18n.qcz }}
 					<image type="image" class="arrowhead" src="../../static/img/down.png" alt=""/>
 				</view>
 			</view>
 			<image class="img" src="../../static/img/finish.png" style="margin-top: 40rpx;"></image>
 		</view>
-			<u-button class="" type="primary" style="margin: 20rpx 23rpx;" @click="sure()">确定</u-button>
+			<u-button class="" type="primary" style="margin: 20rpx 23rpx;" @click="sure()">{{ i18n.qd }}</u-button>
 	</view>
 </template>
 
@@ -78,15 +79,20 @@
 				}, ],
 			}
 		},
+		computed: {
+			i18n() {
+				return this.$t("finish")
+			},
+		},
 		methods: {
 			buy(){
 				uni.navigateTo({
 					url:'/pages/transaction/index'
 				})
 			},
-			sell() {
+			toPage(url) {
 				uni.navigateTo({
-					url:'/pages/recharge/rechargeList'
+					url:url
 				})
 			},
 			sure() {

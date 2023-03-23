@@ -13,18 +13,10 @@
 			</view>
 			<view class="bi-title d-flex-between-center">
 				<view class="left" @click="showSpec = true">
-					<image src="../../static/image/new/1.png" />
-					<!-- {{pairsItem.pairsName}} -->
-					{{pairsItem.name}}
-					<text class="num" :class="{'text-red': pairsItem.change_ratio < 0}">
-						<text v-show="pairsItem.change_ratio > 0 "> + </text>
-						<text v-show="pairsItem.change_ratio < 0 "> - </text>
-						{{ pairsItem.change_ratio }}%
-						<!-- {{pairsItem.updown*100|SubString(2)}}% -->
-					</text>
-					<!-- <text class="num num1">
+					<image src="../../static/image/new/1.png" /> {{pairsItem.pairsName}}
+					<text class="num num1">
 						{{pairsItem.updown*100|SubString(2)}}%
-					</text> -->
+					</text>
 				</view>
 				<view class="right" @click="getLine">
 					<image src="../../static/image/new/2.png" />
@@ -34,22 +26,21 @@
 			</view>
 		</view>
 
-		<!--  切换仓库-->
-		<view class="warehouse">
-			<u-subsection2 mode="subsection" :list="warehouse" :current="cuBond" @change="sectionChange"
-				style="width: 100%"></u-subsection2>
-		</view>
+<!--  切换仓库-->
+    <view class="warehouse">
+      <u-subsection2 mode="subsection" :list="warehouse" :current="cuBond" @change="sectionChange" style="width: 100%" ></u-subsection2>
+    </view>
 
 		<view class="x-box">
 			<view class="fee-box" v-if="cuBond !=2">
 				<view @click="showBond = false" class="left-selset d-flex-between-center">
 					{{ cuBond === 0 ? i18n.kaican:i18n.pingcan }}
-					<!--					<image style="width: 18rpx;height: 10rpx;" src="../../static/image/new/6.png" />-->
+<!--					<image style="width: 18rpx;height: 10rpx;" src="../../static/image/new/6.png" />-->
 				</view>
 				<view class="cont-selset d-flex-between-center" @click="leversState = false">
 					{{ leversCode }}
-					<!--					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"-->
-					<!--						src="../../static/image/new/6.png" />-->
+<!--					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"-->
+<!--						src="../../static/image/new/6.png" />-->
 				</view>
 				<!-- <view class="right-name">
 					<view>
@@ -68,27 +59,25 @@
 					</view>
 					<view class="d-flex-between-center" style="margin-bottom: 10rpx;">
 					</view>
-					<right-area :max-buy="maxBuy" :code="0" :openup="buyData" />
+					<right-area :code="0" :openup="buyData" />
 					<view class="money">
-						<!--						{{nowData.nowPrice}}-->
-						{{pairsItem.close}}
+<!--						{{nowData.nowPrice}}-->
 					</view>
 					<view class="zhehe">
-						≈ {{ rate.mark }} {{ pairsItem.close * rate.rate |SubString(4) }}
-						<!--						≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}-->
+<!--						≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }}-->
 					</view>
-					<right-area :max-buy="maxSell" :code="1" :openup="sellData" />
-					<!--					<view class="d-flex align-items-center">-->
-					<!--						<view class="left-input d-flex-between-center" @click="getLever()">-->
-					<!--							<view>{{ leverCode }}</view>-->
-					<!--							<view style="transition: all 0.3s;" :class="{'r-icon1' : magnification}">-->
-					<!--								<image src="../../static/image/new/6.png" />-->
-					<!--							</view>-->
-					<!--						</view>-->
-					<!--						<view>-->
-					<!--							<image style="width: 52rpx;height: 52rpx;" src="../../static/image/new/10.png" />-->
-					<!--						</view>-->
-					<!--					</view>-->
+					<right-area :code="1" :openup="sellData" />
+<!--					<view class="d-flex align-items-center">-->
+<!--						<view class="left-input d-flex-between-center" @click="getLever()">-->
+<!--							<view>{{ leverCode }}</view>-->
+<!--							<view style="transition: all 0.3s;" :class="{'r-icon1' : magnification}">-->
+<!--								<image src="../../static/image/new/6.png" />-->
+<!--							</view>-->
+<!--						</view>-->
+<!--						<view>-->
+<!--							<image style="width: 52rpx;height: 52rpx;" src="../../static/image/new/10.png" />-->
+<!--						</view>-->
+<!--					</view>-->
 
 				</view>
 				<view class="right">
@@ -119,7 +108,7 @@
 							<!-- 	<image src="../../static/image/new/14.png" /> -->
 						</view>
 					</view>
-					<!--限价委托金额 -->
+          <!--限价委托金额 -->
 					<view class="limit-box">
 						<image style="width: 26rpx;height: 26rpx;" src="../../static/image/new/5.png" />
 						<view class="l-cont" @click="getFixedPrice()">
@@ -132,16 +121,15 @@
 							<view class="item" :class="{'item1': priceCode === index}" v-for="(item, index) in limitFn"
 								:key="index" @click="getLimit(index)">{{ item }}</view>
 						</view>
-						<!--限价点位-->
+        <!--限价点位-->
 					</view>
-					<view v-if="priceCode == 1">
-						<u-input placeholder="限价点位" border="border" type="number" v-model="priceLimitValue"
-							@change="change"></u-input>
-					</view>
-					<!--          //数量-->
-					<view class="l-sum">
-						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;" class="f-input"
-							@input="inputHandler" />
+          <view v-if="priceCode == 1">
+                <u-input placeholder="限价点位" border="border" type="number" v-model="priceLimitValue" @change="change" ></u-input>
+          </view>
+<!--          //数量-->
+          <view class="l-sum">
+						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;"
+							class="f-input" @input="inputHandler"/>
 						<view class="r-icon" @click="getAdd(1)">
 							<text>{{i18n.zhang}}</text>
 						</view>
@@ -157,21 +145,21 @@
 						<view class="item" v-for="(item, index) in numberFn" :key="index">{{ item.val }}</view>
 					</view>
 
-					<!--          展示的 合约金额 保证金 建仓手续费-->
-					<view class="amountDisplayBox" v-if="userId">
-						<view class="amountList">
-							<view class="text">{{i18n.hyje}}</view>
-							<view class="amount">{{search1 * 1000 }}</view>
-						</view>
-						<view class="amountList">
-							<view class="text">{{i18n.bzj}}</view>
-							<view class="amount">{{search1 * 1000  }}</view>
-						</view>
-						<view class="amountList">
-							<view class="text">{{i18n.jcsxf }}</view>
-							<view class="amount">{{search1 * 1000 * 0.03}}</view>
-						</view>
-					</view>
+<!--          展示的 合约金额 保证金 建仓手续费-->
+          <view class="amountDisplayBox" v-if="userId">
+            <view class="amountList">
+              <view class="text">{{i18n.hyje}}</view>
+              <view class="amount">{{search1 * 1000 }}</view>
+            </view>
+            <view class="amountList">
+              <view class="text">{{i18n.bzj}}</view>
+              <view class="amount">{{search1 * 1000  }}</view>
+            </view>
+            <view class="amountList">
+              <view class="text">{{i18n.jcsxf }}</view>
+              <view class="amount">{{search1 * 1000 * 0.03}}</view>
+            </view>
+          </view>
 					<view style="height: 40rpx;"></view>
 					<!-- <view class="stop" @click="stopCode = !stopCode">
 						<view class="circular" v-if="!stopCode"></view>
@@ -213,23 +201,23 @@
 					</view> -->
 
 					<view class="f-btn" :class="{'f-btn1': sellState}" @click="sub(1)">
-						<view v-if="userId">
-							<text v-if="sellState">
-								{{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
+            <view v-if="userId">
+              <text v-if="sellState">
+                {{ cuBond === 0 ? i18n.kk:i18n.pingkong }}
 
-							</text>
-							<text v-else>
-								{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
-							</text>
-						</view>
-						<view v-if="!userId" @click="toLogin">
-							{{i18n.denglu }}
-						</view>
+              </text>
+              <text v-else>
+                {{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
+              </text>
+            </view>
+            <view v-if="!userId" @click="toLogin">
+              {{i18n.denglu }}
+            </view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<!--    持仓 当前委托-->
+<!--    持仓 当前委托-->
 		<view class="d-flex-between-center" style="background: #fff;">
 			<view style="flex: 1">
 				<u-tabs :bold="true" font-size="34" gutter="50" bg-color="#fff" inactive-color="#8D9099" bar-height="8"
@@ -242,9 +230,9 @@
 			</view>
 		</view>
 		<view class="yx-title">
-			<!--			<view>{{ i18n.cclb }}</view>-->
-			<view></view>
-			<!--      一件平仓-->
+<!--			<view>{{ i18n.cclb }}</view>-->
+      <view></view>
+<!--      一件平仓-->
 			<view class="right" @click="isPosition = true">{{ i18n.yjpc }}</view>
 		</view>
 		<view v-if="current === 0">
@@ -263,7 +251,7 @@
 				<u-empty :text="$t('kLine').zwgdsj" mode="order"></u-empty>
 			</view>
 		</view>
-		<!--		<bond-popup @getAdd="getBondAdd" :show-spec.sync="showBond" />-->
+<!--		<bond-popup @getAdd="getBondAdd" :show-spec.sync="showBond" />-->
 		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
 		</u-action-sheet>
@@ -273,23 +261,18 @@
 		<u-modal :title="$t('common').hint" :confirm-text="$t('common').confirm" :cancel-text="$t('common').cancel"
 			@confirm="confirmPosition" confirm-color="#D1A037" :show-cancel-button="true" v-model="isPosition"
 			:content="content"></u-modal>
-		<!--		<yx-stop-popup @getAdd="stopAdd" :money="nowData.nowPrice" :show-pup.sync="isStop" :curCode="isStopCode" />-->
+<!--		<yx-stop-popup @getAdd="stopAdd" :money="nowData.nowPrice" :show-pup.sync="isStop" :curCode="isStopCode" />-->
 		<tabar-com />
 	</view>
 </template>
 <script>
 	import th from '../../common/locales/th';
 	import socket from "../../common/ws/socket.js";
-	import {
-		getData
-	} from '@/common/hooks/socketData.js'
-	import {
-		nextTick
-	} from "vue";
+import { nextTick } from "vue";
 	export default {
 		data() {
 			return {
-				userId: uni.getStorageSync('userId'),
+        userId : uni.getStorageSync('userId'),
 				isStop: false, // 止盈 止损 弹窗
 				isStopCode: false, // false 止盈 true 止损
 				stopMoney: 0,
@@ -346,17 +329,15 @@
 				percentCode: [],
 				current: 0,
 				search: 1,
-				search1: 1, //数量 默认1
-				priceLimitValue: null, //限价点位
+				search1: 1,//数量 默认1
+        priceLimitValue:null,//限价点位
 				btnCode: 1,
 				pairs: [],
 				pairsItem: {},
 				usdtPrice: 0.00,
 				buyData: [],
 				sellData: [],
-				maxSell: 10,
-				maxBuy: 10,
-				socket: null,
+				socket: new socket(),
 				nowData: {},
 				contractMulId: '',
 				contractMul: 0, //合约乘数
@@ -377,26 +358,8 @@
 						val: '100%',
 						code: false
 					}
-				],
-
-				interval: null,
-				interval1: null,
-				interval2: null,
-				rate: {},
+				]
 			};
-		},
-		created() {
-			// 获取 汇率
-			this.$u.api.fack.getCurrencyConfiguration().then(res => {
-				this.rate = res.result[0]
-			})
-			if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
-			else this.getRealTimeOne();
-
-			this.interval = setInterval(() => {
-				if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
-				else this.getRealTimeOne();
-			}, 5000)
 		},
 		onHide() {
 			if (this.timer) { //注销定时器
@@ -405,14 +368,6 @@
 				this.timer = null;
 			}
 			// this.$store.state.socket.removeListener('daymarket')
-			clearInterval(this.interval)
-			this.interval = null
-			clearInterval(this.interval2)
-			this.interval2 = null
-
-			if (this.socket) this.socket.toClose();
-			this.socket = null
-
 		},
 		onUnload() {
 			if (this.timer) { //注销定时器
@@ -437,16 +392,12 @@
 				this.timer = null;
 			}
 			let member = uni.getStorageSync('userId') || ''
-			this.getPairsList();
-			
 			this.sellState = this.setSellCode === 1 ? false : true
 			if (member) {
 				this.timer = setInterval(() => {
 					if (member) {
-						this.getRealtime()
-
-						// this.getPairsList();
-						// this.getBalances();
+						this.getPairsList();
+						this.getBalances();
 					} else {
 						clearInterval(this.timer);
 						this.timer = null;
@@ -459,92 +410,35 @@
 
 		},
 		methods: {
-			// 获取类型的币值 实时数据
-			async getRealtime() {
-				this.$u.throttle(async () => {
-					const {
-						code,
-						data
-					} = await this.$u.api.trendDetails.getRealtime();
-					if (code == '0') {
-						this.pairs = data
-					}
-				}, 2000)
-			},
-			// 获取当前币值
-			async getRealTimeOne(symbol) {
-				const {
-					code,
-					data
-				} = await this.$u.api.trendDetails.getRealtime(symbol);
-				if (code == '0') {
-					this.pairsItem = data[0]
-					console.log(this.socket)
-					if (!this.socket) {
-						this.socket = null
-						this.socketFn()
-					}
-				}
-			},
-
-			socketFn() {
-				console.log(this.pairsItem)
-				if (!this.pairsItem.symbol) return;
-				this.socket = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.pairsItem.symbol}`)
-				this.socket.doOpen();
-				this.interval2 = setInterval(() => {
-					let {
-						code,
-						data
-					} = getData()
-					console.log(code, data)
-					if (code == '0') {
-						this.buyData = data.asks.slice(0, 5);
-						this.sellData = data.bids.slice(0, 5);
-					}
-					console.log(this.buyData, this.sellData)
-				}, 3000)
-				this.socket.on("open", (res) => {
-					// this.socket.send("PING");
-					// this.socket.send(`initEntrust-${this.pairsItem.pairsName}`);
-				});
-				this.socket.on("message", this.onMessage);
-			},
-
-
-
-
-
-
-			inputHandler(e) {
-				if (Number(e.detail.value) < 1) {
-					this.$nextTick(() => {
+			inputHandler(e){
+				if(Number(e.detail.value) < 1){
+					this.$nextTick(()=>{
 						this.search1 = 1
 					})
 				}
-				if (Number(e.detail.value) > (this.usdtPrice / 1030)) {
-					console.log('最大数', Number((this.usdtPrice / 1030)).toFixed(0))
-
-					this.$nextTick(() => {
-						this.search1 = Number((this.usdtPrice / 1030)).toFixed(0)
+				if(Number(e.detail.value) > (this.usdtPrice/1030)){
+					console.log('最大数',Number((this.usdtPrice/1030)).toFixed(0))
+					
+					this.$nextTick(()=>{
+						this.search1 = Number((this.usdtPrice/1030)).toFixed(0)
 					})
 				}
 				// console.log('inputHandler',e.detail.value)
 			},
-			//登录
-			toLogin() {
-				uni.navigateTo({
-					url: `/pages/login/login`
-				})
-			},
-			//切换开仓
-			sectionChange(i) {
-				// console.log('切换开仓',i)
-				this.cuBond = i
-			},
+      //登录
+      toLogin () {
+        uni.navigateTo({
+          url: `/pages/login/login`
+        })
+      },
+      //切换开仓
+      sectionChange(i){
+		  // console.log('切换开仓',i)
+        this.cuBond = i
+      },
 			//撤单
 			chedan(item) {
-				console.log(item, '我是永续撤单--------')
+				console.log(item,'我是永续撤单--------')
 				// this.$u.api.bibi.closeEntrust(item.id).then(res => {
 				// 	if (res.status == "SUCCEED") {
 				// 		this.$utils.showToast(this.$t('cdcg').cdcg)
@@ -553,7 +447,7 @@
 				// 	}
 				// 	this.getEntrustOrderList();
 				// })
-				this.$u.api.bibi.closeEntrust1(item.id).then(res => {
+        this.$u.api.bibi.closeEntrust1(item.id).then(res => {
 					if (res.status == "SUCCEED") {
 						this.$utils.showToast(this.$t('cdcg').cdcg)
 					} else {
@@ -562,20 +456,17 @@
 					this.getEntrustOrderList();
 				})
 			},
-			// 单独平仓
-			pingchang(i) {
-				let obj = {
-					hands: i.hands,
-					id: i.id
-				}
-				this.$u.api.getContractorder.setOrderMatch(obj).then(res => {
-					if (res.status == "SUCCEED") {
-						this.$utils.showToast(this.$t('entrust').pingchangchenggong)
-					} else {
-						this.$utils.showToast(res.errorMessage)
-					}
-				})
-			},
+      // 单独平仓
+      pingchang(i){
+        let obj = {hands:i.hands,id : i.id}
+        this.$u.api.getContractorder.setOrderMatch(obj).then( res =>{
+          if (res.status == "SUCCEED") {
+            this.$utils.showToast(this.$t('entrust').pingchangchenggong)
+          } else {
+            this.$utils.showToast(res.errorMessage)
+          }
+        })
+      },
 			stopAdd(price) {
 				console.log(this.isStop)
 				if (price == '' && !price) {
@@ -636,14 +527,14 @@
 					url: `/pages/kLine/index?name=${this.pairsItem.pairsName}&code=1`
 				})
 			},
-			// socketFn() {
-			// 	this.socket.doOpen();
-			// 	this.socket.on("open", () => {
-			// 		this.socket.send("PING");
-			// 		this.socket.send(`initEntrust-${this.pairsItem.pairsName}`);
-			// 	});
-			// 	this.socket.on("message", this.onMessage);
-			// },
+			socketFn() {
+				this.socket.doOpen();
+				this.socket.on("open", () => {
+					this.socket.send("PING");
+					this.socket.send(`initEntrust-${this.pairsItem.pairsName}`);
+				});
+				this.socket.on("message", this.onMessage);
+			},
 			// 清空数据
 			emptyFn() {
 				this.search1 = null
@@ -667,7 +558,7 @@
 			},
 			sub(code) {
 				const {
-					search1, //张数
+					search1,//张数
 					usdtPrice,
 					sellState,
 					contractMulId,
@@ -689,9 +580,9 @@
 						currentGangganType = item.lever
 					}
 				})
-				console.log(this.pairsItem, 'this.pairsItem')
+				console.log(this.pairsItem,'this.pairsItem')
 				const {
-					name,
+					pairsName,
 					tokenCur,
 					price
 				} = this.pairsItem
@@ -700,26 +591,25 @@
 				obj.contractHands = this.search1 //合约乘数
 				obj.contractMulId = contractMulId // 交易配置id
 				// obj.leverId = leverId
-				obj.leverId = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
-        console.log('md',name)
-				obj.mainCur = name.split("/")[1]
+				obj.leverId = 'f25d2c1dcd6f74037f61ae681fc34fc4'//杠杆ID
+				obj.mainCur = pairsName.split("/")[1]
 				obj.member = uni.getStorageSync('userId')
-				obj.pairsName = name
+				obj.pairsName = pairsName
 				// obj.price = this.priceCode == 0 ? this.search:this.nowData?.nowPrice
-				obj.price = price //金额
+				obj.price = price//金额
 				obj.priceType = this.priceCode == 0 ? "MARKET_PRICE" : "CUSTOM_PRICE" // 0市价 1限价
 				// obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
-				obj.tradeType = this.cuBond == 1 ? 'CLOSE_UP' : 'CLOSE_DOWN'
-				if (this.cuBond == 0) {
-					obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
-				} else if (this.cuBond == 1) {
-					obj.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP" //多开 多空 或者 平多 平空
-				}
+        obj.tradeType = this.cuBond == 1 ? 'CLOSE_UP' : 'CLOSE_DOWN'
+        if(this.cuBond == 0){
+          obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
+        }else if(this.cuBond == 1){
+          obj.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP" //多开 多空 或者 平多 平空
+        }
 
-				// OPEN_UP、OPEN_DOWN、CLOSE_UP、CLOSE_DOWN",
+        // OPEN_UP、OPEN_DOWN、CLOSE_UP、CLOSE_DOWN",
 
-				this.currentDta = {
-					pairsName:name,
+        this.currentDta = {
+					pairsName,
 					price: this.nowData?.nowPrice,
 					num: search1,
 					lever: currentGangganType,
@@ -738,7 +628,7 @@
 						} else {
 							this.$utils.showToast(res.errorMessage)
 						}
-						this.search1 = 1
+            this.search1 = 1
 					})
 				} else {
 					this.ydAddCode = true
@@ -771,7 +661,7 @@
 				this.$u.api.bibi.getCoinInfo(this.pairsItem.pairsName).then(res => {
 					let json = JSON.parse(res.result)
 					this.nowData = json
-					this.search = this.search ? this.search : this.nowData.nowPrice
+					this.search = this.search ? this.search:this.nowData.nowPrice
 				})
 			},
 			onMessage(data) {
@@ -787,12 +677,10 @@
 				);
 			},
 			getTo(item) {
-				console.log('选中了', item)
+				console.log('选中了',item)
 				this.search = item.open
 				this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
-				this.socketFn()
-
 				this.getLeverList();
 				this.getWarehousesList();
 				this.getCoinInfoList();
@@ -816,15 +704,14 @@
 					if (JSON.stringify(this.pairsItem) == "{}") {
 						this.pairsItem = res.result[0]
 					}
-
 					this.getCoinInfoList();
 					this.getLeverList();
 					this.getWarehousesList();
-					this.socketFn()
+					this.socketFn();
 					this.getjiaoyipeizhi()
 				})
 			},
-			//查看委托记录
+      //查看委托记录
 			getRecord() {
 				uni.navigateTo({
 					url: `/pages/record/index?code=3`
@@ -860,14 +747,14 @@
 			},
 			getFloat(number, n) {
 				n = n ? parseInt(n) : 0;
-				if (n <= 0) {
+				if(n <= 0) {
 					return Math.round(number);
 				}
 				// number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
 				// number = number.substring(0, number.indexOf('.') + 1 + n)
 				// console.log(number, '我是计算结果')
 				console.log(number)
-				number = String(number).replace(/^(.*\..{5}).*$/, "$1")
+				number = String(number).replace(/^(.*\..{5}).*$/,"$1")
 				number = Number(number)
 				// number = Number(number).toFixed(n); //补足位数
 				return number;
@@ -876,14 +763,13 @@
 				let amount = this.usdtPrice / 4;
 				switch (index) {
 					case 0:
-						this.search1 = Number((index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5)) /
-							1030).toFixed(0);
+						this.search1 = Number((index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5)) / 1030).toFixed(0);
 						break;
 					case 1:
 						this.search1 = Number(this.getFloat(amount * 2, 6) / 1030).toFixed(0);
 						break;
 					case 2:
-						this.search1 = Number(this.getFloat(amount * 3, 6) / 1030).toFixed(0);
+						this.search1 =Number(this.getFloat(amount * 3, 6) / 1030).toFixed(0);
 						break;
 					case 3:
 						this.search1 = Number(this.getFloat(amount * 4, 6) / 1030).toFixed(0);
@@ -943,7 +829,7 @@
 						// url: `/pages/financial/delivery`
 						url: `/pages/trendDetails/index`
 					})
-				}
+				} 
 				// else {
 				// 	this.$utils.showToast(this.$t('setting').zwkf)
 				// }
@@ -972,23 +858,18 @@
 			topName() {
 				return this.i18n.topName
 			},
-			warehouse() {
-				return this.i18n.warehouse
-			}
+      warehouse(){
+        return this.i18n.warehouse
+      }
 		}
 
 	}
 </script>
 
 <style lang="scss" scoped>
-	.text-red {
-		color: #f6465d !important;
-	}
-
-	.white {
+	.white{
 		background-color: #fff;
 	}
-
 	.yx-title {
 		display: flex;
 		align-items: center;
@@ -1177,7 +1058,7 @@
 				//	border-radius: 6rpx;
 				//	margin: 30rpx 0;
 				//	padding: 18rpx 0;
-				//
+        //
 				//	.f-input {
 				//		text-align: center;
 				//		color: #1F222B;
@@ -1186,18 +1067,17 @@
 				//	}
 				//}
 
-				.amountDisplayBox {
-					padding: 20rpx;
+        .amountDisplayBox {
+          padding: 20rpx ;
+          .amountList {
+            padding: 10rpx 0 ;
+            display: flex;
+            justify-content: space-between;
+            color: #747884;
+            font-size: 24rpx;
 
-					.amountList {
-						padding: 10rpx 0;
-						display: flex;
-						justify-content: space-between;
-						color: #747884;
-						font-size: 24rpx;
-
-					}
-				}
+          }
+        }
 
 				.percent {
 					color: #B0B3BA;
@@ -1288,13 +1168,13 @@
 				}
 
 				.l-sum {
-					margin-top: 10rpx;
+          margin-top: 10rpx;
 					padding: 16rpx 16rpx;
 					border-radius: 6rpx;
 					font-size: 28rpx;
 					font-weight: bold;
-					border: 2rpx solid #dcdfe6;
-					display: flex;
+          border: 2rpx solid #dcdfe6;
+          display: flex;
 					align-items: center;
 
 					.f-input {
@@ -1306,7 +1186,7 @@
 
 					.r-icon {
 						margin-left: auto;
-						color: #7A7E89;
+            color: #7A7E89;
 					}
 
 					& image {
@@ -1413,8 +1293,8 @@
 			display: flex;
 			align-items: center;
 			overflow-x: scroll;
-
-			.bot {
+			
+			.bot{
 				margin-top: 6rpx;
 				width: 40rpx;
 				border-bottom: 5rpx solid #BE1852;
@@ -1461,29 +1341,29 @@
 				font-weight: 600;
 				border-radius: 6rpx;
 				padding: 10rpx 0;
-
+				
 				justify-content: center;
 				align-items: center;
 				display: flex;
 				flex-direction: column;
 				//background: #fff;
-				// border-radius: 25rpx;
-				// background: #2c78f8;
-				color: #BE1852;
-				border: none;
+         // border-radius: 25rpx;
+        // background: #2c78f8;
+        color: #BE1852;
+        border: none;
 			}
 		}
 
-		.warehouse {
-			width: 100%;
-			//margin: 0 26rpx;
-			//border-radius: 6rpx;
-			display: flex;
-			align-items: center;
-			//overflow-x: scroll;
-			// padding: 26rpx 30rpx;
-			margin-top: 20rpx;
+    .warehouse {
+      width: 100%;
+      //margin: 0 26rpx;
+      //border-radius: 6rpx;
+      display: flex;
+      align-items: center;
+      //overflow-x: scroll;
+      // padding: 26rpx 30rpx;
+	  margin-top: 20rpx;
 
-		}
+    }
 	}
 </style>

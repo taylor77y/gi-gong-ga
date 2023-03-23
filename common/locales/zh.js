@@ -1450,7 +1450,27 @@ export default {
 				areaCode: "211"
 			}
 		],
-	
+		sccg:'上传成功',
+		realName:'请输入真实姓名',
+		number:'请输入证件号',
+		positiveLink:'请上传正面照',
+		sideLink:'请上传反面照',
+		handLink:'请上传手持照',
+		tg:'跳过',
+		qxzgj:'请选择国家',
+		qsrgj:'请输入需要搜索的国家名称',
+		smrz:'实名认证',
+		gj:'国籍',
+		zsmz:'真实名字',
+		zjz:'证件/护照号码',
+		zjzsc:'证件照/上传护照',
+		zjzm:'证件正面',
+		zjfm:'证件反面',
+		zjsc:'手持证件照',
+		pssl:'拍摄示例',
+		next:'下一步',
+		srzsxm:'请输入真实姓名',
+		srzjhm:'请输入您的证件/护照号码',
 	},
 	ident: {
 		sfyz: "验证身份",
@@ -2109,5 +2129,16 @@ export default {
 		sjthbj: '实际退还本金为',
 		wyj: '违约金',
 		zand: '则'		
+	},
+	finish:{
+		zccg:'注册成功',
+		szhbzl:'开启您的数字货币之旅',
+		tyxtxxtz:'我已同意授权调用系统信息通知权限',
+		tyfwdzp:'我已同意授权访问地址簿',
+		wxymb:'我想要买币',
+		qjy:'去交易',
+		qcz:'去充值',
+		wxycz:'我想要充值',
+		qd:'确定'
 	}
 }
