@@ -365,6 +365,16 @@
 				return this.$t("entrust")
 			}
 		},
+    watch: {
+      list: {
+        handler(newVal) {
+          newVal.forEach(e => {
+            e.shijian = new Date(e.createTime).toLocaleString('zh-CN');
+          })
+        },
+        deep: true,
+      },
+    },
 		data() {
 			return {
                 
