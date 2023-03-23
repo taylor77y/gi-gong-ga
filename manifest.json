@@ -149,7 +149,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                     "target" : "http://192.168.2.13/",
+                     "target" : "http://192.168.2.15/",
 //                    "target" : "http://wap.mxoexchange.vip/",
                     "changeOrigin" : true,
                     "secure" : false,
