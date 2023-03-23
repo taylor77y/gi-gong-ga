@@ -2167,5 +2167,19 @@ export default {
 		qcz:'To recharge',
 		wxycz:'I want to recharge',
 		qd:'confirm'
+	},
+	gooleVerify:{
+		tg:'skip',
+		aqbd:'Secure Binding',
+		ts:'(Please backup the key properly to prevent loss)',
+		fz:'duplicate',
+		ggyzm:'Google verification code',
+		qc:'clean up',
+		zt:'paste',
+		zysx:'matters needing attention',
+		xzggyz:'1. Download Google Authentication App',
+		smts:'2. Scan the QR code in the above figure and input the verification code. The confirmation is completed',
+		qr:'confirm',
+		qsryzm:'Please enter the verification code'
 	}
 }
