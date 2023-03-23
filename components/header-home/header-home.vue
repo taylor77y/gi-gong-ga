@@ -18,7 +18,7 @@
 			</view>
 
 		</view>
-		<view class="right">
+		<view class="right" v-show="contactLink">
 			<!-- <image src="../../static/image/home/3.png">
 			<image src="../../static/image/home/4.png"> -->
 			<image @click="goCustomer()" src="../../static/image/home/5.png">
@@ -65,16 +65,19 @@
 
 			}
 		},
-		onLoad() {
-			goCustomer()
+		mounted() {
+			this.getContactLink()
 		},
 		methods: {
-			async goCustomer() {
+			async getContactLink(){
 				if (!this.contactLink) {
 					let res = await this.$u.api.kefu.getContactLink(1)
 					console.log('getContactLink', res)
 					this.contactLink = res?.result?.contactLink ?? this.contactLink
 				}
+			},
+			async goCustomer() {
+				// await this.getContactLink()
 				// 跳转外部链接h5
 				// #ifdef H5
 				window.location.href = this.contactLink

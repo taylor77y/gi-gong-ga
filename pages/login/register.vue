@@ -402,7 +402,7 @@
 						// 	})
 						// }, 500)
 					} else {
-						this.$utils.showToast(res.errorCode, res.errorMessage)
+						this.$utils.showToast(res.errorMessage)
 					}
 				}).catch(error => {
 					this.$utils.showToast(error)

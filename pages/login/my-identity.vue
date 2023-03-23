@@ -132,6 +132,9 @@
 				show: false,
 				actionSheetList:[],
 				list: [],
+				handLink:'',
+				sideLink:'',
+				positiveLink:''
 			}
 		},
 		computed: {
@@ -211,11 +214,18 @@
 					areaCode :this.nationalnum,
 					name :this.realName,
 					cardNo :this.number,
+					positiveLink: this.positiveLink,
+					sideLink:this.sideLink,
+					handLink:this.handLink
 				}
 				//console.log(member)
 				//上传 国籍 真实姓名 证件号码
-				this.$u.api.user.setAuthenWithArea(member,this.nationalnum,this.realName,this.number).then(res=>{
-					console.log(res);
+				//member,areaCode,sideFile,cardNo,positiveLink,sideLink,handLink
+				this.$u.api.user.setAuthenWithArea(setAu).then(res=>{
+					console.log('setAuthenWithArea',res);
+					// if(res.status == "SUCCEED"){}
+					// this.$utils.showToast(res.errorMessage)
+					return ;
 				})
 				//上传照片
 				// console.log(member,files[0],files[1],files[2]);

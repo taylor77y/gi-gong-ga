@@ -2,7 +2,7 @@
 	<view class="container">
 		<xl-header>
 			<template #right>
-				<view class="right">
+				<view class="right" v-show="contactLink">
 					<!-- <image style="margin-right: 40rpx;" src="../../static/image/setting/1.png"></image> -->
 					<image @click="goCustomer()" src="../../static/image/setting/2.png" style="width: 40rpx; height: 40rpx;"></image>
 				</view>
@@ -50,8 +50,8 @@
 		</view> -->
 		<view style="height: 40rpx;"></view>
 		<view class="set-list">
-			<view class="item" @click="getPath(item.path)" :class="{ 'f-border': item.border }"
-				v-for="(item, index) in listInfo" :key="index">
+			<view class="item" @click="getPath(item)" :class="{ 'f-border': item.border }"
+				v-for="(item, index) in listInfo" :key="index" v-show="item.id != 'contactLink' || contactLink">
 				<view class="left">
 					<image :src="item.img" /> {{ item.name }}
 				</view>
@@ -88,6 +88,7 @@
 	export default {
 		data() {
 			return {
+				contactLink:'',
 				socket: this.KeFusocket,
 				loginCode: false,
 				checked: true,
@@ -166,6 +167,7 @@
 					// 	isNews: true
 					// },
 					{
+						id:'contactLink',
 						name: '',
 						img: '../../static/image/setting/2.png',
 						border: false,
@@ -212,6 +214,7 @@
 			}
 		},
 		onLoad() {
+			this.getContactLink()
 			if (uni.getStorageSync('userId')) {
 			 this.getUserInfo();
 				this.loginCode = true
@@ -352,6 +355,13 @@
 			// }
 		},
 		methods: {
+			async getContactLink(){
+				if (!this.contactLink) {
+					let res = await this.$u.api.kefu.getContactLink(1)
+					console.log('getContactLink', res)
+					this.contactLink = res?.result?.contactLink ?? this.contactLink
+				}
+			},
 			getAuthentication() {
 				if (this.user.cardState !== 'PASS' && this.user.cardState !== 'WAIT') {
 					uni.navigateTo({
@@ -366,9 +376,17 @@
 				})
 			},
 			goCustomer() {
-				uni.navigateTo({
-					url: `/pages/kefu/customerService?type=service`
-				})
+				// uni.navigateTo({
+				// 	url: `/pages/kefu/customerService?type=service`
+				// })
+				// 跳转外部链接h5
+				// #ifdef H5
+				window.location.href = this.contactLink
+				// #endif
+				// #ifdef APP-PLUS
+				plus.runtime.openURL(this.contactLink) //不需要拼接
+				// plus.runtime.openURL(`http://${jumpUrl}`)//需要拼接
+				// #endif
 			},
 			getLogin(index) {
 				const temp = {
@@ -391,11 +409,21 @@
 					url: `/pages/setup/edt-user`
 				})
 			},
-			getPath(path) {
-				
-				if (path) {
+			getPath(item) {
+				console.log('item',item)
+				if (item.path) {
+					if(item.id == 'contactLink'){
+						// #ifdef H5
+						window.location.href = this.contactLink
+						// #endif
+						// #ifdef APP-PLUS
+						plus.runtime.openURL(this.contactLink) //不需要拼接
+						// plus.runtime.openURL(`http://${jumpUrl}`)//需要拼接
+						// #endif
+						return
+					}
 					uni.navigateTo({
-						url: path
+						url: item.path
 					})
 				} else {
 					this.$utils.showToast(this.i18n.zwkf)
