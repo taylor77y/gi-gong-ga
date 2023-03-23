@@ -382,7 +382,7 @@
 					return;
 				}
 				if(userPass !== confirmUserPass) {
-					this.$utils.showToast("密码不正确")
+					this.$utils.showToast(this.i18n.mmbyz)
 					return;
 				}
 				// if (!verification) {
@@ -409,22 +409,23 @@
 					
 				let params = {
 					password: this.userPass,
-					// 2: 账号， 0：邮箱 ； 1：手机号
+					//注册方式 0: 账号， 1：邮箱 ； 2：手机号
 					regType: this.chenk == 0 ? 2 : this.chenk == 1 ? 0 : this.chenk == 2 ? 1 : '',
-					areaCode: this.chenk == 1 ? this.nationalnum : 86
+					areaCode: this.chenk == 2 ? this.nationalnum : 86
 				}
 				if(params.regType == 0) {
 					params.mail = this.userPhone
 					
 					if(!/^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/.test(this.userPhone)) {
-						this.$utils.showToast(this.$t('common').hujkjkh)
+						this.$utils.showToast(this.i18n.hujkjkh)
 						return;
 					}
 				} else if(params.regType == 1) {
 					params.phone = this.userPhone
 					
 					if(!/^1[3-9]\d{9}$/.test(this.userPhone)) {
-						this.$utils.showToast(this.$t('common').skjkjkhd)
+						console.log('进来了')
+						this.$utils.showToast(this.i18n.skjkjkhd)
 						return;
 					}
 				} else {

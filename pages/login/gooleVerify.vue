@@ -6,7 +6,7 @@
                src="/static/lanhu_zhuce2/psp7pfts61abml9bqfww31ud54m8lwlnff9c1d27e1-8110-48ab-824d-24b76b7c6231.png" />
 <!--        <image @click="cancel()" class="icon_2" referrerpolicy="no-referrer"-->
 <!--               src="/static/lanhu_zhuce2/ps8mi28hn9gmamrpujbfjv4cag6du5nsr5eeb254688-0329-4f0a-8853-62ee62fc9a19.png" />-->
-        <text @click="cancel()">跳过</text>
+        <text @click="cancel()">{{i18n.tg}}</text>
       </view>
     </view>
 
@@ -33,22 +33,22 @@
         <u-icon name="reload" @click="cancel()"></u-icon>
       </view>
       <view class="remarks">
-        <text>（请妥善备份密钥以防丟失）</text>
+        <text>{{i18n.ts}}</text>
       </view>
     </view>
 <!--    复制-->
     <view style="padding: 20px;">
-      <u-button type="primary" :plain="true" :hairline="true"  @click="">复制</u-button>
+      <u-button type="primary" :plain="true" :hairline="true"  @click="">{{i18n.fz}}</u-button>
     </view>
 
     <view class="verificationCode">
       <view class="verificationCodeTextBxo">
           <view style="margin-left: 10rpx">
-              谷歌验证码
+              {{i18n.ggyzm}}
           </view>
         <view class="btn">
-          <a href="#" style=" color: #4D7CF5; margin-right: 10rpx; text-decoration : none">清除</a>
-          <a href="#" style="color: #4D7CF5;  text-decoration : none" >粘贴</a>
+          <a href="#" style=" color: #4D7CF5; margin-right: 10rpx; text-decoration : none">{{i18n.qc}}</a>
+          <a href="#" style="color: #4D7CF5;  text-decoration : none" >{{i18n.zt}}</a>
         </view>
       </view>
 	  <view>
@@ -58,17 +58,17 @@
 
     <view class="mattersNeedingAttentionBox mg30">
       <view class="mattersNeedingAttention">
-        <text>注意事项</text>
+        <text>{{i18n.zysx}}</text>
       </view>
       <view class="mattersNeedingAttention">
-        <text>1.下載Google身份验证器APP</text>
+        <text>{{i18n.xzggyz}}</text>
       </view>
       <view class="mattersNeedingAttention">
-        <text>2.扫描上图二维码输入验证码完成有定</text>
+        <text>{{i18n.smts}}</text>
       </view>
     </view>
 	<view class="item mt-50 mg30">
-		<u-button type="primary" @click="nextup">确认</u-button>
+		<u-button type="primary" @click="nextup">{{i18n.qr}}</u-button>
 	</view>
   </view>
 </template>
@@ -97,7 +97,7 @@
     mounted() { },
     computed:{
       i18n() {
-        return this.$t("member")
+        return this.$t("gooleVerify")
       },
     },
     methods: {
@@ -105,7 +105,7 @@
 		  if(this.$refs.inputmsg.valueModel.length != 6){
 			uni.showToast({
 				icon:'none',
-				title: '请输入验证码',
+				title: this.i18n.qsryzm,
 			});
 			return ;  
 		  }

@@ -2129,5 +2129,19 @@ export default {
 		qcz:'去充值',
 		wxycz:'我想要充值',
 		qd:'确定'
+	},
+	gooleVerify:{
+		tg:'跳过',
+		aqbd:'安全绑定',
+		ts:'（请妥善备份密钥以防丟失）',
+		fz:'复制',
+		ggyzm:'谷歌验证码',
+		qc:'清除',
+		zt:'粘贴',
+		zysx:'注意事项',
+		xzggyz:'1.下載Google身份验证器APP',
+		smts:'2.扫描上图二维码输入验证码完成有定',
+		qr:'确认',
+		qsryzm:'请输入验证码'
 	}
 }
