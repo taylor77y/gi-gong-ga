@@ -33,7 +33,7 @@
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='CLOSE_UP'}">
 					{{item.tradeType=='CLOSE_UP' ? i18n.pd:i18n.dk}}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
+					<text></text> {{item.pairsName}}
 				</view>
 				<view class="right">
           <view class="right"  @click.stop="pingchang(item)">
@@ -85,12 +85,15 @@
 			</view>
 			<view class="f-row" v-if="mode === 4">
 				<view class="left">
-					{{ $t('newFy').ccjj }}
+					{{ $t('newFy').cjjj }}
 					<text>
 					</text>
 				</view>
-				<view class="conta">
-					{{ $t('newFy').wsxyk }}
+<!--				<view class="conta">-->
+<!--					{{ $t('newFy').wsxyk }}-->
+<!--				</view>-->
+        <view class="conta">
+          {{ $t('newFy').bzj }}
 				</view>
 				<view class="right">
 					{{ $t('newFy').syl }}
@@ -137,7 +140,8 @@
 					{{ item.avePrice|SubStringZreo(4) }}
 				</view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
-					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}
+<!--					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}-->
+          {{item.margin|SubStringZreo(4)}}
 				</view>
 				<view class="right" :class="item.profitUp>0?'c_green':'c_red'">
 					{{item.profitUp>0?'+':''}}{{item.profitUp*100|SubStringZreo(2)}}%
@@ -170,31 +174,29 @@
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 4">
-				<view class="left">
-					{{ $t('newFy').ygqp }}
-					<text>
-					</text>
-				</view>
-				<view class="conta">
-					
-					{{ $t('newFy').zybzj }}
-				</view>
-				<view class="right">
-					{{ $t('newFy').ss }}
-				</view>
+<!--				<view class="left">-->
+<!--					{{ $t('newFy').ygqp }}-->
+<!--					<text>-->
+<!--					</text>-->
+<!--				</view>-->
+<!--				<view class="conta">-->
+<!--					{{ $t('newFy').bzj }}-->
+<!--				</view>-->
+<!--				<view class="right">-->
+<!--					{{ $t('newFy').ss }}-->
+<!--				</view>-->
 			</view>
 			<view class="f-row f-000" v-if="mode === 4">
-				<view class="left">
-					{{item.forcePrice|toFixed(4)}}
-				</view>
+<!--				<view class="left">-->
+<!--					{{item.forcePrice|toFixed(4)}}-->
+<!--				</view>-->
 				<view class="conta">
-					
-					{{item.margin|SubStringZreo(4)}}
+<!--					{{item.margin|SubStringZreo(4)}}-->
 				</view>
 				
-				<view class="right" >
-					{{item.hands}}
-				</view>
+<!--				<view class="right" >-->
+<!--					{{item.hands}}-->
+<!--				</view>-->
 			</view>
 			<view class="f-row" v-if="mode === 1">
 				<view class="left">
@@ -236,28 +238,29 @@
 			<view class="f-row" v-if="mode === 4">
 				<view class="left">
 					<!-- 维持保证金率 -->
-					{{ $t('newFy').zyjg }}
+<!--					{{ $t('newFy').zyjg }}-->
+          {{ i18n.chengjiaoshijian }}
 					<text>
 					</text>
 				</view>
 				<view class="conta">
-					
+          {{item.shijian || '-'}}
 				</view>
-				<view class="right">
-					{{ $t('newFy').zsjg }}
-				</view>
+<!--				<view class="right">-->
+<!--					{{ $t('newFy').zsjg }}-->
+<!--				</view>-->
 			</view>
 			<view class="f-row f-000" v-if="mode === 4">
-				<view class="left">
-					{{item.triggerPrice|SubStringZreo(4)}}
-				</view>
+<!--				<view class="left">-->
+<!--					{{item.triggerPrice|SubStringZreo(4)}}-->
+<!--				</view>-->
 				<view class="conta">
 					<!-- {{item.hands}} -->
 				</view>
-				
-				<view class="right" >
-					{{item.ordPrice|SubStringZreo(4)}}
-				</view>
+
+<!--				<view class="right" >-->
+<!--					{{item.ordPrice|SubStringZreo(4)}}-->
+<!--				</view>-->
 			</view>
 			<view class="f-row f-000" v-if="mode === 1">
 				<view class="left">
@@ -354,21 +357,37 @@
 				default: true
 			}
 		},
+    created(){
+      this.infoTime()
+    },
 		computed: {
 			i18n() {
 				return this.$t("entrust")
 			}
 		},
+    watch: {
+      list: {
+        handler(newVal) {
+          newVal.forEach(e => {
+            e.shijian = new Date(e.createTime).toLocaleString('zh-CN');
+          })
+        },
+        deep: true,
+      },
+    },
 		data() {
 			return {
                 
 			}
 		},
-
 		methods: {
+      infoTime(){
+        const list = this.list.map(e=>{
+          return  e.shijian = new  Date(e.createTime).toLocaleString('zh-CN')
+        })
+      },
       //详情  
       goDetails(item){
-        // console.info("🇨🇳🇨🇳:点击了详情 --", item)
         if(this.mode == 3){
           uni.navigateTo({
             url:`/pages/financial/details?data=` + JSON.stringify(item)

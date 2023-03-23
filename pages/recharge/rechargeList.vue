@@ -92,13 +92,6 @@
         }
       },
 			toRechargePage(symbol) {
-        // let member = 'ddba8664bd191a10d0106ae250a4e433'
-        // let data = {member:member}
-        let type = 45
-        this.$u.api.user.getRechargeConfiguration(type).then(res=>{
-          console.info("🇨🇳🇨🇳:res --", res)
-        })
-
 				uni.navigateTo({
 					url: '/pages/recharge/rechargePage?symbol=' + symbol
 				})

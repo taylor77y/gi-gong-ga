@@ -172,8 +172,9 @@ const install = (Vue, vm) => {
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
 		// 获取充值接口
-		// getRechargeConfiguration: (params) => vm.$u.get("/member/balance/getRechargeConfiguration",params),
-		getRechargeConfiguration: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
+		getRechargeWallet: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
+		//充值提交
+		rechargeCurrency: (params) => vm.$u.post(`/member/balance/rechargeCurrency`,params),
 	}
 	const setting = {
 		//刷新用户信息
