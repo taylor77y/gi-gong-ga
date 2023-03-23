@@ -173,8 +173,11 @@ const install = (Vue, vm) => {
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
 		// 获取充值接口
 		getRechargeWallet: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
+		// 获取手续费
+		getRechangeConfiqunation: (key) => vm.$u.get(`/member/balance/new/getRechargeConfiguration?key=${key}`),
 		//充值提交
 		rechargeCurrency: (params) => vm.$u.post(`/member/balance/rechargeCurrency`,params),
+		// getBillingAddressList: (id) => vm.$u.post(`/member/getBillingAddressList?member=${id}`),
 	}
 	const setting = {
 		//刷新用户信息

@@ -1742,6 +1742,14 @@ export default {
 			zcdz:'转出地址（选填）',
 			fzdz:'复制地址',
 			bcewm:'保存二维码',
+			sccg:'上传成功',
+			fzcg: '复制成功',
+			qsrsl:'请输入数量',
+			qsctp:'请上传图片',
+			zt:'粘贴',
+			czcg:'充值成功',
+			bcsbqjtbc:'保存失败,请截图保存',
+			qsrcbsl:'请输入充币数量',
 	},
 	edtUser: {
 		zhxx: '账户信息',
@@ -1750,6 +1758,7 @@ export default {
 		nichen: '昵称',
 		qsrnc: '请输入昵称',
 		sccg: '上传成功',
+
 	},
 	record: {
 		tagBtn: [{
@@ -2051,8 +2060,10 @@ export default {
 		zyjbdd: '质押借币订单'
 	},
 	withdraw: {
-		tb: '提币 USDT ',
-		tbdszbdz: '提币 USDT 到数字币地址',
+		tbsqcg:'提现申请已经提交,如提现未到账?请联系客服',
+		tbslbnsy:'提币数量不能少于1',
+		tb: '提币 ',
+		tbdszbdz: '到数字币地址',
 		xzbz: '选择币种',
 		qklwl: '区块链网络',
 		dz: '地址',

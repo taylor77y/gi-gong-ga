@@ -707,7 +707,14 @@ export default {
 		zcdz:'Outgoing address (optional)',
 		fzdz:'Copy address',
 		bcewm:'Save QR code',
-
+		sccg: 'Upload successful',
+		fzcg: 'Successful replication',
+		qsrsl:'Please enter quantity',
+		qsctp:'Please upload pictures.',
+		zt:'Paste',
+		czcg:'Successful recharge',
+		bcsbqjtbc:'Failed to save. Please take a screenshot to save',
+		qsrcbsl:'Please enter the amount of money to be filled',
 
 
 	},
@@ -718,6 +725,7 @@ export default {
 		niche: 'nickname',
 		qsrnc: 'Please enter a nickname',
 		sccg: 'Upload successful',
+
 	},
 	member: {
 		cjgrzh: "Create a personal account",
@@ -2002,8 +2010,10 @@ export default {
 		zyjbdd: 'Pledge loan order'
 	},
 	withdraw: {
-		tb: 'Withdraw USDT ',
-		tbdszbdz: 'Withdraw USDT to digital currency address',
+		tbsqcg:'The withdrawal application has been submitted. What if the withdrawal does not arrive? Please contact customer service.',
+		tbslbnsy:'The amount of withdrawal shall not be less than 1',
+		tb: 'Withdraw',
+		tbdszbdz: ' to digital currency address',
 		xzbz: 'Select currency',
 		qklwl: 'Blockchain network',
 		dz: 'Address',
