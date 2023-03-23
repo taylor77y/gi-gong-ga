@@ -29,7 +29,7 @@
 					src="/static/lanhu_zhuce2/psbykg78eifnmb9de1pjy8sbqitgqvyzgu3d2d4e60-0426-45d8-95dc-ef9dce59cc35.png" />
 			</view> -->
 
-				<text class="" @click="getAreaCode()">+{{ countryCode }}</text>
+				<text class="" @click="showPhonePopup = true">{{ nationalnum }}</text>
 				<image referrerpolicy="no-referrer"
 					src="/static/lanhu_denglu/ps04twdt13087chpihojawqbuipb5dvmfz1068353f9-a9e8-4434-9048-6cb91bdf69d9.png" />
 			</view>
@@ -80,9 +80,9 @@
 
 		</view>
 
-		<view class="common flex-row justify-between" v-if="!chenk == 0">
+<!-- 		<view class="common flex-row justify-between" v-if="!chenk == 0">
 			<text class="text_7">{{ $t('newFy').yzm }}</text>
-		</view>
+		</view> -->
 		
 		<!-- 		<view class="register-input" v-if="!chenk == 0">
 			<view class="f-in-box">
@@ -129,10 +129,29 @@
 			<text class="text_15"></text>
 			<text class="text_16">&nbsp;注册一个企业账户</text>
 		</view> -->
+		<!-- 号码弹出层 -->
+		<view>
+			<u-popup v-model="showPhonePopup" mode="bottom" length="60%">
+				<view class="flex jcsa poptop">
+					<text></text>
+					<text>{{ i18n.qxzgj }}</text>
+					<text class="close" @click="close">x</text>
+				</view>
+				<u-search :placeholder="i18n.qsrgj" v-model="keyword" shape="square" :show-action="false" @change="search"></u-search>
+				<view v-for="(item,index) in actionSheetList" :key="index">
+					<view class="pop" @click="country(item.text,item.num)">
+						<text>{{ item.text }}</text>
+						<text>{{ item.num }}</text>
+					</view>
+				</view>
+			</u-popup>
+		</view>
 	</view>
 </template>
 <script>
 	import md5Libs from "uview-ui/libs/function/md5";
+	import {cnadrs} from '@/common/hooks/cnarea.js';
+	
 	export default {
 		data() {
 			return {
@@ -158,6 +177,12 @@
 				}, {
 					name: this.$t('member').qjy
 				}, ],
+				showPhonePopup:false,
+				areaCode:86,
+				actionSheetList:[],
+				national: '美国 (USA or Canada)',
+				nationalnum:'1',
+				keyword:''
 			};
 		},
 		computed: {
@@ -187,6 +212,13 @@
 				this.timeCode = true
 			}
 		},
+		onLoad(){
+			cnadrs.map(item => {
+				// this.actionSheetList.push({text:item.name.split('(')[0],num:item.areaCode})
+				this.actionSheetList.push({text:item.name,num:item.areaCode})
+			})
+			this.list = this.actionSheetList;
+		},
 		onUnload() {
 			if (this.newTimer) { //注销定时器
 				console.log('注销定时器')
@@ -197,6 +229,25 @@
 
 		},
 		methods: {
+			// 选择输入框赋值
+			country(v,t){
+				console.log(v,t)
+				this.national = v;
+				this.nationalnum = t;
+				this.showPhonePopup = false;
+			},
+			// 关闭弹出框
+			close(){
+				this.showPhonePopup = false;
+				this.keyword = '';
+			},
+			// 搜索逻辑
+			search(e){
+				this.actionSheetList = this.list
+				this.actionSheetList = this.actionSheetList.filter(item =>
+					item.text.indexOf(e) != -1
+				)
+			},
 			// 发送验证码
 			sendAdd() {
 				this.min = 60
@@ -311,7 +362,7 @@
 					userPhone,
 					userPass,
 					confirmUserPass,
-					countryCode: areaCode,
+					// countryCode: areaCode,
 					verification
 				} = this
 				if(!userPhone) {
@@ -360,7 +411,7 @@
 					password: this.userPass,
 					// 2: 账号， 0：邮箱 ； 1：手机号
 					regType: this.chenk == 0 ? 2 : this.chenk == 1 ? 0 : this.chenk == 2 ? 1 : '',
-					areaCode: 86
+					areaCode: this.chenk == 1 ? this.nationalnum : 86
 				}
 				if(params.regType == 0) {
 					params.mail = this.userPhone
@@ -473,6 +524,26 @@
 	@import './assets/3.scss';
 </style>
 <style lang='scss' scoped>
+	.flex{
+		display: flex;
+	}
+	.jcsa{
+		justify-content: space-between;
+	}
+	.poptop{
+		margin: 20rpx 0;
+		text-align: center;
+	}
+	.pop{
+		margin: 40rpx 20rpx 0 20rpx;
+		display: flex;
+		justify-content: space-between;
+	}
+	.poptop{
+		margin: 20rpx 0;
+		text-align: center;
+	}
+	
 	::v-deep .text_13 {
 		color: #fff!important;
 	}

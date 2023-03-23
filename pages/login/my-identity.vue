@@ -8,7 +8,7 @@
 					src="/static/lanhu_zhuce2/psp7pfts61abml9bqfww31ud54m8lwlnff9c1d27e1-8110-48ab-824d-24b76b7c6231.png" />
 			</u-col>
 			<u-col span="2" class="right-col" @click="next">
-				<text>跳过</text>
+				<text>{{ i18n.tg }}</text>
 			</u-col>
 		</u-row>
 		<!-- 步骤条 -->
@@ -20,24 +20,23 @@
 			<u-popup v-model="show" mode="bottom" length="60%">
 				<view class="flex jcsa poptop">
 					<text></text>
-					<text>请选择国家</text>
+					<text>{{ i18n.qxzgj }}</text>
 					<text class="close" @click="close">x</text>
 				</view>
-				<u-search placeholder="请输入需要搜索的国家名称" v-model="keyword" shape="square" :show-action="false" @change="search"></u-search>
+				<u-search :placeholder="i18n.qsrgj" v-model="keyword" shape="square" :show-action="false" @change="search"></u-search>
 				<view v-for="(item,index) in actionSheetList" :key="index">
 					<view class="pop" @click="country(item.text,item.num)">
 						<text>{{ item.text }}</text>
 						<text>{{ item.num }}</text>
 					</view>
 				</view>
-				
 			</u-popup>
 		</view>
 		<!-- 表单 -->
 		<view class="form">
-			<h2>实名认证</h2>
+			<h2>{{ i18n.smrz }}</h2>
 			<view class="item mt-50">
-				<view class="label">国籍</view>
+				<view class="label">{{ i18n.gj }}</view>
 				<view class="input mt-20">
 					<!-- <u-input  v-model="value" :type="type" :border="false" @click="show = true" class="input-align"/>
 					<u-action-sheet :list="actionSheetList" v-model="show" @click="actionSheetCallback"></u-action-sheet> -->
@@ -45,54 +44,54 @@
  			</view>
 			</view>
 			<view class="iteeem mt-50">
-				<view class="label">真实名字</view>
+				<view class="label">{{ i18n.zsmz }}</view>
 				<view class="input mt-20">
-					<u-input v-model="realName" :clearable="true" placeholder="请输入真实姓名" placeholder-style="color: #868c9a;" class="uni-input" />
+					<u-input v-model="realName" :clearable="true" :placeholder="i18n.srzsxm" placeholder-style="color: #868c9a;" class="uni-input" />
 				</view>
 			</view>
 			<view class="item mt-50">
-				<view class="label">证件/护照号码</view>
+				<view class="label">{{ i18n.zjz }}</view>
 				<view class="input mt-20">
-					<u-input v-model="number" :clearable="true" placeholder="请输入您的证件/护照号码" placeholder-style="color: #868c9a;" class="uni-input" />
+					<u-input v-model="number" :clearable="true" :placeholder="i18n.srzjhm" placeholder-style="color: #868c9a;" class="uni-input" />
 				</view>
 			</view>
 			<view class="item mt-50">
-				<view class="label">证件照/上传护照</view>
+				<view class="label">{{ i18n.zjzsc }}</view>
 				<u-row gutter="16" justify="space-between" class="mt-20">
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload" ref='zm'>
+						<u-upload :action="action" :header="header" @on-success="onSus1" @on-remove="positiveLink = ''" max-count="1" :custom-btn="true" class="upload" ref='zm'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
 						</u-upload>
-						<view class="label mt-10 u-margin-left-38">证件正面</view>
+						<view class="label mt-10 u-margin-left-38">{{ i18n.zjzm }}</view>
 					</u-col>
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload" ref='fm'>
+						<u-upload :action="action" :header="header" @on-success="onSus2" @on-remove="sideLink = ''" max-count="1" :custom-btn="true" class="upload" ref='fm'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
 						</u-upload>
-						<view class="label mt-10 u-margin-left-40">证件反面</view>
+						<view class="label mt-10 u-margin-left-40">{{ i18n.zjfm }}</view>
 					</u-col>
 					<u-col :span="4">
-						<u-upload max-count="1" :custom-btn="true" class="upload" ref='hc'>
+						<u-upload :action="action" :header="header" @on-success="onSus3" @on-remove="handLink = ''" max-count="1" :custom-btn="true" class="upload" ref='hc'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
 						</u-upload>
-						<view class="label mt-10 u-margin-left-35">手持证件照</view>
+						<view class="label mt-10 u-margin-left-35">{{ i18n.zjsc }}</view>
 					</u-col>
 				</u-row>
 			</view>
 			<view class="item mt-50 pb-50">
-				<view class="label">拍摄示例</view>
+				<view class="label">{{ i18n.pssl }}</view>
 				<view class="mt-20">
 					<image src="../../static/img/identity.png" mode=""></image>
 				</view>
 			</view>
 			<view class="item mt-50">
-				<u-button type="primary" @click="nextup">下一步</u-button>
+				<u-button type="primary" @click="nextup">{{ i18n.next }}</u-button>
 			</view>
 		</view>
 	</view>
@@ -104,6 +103,11 @@
 	export default {
 		data(){
 			return {
+				action:  uni.getStorageSync('imgPath') + '/member/upload/new',
+				header: {
+					'token': uni.getStorageSync('token'),
+					'userId': uni.getStorageSync('userId')
+				},
 				numList: [{
 						name: this.$t('member').zhzc
 					}, {
@@ -114,7 +118,7 @@
 						name: this.$t('member').qjy
 				}],
 				//国籍
-				national: '美国',
+				national: '美国 (USA or Canada)',
 				nationalnum:'1',
 				//真实姓名
 				realName: '',
@@ -126,7 +130,7 @@
 				fromfront:[],
 
 				sc:[],
-				value:'美国',
+				value:'',
 				valuecode:'',
 				type:'select',
 				show: false,
@@ -144,7 +148,8 @@
 		},
 		onLoad(){
 			cnadrs.map(item => {
-				this.actionSheetList.push({text:item.name.split('(')[0],num:item.areaCode})
+				// this.actionSheetList.push({text:item.name.split('(')[0],num:item.areaCode})
+				this.actionSheetList.push({text:item.name,num:item.areaCode})
 			})
 			this.list = this.actionSheetList;
 		},
@@ -168,45 +173,79 @@
 					item.text.indexOf(e) != -1
 				)
 			},
+			onSus1(response, index, lists, name) {
+				this.$utils.showToast(this.i18n.sccg)
+				console.log("上传成功", response)
+				this.positiveLink = response.result.url;
+			},
+			onSus2(response, index, lists, name) {
+				this.$utils.showToast(this.i18n.sccg)
+				console.log("上传成功", response)
+				this.sideLink = response.result.url;
+			},
+			onSus3(response, index, lists, name) {
+				this.$utils.showToast(this.i18n.sccg)
+				console.log("上传成功", response)
+				this.handLink = response.result.url;
+			},
 			// 下一步
 			nextup(){
 			// 校验
 				// 姓名
+				// if(!this.realName){
+				// 	uni.showToast({
+				// 		icon:'none',
+				// 		title: '请输入姓名',
+				// 	});
+				// 	return ;
+				// }else if(!this.number){
+				// 	uni.showToast({
+				// 		icon:'none',
+				// 		title: '请输入证件号码',
+				// 	});
+				// 	return ;
+				// }
+				if(!this.nationalnum){
+					return this.$utils.showToast(this.i18n.nationalnum)
+				}
 				if(!this.realName){
-					uni.showToast({
-						icon:'none',
-						title: '请输入姓名',
-					});
-					return ;
-				}else if(!this.number){
-					uni.showToast({
-						icon:'none',
-						title: '请输入证件号码',
-					});
-					return ;
+					return this.$utils.showToast(this.i18n.realName)
+				}
+				if(!this.number){
+					this.$utils.showToast(this.i18n.number)
+					return
+				}
+				if(!this.positiveLink){
+					return this.$utils.showToast(this.i18n.positiveLink)
+				}
+				if(!this.sideLink){
+					return this.$utils.showToast(this.i18n.sideLink)
+				}
+				if(!this.handLink){
+					 return this.$utils.showToast(this.i18n.handLink)
 				}
 				//验证3张照片是否全部上传
-				let files = [];
+				// let files = [];
 				//console.log(this.$refs.fm.lists[0].url);
 				//验证正面
-				if(this.$refs.zm.lists.length>0){
-					files.push(this.$refs.zm.lists[0].url);
-				}
-				if(this.$refs.fm.lists.length>0){
-					files.push(this.$refs.fm.lists[0].url);
-				}
+				// if(this.$refs.zm.lists.length>0){
+				// 	files.push(this.$refs.zm.lists[0].url);
+				// }
+				// if(this.$refs.fm.lists.length>0){
+				// 	files.push(this.$refs.fm.lists[0].url);
+				// }
 
-				if(this.$refs.hc.lists.length>0){
-					files.push(this.$refs.hc.lists[0].url);
-				}
+				// if(this.$refs.hc.lists.length>0){
+				// 	files.push(this.$refs.hc.lists[0].url);
+				// }
 
-				if(files.length < 3){
-					uni.showToast({
-						icon:'none',
-						title: '请上传完整证件信息',
-					});
-					return ;
-				}
+				// if(files.length < 3){
+				// 	uni.showToast({
+				// 		icon:'none',
+				// 		title: '请上传完整证件信息',
+				// 	});
+				// 	return ;
+				// }
 				//上传数据
 				let member = uni.getStorageSync("userId");
 				const setAu = {
@@ -221,10 +260,17 @@
 				//console.log(member)
 				//上传 国籍 真实姓名 证件号码
 				//member,areaCode,sideFile,cardNo,positiveLink,sideLink,handLink
-				this.$u.api.user.setAuthenWithArea(setAu).then(res=>{
-					console.log('setAuthenWithArea',res);
+				this.$u.api.user.setAuthenWithAll(setAu).then(res=>{
+					console.log('setAuthenWithAll',res);
+					if(res?.status == "SUCCEED"){
+						return this.next()
+					}
+					return this.$utils.showToast(res?.errorMessage)
 					// if(res.status == "SUCCEED"){}
 					// this.$utils.showToast(res.errorMessage)
+					// if(){
+					// 	this.next()
+					// }
 					return ;
 				})
 				//上传照片
@@ -237,9 +283,7 @@
 				// })
 
 				//跳转
-				uni.navigateTo({
-					url:'/pages/login/gooleVerify'
-				})
+
 
 			},
 			next(){
