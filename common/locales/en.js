@@ -1757,6 +1757,7 @@ export default {
 
 	},
 	financial: {
+		ghbbkjy:'The currency is not tradable.',
 		kaican: 'open position',
 		pingcan: 'Close position',
 		dan: 'single',

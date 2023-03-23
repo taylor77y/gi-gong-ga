@@ -98,7 +98,7 @@
 				addressInfo: '',//转出去的地址
         chainName:'',//区块链名称
         withdrawalRate:0,//费率
-				numberInfo: 1,//数量
+				numberInfo: 1,//提币数量
 				show: false,
 				list: [
 					{text: 'USDT',id:0},
@@ -121,6 +121,7 @@
 		},
     onLoad(options) {
       this.memberObj = JSON.parse(options.data)
+      // console.info("🇨🇳🇨🇳:整条对象 --", this.memberObj)
       //获取用户提款账单地址 // 判断客户是否有地址
       let memberID = uni.getStorageSync('userId') || 0
       this.$u.api.user.getBillingAddressList(memberID).then(res => {
@@ -129,7 +130,7 @@
       this.getCurrencyList()//点击 提币列表保存费率
     },
 		methods: {
-      //切换币名 更改绑定的币名
+      //切换币名 更改绑定的币名 这个就是 区块链网络 三个按钮
       chainNameSwitching(e){
         this.btnIndex  = e
         switch (e) {
@@ -198,6 +199,7 @@
 			back() {
 				uni.navigateBack(1)
 			},
+      //提现
 			handleFn() {
         let params = {
            type:1,
@@ -213,11 +215,13 @@
           if(res.status === 'SUCCEED'){
             this.$utils.showToast(this.i18n.tbsqcg)
             uni.navigateTo({
-              url:'/pages/fund/assets'
+              url:'pages/withDraw/successfulWthdrawal'
             })
-          } else {
-            this.$utils.showToast(this.i18n.errorMessage)
+          } else if(res.status == "FAILED"){
+            this.$utils.showToast(res.errorMessage)
           }
+        }).catch(e=>{
+          this.$utils.showToast(e.errorMessage)
         })
 			}
 		},

@@ -52,7 +52,6 @@ const install = (Vue, vm) => {
 	}
 	//永续合约
 	const yx = {
-
 		getTransaction: (pairsName={}) => vm.$u.get(`/contract/contractMul/getContractMul?pairsName=${pairsName}`),
 		//普通委托
 		getEntrustOrder: (params={}) => vm.$u.post(`/contract/contract/getEntrustOrder?pairsName=${params.pairsName}&member=${params.member}`),

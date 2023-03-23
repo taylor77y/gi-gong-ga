@@ -1227,7 +1227,7 @@
                 "enablePullDownRefresh": false
             }
             
-        }        ,{
+        } ,{
             "path" : "pages/withDraw/withDraw",
             "style" :                                                                                    
             {
@@ -1235,6 +1235,14 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/withDraw/successfulWthdrawal",
+            "style" :
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+
         }
         ,{
             "path" : "pages/financial/confirm",

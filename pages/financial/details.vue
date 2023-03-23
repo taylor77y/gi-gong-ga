@@ -26,13 +26,13 @@
         <view class="detailsList right">
           <view class="detailsListItem title">{{i18n.duokaiTL}}</view>
           <view class="detailsListItem">{{list.tradeType || '-'}}</view>
-          <view class="detailsListItem">{{list.matchPrice || 0.00}}</view>
-          <view class="detailsListItem">0.00</view>
+          <view class="detailsListItem">{{list.kPrice || 0.00}}</view>
+          <view class="detailsListItem">{{list.bPrice || 0.00}}</view>
           <view class="detailsListItem">{{list.margin || 0.00}}</view>
           <view class="detailsListItem">{{list.takeFee || 0.00}}</view>
-          <view class="detailsListItem">0.00</view>
-          <view class="detailsListItem">{{list.price || 0.00}}</view>
-          <view class="detailsListItem">{{list.id || '-'}}</view>
+          <view class="detailsListItem">{{list.price|| 0.00}}</view>
+          <view class="detailsListItem">{{list.matchPrice || 0.00}}</view>
+          <view class="detailsListItem">{{list.OrderId || '-'}}</view>
           <view class="detailsListItem">{{list.createTime || '-'}}</view>
           <view class="detailsListItem">{{list.updateTime || '-'}}</view>
         </view>
@@ -54,8 +54,8 @@ export default {
   mounted() {
   },
   onLoad: function (data) {
-
     let dataItem = JSON.parse(data.data);
+    console.info("🇨🇳🇨🇳:详情 --", dataItem)
     let newId = dataItem.id
     this.getDetailsData(newId)
 
@@ -91,6 +91,7 @@ export default {
             break;
         }
         this.list = list1
+        console.info("🇨🇳🇨🇳:this.listthis.list --", this.list)
 
       })
     },

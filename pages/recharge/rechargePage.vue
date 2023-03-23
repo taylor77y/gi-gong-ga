@@ -104,7 +104,7 @@
           'token': uni.getStorageSync('token'),
           'userId': uni.getStorageSync('userId')
         },
-        pictureUrl:'',//上传成功的图片地址
+        pictureUrl:null,//上传成功的图片地址
         address:'',//收款地址
         rollOutAddress:'',//转出去地址
         rechargeAddress:[],
@@ -223,17 +223,19 @@
       //下一步
       nextStep() {
         //校验是否有数量跟凭证
-        if (this.amount < 0  || this.amount === 0 ) {
+        if (this.amount <= 0) {
           uni.showToast({
             icon: 'none',
             title: this.i18n.qsrsl
           })
+          return
         }
-        if (this.pictureUrl == ''){
+        if (this.pictureUrl == null ){
           uni.showToast({
             icon: 'none',
             title: this.i18n.qsctp
           })
+          return
         }
         const temp = {
           currency: this.currency,
@@ -243,13 +245,16 @@
           chainName:  this.currency == 'USDT' ?  this.btnList[this.btnIndex] : this.currency == 'BTC' ?  this.btnList2[this.btnIndex] :  this.btnList3[this.btnIndex],
           paymentVoucher:this.pictureUrl,
         }
+        //充值接口
         this.$u.api.user.rechargeCurrency(temp).then(res => {
-          if (res.status == '"SUCCEED"') {
+          if (res.status == "SUCCEED") {
             this.$utils.showToast(this.i18n.czcg)
-          } else {
+            uni.navigateTo({
+              url:'/pages/withDraw/successfulWthdrawal'
+            })
+          } else if(res.status == "FAILED") {
             this.$utils.showToast(res.errorMessage)
             this.amount = ''
-            this.account = ''
           }
         })
       },
