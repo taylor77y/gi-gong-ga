@@ -691,7 +691,7 @@
 				})
 				console.log(this.pairsItem, 'this.pairsItem')
 				const {
-					pairsName,
+					name,
 					tokenCur,
 					price
 				} = this.pairsItem
@@ -701,9 +701,10 @@
 				obj.contractMulId = contractMulId // 交易配置id
 				// obj.leverId = leverId
 				obj.leverId = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
-				obj.mainCur = pairsName.split("/")[1]
+        console.log('md',name)
+				obj.mainCur = name.split("/")[1]
 				obj.member = uni.getStorageSync('userId')
-				obj.pairsName = pairsName
+				obj.pairsName = name
 				// obj.price = this.priceCode == 0 ? this.search:this.nowData?.nowPrice
 				obj.price = price //金额
 				obj.priceType = this.priceCode == 0 ? "MARKET_PRICE" : "CUSTOM_PRICE" // 0市价 1限价
@@ -718,7 +719,7 @@
 				// OPEN_UP、OPEN_DOWN、CLOSE_UP、CLOSE_DOWN",
 
 				this.currentDta = {
-					pairsName,
+					pairsName:name,
 					price: this.nowData?.nowPrice,
 					num: search1,
 					lever: currentGangganType,

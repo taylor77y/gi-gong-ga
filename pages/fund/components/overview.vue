@@ -18,7 +18,7 @@
       {{ isInput ? walletResult.cnyPrice : '*********' }}
     </view>
     <view class="zhehe">
-      {{ isInput ? '≈ $  ' + walletResult.usdtPrice : '*********' }}
+      {{ isInput ? '≈ $  ' + walletResult.usdtPrice  +  'USDT' : '*********' }}
 <!--      <image referrerpolicy="no-referrer" src="/static/image/my/4.png"/>-->
     </view>
 <!--    <view class="a-img">-->
@@ -120,17 +120,10 @@ export default {
     // },
     //钱包
     getBalances() {
-      let member = uni.getStorageSync('userId')
+      let member = uni.getStorageSync('userId') || 0
       this.$u.api.user.getBalanceList(member).then(res => {
         this.walletResult = res.result
-
-        // let leftCurrency = ''
-        // let nowAmount = ''
-        // res.result.balances.map(item => {
-        //   if (item.currency === leftCurrency) {
-        //     nowAmount = item.assetsBalance;
-        //   }
-        // })
+        console.info("🇨🇳🇨🇳:res --",this.walletResult)
       })
     },
 
@@ -141,28 +134,12 @@ export default {
       // }
       const temp = {
         0: `/pages/recharge/rechargeList`,
-        1: `/pages/withDraw/withDraw`,
+        1: `/pages/withDraw/withDraw?data=+ ${JSON.stringify(this.walletResult)}` ,
         2: `/pages/flashCash/index`,
       }
       uni.navigateTo({
         url: temp[index]
       })
-    },
-    // 充值币
-    getRechargeMethod() {
-      // uni.navigateTo({
-      //   url:'/pages/recharge/rechargeList'
-      // })
-      // const member = uni.getStorageSync('userId')
-      // this.$u.api.common.getRechargeMethod(member).then(res=>{
-      //   if (res.status == "SUCCEED") {
-      //     uni.navigateTo({
-      //       url: '/pages/recharge/index?code=1'
-      //     })
-      //   } else {
-      //     this.$utils.showToast(res.errorMessage)
-      //   }
-      // })
     },
 
 	  toPage(){

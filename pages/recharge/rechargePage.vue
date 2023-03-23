@@ -5,53 +5,53 @@
 			<view class="title">
 				{{currency}} Deposit
 			</view>
-<!--			<view class="qrcode-container">-->
-<!--				&lt;!&ndash; 二维码，qrcode/imgUrl &ndash;&gt;-->
-<!--				<image class="qrcode"-->
-<!--					src="data:image/png;base64,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">-->
-<!--				</image>-->
-<!--			</view>-->
-
       <view class="p-30 box-shadow border-radius-20 mx-auto" style="width: 333rpx;">
-        <uqrcode ref="uqrcode" class="d-inline-block"></uqrcode>
+        <uqrcode id="uqrcode"  ref="uqrcode" class="d-inline-block"></uqrcode>
       </view>
-
-
 			<view class="save-btn-container">
-				<button type="primary" class="save-btn">{{ i18n.bcewm}}</button>
+				<button type="primary" class="save-btn" @click="saveQR">{{ i18n.bcewm}}</button>
 			</view>
 			<view class="address">
 				{{this.address}}
 			</view>
 			<view class="copy-btn-container">
-				<button type="primary" class="copy-btn">  {{ i18n.fzdz}}</button>
+				<button type="primary" class="copy-btn" @click="copyAddressToClipboard">  {{ i18n.fzdz}}</button>
 			</view>
 			<view class="input-container">
 				<view class="title" style="margin: 10rpx 0;">
           {{ i18n.zcdz}}
 				</view>
-				<input type="text" class="input" style="padding-right: 160rpx;" placeholder="Enter amount"
-					placeholder-style="color: #C0C0C0;font-size:26rpx">
+				<input type="text" class="input" style="padding-right: 160rpx;" placeholder="Enter address"
+					placeholder-style="color: #C0C0C0;font-size:26rpx" v-model="rollOutAddress">
 				<view class="paste" @tap="pasteClick()">
-					Paste
+					{{i18n.zt}}
 				</view>
 			</view>
 			<view class="input-container">
 				<view class="title">
           {{ i18n.cbsl}}
 				</view>
-				<input type="text" class="input" placeholder="Enter amount"
-					placeholder-style="color: #C0C0C0;font-size:26rpx" v-model="chargeMoneyValue">
-<!--				<input type="text" v-model="amount" class="input" placeholder="Enter amount"-->
-<!--					placeholder-style="color: #C0C0C0;font-size:26rpx">-->
+<!--				<input type="number" class="input" placeholder="Enter amount"-->
+<!--					placeholder-style="color: #C0C0C0;font-size:26rpx" v-model="amount">-->
+         <input type="number" class="input" :placeholder="i18n.qsrcbsl"
+               placeholder-style="color: #C0C0C0;font-size:26rpx"
+               v-model.number="amount" min="0" step="1" @input="handleInput">
 			</view>
 			<view class="chain-container">
 				<view class="title">
           {{ i18n.lmc}}
 				</view>
 				<view class="btn-list">
-					<view class="btn" :class="{active:btnIndex==index}" v-for="(item,index) in btnList" :key="index"
-						@tap="btnIndex = index">
+					<view  v-if="currency === 'USDT'"  class="btn" :class="{active:btnIndex==index}" v-for="(item,index) in btnList" :key="index"
+						@tap="chainNameSwitching(index)">
+						{{item}}
+					</view>
+          <view  v-if="currency === 'BTC'"  class="btn" :class="{active:btnIndex==index}" v-for="(item,index) in btnList2" :key="index"
+						@tap="chainNameSwitching(index)">
+						{{item}}
+					</view>
+          <view  v-if="currency === 'ETH'"  class="btn" :class="{active:btnIndex==index}" v-for="(item,index) in btnList3" :key="index"
+						@tap="chainNameSwitching(index)">
 						{{item}}
 					</view>
 				</view>
@@ -62,8 +62,12 @@
 					{{ i18n.fkpz}}
 				</view>
 				<view class="upload">
-					<u-upload   max-count="1" upload-text="选择图片" :fileList="fileList">
-					</u-upload>
+<!--					<u-upload   max-count="1" upload-text="选择图片" :fileList="fileList">-->
+<!--					</u-upload>-->
+          <u-upload :upload-text="$t('recharge').xuanzhetupian" max-count="1"
+                    @on-success="onSus" :action="action" :header="header">
+          </u-upload>
+
 				</view>
 			</view>
 
@@ -85,7 +89,6 @@
           {{ i18n.beizhu.shuomingwenzi6 }}
 				</view>
 				<button class="btn" type="primary" @click="nextStep">下一步</button>
-<!--				<button class="btn" @click="submit" type="primary">Next step</button>-->
 			</view>
 		</view>
 	</view>
@@ -96,19 +99,31 @@
   export default {
     data() {
       return {
+        action:  uni.getStorageSync('imgPath') + '/member/upload/new' || '-', //图片上传地址
+        header: {
+          'token': uni.getStorageSync('token'),
+          'userId': uni.getStorageSync('userId')
+        },
+        pictureUrl:'',//上传成功的图片地址
         address:'',//收款地址
+        rollOutAddress:'',//转出去地址
         rechargeAddress:[],
         fileList: [],//参数(数组，元素为对象)
-        chargeMoneyValue: 0,//充币数
         selectCoin: '',
         btnList: [
           'ERC20',
           'TRC20',
           'OMNI'
         ],
+        btnList2: [
+          'BTC',
+        ],
+        btnList3: [
+          'ETH',
+        ],
         btnIndex: 0,
         currency: "",//金币名字 已转大写
-        amount: 0
+        amount: 1 //充值的数量
       }
     },
     computed: {
@@ -116,15 +131,63 @@
         return this.$t('recharge')
       }
     },
-
+    watch: {
+      btnIndex(newVal, oldVal) {
+        this.getQRCode()
+      }
+    },
     onLoad() {
       this.currency = this.$mp.query.symbol.toUpperCase();
       this.getQRCode()
     },
     methods: {
-      // 获取二维码地址
+      //不可以输入0
+      handleInput(){
+        if(this.amount === 0){
+          this.amount = 1
+        }
+      },
+      //切换币名
+      chainNameSwitching(e){
+        this.btnIndex  = e
+      },
+
+      //保存二维码
+      saveQR(){
+        this.$utils.showToast(this.i18n.bcsbqjtbc)
+      },
+      //粘贴
+         pasteClick() {
+          navigator.clipboard.readText().then((text) => {
+            // 在此处可以使用文本变量来操作复制的内容
+          this.rollOutAddress = text
+          });
+        },
+         //复制文本
+      copyAddressToClipboard() {
+        const input = document.createElement('input');
+        input.setAttribute('value', this.address);
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        this.$utils.showToast(this.i18n.fzcg)
+      },
+      //上传图片
+      onSus(response, index, lists, name) {
+        this.$utils.showToast(this.i18n.sccg)
+        this.pictureUrl = response.result.url
+      },
+      close() {
+        this.$emit('update:showPup', false)
+      },
+      confirm() {
+        this.$emit('addFn', this.value, this.img)
+      },
+
+      // 获取接口地址的 二维码地址
       getQRCode(){
-        let coinType = null //进来获取是那个币种 来请求输入 拿到充值的地址
+        let coinType = null //进来获取是那个 USDT 或者BTC币种 来请求输入 拿到充值的地址
         switch (this.currency) {
           case 'USDT':
             coinType = 1;
@@ -137,74 +200,58 @@
             break
         }
         this.$u.api.user.getRechargeWallet(coinType).then(res=>{
-          this.rechargeAddress = res.result
-          this.address = res.result[0].account;
-          this.$refs.uqrcode.make({
-            canvasId: 'qrcode',
-            mode: 'canvas', // 默认为view
-            size: 150,
-            text: this.address
-          }).then(res=>{
-            console.info("🇨🇳🇨🇳:res --", res)
-            // this.addressImage = res.tempFilePath
-            // uni.hideLoading()
-          })
-
+            if (res.status === 'SUCCEED') {
+              this.rechargeAddress = res.result
+              res.result.forEach(i=>{
+                if(this.btnIndex == 0 ){
+                  this.address = res.result[0].account;
+                } if(this.btnIndex == 1 ){
+                  this.address = res.result[1].account;
+                } if(this.btnIndex == 2 ){
+                  this.address = res.result[2].account;
+                }
+              })
+              this.$refs.uqrcode.make({
+                canvasId: 'qrcode',
+                mode: 'canvas', // 默认为view
+                size: 150,
+                text: this.address
+              })
+            }
         })
       },
+      //下一步
       nextStep() {
-        if (this.chargeMoneyValue === 0 ) {
+        //校验是否有数量跟凭证
+        if (this.amount < 0  || this.amount === 0 ) {
           uni.showToast({
             icon: 'none',
-            title: '请输入数量'
+            title: this.i18n.qsrsl
           })
         }
-        if (this.fileList.length <= 0) {
+        if (this.pictureUrl == ''){
           uni.showToast({
             icon: 'none',
-            title: '请上传图片'
+            title: this.i18n.qsctp
           })
         }
-      },
-
-      pasteClick() {
-      },
-      //提交
-      submit() {
-        // if(true){
-        // 	console.log("init...",this.btnList[this.btnIndex])
-        // 	return;
-        // }
         const temp = {
           currency: this.currency,
           amount: this.amount,
           status: 1,
           memberId: uni.getStorageSync('userId'),
-          chainName: this.btnList[this.btnIndex]
+          chainName:  this.currency == 'USDT' ?  this.btnList[this.btnIndex] : this.currency == 'BTC' ?  this.btnList2[this.btnIndex] :  this.btnList3[this.btnIndex],
+          paymentVoucher:this.pictureUrl,
         }
-        // const {amount,account,selectCoin,i18n} = this
-        // if(!this.$u.test.amount(amount)){
-        // 	this.$utils.showToast(i18n.plsIptCrtAmount)
-        // 	return
-        // }
-        // if(!account){
-        // 	this.$utils.showToast(i18n.plsUploadPaymentVoucher)
-        // 	return
-        // }
-
-        // const {id:currency} = selectCoin
-
-        this.$u.api.user.chongzhi(temp).then(res => {
-          if (res.data.result == 1) {
-            this.$utils.showToast("申請成功")
+        this.$u.api.user.rechargeCurrency(temp).then(res => {
+          if (res.status == '"SUCCEED"') {
+            this.$utils.showToast(this.i18n.czcg)
           } else {
-            this.$utils.showToast(res.message)
+            this.$utils.showToast(res.errorMessage)
             this.amount = ''
             this.account = ''
           }
-
         })
-
       },
 
     }
