@@ -129,7 +129,7 @@
 					<!--          //数量-->
 					<view class="l-sum">
 						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;" class="f-input"
-							@input="inputHandler" />
+							 @click="inputHandler" />
 						<view class="r-icon" @click="getAdd(1)">
 							<text>{{i18n.zhang}}</text>
 						</view>
@@ -277,6 +277,7 @@
 	export default {
 		data() {
 			return {
+        coinName:'',//货币名
         isError:false,
 				userId: uni.getStorageSync('userId'),
 				isStop: false, // 止盈 止损 弹窗
@@ -367,7 +368,6 @@
 						code: false
 					}
 				],
-
 				interval: null,
 				interval1: null,
 				interval2: null,
@@ -381,8 +381,11 @@
 			})
 			if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
 			else this.getRealTimeOne();
-
+      setInterval(()=>{
+        this.getWarehousesList()
+      },2000)
 			this.interval = setInterval(() => {
+        this.getWarehousesList()
 				if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
 				else this.getRealTimeOne();
 			}, 5000)
@@ -427,7 +430,7 @@
 			}
 			let member = uni.getStorageSync('userId') || ''
 			this.getPairsList();
-			
+
 			this.sellState = this.setSellCode === 1 ? false : true
 			if (member) {
 				this.timer = setInterval(() => {
@@ -499,21 +502,18 @@
 				});
 				this.socket.on("message", this.onMessage);
 			},
-
-			inputHandler(e) {
+			inputHandler(e) {   //输入金额事件
 				if (Number(e.detail.value) < 1) {
 					this.$nextTick(() => {
 						this.search1 = 1
 					})
 				}
 				if (Number(e.detail.value) > (this.usdtPrice / 1030)) {
-					// console.log('最大数', Number((this.usdtPrice / 1030)).toFixed(0))
-
 					this.$nextTick(() => {
 						this.search1 = Number((this.usdtPrice / 1030)).toFixed(0)
 					})
 				}
-				// console.log('inputHandler',e.detail.value)
+        this.search1 = 1
 			},
 			//登录
 			toLogin() {
@@ -544,20 +544,6 @@
 						this.$utils.showToast(res.errorMessage)
 					}
 					this.getEntrustOrderList();
-				})
-			},
-			// 单独平仓
-			pingchang(i) {
-				let obj = {
-					hands: i.hands,
-					id: i.id
-				}
-				this.$u.api.getContractorder.setOrderMatch(obj).then(res => {
-					if (res.status == "SUCCEED") {
-						this.$utils.showToast(this.$t('entrust').pingchangchenggong)
-					} else {
-						this.$utils.showToast(res.errorMessage)
-					}
 				})
 			},
 			stopAdd(price) {
@@ -600,15 +586,32 @@
 				this.stopMoney = item.closePrice
 				this.stopList = item
 				this.isStop = true
-
 			},
+      // 单独平仓
+      pingchang(i) {
+        let coinName = 'USDT'
+        let price = this.pairsItem.close || this.pairsItem.price
+        let {id} = i
+        this.$u.api.contractNewInterface.setOrderMatch(id,coinName,price).then(res => {
+          if (res.status == "SUCCEED") {
+            this.$utils.showToast(this.$t('entrust').pingchangchenggong)
+            this.getWarehousesList();
+          } else {
+            this.$utils.showToast(res.errorMessage)
+          }
+        })
+      },
 			// 一键平仓调用
 			confirmPosition() {
-				let member = uni.getStorageSync('userId')
-				let pairsName =  this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name
-				this.$u.api.yx.setAllContractMatch(member, pairsName).then(res => {
+        let params = {
+              memberId : uni.getStorageSync('userId'),
+              pairsName : this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name,
+              coinName : "USDT",
+              price  :  this.pairsItem.close || this.pairsItem.price
+        }
+				this.$u.api.contractNewInterface.setAllContractMatch(params).then(res => {
 					if (res.status === 'SUCCEED') {
-						this.$utils.showToast(this.$t('transaction').zccg)
+						this.$utils.showToast(this.$t('entrust').pingchangchenggong)
 						this.getWarehousesList();
 					} else {
 						this.$utils.showToast(res.errorMessage)
@@ -622,24 +625,14 @@
 			},
 			emptyFn() {
 				this.search1 = null
-				this.numberFn = [{
-						val: '25%',
-						code: false
-					},
-					{
-						val: '50%',
-						code: false
-					},
-					{
-						val: '75%',
-						code: false
-					},
-					{
-						val: '100%',
-						code: false
-					}
+				this.numberFn = [
+          {val: '25%', code: false},
+          {val: '50%', code: false},
+					{val: '75%', code: false},
+					{val: '100%', code: false}
 				]
 			},
+      //开仓/平仓
 			sub(code) {
         if(this.isError){
           this.$utils.showToast(this.i18n.ghbbkjy)
@@ -656,10 +649,7 @@
 					this.$utils.showToast(this.i18n.qsrsl)
 					return
 				}
-				// if (usdtPrice <= 0) {
-				// 	this.$utils.showToast(this.i18n.kyzjbz)
-				// 	return
-				// }
+
 				let leverId = ''
 				let currentGangganType = 0
 				this.levers.forEach(item => {
@@ -668,33 +658,42 @@
 						currentGangganType = item.lever
 					}
 				})
-				console.log(this.pairsItem, 'this.pairsItem')
-				const {
-					name,
-					close,
-					price
-				} = this.pairsItem
-				let obj = new Object();
-				obj.coinName = name.split("/")[0]
-				obj.contractHands = this.search1 //合约乘数
-				obj.contractMulId = contractMulId // 交易配置id
-				// obj.leverId = leverId
-				obj.leverId = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
-				obj.mainCur = name.split("/")[1]
-				obj.member = uni.getStorageSync('userId')
-				obj.pairsName = name
-				// obj.price = this.priceCode == 0 ? this.search:this.nowData?.nowPrice
-				obj.price = close //金额
-				obj.priceType = this.priceCode == 0 ? "MARKET_PRICE" : "CUSTOM_PRICE" // 0市价 1限价
-				// obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
-				obj.tradeType = this.cuBond == 1 ? 'CLOSE_UP' : 'CLOSE_DOWN'
-				if (this.cuBond == 0) {
-					obj.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //多开 多空 或者 平多 平空
-				} else if (this.cuBond == 1) {
-					obj.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP" //多开 多空 或者 平多 平空
-				}
-
-				// OPEN_UP、OPEN_DOWN、CLOSE_UP、CLOSE_DOWN",
+        //去登录
+        if (!uni.getStorageSync('userId')){
+          this.$utils.showToast(this.$t('member').this.i18n.qdl)
+        }
+        const {name, close, price} = this.pairsItem
+       let  newParams = new Object()
+          newParams.memberId = uni.getStorageSync('userId') || 0
+          newParams.pairsName = name//全名
+          newParams.coinName  = name.split("/")[1]//前两位名
+          newParams.kPrice = Number(close).toFixed(4) || price//建仓价
+          newParams.amount = this.search1 * 1000//合约金额
+          newParams.margin = this.search1 * 1000//保证金
+          newParams.matchFee  = this.search1 * 30 //手续费
+          newParams.leverId  = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
+          newParams.contractHands  = this.search1 //手
+          if (this.cuBond == 0) {
+            newParams.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //或者 平多 平空
+          } else if (this.cuBond == 1) {
+            newParams.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP"//平多 平空
+          }
+        const onSuccess = (res) => {
+          if (res.status === 'SUCCEED') {
+            this.$utils.showToast(this.$t('transaction').zccg)
+            this.ydAddCode = false
+            this.change(this.current)
+            this.emptyFn()
+          } else {
+            this.$utils.showToast(res.errorMessage)
+          }
+          this.search1 = 1
+        }
+        if (this.cuBond === 0) {
+          this.$u.api.contractNewInterface.setContractOrderBuy(newParams).then(onSuccess)
+        } else if (this.cuBond === 1) {
+          this.$u.api.contractNewInterface.setContractOrderSell(newParams).then(onSuccess)
+        }
 
 				this.currentDta = {
 					pairsName:name,
@@ -704,24 +703,6 @@
 					bond: search1 * contractMul * price / currentGangganType,
 					sellState
 				}
-				if (code) {
-					this.$u.api.yx.setContractOrder(obj).then(res => {
-						console.log("永续合约结果", res)
-						if (res.status === 'SUCCEED') {
-							this.$utils.showToast(this.$t('transaction').zccg)
-							this.ydAddCode = false
-							this.change(this.current)
-
-							this.emptyFn()
-						} else {
-							this.$utils.showToast(res.errorMessage)
-						}
-						this.search1 = 1
-					})
-				} else {
-					this.ydAddCode = true
-				}
-
 			},
 			// 交易配置id
 			getjiaoyipeizhi() {
@@ -785,7 +766,6 @@
 							this.usdtPrice = item.assetsBalance;
 						}
 					})
-
 				})
 			},
 			//币种
@@ -808,10 +788,7 @@
 					url: `/pages/record/index?code=3`
 				})
 			},
-			// getBondAdd(index) {
-			// 	this.cuBond = index
-			// 	this.showBond = false
-			// },
+
 			// 点击
 			onClickLever(index) {
 				this.leverCode = this.lever[index].text
@@ -841,15 +818,12 @@
 				if (n <= 0) {
 					return Math.round(number);
 				}
-				// number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n); //四舍五入
-				// number = number.substring(0, number.indexOf('.') + 1 + n)
-				// console.log(number, '我是计算结果')
-				console.log(number)
+				// console.log(number)
 				number = String(number).replace(/^(.*\..{5}).*$/, "$1")
 				number = Number(number)
-				// number = Number(number).toFixed(n); //补足位数
 				return number;
 			},
+      //计算输入框价格
 			getPercent(index) {
 				let amount = this.usdtPrice / 4;
 				switch (index) {
@@ -880,7 +854,6 @@
 				})
 			},
 			change(e) {
-
 				this.current = e
 				switch (e) {
 					case 0:
@@ -891,6 +864,7 @@
 						break;
 				}
 			},
+      // 获取委托订单清单
 			getEntrustOrderList() {
 				let obj = new Object();
 				// obj.pairsName = this.pairsItem.pairsName;
@@ -898,15 +872,16 @@
 				obj.member = uni.getStorageSync('userId')
 				this.$u.api.yx.getEntrustOrder(obj).then(res => {
 					this.newList = res.result;
-
 				})
 			},
+      //获取持仓列表
 			getWarehousesList() {
         let pairsName =  this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name
-				let member = uni.getStorageSync('userId')
-				this.$u.api.yx.getWarehouses(pairsName, member).then(res => {
+				let memberId = uni.getStorageSync('userId')
+        let price = this.pairsItem.close || this.pairsItem.price
+				this.$u.api.contractNewInterface.getWarehouses(memberId,pairsName,price).then(res => {
           this.isError = false;
-					this.list = res.result.warehouses;
+					this.list = res.result;
 				}).catch(error=>{
           this.isError = true
           this.$utils.showToast(this.i18n.ghbbkjy)
@@ -915,7 +890,6 @@
 			getTopBtn(index) {
 				if (index === 0) {
 					uni.navigateTo({
-						// url: `/pages/financial/delivery`
 						url: `/pages/trendDetails/index`
 					})
 				}

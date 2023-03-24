@@ -23,6 +23,10 @@
 				tabCurrent: 0
 			}
 		},
+    onLoad(options){
+      this.tabChange(options.type)
+      // this.tabCurrent = options.type
+    },
 		methods: {
 			tabChange(index) {
 				this.tabCurrent = index

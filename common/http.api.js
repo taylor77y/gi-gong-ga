@@ -414,7 +414,16 @@ const install = (Vue, vm) => {
 		getContactLink: (id) => vm.$u.post("/contract/contract/getContractOrder?orderId="+id),
 		setOrderMatch: (params) => vm.$u.post("/contract/contract/setOrderMatch?params",params),
 	}
-
+	//合约 订单 新接口 亚琴
+	const contractNewInterface = {
+		getContractOrder: (orderId) => vm.$u.post("/contract/perpetual_contract/getContractOrder?orderId="+orderId),//订单详情
+		getHistoryOrders: (member) => vm.$u.get(`/contract/perpetual_contract/getHistoryOrders?member=${member}&pageNum=1&pageSize=999`),//获取历史列表
+		getWarehouses: (memberId,pairsName,price) => vm.$u.get(`/contract/perpetual_contract/getWarehouses?memberId=${memberId}&pairsName=${pairsName}&price=${price}`),//获取持仓列表
+		setAllContractMatch: (params) => vm.$u.post(`/contract/perpetual_contract/setAllContractMatch`,params),//一键平仓
+		setOrderMatch: (id,coinName,price) => vm.$u.post(`/contract/perpetual_contract/setOrderMatch?id=${id}&coinName=${coinName}&price=${price}`),//单独平仓
+		setContractOrderBuy: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderBuy`,params,{ 'Content-Type': 'application/json' }),//多开多空
+		setContractOrderSell: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderSell`,params,{ 'Content-Type': 'application/json' }),//平多平空
+	}
 	vm.$u.api = {
 		common,
 		user,
@@ -436,7 +445,8 @@ const install = (Vue, vm) => {
 		trendDetails,
 		wantBuy,
 		kefu,
-		getContractorder
+		getContractorder,
+		contractNewInterface
 	};
 }
 export default {

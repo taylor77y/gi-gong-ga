@@ -98,7 +98,7 @@
 			},
 			headerRightClick(){
 				uni.navigateTo({
-					url: '/pages/assetsCenter/rechargeWithdrawRecord'
+					url: '/pages/assetsCenter/rechargeWithdrawRecord?type=' + '0'
 				})
 			}
 		},

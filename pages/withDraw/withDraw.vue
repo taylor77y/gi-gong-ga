@@ -5,7 +5,7 @@
 			<view class="back" @click="back()">
 				<u-icon name="arrow-left" :size="50" color="#82848a"></u-icon>
 			</view>
-			<view class="right">
+			<view class="right" @click="toHistory">
 				<u-icon name="clock" :size="50" color="#82848a"></u-icon>
 			</view>
 		</view>
@@ -119,17 +119,23 @@
         ],
 			};
 		},
-    onLoad(options) {
-      this.memberObj = JSON.parse(options.data)
-      // console.info("🇨🇳🇨🇳:整条对象 --", this.memberObj)
-      //获取用户提款账单地址 // 判断客户是否有地址
-      let memberID = uni.getStorageSync('userId') || 0
-      this.$u.api.user.getBillingAddressList(memberID).then(res => {
-      })
 
+    mounted() {
+      try {
+        this.memberObj = JSON.parse(this.$route.query.data);
+      } catch (e) {
+        console.error(e);
+      }
+
+      //获取用户提款账单地址 // 判断客户是否有地址
+      let memberID = uni.getStorageSync('userId') || 0;
+      this.$u.api.user.getBillingAddressList(memberID).then(res => {}).catch(e => {
+        console.error(e);
+      });
       this.getCurrencyList()//点击 提币列表保存费率
     },
 		methods: {
+
       //切换币名 更改绑定的币名 这个就是 区块链网络 三个按钮
       chainNameSwitching(e){
         this.btnIndex  = e
@@ -162,14 +168,13 @@
           this.numberInfo = 1
         }
       },
-
       //点击全部的币
       allBtn() {
         this.numberInfo = this.memberObj.usdtPrice
       },
       //点击了 提币列表
       getCurrencyList(index){
-        let key = 'usdt_extract_handling'
+        let key = 'usdt_extract_handling' //默认是usdt的手续费率. 需要请求接口换算
         switch (index) {
           case 0:
             this.withdrawalName = 'USDT';
@@ -198,6 +203,11 @@
       },
 			back() {
 				uni.navigateBack(1)
+			},
+      toHistory() {
+				uni.navigateTo({
+          url:`/pages/assetsCenter/rechargeWithdrawRecord?type=1`
+        })
 			},
       //提现
 			handleFn() {

@@ -15,10 +15,10 @@
       </view>
     </view>
     <view class="money">
-      {{ isInput ? walletResult.cnyPrice : '*********' }}
+      {{ isInput ? '≈$ ' +walletResult.usdtPrice + ' USDT' : '*********'  }}
     </view>
     <view class="zhehe">
-      {{ isInput ? '≈ $  ' + walletResult.usdtPrice  +  'USDT' : '*********' }}
+<!--      {{ isInput ? '≈ $  ' + walletResult.usdtPrice  +  'USDT' : '*********' }}-->
 <!--      <image referrerpolicy="no-referrer" src="/static/image/my/4.png"/>-->
     </view>
 <!--    <view class="a-img">-->
@@ -123,7 +123,7 @@ export default {
       let member = uni.getStorageSync('userId') || 0
       this.$u.api.user.getBalanceList(member).then(res => {
         this.walletResult = res.result
-        console.info("🇨🇳🇨🇳:res --",this.walletResult)
+        console.info("🇨🇳🇨🇳:walletResult --",this.walletResult)
       })
     },
 
@@ -277,8 +277,8 @@ export default {
   }
 
   .money {
-    font-size: 52rpx;
-    color: #1F222B;
+    font-size: 40rpx;
+    //color: #1F222B;
     font-weight: bold;
   }
 

@@ -17,12 +17,12 @@
 
 		<view class="money">
 <!--			{{ isInput ? '******':usdtPrice | SubString(5) }}-->
-      {{ !isInput ? walletResult.cnyPrice : '*********' }}
+      {{ !isInput ? '≈$ ' + walletResult.usdtPrice + ' USDT' : '*********' }}
 		</view>
 		<view class="zhehe">
 <!--			{{ setRate.mark }}{{ isInput ? '******':usdtPrice * setRate.rate | SubString(5) }}-->
 <!--      {{ !isInput ? '≈ $ 99 ' : '*********' }}-->
-      {{ !isInput ? '≈ $  ' + walletResult.usdtPrice : '*********' }}
+<!--      {{ !isInput ? '≈ $  ' + walletResult.usdtPrice : '*********' }}-->
 		</view>
 
     <!-- 注册-->
@@ -308,8 +308,8 @@
 		}
 
 		.money {
-			font-size: 52rpx;
-			color: #1F222B;
+			font-size: 40rpx;
+			//color: #1F222B;
 			font-weight: bold;
 		}
 

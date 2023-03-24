@@ -452,7 +452,7 @@
 			getCoinInfoList() {
 				this.$u.api.bibi.getCoinInfo(this.pairsItem.pairsName).then(res => {
 					let json = JSON.parse(res.result)
-					this.nowData = json
+					this.nowData = json || {}
 				})
 			},
 			getEntrustDom() {

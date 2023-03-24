@@ -5,7 +5,7 @@
     </head-slot>
       <view class="detailsTitle">
         <view class="detailsTitleList text">{{i18n.yingkuijine}}</view>
-        <view class="detailsTitleList amount">{{list.matchFee}}</view>
+        <view class="detailsTitleList amount">{{list.profit + `   (${list.profitUp }%)`}}</view>
       </view>
 
       <view class="detailsListBox">
@@ -25,14 +25,14 @@
 
         <view class="detailsList right">
           <view class="detailsListItem title">{{i18n.duokaiTL}}</view>
-          <view class="detailsListItem">{{list.tradeType || '-'}}</view>
-          <view class="detailsListItem">{{list.kPrice || 0.00}}</view>
-          <view class="detailsListItem">{{list.bPrice || 0.00}}</view>
+          <view class="detailsListItem"  style="color : red">{{ list.orderState ? '已平仓': '-'}}</view>
+          <view class="detailsListItem">{{list.amount || 0.00}}</view>
+          <view class="detailsListItem">{{list.amount || 0.00}}</view>
           <view class="detailsListItem">{{list.margin || 0.00}}</view>
-          <view class="detailsListItem">{{list.takeFee || 0.00}}</view>
-          <view class="detailsListItem">{{list.price|| 0.00}}</view>
-          <view class="detailsListItem">{{list.matchPrice || 0.00}}</view>
-          <view class="detailsListItem">{{list.OrderId || '-'}}</view>
+          <view class="detailsListItem">{{list.matchFee || 0.00}}</view>
+          <view class="detailsListItem">{{list.kPrice|| 0.00}}</view>
+          <view class="detailsListItem">{{list.bPrice || 0.00}}</view>
+          <view class="detailsListItem">{{list.id || '-'}}</view>
           <view class="detailsListItem">{{list.createTime || '-'}}</view>
           <view class="detailsListItem">{{list.updateTime || '-'}}</view>
         </view>
@@ -52,13 +52,8 @@ export default {
   created() {
   },
   mounted() {
-  },
-  onLoad: function (data) {
-    let dataItem = JSON.parse(data.data);
-    console.info("🇨🇳🇨🇳:详情 --", dataItem)
-    let newId = dataItem.id
-    this.getDetailsData(newId)
-
+    const dataItem = JSON.parse(this.$route.query.data);
+    this.getDetailsData(dataItem.id);
   },
   computed : {
     i18n () {
@@ -67,33 +62,34 @@ export default {
   },
   methods: {
     //获取详情
-    getDetailsData(id){
-      this.$u.api.getContractorder.getContactLink(id).then(res=>{
-        let list1 = res.result
-        const createDate = new Date(res.result.createTime);//开始
-        const updateDate = new Date(res.result.updateTime);//更新
+    async getDetailsData(id){
+      try {
+        const res = await this.$u.api.contractNewInterface.getContractOrder(id);
+        const list1 = res.result;
+        const createDate = new Date(list1.createTime);//开始
+        const settleTime = new Date(list1.settleTime);//更新
         const formCreateTime = createDate.toLocaleString('zh-CN'); // 将日期对象格式化为本地化日期时间字符串（输出中国标准时间格式）
-        const formUpdateTime = updateDate.toLocaleString('zh-CN'); // 将日期对象格式化为本地化日期时间字符串（输出中国标准时间格式）
-        list1.createTime = formCreateTime
-        list1.updateTime = formUpdateTime
-        switch (list1.tradeType){
-          case 'OPEN_UP':
-            list1.tradeType = '多开'
-            break;
-          case 'OPEN_DOWN':
-            list1.tradeType = '多空'
-            break;
-          case 'CLOSE_UP':
-            list1.tradeType = '平多'
-            break;
-          case 'CLOSE_DOWN':
-            list1.tradeType = '平空'
-            break;
-        }
-        this.list = list1
-        console.info("🇨🇳🇨🇳:this.listthis.list --", this.list)
-
-      })
+        const formUpdateTime = settleTime.toLocaleString('zh-CN'); // 将日期对象格式化为本地化日期时间字符串（输出中国标准时间格式）
+        list1.createTime = formCreateTime;
+        list1.updateTime = formUpdateTime;
+        // switch (list1.orderState){
+        //   case 'OPEN_UP':
+        //     list1.tradeType = '多开';
+        //     break;
+        //   case 'OPEN_DOWN':
+        //     list1.tradeType = '多空';
+        //     break;
+        //   case 'CLOSE_UP':
+        //     list1.tradeType = '平多';
+        //     break;
+        //   case 'CLOSE_DOWN':
+        //     list1.tradeType = '平空';
+        //     break;
+        // }
+        this.list = list1;
+      } catch (error) {
+        console.log(error);
+      }
     },
   }
 }

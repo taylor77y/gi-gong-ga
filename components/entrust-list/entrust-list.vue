@@ -93,7 +93,7 @@
 <!--					{{ $t('newFy').wsxyk }}-->
 <!--				</view>-->
         <view class="conta">
-          {{ $t('newFy').bzj }}
+<!--          {{ $t('newFy').bzj }}-->
 				</view>
 				<view class="right">
 					{{ $t('newFy').syl }}
@@ -136,15 +136,16 @@
 				</view>
 			</view>
 			<view class="f-row f-000" v-if="mode === 4">
-				<view class="left">
-					{{ item.avePrice|SubStringZreo(4) }}
+				<view class="left" :class="item.price>0?'c_green':'c_red'">
+					{{ item.price|SubStringZreo(4) }}
 				</view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
 <!--					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}-->
-          {{item.margin|SubStringZreo(4)}}
+<!--          {{item.margin|SubStringZreo(4)}}-->
 				</view>
+<!--        收益率-->
 				<view class="right" :class="item.profitUp>0?'c_green':'c_red'">
-					{{item.profitUp>0?'+':''}}{{item.profitUp*100|SubStringZreo(2)}}%
+					{{item.profitUp }}
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 3">
@@ -244,7 +245,7 @@
 					</text>
 				</view>
 				<view class="conta">
-          {{item.shijian || '-'}}
+          {{processedList(item) || '-'}}
 				</view>
 <!--				<view class="right">-->
 <!--					{{ $t('newFy').zsjg }}-->
@@ -341,7 +342,7 @@
 			list: {
 				type: Array,
 				default: () => {
-					return [,,]
+					return []
 				}
 			},
 			mode:{
@@ -358,6 +359,7 @@
 			}
 		},
     created(){
+      // console.info("🇨🇳🇨🇳:订单 --", this.list)
       this.infoTime()
     },
 		computed: {
@@ -365,29 +367,33 @@
 				return this.$t("entrust")
 			}
 		},
-    watch: {
-      list: {
-        handler(newVal) {
-          newVal.forEach(e => {
-            e.shijian = new Date(e.createTime).toLocaleString('zh-CN');
-          })
-        },
-        deep: true,
-      },
-    },
+    // watch: {
+    //   list: {
+    //     handler(newVal) {
+    //       newVal.forEach(e => {
+    //         e.shijian = new Date(e.time).toLocaleString('zh-CN');
+    //       })
+    //     },
+    //     deep: true,
+    //   },
+    // },
 		data() {
 			return {
                 
 			}
 		},
 		methods: {
+      processedList(e) {
+        return new Date(e.time).toLocaleString('zh-CN')
+      },
       infoTime(){
-        const list = this.list.map(e=>{
-          return  e.shijian = new  Date(e.createTime).toLocaleString('zh-CN')
-        })
+        // this.list = this.list.map(e=>{
+        //   return Object.assign(e,{shijian:new  Date(e.time).toLocaleString('zh-CN')})
+        // })
       },
       //详情  
       goDetails(item){
+        console.info("🇨🇳🇨🇳:itemitemitemitem --", item)
         if(this.mode == 3){
           uni.navigateTo({
             url:`/pages/financial/details?data=` + JSON.stringify(item)

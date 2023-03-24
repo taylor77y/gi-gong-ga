@@ -186,14 +186,14 @@
 				})
 			},
 			getHisEntrustOrderList(){
-				let obj = new Object();
-				obj.page = this.page;
-				obj.size = this.size;
-				obj.orderState = "FINAL";
-				obj.member = uni.getStorageSync('userId')
-				this.$u.api.yx.getHistoryOrders(obj).then(res => {
-          console.info("🇨🇳🇨🇳:res --", res.result.result.records)
-					this.list = this.list.concat(res.result.result.records)
+				// let obj = new Object();
+				// obj.page = this.page;
+				// obj.size = this.size;
+				// obj.orderState = "FINAL";
+				// obj.member = uni.getStorageSync('userId')
+        let member = uni.getStorageSync('userId')
+				this.$u.api.contractNewInterface.getHistoryOrders(member).then(res => {
+					this.list = res.result.result
 					this.handlePageFn(res.result.result.total)
 				})
 			}
