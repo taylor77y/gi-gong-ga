@@ -209,6 +209,7 @@
 							<text v-else>
 								{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
 							</text>
+              <span style=" display: inline-block ;text-align: right">平仓</span>
 						</view>
 						<view v-if="!userId" @click="toLogin">
 							{{i18n.denglu }}

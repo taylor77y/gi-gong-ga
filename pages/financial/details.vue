@@ -5,7 +5,7 @@
     </head-slot>
       <view class="detailsTitle">
         <view class="detailsTitleList text">{{i18n.yingkuijine}}</view>
-        <view class="detailsTitleList amount">{{list.profit + `   (${list.profitUp })`}}</view>
+        <view class="detailsTitleList amount"  :class="{'left1': list.profit < 0 }"  >{{list.profit + `   (${list.profitUp })`}}</view>
       </view>
 
       <view class="detailsListBox">
@@ -102,6 +102,9 @@ export default {
         .amount {
           color: #f00056 ;
           font-size: 40rpx;
+        }
+        .left1 {
+          color: #14D69F ;
         }
       }
       .detailsListBox{

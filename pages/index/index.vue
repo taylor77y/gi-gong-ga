@@ -3,8 +3,8 @@
 		<header-home />
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
-		<home-notice :notifications="noticeList" />
-		<home-application :list="application" />
+<!--		<home-notice :notifications="noticeList" />-->
+		<home-application :list="application" style="margin-top: 50rpx"/>
 		<view style="display: flex;justify-content: space-between;">
 		<view class="f-buy" >
 			<view class="left" style="display: flex;">
