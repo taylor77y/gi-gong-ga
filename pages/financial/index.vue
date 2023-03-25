@@ -876,6 +876,9 @@
 			},
       //获取持仓列表
 			getWarehousesList() {
+        if(!this.userId) {
+          return
+        }
         let pairsName =  this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name
 				let memberId = uni.getStorageSync('userId')
         let price = this.pairsItem.close || this.pairsItem.price
