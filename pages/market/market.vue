@@ -57,7 +57,7 @@
 				search: '',
 				curList: [],
 				coinQuotations: [],
-				current: 0,
+				current: 1,
 				nameDom:"NAME_DOWN",
 				sot:"SPOT",
 				timer: null,

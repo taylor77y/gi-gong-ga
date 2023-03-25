@@ -31,8 +31,8 @@
 				</view>
 			</view>
 			<view class="list-title" v-if="mode === 4">
-				<view class="left" :class="{'left1': item.tradeType!='CLOSE_UP'}">
-					{{item.tradeType=='CLOSE_UP' ? i18n.pd:i18n.dk}}
+				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
+					{{item.tradeType=='OPEN_DOWN' ? '开空':'开多'}}
 					<text></text> {{item.pairsName}}
 				</view>
 				<view class="right">
@@ -393,7 +393,6 @@
       },
       //详情  
       goDetails(item){
-        console.info("🇨🇳🇨🇳:itemitemitemitem --", item)
         if(this.mode == 3){
           uni.navigateTo({
             url:`/pages/financial/details?data=` + JSON.stringify(item)

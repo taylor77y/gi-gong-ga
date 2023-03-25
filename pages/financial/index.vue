@@ -502,7 +502,8 @@
 				});
 				this.socket.on("message", this.onMessage);
 			},
-			inputHandler(e) {   //输入金额事件
+      //输入金额事件
+			inputHandler(e) {
 				if (Number(e.detail.value) < 1) {
 					this.$nextTick(() => {
 						this.search1 = 1
@@ -515,6 +516,36 @@
 				}
         this.search1 = 1
 			},
+      //计算输入框价格
+      getPercent(index) {
+        let amount = this.usdtPrice / 4;
+        switch (index) {
+          case 0:
+            this.search1 = Number((index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5)) /
+                1030).toFixed(0);
+            break;
+          case 1:
+            this.search1 = Number(this.getFloat(amount * 2, 6) / 1030).toFixed(0);
+            break;
+          case 2:
+            this.search1 = Number(this.getFloat(amount * 3, 6) / 1030).toFixed(0);
+            break;
+          case 3:
+            this.search1 = Math.floor(this.getFloat(amount * 4, 6) / 1030);
+            break;
+        }
+        this.numberFn.forEach((item, key) => {
+          if (item.code) {
+            if (key >= index) {
+              item.code = false
+            }
+          } else {
+            if (key <= index) {
+              item.code = true
+            }
+          }
+        })
+      },
 			//登录
 			toLogin() {
 				uni.navigateTo({
@@ -663,7 +694,7 @@
           this.$utils.showToast(this.$t('member').this.i18n.qdl)
         }
         const {name, close, price} = this.pairsItem
-       let  newParams = new Object()
+       let  newParams = new Object() //传参
           newParams.memberId = uni.getStorageSync('userId') || 0
           newParams.pairsName = name//全名
           newParams.coinName  = name.split("/")[1]//前两位名
@@ -674,9 +705,9 @@
           newParams.leverId  = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
           newParams.contractHands  = this.search1 //手
           if (this.cuBond == 0) {
-            newParams.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //或者 平多 平空
+            newParams.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //或者 开空 开多
           } else if (this.cuBond == 1) {
-            newParams.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP"//平多 平空
+            newParams.tradeType = sellState ? "CLOSE_DOWN" : "CLOSE_UP"//平空 平多
           }
         const onSuccess = (res) => {
           if (res.status === 'SUCCEED') {
@@ -822,36 +853,6 @@
 				number = String(number).replace(/^(.*\..{5}).*$/, "$1")
 				number = Number(number)
 				return number;
-			},
-      //计算输入框价格
-			getPercent(index) {
-				let amount = this.usdtPrice / 4;
-				switch (index) {
-					case 0:
-						this.search1 = Number((index === 0 && this.numberFn[0].code ? 0 : this.getFloat(amount * 1, 5)) /
-							1030).toFixed(0);
-						break;
-					case 1:
-						this.search1 = Number(this.getFloat(amount * 2, 6) / 1030).toFixed(0);
-						break;
-					case 2:
-						this.search1 = Number(this.getFloat(amount * 3, 6) / 1030).toFixed(0);
-						break;
-					case 3:
-						this.search1 = Number(this.getFloat(amount * 4, 6) / 1030).toFixed(0);
-						break;
-				}
-				this.numberFn.forEach((item, key) => {
-					if (item.code) {
-						if (key >= index) {
-							item.code = false
-						}
-					} else {
-						if (key <= index) {
-							item.code = true
-						}
-					}
-				})
 			},
 			change(e) {
 				this.current = e
