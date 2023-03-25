@@ -354,7 +354,8 @@ export default {
 		}],
 		topName: [
 			'Exchange',
-			'c2c'
+			'spot',
+			'c2c',
 		]
 	},
 	fack: {
@@ -1727,6 +1728,8 @@ export default {
 		]
 	},
 	entrust: {
+		kaiduozhuangtai: 'OPEN_UP',
+		kaikongzhuangtai: 'OPEN_DOWN',
 		ckxq: 'View details',
 		chedan: 'Cancel order',
 		pd: 'Pingduo',
@@ -1759,6 +1762,7 @@ export default {
 
 	},
 	financial: {
+		ypc:'Closed position',
 		ghbbkjy:'The currency is not tradable.',
 		kaican: 'open position',
 		pingcan: 'Close position',
@@ -1862,6 +1866,7 @@ export default {
 
 	},
 	newFy: {
+		cjjj:'Average transaction price',
 		yzm: 'Verification code',
 		jsjghy: 'Extreme delivery contract',
 		zc: 'Support 30s 60s 90s 120s',

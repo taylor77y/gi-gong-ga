@@ -129,7 +129,7 @@
 					<!--          //数量-->
 					<view class="l-sum">
 						<input type="number" v-model="search1" placeholder-style="background: #F6F6F6;" class="f-input"
-							 @click="inputHandler" />
+							 @input="inputHandler" />
 						<view class="r-icon" @click="getAdd(1)">
 							<text>{{i18n.zhang}}</text>
 						</view>
@@ -149,15 +149,15 @@
 					<view class="amountDisplayBox" v-if="userId">
 						<view class="amountList">
 							<view class="text">{{i18n.hyje}}</view>
-							<view class="amount">{{search1 * 1000 }}</view>
+							<view class="amount">{{search1 * 1000 || 0.00}}</view>
 						</view>
 						<view class="amountList">
 							<view class="text">{{i18n.bzj}}</view>
-							<view class="amount">{{search1 * 1000  }}</view>
+							<view class="amount">{{search1 * 1000  ||0.00}}</view>
 						</view>
 						<view class="amountList">
 							<view class="text">{{i18n.jcsxf }}</view>
-							<view class="amount">{{search1 * 1000 * 0.03}}</view>
+							<view class="amount">{{search1 * 1000 * 0.03 ||0.00}}</view>
 						</view>
 					</view>
 					<view style="height: 40rpx;"></view>
@@ -383,7 +383,7 @@
 			else this.getRealTimeOne();
       setInterval(()=>{
         this.getWarehousesList()
-      },2000)
+      },5000)
 			this.interval = setInterval(() => {
         this.getWarehousesList()
 				if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
@@ -468,7 +468,7 @@
 				} = await this.$u.api.trendDetails.getRealtime(symbol);
 				if (code == '0') {
 					this.pairsItem = data[0]
-					console.log(this.socket)
+					// console.log(this.socket)
 					if (!this.socket) {
 						this.socket = null
 						this.socketFn()
@@ -477,7 +477,7 @@
 			},
 
 			socketFn() {
-				console.log(this.pairsItem)
+				// console.log(this.pairsItem)
 				if (!this.pairsItem.symbol) return;
         if (this.socket) this.socket.toClose();
         this.socket = null
@@ -489,12 +489,12 @@
 						code,
 						data
 					} = getData()
-					console.log(code, data)
+					// console.log(code, data)
 					if (code == '0') {
 						this.buyData = data.asks.slice(0, 5);
 						this.sellData = data.bids.slice(0, 5);
 					}
-					console.log(this.buyData, this.sellData)
+					// console.log(this.buyData, this.sellData)
 				}, 3000)
 				this.socket.on("open", (res) => {
 					// this.socket.send("PING");
@@ -503,19 +503,21 @@
 				this.socket.on("message", this.onMessage);
 			},
       //输入金额事件
-			inputHandler(e) {
-				if (Number(e.detail.value) < 1) {
-					this.$nextTick(() => {
-						this.search1 = 1
-					})
-				}
-				if (Number(e.detail.value) > (this.usdtPrice / 1030)) {
-					this.$nextTick(() => {
-						this.search1 = Number((this.usdtPrice / 1030)).toFixed(0)
-					})
-				}
-        this.search1 = 1
-			},
+      inputHandler(e) {
+        const value = Number(e.detail.value)
+        if (value < 1) {
+          this.$nextTick(() => {
+            this.search1 = 0
+          })
+        } else if (value > (this.usdtPrice / 1030)) {
+          this.$nextTick(() => {
+            this.search1 = Math.floor(this.usdtPrice / 1030)
+            // this.search1 = 0
+          })
+        } else {
+          this.search1 = value
+        }
+      },
       //计算输入框价格
       getPercent(index) {
         let amount = this.usdtPrice / 4;

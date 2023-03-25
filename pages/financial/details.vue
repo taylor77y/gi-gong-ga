@@ -5,7 +5,7 @@
     </head-slot>
       <view class="detailsTitle">
         <view class="detailsTitleList text">{{i18n.yingkuijine}}</view>
-        <view class="detailsTitleList amount">{{list.profit + `   (${list.profitUp }%)`}}</view>
+        <view class="detailsTitleList amount">{{list.profit + `   (${list.profitUp })`}}</view>
       </view>
 
       <view class="detailsListBox">
@@ -24,8 +24,8 @@
         </view>
 
         <view class="detailsList right">
-          <view class="detailsListItem title">{{i18n.duokaiTL}}</view>
-          <view class="detailsListItem"  style="color : red">{{ list.orderState ? '已平仓': '-'}}</view>
+          <view class="detailsListItem title">{{ type }}{{list.pairsName}}</view>
+          <view class="detailsListItem"  style="color : red">{{ list.orderState ? i18n.ypc: '-'}}</view>
           <view class="detailsListItem">{{list.amount || 0.00}}</view>
           <view class="detailsListItem">{{list.amount || 0.00}}</view>
           <view class="detailsListItem">{{list.margin || 0.00}}</view>
@@ -56,6 +56,9 @@ export default {
     this.getDetailsData(dataItem.id);
   },
   computed : {
+    type () {
+      return this.list.tradeType == 'OPEN_DOWN' ? this.i18n.kk :this.i18n.kd
+    },
     i18n () {
       return this.$t('financial')
     }
@@ -72,20 +75,6 @@ export default {
         const formUpdateTime = settleTime.toLocaleString('zh-CN'); // 将日期对象格式化为本地化日期时间字符串（输出中国标准时间格式）
         list1.createTime = formCreateTime;
         list1.updateTime = formUpdateTime;
-        // switch (list1.orderState){
-        //   case 'OPEN_UP':
-        //     list1.tradeType = '多开';
-        //     break;
-        //   case 'OPEN_DOWN':
-        //     list1.tradeType = '多空';
-        //     break;
-        //   case 'CLOSE_UP':
-        //     list1.tradeType = '平多';
-        //     break;
-        //   case 'CLOSE_DOWN':
-        //     list1.tradeType = '平空';
-        //     break;
-        // }
         this.list = list1;
       } catch (error) {
         console.log(error);

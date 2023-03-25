@@ -28,7 +28,8 @@
 				current: 0,
 				listInfo: [
 					{name: '中文', val: 'zh'},
-					{name: 'English', val: 'en'}
+					{name: 'English', val: 'en'},
+					{name: '한국인', val: 'kor'}
 				]
 			}
 		},

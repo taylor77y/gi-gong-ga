@@ -1792,6 +1792,8 @@ export default {
 		]
 	},
 	entrust: {
+		kaiduozhuangtai: '开多',
+		kaikongzhuangtai: '开空',
 		ckxq: '查看详情',
 		chedan: '撤单',
 		pingchang:'平仓',
@@ -1826,6 +1828,7 @@ export default {
 
 	},
 	financial: {
+		ypc:'已平仓',
 		ghbbkjy:'该货币不可交易.',
 		kaican: '开仓',
 		pingcan: '平仓',

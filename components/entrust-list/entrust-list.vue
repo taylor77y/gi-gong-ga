@@ -19,9 +19,10 @@
 				</view>
 				
 			</view>
-			<view class="list-title" v-if="mode === 3">
-				<view class="left" :class="{'left1': item.tradeType!='CLOSE_UP'}">
-					{{item.tradeType=='CLOSE_UP' ? i18n.pd:i18n.dk}}
+<!--			历史列表-->
+      <view class="list-title" v-if="mode === 3">
+				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
+          {{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai }}
 					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
 				</view>
 				<view class="right" v-if="state === 10 && state === 2" @click.stop="chedan(item)">
@@ -30,9 +31,10 @@
 				<view class="right" v-else>
 				</view>
 			</view>
+<!--      持仓-->
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
-					{{item.tradeType=='OPEN_DOWN' ? '开空':'开多'}}
+					{{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai}}
 					<text></text> {{item.pairsName}}
 				</view>
 				<view class="right">
@@ -128,8 +130,8 @@
 				<view class="conta">
 					
 				</view>
-				<view class="right" v-if="item.matchPrice">
-					{{item.matchPrice | toFixed(4)}}
+				<view class="right" v-if="item.kPrice">
+					{{item.kPrice| toFixed(4)}}
 				</view>
 				<view class="right" v-else>
 					----
@@ -144,8 +146,9 @@
 <!--          {{item.margin|SubStringZreo(4)}}-->
 				</view>
 <!--        收益率-->
-				<view class="right" :class="item.profitUp>0?'c_green':'c_red'">
-					{{item.profitUp }}
+				<view class="right" :class="item.num?'c_red':'c_green'">
+					{{ item.profitUp }}
+<!--					{{ Number(item.profitUp) > 0 ? '+': '' + item.profitUp }}-->
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 3">
@@ -163,7 +166,7 @@
 			</view>
 			<view class="f-row f-000" v-if="mode === 3">
 				<view class="left">
-					{{item.takeFee | toFixed(4)}}
+          {{item.matchFee | toFixed(4)}}
 				</view>
 				<view class="conta">
 				</view>
@@ -286,7 +289,7 @@
 			</view>
 			<view class="f-row f-000" v-if="mode === 3">
 				<view class="left">
-					{{item.matchFee | toFixed(4)}}
+					{{item.profit | toFixed(4)}}
 				</view>
 				<view class="conta">
 					
@@ -359,30 +362,44 @@
 			}
 		},
     created(){
-      // console.info("🇨🇳🇨🇳:订单 --", this.list)
+      console.info("🇨🇳🇨🇳:订单 --", this.list)
       this.infoTime()
     },
 		computed: {
+      type () {
+        return this.list.tradeType ==  "OPEN_DOWN" ? this.i18n.kaikongzhuangtai :this.i18n.kaiduozhuangtai
+      },
 			i18n() {
 				return this.$t("entrust")
 			}
 		},
-    // watch: {
-    //   list: {
-    //     handler(newVal) {
-    //       newVal.forEach(e => {
-    //         e.shijian = new Date(e.time).toLocaleString('zh-CN');
-    //       })
-    //     },
-    //     deep: true,
-    //   },
-    // },
+    watch: {
+      list: {
+        handler(newVal) {
+          newVal.forEach(e => {
+            const num = parseFloat(e.profitUp)
+            if (num > 0) {
+              e.num = true
+            } else  {
+              e.num = false
+            }
+          })
+        },
+        deep: true,
+      },
+    },
+
 		data() {
 			return {
-                
+        isColor:false
 			}
 		},
 		methods: {
+      //计算收益率是否＞0
+      percentage(e){
+        let num = parseFloat(str)
+
+      },
       processedList(e) {
         return new Date(e.time).toLocaleString('zh-CN')
       },
