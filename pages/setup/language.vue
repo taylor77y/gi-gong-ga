@@ -11,7 +11,7 @@
 				</view>
 				<view class="right">
                     <view >
-                    	<image v-if="current === index" src="../../static/image/fIattributes/39.png"></image>
+                    	<image v-if="current === index" src="../../static/image/fIattributes/38.png"></image>
                     </view>
 					
 				</view>
@@ -29,7 +29,8 @@
 				listInfo: [
 					{name: '中文', val: 'zh'},
 					{name: 'English', val: 'en'},
-					{name: '한국인', val: 'kor'}
+					{name: '한국인', val: 'kor'},
+					{name: '繁体', val: 'hk'}
 				]
 			}
 		},
@@ -56,7 +57,7 @@
 			   uni.setStorageSync('lang',this.listInfo[index].val)
 			   // this.$store.commit('setLang', this.listInfo[index].val)
 			   uni.setStorageSync('lauInfo',this.listInfo[index].name)
-               uni.navigateBack(1);
+        uni.navigateBack(1);
 			}
 		}
 	}

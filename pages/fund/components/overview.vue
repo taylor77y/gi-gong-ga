@@ -123,7 +123,7 @@ export default {
       let member = uni.getStorageSync('userId') || 0
       this.$u.api.user.getBalanceList(member).then(res => {
         this.walletResult = res.result
-        console.info("🇨🇳🇨🇳:walletResult --",this.walletResult)
+        console.info("🇨🇳🇨🇳:钱包接口 --",this.walletResult)
       })
     },
 

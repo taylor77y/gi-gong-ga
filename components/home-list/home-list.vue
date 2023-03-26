@@ -25,7 +25,7 @@
 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
 				{{item.volume|SubString1(2)}}
 			</view>
-			<view v-else class="right" :class="item.change_ratio>0?'right1':''">
+			<view v-else class="right" :class="item.change_ratio<0?'right1':''">
 				{{ item.change_ratio>0 ? '+' + item.change_ratio : item.change_ratio}} %
 			</view>
 		</view>

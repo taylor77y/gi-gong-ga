@@ -209,7 +209,6 @@
 							<text v-else>
 								{{ cuBond === 0 ? i18n.kd:i18n.pingduo }}
 							</text>
-              <span style=" display: inline-block ;text-align: right">平仓</span>
 						</view>
 						<view v-if="!userId" @click="toLogin">
 							{{i18n.denglu }}
@@ -234,7 +233,7 @@
 			<!--			<view>{{ i18n.cclb }}</view>-->
 			<view></view>
 			<!--      一件平仓-->
-			<view class="right" @click="isPosition = true">{{ i18n.yjpc }}</view>
+			<view class="right" @click="isPosition = true" v-if="list.length>0">{{ i18n.yjpc }}</view>
 		</view>
 		<view v-if="current === 0">
 			<view v-if="list.length > 0">

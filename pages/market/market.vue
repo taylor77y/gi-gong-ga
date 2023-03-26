@@ -73,24 +73,24 @@
 			
 		},
 		watch: {
-			search() {
-				this.$u.throttle(async () => {
-					const Letter = new RegExp('[A-Za-z]+') //字母
-					let arr = this.newcoinQuotations
-					if (Letter.test(this.search)) {
-					        //字母搜索
-						this.coinQuotations = arr.filter(array => {
-						  let flag = false
-						  if (array.pairsName) {
-							let reg = new RegExp(this.search,'i') 
-							flag = array.pairsName.match(reg)
-						  }
-						  return flag
-						})
-					  }
-				}, 200)	
-				
-			}
+      async search() {
+        await this.$nextTick()
+        this.$u.throttle(() => {
+          const Letter = new RegExp('[A-Za-z]+') //字母
+          let arr = this.newcoinQuotations
+          if (Letter.test(this.search)) {
+            //字母搜索
+            this.coinQuotations = arr.filter(array => {
+              let flag = false
+              if (array.pairsName) {
+                let reg = new RegExp(this.search, 'i')
+                flag = array.pairsName.match(reg)
+              }
+              return flag
+            })
+          }
+        }, 200)
+      }
 		},
 		onShow() {
 			 if (this.timer) { //注销定时器

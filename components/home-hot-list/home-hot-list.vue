@@ -1,63 +1,61 @@
+
 <template>
-	<view class="home-hot-list">
-		<view class="title">
-			{{ title }}
-		</view>
-		<view class="like-list">
-			<view class="like-list-item" @click="getPathDet(item.name)" v-for="(item, index) in list" :key="index">
-				<view class="d-flex-between-center f-title">
-					{{item.name}}
-				</view>
-				<view class="rate1">{{item.change_ratio}}%</view>
-				<view class="money">
-					{{item.close}}
-				</view>
-				<view class="equivalent">
-					{{ setRate.mark }} {{item.close}}
-				</view>
-			</view>
-		</view>
-	</view>
+  <view class="home-hot-list">
+    <view class="title">{{ title }}</view>
+    <view class="like-list">
+      <view class="like-list-item" v-for="(item, index) in list" :key="index" @click="goToDetail(item.name)">
+        <view class="d-flex-between-center f-title">
+          {{ item.name }}
+          <view :class="{'rate1': item.change_ratio > 0, 'rate': item.change_ratio <= 0}">
+          {{ getChangeRatio(item.change_ratio) }}</view></view>
+        <view class="money">{{ item.close }}</view>
+        <view class="equivalent">≈ {{ rateConfig.mark }} {{ item.close }}</view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
-	export default {
-		props: {
-			list: {
-				type: Array,
-				default: () => []
-			},
-			title: {
-				type: [String, Number],
-				default: ''
-			}
-		},
-		computed: {
-		    setRate() {
-		       return this.$store.state.rate || {}
-		    }
-		},
-		data() {
-			return {
-				baseImg:"https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
-				baseUrl:uni.getStorageSync('ossUrl')
-			}
-		},
-		onLoad() {
+import { mapState } from 'vuex';
 
-		},
-		methods: {
-			// 跳转详情
-			getPathDet(name) {
-				uni.navigateTo({
-					url: `/pages/kLine/index?name=${name}&code=0`
-				})
-				// uni.navigateTo({
-				// 	url: temp[this.code]
-				// })
-			},
-		}
-	}
+export default {
+  props: {
+    list: {
+      type: Array,
+      default: () => []
+    },
+    title: {
+      type: [String, Number],
+      default: ''
+    }
+  },
+  data() {
+    return {
+      rateConfig: {
+        mark: '$'
+      },
+      baseImg: "https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg",
+      baseUrl: uni.getStorageSync('ossUrl')
+    };
+  },
+  computed: {
+    ...mapState({
+      rate: state => state.rate || {}
+    })
+  },
+  methods: {
+    // 跳转到详情页
+    goToDetail(name) {
+      uni.navigateTo({
+        url: `/pages/kLine/index?name=${name}&code=0`
+      });
+    },
+    // 获取涨跌幅的文本
+    getChangeRatio(changeRatio) {
+      return `${changeRatio > 0 ? '+' : ''}${changeRatio}%`;
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +86,7 @@
 				}
 				.f-title {
 					color: #8D9099;
-					font-size: 22rpx;
+					font-size: 24rpx;
 					margin-bottom: 40rpx;
 					& image {
 						width: 32rpx;
@@ -97,17 +95,18 @@
 					}
 				}
 				.rate {
-					font-size: 22rpx;
+					font-size: 24rpx;
 					color: #5EBA89;
 				}
 				.rate1 {
-					font-size: 22rpx;
+					font-size: 24rpx;
 					color: #E45360;
 				}
 				.money {
 					font-size: 30rpx;
 					font-weight: bold;
 					margin-bottom: 10rpx;
+          color:#e45360
 				}
 				.equivalent {
 					color: #8D9099;
