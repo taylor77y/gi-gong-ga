@@ -68,7 +68,7 @@
 			};
 		},
 		onLoad() {
-			this.getCoinData()
+			// this.getCoinData()
 			this.getCoinQuotationList(this.nameDom,this.sot);
 			
 		},

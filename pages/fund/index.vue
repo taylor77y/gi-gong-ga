@@ -77,13 +77,15 @@
           }
         })
       },
-      //获取理财
+      //获取理财列表
       getFundProduct(){
         this.$u.api.fundFinancing.getFundProduct().then(res=>{
           if(res.status === 'SUCCEED'){
             this.financialList = res.result
+            console.info("🇨🇳🇨🇳:列表 --",    this.financialList)
           }
         })
+
       },
 			toPage(page) {
 				uni.navigateTo({
@@ -92,7 +94,7 @@
 			},
 			buyButtonClick(e) {
 				uni.navigateTo({
-					url: `/pages/fund/fund-buy?id=${e.id}`
+					url: `/pages/fund/fund-buy?id=${e.id}&periodDay=${e.periodDay}`
 				})
 			}
 		}
