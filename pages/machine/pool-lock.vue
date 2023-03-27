@@ -1,26 +1,26 @@
 <template>
 	<view class="page">
-		<xl-header :title="i18n.title"></xl-header>
+		<xl-header title="矿池锁仓"></xl-header>
 		<view class="container">
 			<div class="info-card">
 				<div class="top">
 					<image class="banner" src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png"></image>
 					<view class="title">
-						Super computing power miner 3 days
+						{{product.zhName}}
 					</view>
 				</div>
 				<div class="bottom">
 					<div class="item">
 						<div class="desc">Applicable algorithm</div>
-						<div class="title">EtHash</div>
+						<div class="title">{{detail.algorithm}}</div>
 					</div>
 					<div class="item">
 						<div class="desc">Official power consumption</div>
-						<div class="title">1510w</div>
+						<div class="title">{{detail.waste}}</div>
 					</div>
 					<div class="item">
 						<div class="desc">Rated hashrate</div>
-						<div class="title">420Ksol/s</div>
+						<div class="title">{{detail.rated}}</div>
 					</div>
 				</div>
 			</div>
@@ -35,9 +35,9 @@
 					<div class="cel">Direction</div>
 				</div>
 				<div class="td">
-					<div class="cel">usdt</div>
-					<div class="cel">3</div>
-					<div class="cel">3</div>
+					<div class="cel">{{ product.buyPairsName }}</div>
+					<div class="cel">{{ product.periodDay }}</div>
+					<div class="cel">{{ product.periodDay }}</div>
 					<div class="cel">
 						<button class="btn" @tap="listIteamClick()">Experience</button>
 					</div>
@@ -49,35 +49,35 @@
 			<div class="list-container mt-20">
 				<div class="item">
 					<div class="left">Producer</div>
-					<div class="right">比特大陆</div>
+					<div class="right">{{detail.factory}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Rated hashrate</div>
-					<div class="right">420Ksol/s</div>
+					<div class="right">{{detail.rated}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Wall power consumption</div>
-					<div class="right">1510</div>
+					<div class="right">{{detail.waste}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Carton size</div>
-					<div class="right">245mm*132.5mm*290mm</div>
+					<div class="right">{{detail.size}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Machine weight</div>
-					<div class="right">5.9KG</div>
+					<div class="right">{{detail.weight}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Operating temperature</div>
-					<div class="right">0℃ ~ 40℃</div>
+					<div class="right">{{detail.temperature}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Working humidity</div>
-					<div class="right">5%RH ~ 95%RH</div>
+					<div class="right">{{detail.humidity}}</div>
 				</div>
 				<div class="item">
 					<div class="left">Network link</div>
-					<div class="right">Ethernet</div>
+					<div class="right">{{detail.link}}</div>
 				</div>
 			</div>
 		</view>
@@ -88,7 +88,8 @@
 	export default {
 		data() {
 			return {
-
+				product:{},
+				detail:{}
 			}
 		},
 		computed: {
@@ -96,12 +97,20 @@
 				return this.$t("machinePoolLock")
 			}
 		},
+		onLoad(options) {
+			// console.log('options.data',options.data)
+			this.product = JSON.parse(options.data)
+			console.log('this.product',this.product)
+			if(this.product.detail){
+				this.detail = JSON.parse(this.product.detail)
+			}
+		},
 		methods: {
 			listIteamClick() {
 				uni.navigateTo({
-					url: '/pages/machine/machine-buy'
+					url: '/pages/machine/machine-buy?id=' + this.product.id
 				})
-			}
+			},
 		}
 	}
 </script>

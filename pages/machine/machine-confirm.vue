@@ -127,7 +127,7 @@
 					orderNumber : this.orderNo,
 					productId: this.id,
 					memberId: userId,
-					valueDate: toMoDay(),
+					valueDate: this.toMoDay(),
 					periodDay : this.order.periodDay,
 					residueDay:0,
 					price: this.amount,
@@ -138,7 +138,7 @@
 					this.$utils.showToast('购买成功')
 					setTimeout(()=>{
 						uni.navigateTo({
-							url: '/pages/fund/components/successfulPurchase'
+							url: '/pages/machine/bySuccess'
 						})
 					},500)
 				}

@@ -124,6 +124,10 @@
 				}
 			},
 			toBuyHandler() {
+				if(this.amount<=0){
+					this.$utils.showToast('请输入正确的金额')
+					return
+				}
 				uni.navigateTo({
 					url: `/pages/machine/machine-confirm?id=${this.id}&amount=${this.amount}`
 				})

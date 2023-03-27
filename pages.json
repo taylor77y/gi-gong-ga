@@ -1389,6 +1389,9 @@
         ,{
             "path" : "pages/wantBuy/order",
             "style" : {}
+        },{
+            "path" : "pages/machine/bySuccess",
+            "style" : {}
         }
     ],
 	"globalStyle": {

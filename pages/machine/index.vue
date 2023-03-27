@@ -28,7 +28,7 @@
 			<button class="btn ml-20" @tap="toPage('/pages/machine/machine-rule')">{{i18n.gz}}</button>
 		</view>
 		<view class="amount-card">
-			<view class="item" v-for="(item,index) in productList" :key="index" @tap="toDetail(item.id)">
+			<view class="item" v-for="(item,index) in productList" :key="index" @tap="toDetail(item)">
 				<view class="title">
 					{{item.periodDay}}天预期收益{{item.dayRate}}
 				</view>
@@ -96,9 +96,9 @@
 					url: '/pages/machine/machine-buy?id=' + id
 				})
 			},
-			toDetail(id) {
+			toDetail(item) {
 				uni.navigateTo({
-					url: '/pages/machine/pool-lock?id=' + id
+					url: '/pages/machine/pool-lock?data=' + JSON.stringify(item)
 				})
 			}
 		}
