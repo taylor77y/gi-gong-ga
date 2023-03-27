@@ -433,7 +433,6 @@ const install = (Vue, vm) => {
 		getCheckFundOrder: (productId) => vm.$u.post(`/fund/fund_product/getCheckFundOrder?productId=${productId}` ),//获取用户购买基金统计信息
 		getCountFundOrderByUserId: (userId) => vm.$u.post(`/fund/fund_product/getCountFundOrderByUserId?userId=${userId}` ),//获取确认订单信息的详情
 
-
 	}
 	vm.$u.api = {
 		common,

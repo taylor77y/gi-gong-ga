@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<xl-header title="理財5天"></xl-header>
+		<xl-header :title="data.name"></xl-header>
 		<view class="container">
 			<view class="title">
         购买金额
@@ -116,7 +116,7 @@
 			return {
         periodDayId:0,//周期
         availableAmount:0,
-        amountAll:1000,//Usdt金额
+        amountAll:1,//Usdt金额
         data: {}, // 请求回来的数据
 			}
 		},

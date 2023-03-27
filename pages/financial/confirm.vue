@@ -95,24 +95,6 @@
 				uni.navigateBack()
 			},
 			confirmClick(){
-
-        // finishValueDate 结束起息日
-        //
-        // fundProductId  基金产品Id
-        //
-        // memberId   Id
-        //
-        // orderNumber  订单id
-        //
-        //
-        // periodDay  周期
-        //
-        // price 狗买的钱
-        //
-        // residueDay  剩余天
-        //
-        // valueDate
-        //
         let userId = uni.getStorageSync('userId')
         let params  = new Object()
         params.finishValueDate = this.orderData.endDate
@@ -127,6 +109,9 @@
 
         this.$u.api.fundFinancing.setFundOrderPurchase(params).then(res=>{
           if(res.status==='SUCCEED'){
+            uni.navigateTo({
+              url:'/pages/fund/components/successfulPurchase'
+            })
           } else if(res.status === 'FAILED') {
             return this.$utils.showToast(res.errorMessage)
           }

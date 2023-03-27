@@ -1178,7 +1178,15 @@
             "path" : "pages/fund/components/successfulPurchase",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "成功购买",
+                "enablePullDownRefresh": false
+            }
+
+        },{
+            "path" : "pages/fund/components/financialDetails",
+            "style" :
+            {
+                "navigationBarTitleText": "详情",
                 "enablePullDownRefresh": false
             }
 

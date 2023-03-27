@@ -33,7 +33,7 @@
       </view>
       <view class="amount">
         <view class="money">
-          {{ isInput ? '******' : 0.00 | SubString(5) }}
+          {{ isInput ? '******' : purchasedFunds.toPrice | SubString(5) }}
         </view>
         <view class="zhehe">
           {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -51,7 +51,7 @@
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 0.00 | SubString(5) }}
+              {{ isInput ? '******' : purchasedFunds.dayPrice | SubString(5) }}
             </view>
             <view class="zhehe">
               {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -68,7 +68,7 @@
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 0.00 | SubString(5) }}
+              {{ isInput ? '******' : purchasedFunds.addUpPrice | SubString(5) }}
             </view>
             <view class="zhehe">
               {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -87,7 +87,7 @@
         </view>
         <view class="amount" v-if="current === 2 && isShow === 1 || current === 3">
           <view class="money" style="color: #707070">
-            {{ isInput ? '******' : 0.00 | SubString(5) }}
+            {{ isInput ? '******' : purchasedFunds.size | SubString(5) }}
           </view>
           <view  style="color: #707070">
             {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -102,7 +102,7 @@
         <a href="#" style="text-decoration : none" v-if="isShow === 1" @tap='toRules(1)'>{{i18n.lc.gz}}</a>
         <a href="#" style="text-decoration : none" v-else @tap='toRules(-1)'>{{i18n.lc.gz}}</a>
       </view>
-      <financialList  :products="productsList"/>
+      <financialList  :products="productsList" v-if="isShow !== 2"/>
 
     </view>
   </view>
@@ -127,7 +127,8 @@ export default {
       isShow: null,//是否显示
       isInput: false,//是否隐藏
       isPrimaryActive: true,
-      isSecondaryActive: false
+      isSecondaryActive: false,
+      purchasedFunds:{},// 理财总资产
     }
   },
   computed:{
@@ -136,12 +137,23 @@ export default {
     },
   },
   created() {
+    this.getPurchasedFunds()
     this.getFundOrderByUserId()
   },
   mounted() {
   },
   methods: {
-    // 用户的理财产品
+    //理财资产列表
+    getPurchasedFunds(){
+        let id = uni.getStorageSync('userId') || 0;
+        this.$u.api.fundFinancing.getCountFundOrderByUserId(id).then(res=>{
+          if(res.status === 'SUCCEED'){
+            this.purchasedFunds = res.result
+          }
+        })
+
+    },
+    // 用户的理财产品  理财列表
     getFundOrderByUserId(){
        let  userId =  uni.getStorageSync('userId')
        let   status = 0
