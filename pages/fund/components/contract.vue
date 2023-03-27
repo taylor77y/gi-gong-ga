@@ -102,7 +102,7 @@
         <a href="#" style="text-decoration : none" v-if="isShow === 1" @tap='toRules(1)'>{{i18n.lc.gz}}</a>
         <a href="#" style="text-decoration : none" v-else @tap='toRules(-1)'>{{i18n.lc.gz}}</a>
       </view>
-      <financialList  :products="products"/>
+      <financialList  :products="productsList"/>
 
     </view>
   </view>
@@ -112,6 +112,7 @@
 import  financialList from '../components/financialList.vue'
 export default {
   components: {
+    financialList
   },
   name: 'contract',
   props: {
@@ -122,26 +123,7 @@ export default {
   },
   data() {
     return {
-      products: [
-        {
-          avatar: '产品1头像',
-          name: '产品1名称',
-          quantity: '产品1数量',
-          cycle: '产品1周期',
-          price: '产品1价格',
-          profit: '产品1累计收益'
-        },
-        {
-          avatar: '产品2头像',
-          name: '产品2名称',
-          quantity: '产品2数量',
-          cycle: '产品2周期',
-          price: '产品2价格',
-          profit: '产品2累计收益'
-        },
-        // ...
-      ],
-
+      productsList :[],//个人产品
       isShow: null,//是否显示
       isInput: false,//是否隐藏
       isPrimaryActive: true,
@@ -154,11 +136,24 @@ export default {
     },
   },
   created() {
+    this.getFundOrderByUserId()
   },
   mounted() {
   },
   methods: {
-
+    // 用户的理财产品
+    getFundOrderByUserId(){
+       let  userId =  uni.getStorageSync('userId')
+       let   status = 0
+      // }
+      this.$u.api.fundFinancing.getFundOrderByUserId(userId,status).then(res =>{
+        if(res.status === 'SUCCEED'){
+      this.productsList = res.result
+        } else {
+          this.$utils.showToast(res.errorMessage)
+        }
+      })
+    },
     toRules(e){
       uni.navigateTo({
         url:e === 1 ? '/pages/fund/fund-rule' : '/pages/machine/machine-rule'

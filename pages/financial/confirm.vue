@@ -73,34 +73,64 @@
 	export default {
 		data() {
 			return {
-        orderNumber:0,//订单数
+        orderNumber:0,//订单编号
         amount:0,//金额
         orderData:{},//订单数据
-			}
+        periodDayId :'',//周期数
+        productId:'',//产品ID
+      }
 		},
     onLoad(options){
+      console.info("🇨🇳🇨🇳:o --", options)
       this.orderNumber = +(new Date()).toISOString().slice(0, 10).replace(/-/g, '') + Math.random().toString().substr(2, 6);
       this.amount = options.amount; // 获取amount参数值
-      this.orderData  = uni.getStorageSync('data'); // 获取之前存储的data对象
+      this.orderData  = uni.getStorageSync('data');
+      this.amount  = uni.getStorageSync('amount');
+      this.periodDayId  = options.periodDayId
+      this.productId  = options.productId
+      console.info("🇨🇳🇨🇳:this.orderData  --", this.orderData )
     },
 		methods: {
 			cancelClick() {
 				uni.navigateBack()
 			},
 			confirmClick(){
+
+        // finishValueDate 结束起息日
+        //
+        // fundProductId  基金产品Id
+        //
+        // memberId   Id
+        //
+        // orderNumber  订单id
+        //
+        //
+        // periodDay  周期
+        //
+        // price 狗买的钱
+        //
+        // residueDay  剩余天
+        //
+        // valueDate
+        //
+        let userId = uni.getStorageSync('userId')
         let params  = new Object()
-        // params.finishValueDate = this.orderData.
-        // this.$u.api.fundFinancing.setFundOrderPurchase(this.orderId).then(res=>{
-        //   if(res.status === 'SUCCEED'){
-        //     this.data = res.result
-        //     const date = new Date(this.data.buyDate);
-        //     this.data.buyDate =  date.toLocaleString();
-        //     const date1 = new Date(this.data.endDate);
-        //     this.data.endDate =  date1.toLocaleString();
-        //     const date2 = new Date(this.data.startDate);
-        //     this.data.startDate =  date2.toLocaleString();
-        //   }
-        // })
+        params.finishValueDate = this.orderData.endDate
+        params.fundProductId = this.productId //产品ID
+        // params.fundProductId = 2//产品ID
+        params.memberId = userId //用户ID
+        params.orderNumber  = this.orderNumber //订单id
+        params.periodDay =  this.periodDayId  //周期
+        params.price = this.amount  //金额
+        params.residueDay = this.periodDayId//剩余天数
+        params.valueDate =  this.orderData.startDate    // 起息时间
+
+        this.$u.api.fundFinancing.setFundOrderPurchase(params).then(res=>{
+          if(res.status==='SUCCEED'){
+          } else if(res.status === 'FAILED') {
+            return this.$utils.showToast(res.errorMessage)
+          }
+        })
 			}
 		}
 	}

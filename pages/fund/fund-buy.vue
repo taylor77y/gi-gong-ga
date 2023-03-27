@@ -114,13 +114,15 @@
 	export default {
 		data() {
 			return {
+        periodDayId:0,//周期
         availableAmount:0,
-        amountAll:0,//Usdt金额
+        amountAll:1000,//Usdt金额
         data: {}, // 请求回来的数据
 			}
 		},
-   onLoad (id) {
-      this.orderId = id.id
+   onLoad (obj) {
+      this.orderId = obj.id //产品id
+      this.periodDayId = obj.periodDay //产品id
      this.getCheckFundOrder()//获取数据
    },
     computed: {
@@ -130,13 +132,6 @@
       getCheckFundOrder(){
         this.$u.api.fundFinancing.getCheckFundOrder(this.orderId).then(res=>{
           if(res.status === 'SUCCEED'){
-            // this.data = res.result
-            // const date = new Date(this.data.buyDate);
-            // this.data.buyDate =  date.toLocaleString();
-            // const date1 = new Date(this.data.endDate);
-            // this.data.endDate =  date1.toLocaleString();
-            // const date2 = new Date(this.data.startDate);
-            // this.data.startDate =  date2.toLocaleString();
             this.data = res.result;
             const date = new Date(this.data.buyDate);
             this.data.buyDate =  date.toISOString().slice(0,10);
@@ -172,7 +167,7 @@
           uni.setStorageSync('data', this.data);
           uni.setStorageSync('amount', this.amountAll);
           uni.navigateTo({
-              url:`/pages/financial/confirm?amount=${this.amountAll}`
+              url:`/pages/financial/confirm?productId=${this.orderId}&periodDayId=${this.periodDayId}`
           })
         }
 			}

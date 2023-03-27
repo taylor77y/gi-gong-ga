@@ -1175,13 +1175,22 @@
             
         }
         ,{
-            "path" : "pages/fund/index",
+            "path" : "pages/fund/components/successfulPurchase",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
+
+        }
+        ,{
+            "path" : "pages/fund/index",
+            "style" :
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+
         }
         ,{
             "path" : "pages/funds/index",
