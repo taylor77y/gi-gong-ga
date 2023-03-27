@@ -1,87 +1,147 @@
 <template>
 	<view class="page">
-		<xl-header title=""></xl-header>
+		<xl-header title="确认订单"></xl-header>
 
 		<view class="container">
 			<view class="title">
-				Purchase amount
+				{{order.name}}
 			</view>
-<!-- 			<view class="input-container">
-				<input disabled type="text" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0">
-				<view class="usdt">
-					USDT
-				</view>
-			</view> -->
 			<view class="row mt-20">
 				<view class="left">
-					Est. Interest
+					矿机金额
 				</view>
 				<view class="right">
-					Every day
+					{{amount}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+					30天预期收益
 				</view>
 				<view class="right">
-
+					{{30 * amount * order.todayRate }}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+					周期
 				</view>
 				<view class="right">
-
+					{{order.periodDay}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+					日收益
 				</view>
 				<view class="right">
-
+					{{order.todayRate}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+					起息日
 				</view>
 				<view class="right">
-
+					{{ toMoDay()}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+					计息结束日
 				</view>
 				<view class="right">
-
+					--
+				</view>
+			</view>
+			<view class="row">
+				<view class="left">
+					订单编号
+				</view>
+				<view class="right">
+					{{orderNo}}
+				</view>
+			</view>
+			<view class="row">
+				<view class="left">
+					订单时间
+				</view>
+				<view class="right">
+					{{ buyTime(order.buyDate) }}
 				</view>
 			</view>
 
 			<view class="btn-container">
-				<button class="btn mr-20" @tap="cancelClick()">Cancel</button>
-				<button type="primary" class="btn ml-20" @tap="confirmClick()">Confirm</button>
+				<button class="btn mr-20" @tap="cancelClick()">取消</button>
+				<button type="primary" class="btn ml-20" @tap="confirmClick()">确认</button>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		formatDate
+	} from "@/common/utils/dateFormat.js"
+	
 	export default {
 		data() {
 			return {
-
+				id: null,
+				order: {},
+				availableAmount: 0,
+				amount: 0,
+				orderNo:''
 			}
 		},
+		onLoad(options) {
+			this.id = options.id
+			this.amount = options.amount
+			this.orderNo = +(new Date()).toISOString().slice(0, 10).replace(/-/g, '') + Math.random().toString().substr(2, 6);
+			this.getCheckSmartPoolOrder()
+		},
 		methods: {
+			buyTime(time){
+				return formatDate(time)
+			},
+			toMoDay() {
+				// let dateTime = new Date()
+				// dateTime = dateTime.setDate(dateTime.getDate() + 1)
+				return formatDate(this.order.startDate, 'yyyy-MM-dd')
+			},
+			async getCheckSmartPoolOrder() {
+				let res = await this.$u.api.machine.getCheckSmartPoolOrder(this.id)
+				if (res.status == "SUCCEED") {
+					this.order = res.result
+				}
+			},
 			cancelClick() {
 				uni.navigateBack()
 			},
-			confirmClick(){
-				
+			async confirmClick() {
+				let userId = uni.getStorageSync('userId')
+				if (!userId) {
+					return
+				}
+				let res = await this.$u.api.machine.setSmartPoolOrderPurchase({
+					orderNumber : this.orderNo,
+					productId: this.id,
+					memberId: userId,
+					valueDate: toMoDay(),
+					periodDay : this.order.periodDay,
+					residueDay:0,
+					price: this.amount,
+					accumulatedIncome:0,
+					penalPrice:0
+				})
+				if(res.status == 'SUCCEED'){
+					this.$utils.showToast('购买成功')
+					setTimeout(()=>{
+						uni.navigateTo({
+							url: '/pages/fund/components/successfulPurchase'
+						})
+					},500)
+				}
 			}
 		}
 	}

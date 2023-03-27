@@ -434,6 +434,14 @@ const install = (Vue, vm) => {
 		getCountFundOrderByUserId: (userId) => vm.$u.post(`/fund/fund_product/getCountFundOrderByUserId?userId=${userId}` ),//获取确认订单信息的详情
 
 	}
+	
+	//智能矿池
+	const machine = {
+		getCountSmartPoolOrderByUserId: (userId)=> vm.$u.get("/fund/smart_pool_product/getCountSmartPoolOrderByUserId?userId="+userId),
+		getSmartPoolProduct: () => vm.$u.get("/fund/smart_pool_product/getSmartPoolProduct"),
+		getCheckSmartPoolOrder:(productId) => vm.$u.get("/fund/smart_pool_product/getCheckSmartPoolOrder?productId="+productId),
+		setSmartPoolOrderPurchase:(params) => vm.$u.post(`/fund/smart_pool_product/setSmartPoolOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
+	}
 	vm.$u.api = {
 		common,
 		user,
@@ -458,6 +466,7 @@ const install = (Vue, vm) => {
 		getContractorder,
 		contractNewInterface,
 		fundFinancing,
+		machine
 	};
 }
 export default {
