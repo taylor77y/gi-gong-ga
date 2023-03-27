@@ -6,20 +6,20 @@
 				{{i18n.tgje}}
 			</text>
 			<text class="amount-number">
-				0
+				{{ countData.toPrice||0 }}
 			</text>
 			<view class="amount-list">
 				<view class="item">
 					<text class="title">{{i18n.yjrsy}}</text>
-					<text class="number">0</text>
+					<text class="number">{{ countData.dayPrice||0 }}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.ljsy}}</text>
-					<text class="number">0</text>
+					<text class="number">{{ countData.addUpPrice||0 }}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.tgdd}}</text>
-					<text class="number">0</text>
+					<text class="number">{{ countData.size||0 }}</text>
 				</view>
 			</view>
 		</view>
@@ -28,23 +28,23 @@
 			<button class="btn ml-20" @tap="toPage('/pages/machine/machine-rule')">{{i18n.gz}}</button>
 		</view>
 		<view class="amount-card">
-			<view class="item" v-for="(item,index) in [0,1,2]" :key="index" @tap="toDetail()">
+			<view class="item" v-for="(item,index) in productList" :key="index" @tap="toDetail(item)">
 				<view class="title">
-					3DEst. Interest9USDT
+					{{item.periodDay}}天预期收益{{item.dayRate}}
 				</view>
 				<view class="box">
 					<image src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png" class="img"></image>
 					<view class="content">
 						<view class="title">
-							Super computing power miner 3 days
+							{{ item.zhName}}
 						</view>
 						<view class="desc">
-							<text class="col">Yield 3</text>
-							<text class="col">Limit 0-0 USDT</text>
-							<text class="col">Cycle 3D</text>
+							<text class="col">日收益率 {{item.dayRate}}</text>
+							<text class="col">限额 {{item.investmentAmountFront}} - {{item.investmentAmountBehind}} {{item.buyPairsName}}</text>
+							<text class="col">周期 {{item.periodDay}}</text>
 						</view>
 					</view>
-					<button type="primary" class="btn" @tap.stop="buyButtonClick(item)">Experience now</button>
+					<button type="primary" class="btn" @tap.stop="buyButtonClick(item.id)">立即租用</button>
 				</view>
 			</view>
 		</view>
@@ -55,7 +55,8 @@
 	export default {
 		data() {
 			return {
-
+				productList: [],
+				countData: {}
 			}
 		},
 		computed: {
@@ -63,20 +64,41 @@
 				return this.$t("machineIndex")
 			}
 		},
+		onLoad() {
+			this.getCountSmartPoolOrderByUserId()
+			this.getSmartPoolProduct()
+		},
 		methods: {
+			async getSmartPoolProduct() {
+				let res = await this.$u.api.machine.getSmartPoolProduct()
+				if (res.status == "SUCCEED") {
+					this.productList = res.result
+				}
+			},
+			async getCountSmartPoolOrderByUserId() {
+				let userId = uni.getStorageSync('userId')
+				if (!userId) {
+					return
+				}
+				let res = await this.$u.api.machine.getCountSmartPoolOrderByUserId(userId)
+				console.log('getCountSmartPoolOrderByUserId', res)
+				if (res.status == "SUCCEED") {
+					this.countData = res.result
+				}
+			},
 			toPage(page) {
 				uni.navigateTo({
 					url: page
 				})
 			},
-			buyButtonClick() {
+			buyButtonClick(id) {
 				uni.navigateTo({
-					url: '/pages/machine/machine-buy'
+					url: '/pages/machine/machine-buy?id=' + id
 				})
 			},
-			toDetail() {
+			toDetail(item) {
 				uni.navigateTo({
-					url: '/pages/machine/pool-lock'
+					url: '/pages/machine/pool-lock?data=' + JSON.stringify(item)
 				})
 			}
 		}
@@ -197,6 +219,7 @@
 					}
 
 					.content {
+						flex: 2;
 						padding-left: 10rpx;
 						display: flex;
 						flex-direction: column;
