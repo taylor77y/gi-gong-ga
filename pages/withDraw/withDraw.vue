@@ -122,7 +122,7 @@
 
     mounted() {
       try {
-        this.memberObj = JSON.parse(this.$route.query.data);
+        this.memberObj = JSON.parse(this.$route.query.data) || {}
       } catch (e) {
         console.error(e);
       }

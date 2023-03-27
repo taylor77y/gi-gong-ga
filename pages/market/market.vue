@@ -167,13 +167,14 @@
 					this.newcoinQuotations = res.result
 				})
 			},
-      getTabFour(NAME_DOWN, SPOT) {
-        this.sot = SPOT
-        this.$u.api.quato.getTabFour(NAME_DOWN, SPOT).then(res => {
-          this.coinQuotations = res.result;
-          this.newcoinQuotations = res.result
-        })
-      }
+      //一直接口报错 没有这个接口
+      // getTabFour(NAME_DOWN, SPOT) {
+      //   this.sot = SPOT
+      //   this.$u.api.quato.getTabFour(NAME_DOWN, SPOT).then(res => {
+      //     this.coinQuotations = res.result;
+      //     this.newcoinQuotations = res.result
+      //   })
+      // }
 		},
 		computed: {
 			homeTitle() {

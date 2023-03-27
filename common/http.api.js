@@ -424,6 +424,16 @@ const install = (Vue, vm) => {
 		setContractOrderBuy: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderBuy`,params,{ 'Content-Type': 'application/json' }),//多开多空
 		setContractOrderSell: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderSell`,params,{ 'Content-Type': 'application/json' }),//平多平空
 	}
+	// 基金理财
+	const fundFinancing = {
+		getFundOrderByUserId: (params) => vm.$u.post(`/fund/fund_product/getFundOrderByUserId`,params,{ 'Content-Type': 'application/json' }),//用户的理财订单
+		getFundProduct: () => vm.$u.get("/fund/fund_product/getFundProduct"),//获取基金理财产品
+		setFundOrderPurchase: (params) => vm.$u.post(`/fund/fund_product/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),//买入理财产品
+		setFundOrderRedeem: (params) => vm.$u.post(`/fund/fund_product/setFundOrderRedeem`,params,{ 'Content-Type': 'application/json' }),//赎回产品
+		getCheckFundOrder: (productId) => vm.$u.post(`/fund/fund_product/getCheckFundOrder?productId=${productId}` ),//获取用户购买基金统计信息
+		getCountFundOrderByUserId: (userId) => vm.$u.post(`/fund/fund_product/getCountFundOrderByUserId?userId=${userId}` ),//获取确认订单信息的详情
+
+	}
 	vm.$u.api = {
 		common,
 		user,
@@ -446,7 +456,8 @@ const install = (Vue, vm) => {
 		wantBuy,
 		kefu,
 		getContractorder,
-		contractNewInterface
+		contractNewInterface,
+		fundFinancing,
 	};
 }
 export default {

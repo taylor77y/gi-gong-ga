@@ -1,69 +1,69 @@
 <template>
 	<view class="page">
-		<xl-header title=""></xl-header>
+		<xl-header title="理財5天"></xl-header>
 
 		<view class="container">
 			<view class="title">
-				Purchase amount
+        理财金额(USDT)
 			</view>
 			<view class="input-container">
-				<input disabled type="text" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0">
+				<input disabled type="text" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0" v-model="amount" disabled>
 				<view class="usdt">
 					USDT
 				</view>
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-					Est. Interest
+          预期收益
 				</view>
 				<view class="right">
-					Every day
+          {{orderData.distribute }}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+          日收益
 				</view>
 				<view class="right">
-
+       {{orderData.todayRate}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+          起息日
 				</view>
 				<view class="right">
-
+          {{orderData.startDate }}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+          计息结束日
 				</view>
 				<view class="right">
-
+          {{orderData.endDate}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
-				</view>
+          订单编号
+        </view>
 				<view class="right">
-
+        {{orderNumber}}
 				</view>
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+          订单时间
 				</view>
 				<view class="right">
-
+         {{orderData.buyDate}}
 				</view>
 			</view>
 
 			<view class="btn-container">
-				<button class="btn mr-20" @tap="cancelClick()">Cancel</button>
-				<button type="primary" class="btn ml-20" @tap="confirmClick()">Confirm</button>
+				<button class="btn mr-20" @tap="cancelClick()">取消</button>
+				<button type="primary" class="btn ml-20" @tap="confirmClick()">确定</button>
 			</view>
 		</view>
 	</view>
@@ -73,15 +73,34 @@
 	export default {
 		data() {
 			return {
-
+        orderNumber:0,//订单数
+        amount:0,//金额
+        orderData:{},//订单数据
 			}
 		},
+    onLoad(options){
+      this.orderNumber = +(new Date()).toISOString().slice(0, 10).replace(/-/g, '') + Math.random().toString().substr(2, 6);
+      this.amount = options.amount; // 获取amount参数值
+      this.orderData  = uni.getStorageSync('data'); // 获取之前存储的data对象
+    },
 		methods: {
 			cancelClick() {
 				uni.navigateBack()
 			},
 			confirmClick(){
-				
+        let params  = new Object()
+        // params.finishValueDate = this.orderData.
+        // this.$u.api.fundFinancing.setFundOrderPurchase(this.orderId).then(res=>{
+        //   if(res.status === 'SUCCEED'){
+        //     this.data = res.result
+        //     const date = new Date(this.data.buyDate);
+        //     this.data.buyDate =  date.toLocaleString();
+        //     const date1 = new Date(this.data.endDate);
+        //     this.data.endDate =  date1.toLocaleString();
+        //     const date2 = new Date(this.data.startDate);
+        //     this.data.startDate =  date2.toLocaleString();
+        //   }
+        // })
 			}
 		}
 	}

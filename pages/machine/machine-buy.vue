@@ -1,10 +1,10 @@
 <template>
 	<view class="page">
-		<xl-header title=""></xl-header>
+		<xl-header title="体验礦機 3天"></xl-header>
 		
 		<view class="container">
 			<view class="title">
-				Purchase amount
+        购买金额
 			</view>
 			<view class="input-container">
 				<input type="text" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0">
@@ -12,12 +12,12 @@
 					USDT
 				</view>
 				<view class="all">
-					All
+					全部
 				</view>
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-					Available balance
+          可用余额
 				</view>
 				<view class="right">
 					0 USDT
@@ -25,7 +25,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					Amount limits:
+          数量限制
 				</view>
 				<view class="right">
 					
@@ -33,7 +33,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					Minimum
+          最少可投
 				</view>
 				<view class="right">
 					1000 USDT
@@ -41,18 +41,18 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					Maximum
+          最大可投
 				</view>
 				<view class="right">
 					9999999 USDT
 				</view>
 			</view>
 			<view class="sub-title">
-				Summary
+        概览
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					Buy  Date  
+          购买日
 				</view>
 				<view class="right">
 					2023-03-15
@@ -60,7 +60,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					Value Date 
+          起息日
 				</view>
 				<view class="right">
 					2023-03-16
@@ -68,7 +68,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					Post Interest Date
+          派息时间
 				</view>
 				<view class="right">
 					Every day
@@ -76,7 +76,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					End Interest Date
+          预计今日收益
 				</view>
 				<view class="right">
 					2023-03-20

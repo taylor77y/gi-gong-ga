@@ -1581,7 +1581,7 @@ export default {
 		lc:{
 			hblc:'货币理财',
 			kclc:'矿池理财',
-			yjrsy:'预计日收益 (USDT)',
+			yjrsy:'预计日收益',
 			ljsy:'累计收益 (USDT)',
 			tgzzdd:'托管中总订单',
 			sylc:'所有理财',

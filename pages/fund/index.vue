@@ -6,20 +6,20 @@
 				{{i18n.tgje}}
 			</text>
 			<text class="amount-number">
-				0
+				{{purchasedFunds.toPrice}}
 			</text>
 			<view class="amount-list">
 				<view class="item">
 					<text class="title">{{i18n.yjrsy}}</text>
-					<text class="number">0</text>
+					<text class="number">{{purchasedFunds.dayPrice}}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.ljsy}}</text>
-					<text class="number">0</text>
+					<text class="number">{{purchasedFunds.addUpPrice}}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.tgdd}}</text>
-					<text class="number">0</text>
+					<text class="number">{{purchasedFunds.size}}</text>
 				</view>
 			</view>
 		</view>
@@ -28,23 +28,22 @@
 			<button class="btn ml-20" @tap="toPage('/pages/fund/fund-rule')">{{i18n.gz}}</button>
 		</view>
 		<view class="amount-card">
-			<view class="item" v-for="(item,index) in [0,1,2]" :key="index">
+			<view class="item" v-for="(item,index) in financialList" :key="index">
 				<view class="title">
-					3DEst. Interest9USDT
+				收益率:	{{item.dayRateFront}}% ~  {{item.dayRateBehind}}%
 				</view>
 				<view class="box">
-					<image src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png" class="img"></image>
+					<image :src="item.fundImage" class="img"></image>
 					<view class="content">
 						<view class="title">
-							Super computing power miner 3 days
+						{{	item.zhName}}
 						</view>
 						<view class="desc">
-							<text class="col">Yield 3</text>
-							<text class="col">Limit 0-0 USDT</text>
-							<text class="col">Cycle 3D</text>
+							<text class="col">限额{{item.investmentAmountFront}}--{{item.investmentAmountBehind}}USDT</text>
+							<text class="col">周期{{item.periodDay}}天</text>
 						</view>
 					</view>
-					<button type="primary" class="btn" @tap="buyButtonClick(item)">Experience now</button>
+					<button type="primary" class="btn" @tap="buyButtonClick(item)">立即买入</button>
 				</view>
 			</view>
 		</view>
@@ -55,7 +54,8 @@
 	export default {
 		data() {
 			return {
-
+        financialList:[],//理财列表
+        purchasedFunds:{},///获取用户购买基金统计信息
 			}
 		},
 		computed: {
@@ -63,15 +63,36 @@
 				return this.$t("machineIndex")
 			}
 		},
+    created(){
+      this.getFundProduct()
+      this.getCountFundOrderByUserId()
+    },
 		methods: {
+      //获取用户购买基金统计信息
+      getCountFundOrderByUserId(){
+        let id = uni.getStorageSync('userId') || 0;
+        this.$u.api.fundFinancing.getCountFundOrderByUserId(id).then(res=>{
+          if(res.status === 'SUCCEED'){
+            this.purchasedFunds = res.result
+          }
+        })
+      },
+      //获取理财
+      getFundProduct(){
+        this.$u.api.fundFinancing.getFundProduct().then(res=>{
+          if(res.status === 'SUCCEED'){
+            this.financialList = res.result
+          }
+        })
+      },
 			toPage(page) {
 				uni.navigateTo({
 					url: page
 				})
 			},
-			buyButtonClick() {
+			buyButtonClick(e) {
 				uni.navigateTo({
-					url: '/pages/fund/fund-buy'
+					url: `/pages/fund/fund-buy?id=${e.id}`
 				})
 			}
 		}
@@ -152,7 +173,7 @@
 					transform-origin: 0 0;
 					transform: scale(0.5, 0.5) translateZ(0);
 					box-sizing: border-box;
-					left: 0;
+					right: 0;
 					top: 0;
 					border-radius: 12rpx;
 					border: 0;
@@ -184,6 +205,7 @@
 				.box {
 					display: flex;
 					align-items: center;
+          justify-content: space-between;
 
 					.img {
 						width: 108rpx;
@@ -220,7 +242,7 @@
 						justify-content: center;
 						font-size: 28rpx;
 						line-height: 32rpx;
-						padding: 20rpx;
+						padding: 15rpx;
 						font-weight: 600;
 
 						// &::after {
