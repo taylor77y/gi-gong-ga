@@ -442,6 +442,7 @@ const install = (Vue, vm) => {
 		getSmartPoolProduct: () => vm.$u.get("/fund/smart_pool_product/getSmartPoolProduct"),
 		getCheckSmartPoolOrder:(productId) => vm.$u.get("/fund/smart_pool_product/getCheckSmartPoolOrder?productId="+productId),
 		setSmartPoolOrderPurchase:(params) => vm.$u.post(`/fund/smart_pool_product/setSmartPoolOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
+		getSmartPoolOrderByUserId: (userId,status=0) => vm.$u.get(`/fund/smart_pool_product/getSmartPoolOrderByUserId?userId=${userId}&status=${status}`),
 	}
 	vm.$u.api = {
 		common,

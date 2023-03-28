@@ -3,7 +3,8 @@
 		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
 			<view class="left" v-if="code === 0">
 				<image :src="baseUrl + '/symbol/'+item.symbol+'.png'" />
-				{{item.name}}
+				<!-- {{item.name}} -->
+				<text class="name">{{biNameFilter(item.name,0)}}<text class="small">{{biNameFilter(item.name,1)}}</text></text>
 			</view>
 			<view class="lefts" v-else>
 				<view class="b-name">
@@ -18,14 +19,17 @@
 				<view class="top">
 					{{item.close}}
 				</view>
-				<view class="money">
+<!-- 				<view class="money">
 					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
+				</view> -->
+				<view class="money">
+					$ {{Number(item.close).toFixed(2)}}
 				</view>
 			</view>
-			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
+<!-- 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
 				{{item.volume|SubString1(2)}}
-			</view>
-			<view v-else class="right" :class="item.change_ratio<0?'right1':''">
+			</view> -->
+			<view class="right" :class="item.change_ratio>0?'right1':''">
 				{{ item.change_ratio>0 ? '+' + item.change_ratio : item.change_ratio}} %
 			</view>
 		</view>
@@ -87,6 +91,13 @@
 			}
 		},
 		methods: {
+			biNameFilter(name,fix){
+				if(!name){
+					return ''
+				}
+				let arr = name.split('/')
+				return arr[fix]
+			},
 			sortList(){
 				if(this.tabIndex == 1){
 					this.renderList.sort((v1,v2)=>{
@@ -131,6 +142,10 @@
 						font-size: 32rpx;
 						color: #1F222B;
 						font-weight: bold;
+					}
+					.small{
+						font-size: 30rpx;
+						color: #ccc;
 					}
 
 					.b-btn {

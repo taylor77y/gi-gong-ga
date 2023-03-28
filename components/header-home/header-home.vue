@@ -72,7 +72,7 @@
 			async getContactLink(){
 				if (!this.contactLink) {
 					let res = await this.$u.api.kefu.getContactLink(1)
-					console.log('getContactLink', res)
+					// console.log('getContactLink', res)
 					this.contactLink = res?.result?.contactLink ?? this.contactLink
 				}
 			},

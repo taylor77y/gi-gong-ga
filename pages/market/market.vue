@@ -68,8 +68,8 @@
 			};
 		},
 		onLoad() {
-			// this.getCoinData()
-			this.getCoinQuotationList(this.nameDom,this.sot);
+			this.getCoinData()
+			// this.getCoinQuotationList(this.nameDom,this.sot);
 			
 		},
 		watch: {
@@ -101,7 +101,7 @@
              this.timer = setInterval(()=> {
 				// this.getMainCursList();
 				// this.getCoinQuotationList(this.nameDom,this.sot);
-				this.changeFour(this.currentFour)
+				// this.changeFour(this.currentFour)
 				this.getCoinData()
 			}, 5000);
 		},
@@ -112,7 +112,7 @@
 					if(res.result){
 						try{
 							let data = JSON.parse(res.result)
-							console.log('getCoinData-data',data.data)
+							// console.log('getCoinData-data',data.data)
 							if(data.code == 0){
 								this.coinList = data.data
 							}
@@ -140,20 +140,20 @@
       changeFour(e){
 		  this.tabIndex = e
         this.currentFour = e
-        switch (e) {
-          case 0:
-            this.getTabFour("HOT","SPOT");
-            break;
-          case 1:
-            this.getTabFour("updownDesc","CONTRACT");
-            break
-          case 2:
-            this.getTabFour("updownAsc","CONTRACT");
-            break;
-          case 3:
-            this.getTabFour("24","CONTRACT");
-            break;
-        }
+        // switch (e) {
+        //   case 0:
+        //     this.getTabFour("HOT","SPOT");
+        //     break;
+        //   case 1:
+        //     this.getTabFour("updownDesc","CONTRACT");
+        //     break
+        //   case 2:
+        //     this.getTabFour("updownAsc","CONTRACT");
+        //     break;
+        //   case 3:
+        //     this.getTabFour("24","CONTRACT");
+        //     break;
+        // }
       },
 			getMainCursList() {
 				this.$u.api.quato.getMainCurs().then(res => {
@@ -161,8 +161,10 @@
 				})
 			},
 			getCoinQuotationList(NAME_DOWN, SPOT) {
+				// console.log('请求了getCoinQuotationList',NAME_DOWN, SPOT)
 				this.sot = SPOT
 				this.$u.api.quato.getCoinQuotation(NAME_DOWN, SPOT).then(res => {
+					console.log('getCoinQuotation',res)
 					this.coinQuotations = res.result;
 					this.newcoinQuotations = res.result
 				})

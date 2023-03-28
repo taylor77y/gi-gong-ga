@@ -102,7 +102,14 @@
         <a href="#" style="text-decoration : none" v-if="isShow === 1" @tap='toRules(1)'>{{i18n.lc.gz}}</a>
         <a href="#" style="text-decoration : none" v-else @tap='toRules(-1)'>{{i18n.lc.gz}}</a>
       </view>
-      <financialList  :products="productsList"/>
+	  <!-- {{isShow}} -->
+	  <view class="financialList" v-show="isShow == 1">
+	  	<financialList :products="productsList" />
+	  </view>
+	  <view class="smartPool" v-show="isShow == 2">
+	  	<smartPool :list="smartPoolList"/>
+	  </view>
+      
 
     </view>
   </view>
@@ -110,9 +117,11 @@
 
 <script>
 import  financialList from '../components/financialList.vue'
+import  smartPool from '../components/smartPool.vue'
 export default {
   components: {
-    financialList
+    financialList,
+	smartPool
   },
   name: 'contract',
   props: {
@@ -124,10 +133,11 @@ export default {
   data() {
     return {
       productsList :[],//个人产品
-      isShow: null,//是否显示
+      isShow: 1,//是否显示
       isInput: false,//是否隐藏
       isPrimaryActive: true,
-      isSecondaryActive: false
+      isSecondaryActive: false,
+	  smartPoolList:[]
     }
   },
   computed:{
@@ -137,10 +147,21 @@ export default {
   },
   created() {
     this.getFundOrderByUserId()
+	this.getSmartPoolList()
   },
   mounted() {
   },
   methods: {
+	  async getSmartPoolList(){
+		let userId = uni.getStorageSync('userId')
+		if(!userId){
+			return
+		}
+		let res = await this.$u.api.machine.getSmartPoolOrderByUserId(userId,0)
+		if(res.status === 'SUCCEED'){
+			this.smartPoolList = res.result
+		}
+	  },
     // 用户的理财产品
     getFundOrderByUserId(){
        let  userId =  uni.getStorageSync('userId')

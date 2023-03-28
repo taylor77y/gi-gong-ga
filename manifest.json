@@ -1,6 +1,6 @@
 {
     "name" : "WooCloud",
-    "appid" : "__UNI__9A6BCB3",
+    "appid" : "__UNI__ED9969A",
     "description" : "测试",
     "versionName" : "0.8.1",
     "versionCode" : 81,
@@ -149,7 +149,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    "target" : "http://192.168.2.14/",
+                    "target" : "http://192.168.2.15/",
                     //                    "target" : "http://wap.mxoexchange.vip/",
                     "changeOrigin" : true,
                     "secure" : false,

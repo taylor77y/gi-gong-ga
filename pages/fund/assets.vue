@@ -61,6 +61,7 @@
 				clearInterval(this.timer);
 				this.timer = null;
 			}
+			
 			let member = uni.getStorageSync('userId') || '';
 			if(member) {
 				this.getUserInfo(member);

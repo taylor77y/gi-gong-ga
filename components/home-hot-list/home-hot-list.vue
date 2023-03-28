@@ -6,7 +6,7 @@
       <view class="like-list-item" v-for="(item, index) in list" :key="index" @click="goToDetail(item.name)">
         <view class="d-flex-between-center f-title">
           {{ item.name }}
-          <view :class="{'rate1': item.change_ratio > 0, 'rate': item.change_ratio <= 0}">
+          <view :class="{'rate1': item.change_ratio < 0, 'rate': item.change_ratio >= 0}">
           {{ getChangeRatio(item.change_ratio) }}</view></view>
         <view class="money">{{ item.close }}</view>
         <view class="equivalent">≈ {{ rateConfig.mark }} {{ item.close }}</view>

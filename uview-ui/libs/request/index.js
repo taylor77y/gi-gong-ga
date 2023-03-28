@@ -77,16 +77,20 @@ class Request {
 						]
 						if(!router.includes(routes)) {
 							if (response.data.errorCode === 'SYS.0015') {
-								uni.navigateTo({
-									url:'/pages/login/login'
-								})
-							  return
+								console.log('routes',routes)
+								if('pages/login/login' != routes){
+									uni.navigateTo({
+										url:'/pages/login/login'
+									})
+									return
+								}
 							}
-							if(response.errMsg) {
-								uni.showModal({
-									title: response.errMsg
-								});
-							}
+							// if(response.errMsg) {
+							// 	// console.log('进来了8899')
+							// 	uni.showModal({
+							// 		title: response.errMsg
+							// 	});
+							// }
 						}
 						reject(response)
 					}

@@ -177,7 +177,7 @@ const setTabbar = (that) => {
 			index:i,
 			text:nav[i],
 			fail(res) {
-				console.log(res);
+				// console.log(res);
 			}
 		})
 	}

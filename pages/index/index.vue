@@ -142,7 +142,7 @@
 		},
 
 		onLoad() {
-			uni.setStorageSync('ossUrl','http://oss.obk3.com/')
+			// uni.setStorageSync('ossUrl','http://oss.obk3.com/')
 			// this.getBList("UPDOWN");
 			// this.getFList("TOP");
 			this.getCoinData()
@@ -162,7 +162,7 @@
 				clearInterval(this.timer);
 				this.timer = null;
 			}
-		    console.log('我离开了 ')	
+		    // console.log('我离开了 ')	
 		},
 		onShow() {
 			// this.getNotice()
@@ -179,9 +179,10 @@
 					if(res.result){
 						try{
 							let data = JSON.parse(res.result)
-							console.log('getCoinData-data',data.data)
+							// console.log('getCoinData-data',data.data)
 							if(data.code == 0){
 								this.coinList = data.data
+								// console.log('this.coinList',this.coinList)
 								let arr = []
 								data.data.forEach(e=>{
 									if(e.name == 'BTC/USDT'){
@@ -234,7 +235,9 @@
 					this.noticeList = res.result
 				})
 			},
-			getCode(index) {
+			async getCode(index) {
+				// console.log('进来了')
+				// await this.getCoinData()
 				this.tabIndex = index
 				switch (index) {
 					case 0:
@@ -249,6 +252,7 @@
 					default:
 						break;
 				}
+				
 			},
 			//获取B的列表
 			getBList(currery) {

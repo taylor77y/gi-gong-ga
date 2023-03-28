@@ -5,7 +5,7 @@
 			<swiper-item class="cy-banner__item" v-for="(item, ind) of banner" :key="ind">
 				    <view class="image-wrap">
 						
-					    <image :src="require('../../static/image/fb.gif')" mode="widthFix" :lazy-load="true"></image>
+					    <image :src="require('../../static/image/home.gif')" mode="widthFix" :lazy-load="true"></image>
 					</view>
 			</swiper-item>
 		</swiper>
