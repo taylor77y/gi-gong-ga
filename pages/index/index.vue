@@ -41,7 +41,7 @@
 			<view class="money">{{ i18n.zxj }}</view>
 			<view class="right" @click="sort">
 				24h{{ i18n.zdf }}
-				<span class="caret-wrapper">
+				<span class="caret-wrapper" @click="changeAscend">
 					<u-icon name="arrow-up-fill" size="20" class="right-icon ascending" :class="{'actived-icon': isAscend === 1}"></u-icon>
 					<u-icon name="arrow-down-fill" size="20" class="right-icon descending" :class="{'actived-icon': isAscend === 2}"></u-icon>
 				</span>
@@ -147,7 +147,6 @@
 				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
 			};
 		},
-
 		onLoad() {
 			uni.setStorageSync('ossUrl','http://oss.obk3.com/')
 			// this.getBList("UPDOWN");
@@ -183,7 +182,12 @@
 			// 排序
 			sort() {
 				console.log(this.isRise)
-			},
+			
+			}
+			changeAscend() {
+				if(this.isAscend > 2) this.isAscend = 0;
+				else this.isAscend += 1;
+			}
 			getCoinData(){
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('getCoinData',res)
