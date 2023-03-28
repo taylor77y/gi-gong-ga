@@ -3,8 +3,8 @@
 		<header-home />
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
-<!--		<home-notice :notifications="noticeList" />-->
-		<home-application :list="application" style="margin-top: 50rpx"/>
+		<home-notice :notifications="noticeList" />
+		<home-application :list="application" />
 		<view style="display: flex;justify-content: space-between;">
 		<view class="f-buy" >
 			<view class="left" style="display: flex;">
@@ -39,7 +39,13 @@
 		<view class="list-title-box">
 			<view class="name">{{ i18n.mc }}</view>
 			<view class="money">{{ i18n.zxj }}</view>
-			<view class="right">24h{{ i18n.zdf }}</view>
+			<view class="right" @click="sort">
+				24h{{ i18n.zdf }}
+				<span class="caret-wrapper">
+					<u-icon name="arrow-up-fill" size="20" class="right-icon ascending" :class="{'actived-icon': isAscend === 1}"></u-icon>
+					<u-icon name="arrow-down-fill" size="20" class="right-icon descending" :class="{'actived-icon': isAscend === 2}"></u-icon>
+				</span>
+			</view>
 		</view>
 		<!-- <home-list :list="bList" :state="0" :curType="cur" /> -->
 		<home-list :list="coinList" :state="0" :curType="cur" :tabIndex="tabIndex" />
@@ -137,7 +143,8 @@
 				timer: null,
 				coinList:[],
 				coinListT:[],
-				tabIndex:0
+				tabIndex:0,
+				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
 			};
 		},
 
@@ -165,7 +172,7 @@
 		    console.log('我离开了 ')	
 		},
 		onShow() {
-			// this.getNotice()
+			this.getNotice()
 			this.timer = setInterval(() => {
 				// this.getBList(this.cur);
 				// this.getFList("TOP");
@@ -173,6 +180,10 @@
 			}, 5000);
 		},
 		methods: {
+			// 排序
+			sort() {
+				console.log(this.isRise)
+			},
 			getCoinData(){
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('getCoinData',res)
@@ -385,6 +396,34 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.caret-wrapper {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		height: 34px;
+		width: 24px;
+		vertical-align: middle;
+		cursor: pointer;
+		overflow: initial;
+		position: relative;
+		.right-icon {
+			width: 0;
+			height: 0;
+			border: 5px solid transparent;
+			position: absolute;
+			left: 7px;
+			border-top-color: #c0c4cc;
+		}
+		.descending {
+			bottom: 7px;
+		}
+		.ascending {
+			top: 5px;
+		}
+		.actived-icon {
+			border-bottom-color: #409eff;
+		}
+	}
 	.goods {
 		padding: 24rpx 0;
 
