@@ -76,7 +76,7 @@ export default {
 			border-bottom: 1rpx solid #F6F6F6;
 			.like-list-item {
 				padding: 20rpx;
-                background: #FAFAFA;
+                // background: #FAFAFA;
 				border-radius: 10rpx;
 				margin-right: 2%;
 				width: 32%;

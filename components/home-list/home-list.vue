@@ -23,7 +23,7 @@
 					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
 				</view> -->
 				<view class="money">
-					$ {{Number(item.close).toFixed(2)}}
+					${{Number(item.close).toFixed(2)}}
 				</view>
 			</view>
 <!-- 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
@@ -96,7 +96,7 @@
 					return ''
 				}
 				let arr = name.split('/')
-				return arr[fix]
+				return (fix==1?'/':'') + arr[fix]
 			},
 			sortList(){
 				if(this.tabIndex == 1){
@@ -131,6 +131,12 @@
 			border-bottom: 2rpx solid #F6F6F6;
 			padding: 32rpx 0;
 
+			.small{
+				font-size: 26rpx;
+				color: #868c9a;
+				font-weight: normal;
+			}
+			
 			.lefts {
 				width: 400rpx;
 
@@ -143,10 +149,7 @@
 						color: #1F222B;
 						font-weight: bold;
 					}
-					.small{
-						font-size: 30rpx;
-						color: #ccc;
-					}
+
 
 					.b-btn {
 						background: #F7F4FA;

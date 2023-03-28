@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import {u} from "caniuse-lite/data/browserVersions";
 
 export default {
   props: {
@@ -113,11 +112,7 @@ export default {
   },
   methods: {
     //投资
-    // getPortfolio(){
-    //   this.$u.api.wallet.getPortfolio().then(res=>{
-    //     console.info("🇨🇳🇨🇳:res --", res)
-    //   })
-    // },
+
     //钱包
     getBalances() {
       let member = uni.getStorageSync('userId') || 0

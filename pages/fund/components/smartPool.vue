@@ -8,7 +8,7 @@
 					数量 <text class="text">{{item.price}} </text>USDT
 				</view>
 				<view class="period">
-					周期  <text class="text">{{item.periodDay}}</text>
+					周期 <text class="text">{{item.periodDay}}</text>
 				</view>
 			</view>
 			<view class="income">
@@ -24,7 +24,7 @@
 					</view>
 				</view>
 				<view class="right">
-					>
+					<u-icon name="arrow-right" size="20"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -45,7 +45,9 @@
 		},
 		methods: {
 			toDetail(item) {
-
+				uni.navigateTo({
+					url: `/pages/fund/components/smartPoolDetail?data=${JSON.stringify(item)}`
+				})
 			}
 		}
 	}
@@ -53,6 +55,7 @@
 
 <style lang="scss" scoped>
 	.smart-pool {
+		margin-top: 40rpx;
 		padding: 10rpx 0;
 		padding-bottom: 100rpx;
 
@@ -76,19 +79,18 @@
 				padding-left: 20rpx;
 				color: #868c9a;
 
-				.text{
+				.text {
 					color: #333;
 					padding: 0 8rpx;
 				}
+
 				.title {
 					font-size: 28rpx;
 					font-weight: 600;
 					color: #333;
 				}
 
-				.number {
-					
-				}
+				.number {}
 
 				.period {}
 			}
@@ -98,15 +100,25 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				font-size: 28rpx;
+
 				.left {
+					margin-right: 30rpx;
 					display: flex;
 					flex-direction: column;
-					.number {}
 
-					.tip {}
+					.number {
+						font-size: 42rpx;
+						color: #2ebd85;
+					}
+
+					.tip {
+						margin-top: 10rpx;
+					}
 				}
 
 				.right {
+
 					color: #000;
 					font-size: 30rpx;
 				}

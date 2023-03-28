@@ -82,7 +82,6 @@
         this.$u.api.fundFinancing.getFundProduct().then(res=>{
           if(res.status === 'SUCCEED'){
             this.financialList = res.result
-            console.info("🇨🇳🇨🇳:列表 --",    this.financialList)
           }
         })
 

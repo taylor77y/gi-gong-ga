@@ -124,7 +124,7 @@
 		.search-input-box {
 			background: #F4F4F6;
 			border-radius: 32rpx;
-			padding: 0 30rpx;
+			padding: 0 20rpx;
 			margin-left: 20rpx;
 			margin-right: 20rpx;
 
@@ -133,10 +133,10 @@
 				align-items: center;
 
 				.search-input {
-					width: 460rpx;
-					height: 62rpx;
-					line-height: 62rpx;
-					font-size: 28rpx;
+					width: 494rpx;
+					height: 52rpx;
+					line-height: 52rpx;
+					font-size: 26rpx;
 					color: #666;
 					-webkit-touch-callout: none;
 					-webkit-user-select: none;
@@ -147,8 +147,8 @@
 					margin-right: 18rpx;
 
 					& image {
-						width: 36rpx;
-						height: 36rpx;
+						width: 26rpx;
+						height: 26rpx;
 					}
 				}
 			}

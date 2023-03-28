@@ -6,9 +6,9 @@
 			:list="assetsList" :is-scroll="false" :current="current" @change="change"></u-tabs>
         <view class="f-uid" v-show="current === 0 || current === 1" >UID: {{ list.uuid }}</view>
 		<view class="assets-box" >
-			 <overview v-show="current === 0" /> <!--overview-->
+			<overview v-show="current === 0" /> <!--overview-->
 			<spots v-show="current === 1" :cnyPrice="cnyPrice" :usdtPrice="usdtPrice" :balances="balances"/><!--spots-->
-      <contract v-show="current === 2 || current === 3" :current="current" /><!--contract-->
+			<contract v-show="current === 2 || current === 3" :current="current" /><!--contract-->
 		</view>
 		<tabar-com />
 	</view>

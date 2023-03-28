@@ -2,6 +2,7 @@
 //成功购买
 <template>
   <div class="container">
+    <xl-header title=""></xl-header>
     <div class="success-box">
       <div class="icon-box">
         <img src="../image/1.png" alt="Success Icon" />

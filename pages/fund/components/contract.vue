@@ -33,7 +33,7 @@
       </view>
       <view class="amount">
         <view class="money">
-          {{ isInput ? '******' : 0.00 | SubString(5) }}
+          {{ isInput ? '******' : purchasedFunds.toPrice | SubString(5) }}
         </view>
         <view class="zhehe">
           {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -51,7 +51,7 @@
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 0.00 | SubString(5) }}
+              {{ isInput ? '******' : purchasedFunds.dayPrice | SubString(5) }}
             </view>
             <view class="zhehe">
               {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -68,7 +68,7 @@
           </view>
           <view class="amount">
             <view class="money">
-              {{ isInput ? '******' : 0.00 | SubString(5) }}
+              {{ isInput ? '******' : purchasedFunds.addUpPrice | SubString(5) }}
             </view>
             <view class="zhehe">
               {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -87,7 +87,7 @@
         </view>
         <view class="amount" v-if="current === 2 && isShow === 1 || current === 3">
           <view class="money" style="color: #707070">
-            {{ isInput ? '******' : 0.00 | SubString(5) }}
+            {{ isInput ? '******' : purchasedFunds.size | SubString(5) }}
           </view>
           <view  style="color: #707070">
             {{ setRate.mark }}{{ isInput ? '******' : '≈HK $ 0.00 ' | SubString(5) }}
@@ -109,7 +109,6 @@
 	  <view class="smartPool" v-show="isShow == 2">
 	  	<smartPool :list="smartPoolList"/>
 	  </view>
-      
 
     </view>
   </view>
@@ -137,7 +136,8 @@ export default {
       isInput: false,//是否隐藏
       isPrimaryActive: true,
       isSecondaryActive: false,
-	  smartPoolList:[]
+	  smartPoolList:[],
+      purchasedFunds:{},// 理财总资产
     }
   },
   computed:{
@@ -146,6 +146,7 @@ export default {
     },
   },
   created() {
+    this.getPurchasedFunds()
     this.getFundOrderByUserId()
 	this.getSmartPoolList()
   },
@@ -163,6 +164,17 @@ export default {
 		}
 	  },
     // 用户的理财产品
+    //理财资产列表
+    getPurchasedFunds(){
+        let id = uni.getStorageSync('userId') || 0;
+        this.$u.api.fundFinancing.getCountFundOrderByUserId(id).then(res=>{
+          if(res.status === 'SUCCEED'){
+            this.purchasedFunds = res.result
+          }
+        })
+
+    },
+    // 用户的理财产品  理财列表
     getFundOrderByUserId(){
        let  userId =  uni.getStorageSync('userId')
        let   status = 0

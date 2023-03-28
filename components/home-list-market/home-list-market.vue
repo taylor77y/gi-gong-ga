@@ -3,7 +3,7 @@
 		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
 			<view class="left" v-if="code === 0">
 				<image :src="baseUrl + '/symbol/'+item.symbol+'.png'" />
-				{{item.name}}
+				<text class="name">{{biNameFilter(item.name,0)}}<text class="small">{{biNameFilter(item.name,1)}}</text></text>
 			</view>
 			<view class="lefts" v-else>
 				<view class="b-name">
@@ -19,7 +19,7 @@
 					{{item.close}}
 				</view>
 				<view class="money">
-					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
+					${{Number(item.close).toFixed(2)}}
 				</view>
 			</view>
 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
@@ -87,6 +87,13 @@
 			}
 		},
 		methods: {
+			biNameFilter(name,fix){
+				if(!name){
+					return ''
+				}
+				let arr = name.split('/')
+				return (fix==1?'/':'') + arr[fix]
+			},
 			sortList(){
 				if(this.tabIndex == 1){
 					this.renderList.sort((v1,v2)=>{
@@ -113,6 +120,11 @@
 
 <style lang="scss" scoped>
 	.home-list {
+		.small{
+			font-size: 26rpx;
+			color: #868c9a;
+			font-weight: normal;
+		}
 		.item {
 			display: flex;
 			align-items: center;

@@ -6,8 +6,10 @@ const install = (Vue, vm) => {
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/",
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.nvzyj.cn/",
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/",
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/",
 
@@ -29,8 +31,10 @@ const install = (Vue, vm) => {
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
 	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/")
+	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://www.nvzyj.cn/")
+	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/")
 	// 客服连接地址
 	uni.setStorageSync('wssURL', 'ws://wap.adbaa3011.cc/socket/im/')
 	// 图片拼接路径

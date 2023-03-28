@@ -3,23 +3,23 @@
 		<header-home />
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
-<!--		<home-notice :notifications="noticeList" />-->
-		<home-application :list="application" style="margin-top: 50rpx"/>
+		<home-notice :notifications="noticeList" />
+		<home-application :list="application" />
 		<view style="display: flex;justify-content: space-between;">
-		<view class="f-buy" >
+		<view class="f-buy h1" >
 			<view class="left" style="display: flex;">
 				<view class="title" style="width:80rpx;height: 80rpx">
-					<image src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
+					<image  src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
 				</view>
 				<view style="line-height: 80rpx;">
 					{{i18n.kauisuchongbi}}
 				</view>
 			</view>
 			<view class="right" @click="toF()">
-				<image src="../../static/image/home/2/13.png" />
+				<image class="icon" src="../../static/image/home/2/13.png" />
 			</view>
 		</view>
-		<view class="f-buy" >
+		<view class="f-buy h2" style="margin-left: 40rpx;">
 			<view class="left" style="display: flex;">
 				<view class="title" style="width:80rpx;height: 80rpx">
 					<image src="../../static/image/home/2/12.png" style="width: 100%;height: 100%;" />
@@ -29,7 +29,7 @@
 				</view>
 			</view>
 			<view class="right" @click="toWith()">
-				<image src="../../static/image/home/2/13.png" />
+				<image class="icon" src="../../static/image/home/2/13.png" />
 			</view>
 		</view>
 		</view>
@@ -39,7 +39,13 @@
 		<view class="list-title-box">
 			<view class="name">{{ i18n.mc }}</view>
 			<view class="money">{{ i18n.zxj }}</view>
-			<view class="right">24h{{ i18n.zdf }}</view>
+			<view class="right">
+				24h{{ i18n.zdf }}
+				<span class="caret-wrapper" @tap="changeAscend">
+					<u-icon name="arrow-down-fill" size="8" class="right-icon ascending" :class="{'actived-icon': isAscend === 1}"></u-icon>
+					<u-icon name="arrow-up-fill" size="8" class="right-icon descending" :class="{'actived-icon': isAscend === 2}"></u-icon>
+				</span>
+			</view>
 		</view>
 		<!-- <home-list :list="bList" :state="0" :curType="cur" /> -->
 		<home-list :list="coinList" :state="0" :curType="cur" :tabIndex="tabIndex" />
@@ -136,11 +142,12 @@
 				hasClickDown: false, //是否已经点击过下载,
 				timer: null,
 				coinList:[],
+				initCoinList:[],
 				coinListT:[],
-				tabIndex:0
+				tabIndex:0,
+				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
 			};
 		},
-
 		onLoad() {
 			// uni.setStorageSync('ossUrl','http://oss.obk3.com/')
 			// this.getBList("UPDOWN");
@@ -165,7 +172,7 @@
 		    // console.log('我离开了 ')	
 		},
 		onShow() {
-			// this.getNotice()
+			this.getNotice()
 			this.timer = setInterval(() => {
 				// this.getBList(this.cur);
 				// this.getFList("TOP");
@@ -173,15 +180,38 @@
 			}, 5000);
 		},
 		methods: {
+			// 排序
+			sort() {
+				//0恢复，1跌，2涨
+				if(this.tabIndex == 0){
+					if(this.isAscend == 1){
+						this.coinList.sort((v1,v2)=>{
+							return v1.change_ratio - v2.change_ratio
+						})
+					}else if(this.isAscend == 2){
+						this.coinList.sort((v1,v2)=>{
+							return v2.change_ratio - v1.change_ratio
+						})
+					}
+				}
+			},
+			changeAscend() {
+				if(this.isAscend > 2) this.isAscend = 0;
+				else this.isAscend += 1;
+				console.log('this.isAscend',this.isAscend)
+				this.sort()
+			},
 			getCoinData(){
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('getCoinData',res)
 					if(res.result){
 						try{
 							let data = JSON.parse(res.result)
-							// console.log('getCoinData-data',data.data)
+							console.log('getCoinData-data',data.data)
 							if(data.code == 0){
 								this.coinList = data.data
+								this.sort()
+								this.initCoinList = data.data
 								// console.log('this.coinList',this.coinList)
 								let arr = []
 								data.data.forEach(e=>{
@@ -218,7 +248,7 @@
 			},
 			//公告列表
 			getNotice() {
-				const index = uni.getStorageSync('lang') || 'en'
+				const index = uni.getStorageSync('lang') || 'zh'
 				const language = {
 					'zh': 'CHINESE_SIM',
 					'en': 'ENGLISH',
@@ -236,9 +266,10 @@
 				})
 			},
 			async getCode(index) {
-				// console.log('进来了')
+				
 				// await this.getCoinData()
 				this.tabIndex = index
+				// console.log('进来了',this.tabIndex)
 				switch (index) {
 					case 0:
 						this.getBList("UPDOWN");
@@ -319,11 +350,11 @@
 					 	title: this.i18n.application[3],
 					 	value: '/pages/fm-home/index'
 					 },
-					 {
-					 	img: '../../static/image/home/2/5.png',
-					 	title: this.i18n.application[4],
-					 	value: '/pages/fund/assets'
-					 },
+					 // {
+					 // 	img: '../../static/image/home/2/5.png',
+					 // 	title: this.i18n.application[4],
+					 // 	value: '/pages/fund/assets'
+					 // },
 					 {
 					 	img: '../../static/image/home/2/6.png',
 					 	title: this.i18n.application[5],
@@ -344,11 +375,11 @@
 					 	title: this.i18n.application[8],
 					 	value: '/pages/recharge/recharge-record?code=3'
 					 },
-					 {
-					 	img: '../../static/image/home/2/10.png',
-					 	title: this.i18n.application[9],
-					 	value: ''
-					 }
+					 // {
+					 // 	img: '../../static/image/home/2/10.png',
+					 // 	title: this.i18n.application[9],
+					 // 	value: ''
+					 // }
 				]
 			},
 			homeTitle() {
@@ -389,6 +420,36 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.caret-wrapper {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		height: 28rpx;
+		width: 28rpx;
+		vertical-align: middle;
+		cursor: pointer;
+		overflow: initial;
+		position: relative;
+		.right-icon {
+			width: 0;
+			height: 0;
+			border: 5px solid transparent;
+			position: absolute;
+			left: 7px;
+		}
+		::v-deep .u-icon__icon {
+			right: 6px;
+		}
+		.descending {
+			bottom: 7px;
+		}
+		.ascending {
+			top: 5px;
+		}
+		.actived-icon {
+			color: #409eff;
+		}
+	}
 	.goods {
 		padding: 24rpx 0;
 
@@ -484,6 +545,7 @@
 	}
 
 	.f-buy {
+		flex: 1;
 		background: linear-gradient(to right, #F6F6F6, #FBFBFB);
 		border-radius: 8rpx;
 		padding: 28rpx 40rpx;
@@ -491,9 +553,20 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-top: 40rpx;
-
+		
+		&.h1{
+			background-image: url("../../static/image/home/h.png");
+			background-size: cover;
+		}
+		
+		&.h2{
+			background-image: url("../../static/image/home/h2.png");
+			background-size: cover;
+		}
+			
 		.left {
-			color: #8D9099;
+			color: #333;
+			font-weight: 600;
 			font-size: 22rpx;
 
 			.title {
@@ -502,12 +575,22 @@
 				font-size: 28rpx;
 				margin-bottom: 10rpx;
 			}
+			
+			.icon{
+				width: 54rpx;
+				height: 54rpx;
+			}
 		}
 
 		.right {
 			& image {
 				width: 84rpx;
 				height: 92rpx;
+			}
+			
+			.icon{
+				width: 54rpx;
+				height: 54rpx;
 			}
 		}
 	}

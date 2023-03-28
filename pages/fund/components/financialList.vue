@@ -1,9 +1,9 @@
 //理财列表
 <template>
   <div class="financial-products-list">
-    <div v-for="product in products" :key="product.id" class="financial-product">
+    <div v-for="product in products" :key="product.id" class="financial-product" @click="toSell(product)">
       <div class="left-container">
-        <img :src="product.fund_image" alt="Product Image" class="product-image" style="width: 60rpx;height: 60rpx;margin: 0 10 rpx;  object-fit: cover;">
+        <img :src="product.fund_image" alt="Product Image" class="product-image" style="width: 80rpx;height: 80rpx;margin: 0 10 rpx;  object-fit: cover;">
         <div class="product-info">
           <div class="product-title">{{ product.name }}</div>
           <div class="product-details"><span style="color: #9A9CA9">数量</span> {{ product.price }} <span style="color: #9A9CA9">USDT</span></div>
@@ -29,7 +29,14 @@ export default {
   },
   data() {
     return {}
-  }
+  },
+  methods:{
+    toSell(e){
+      uni.navigateTo({
+        url:`/pages/fund/components/financialDetails?data=${JSON.stringify(e)}`
+      })
+    }
+  },
 }
 </script>
 
