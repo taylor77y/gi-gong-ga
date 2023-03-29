@@ -79,13 +79,13 @@
 			</view>
 			<view class="cell">
 				<div class="l">借款时间</div>
-				<div class="r">{{data.creationTime}}</div>
+				<div class="r">{{ dateFormat(data.creationTime)}}</div>
 			</view>
 			<view class="cell">
 				<div class="l">到期时间</div>
-				<div class="r">{{data.expireTime}}</div>
+				<div class="r">{{ dateFormat(data.expireTime)}}</div>
 			</view>
-			<view class="cell">
+			<view class="cell" @tap="toDetail()">
 				<div class="l link">质押记录</div>
 				<div class="r">
 					<u-icon name="arrow-right" color="#13d3eb" size="28"></u-icon>
@@ -104,6 +104,9 @@
 </template>
 
 <script>
+	import {
+		formatDate
+	} from "@/common/utils/dateFormat.js"
 	export default {
 		data() {
 			return {
@@ -115,6 +118,9 @@
 			console.log('this.data', this.data)
 		},
 		methods: {
+			dateFormat(time){
+				return formatDate(time)
+			},
 			statusFilter(status) {
 				if (status == 0) {
 					return '计息中'
@@ -123,6 +129,11 @@
 				} else if (status == 2) {
 					return '强平结清'
 				}
+			},
+			toDetail() {
+				uni.navigateTo({
+					url: '/pages/pledgeLoan/pledgeRecord?data=' + JSON.stringify(this.data.details)
+				})
 			},
 		}
 	}

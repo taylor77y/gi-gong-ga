@@ -71,7 +71,7 @@ function getDate(time) {
 	}
 }
 
-export function formatDate(date, format = 'yyyy-MM-dd hh:mm') {
+export function formatDate(date, format = 'yyyy-MM-dd hh:mm:ss') {
 	if (!date && date !== 0) {
 		return ''
 	}

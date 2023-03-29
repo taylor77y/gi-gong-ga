@@ -19,7 +19,7 @@
 							<view class="select" @click="showSelect = !showSelect">
 								<text class="text">{{selected}}</text>
 								<view class="down-icon">
-									<image src="../../static/image/k-line/6.png" />
+									<image :src="baseUrl + '/symbol/usdt.png'" />
 								</view>
 							</view>
 							<view v-show="showSelect" class="select-box1">
@@ -50,7 +50,7 @@
 							<view class="select" @click="showPledgeSelect = !showPledgeSelect">
 								<text class="text">{{chooseCoin.name}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/'+chooseCoin.name+'.png'" />
+									<image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
 								</view>
 							</view>
 						</view>
@@ -207,6 +207,10 @@
 			this.getMyCoinList()
 		},
 		methods: {
+			tolowerCase(name){
+				console.log('name',name)
+				return name
+			},
 			async getInfo() {
 				if (this.borrowPrice < 200) {
 					this.$utils.showToast('借币数量不能少于200')
