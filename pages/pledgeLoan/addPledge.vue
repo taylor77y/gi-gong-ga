@@ -21,7 +21,7 @@
 					</view>
 				</view>
 				<view class="money exchange-container">
-					可用余额：{{ablePledgePrice}} USDT
+					可用余额：{{ablePledgePrice}} {{pledgeName}}
 					<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 				</view>
 				<view class="cell">

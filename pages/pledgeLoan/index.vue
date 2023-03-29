@@ -15,11 +15,11 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/usdt.png'" />
 							<view class="select" @click="showSelect = !showSelect">
 								<text class="text">{{selected}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/usdt.png'" />
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 							<view v-show="showSelect" class="select-box1">
@@ -46,11 +46,12 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
 							<view class="select" @click="showPledgeSelect = !showPledgeSelect">
 								<text class="text">{{chooseCoin.name}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
+									<!-- <image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" /> -->
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 						</view>
@@ -414,7 +415,7 @@
 				.img-box {
 					width: 40rpx;
 					height: 40rpx;
-					background: #000;
+					// background: #000;
 					border-radius: 50%;
 					margin-right: 14rpx;
 					display: inline-block;
