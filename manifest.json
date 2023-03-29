@@ -149,8 +149,9 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-                    "target" : "http://192.168.2.15/",
-                    // "target" : "https://www.mxoexchange.com/",
+
+                    "target" : "http://192.168.2.15  /",
+                    //                    "target" : "http://wap.mxoexchange.vip/",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {

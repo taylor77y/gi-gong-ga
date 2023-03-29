@@ -136,9 +136,11 @@ const install = (Vue, vm) => {
 		//资金记录
 		getBalanceRecord: (member,pageNum,pageSize) => vm.$u.get(`/member/member/getBalanceRecord?pageNum=${pageNum}&pageSize=${pageSize}&member=${member}&type=`),
 		//提币
-		extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin?member=${params.member}&balance=${params.balance}&type=${params.type}&currency=${params.currency}&baId=${params.baId}`),
+		// extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin?member=${params.member}&balance=${params.balance}&type=${params.type}&currency=${params.currency}&baId=${params.baId}`),
+		extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin`,params),
 		//提币地址列表
-		getBillingAddressList: (member) => vm.$u.get(`/member/member/getBillingAddressList?member=${member}`),
+		// getBillingAddressList: (member) => vm.$u.get(`/member/member/getBillingAddressList?member=${member}`),
+		getBillingAddressList: (params) => vm.$u.get(`/member/member/getBillingAddressList`,params),
 		//添加提币地址
 		saveBillingAddress: (member,currency,address,currencyType) => vm.$u.post(`/member/member/saveBillingAddress?member=${member}&currency=${currency}&address=${address}&currencyType=${currencyType}`),
 		//修改提币地址

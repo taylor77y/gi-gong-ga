@@ -55,7 +55,7 @@
 				</view>
 				<view class="number-bottom">
 					<view><text>{{i18n.ky}}</text></view>
-					<view><text>{{memberObj.usdtPrice}}{{withdrawalName}}</text></view>
+					<view><text>{{availableBalance}}{{withdrawalName}}</text></view>
 				</view>
 			</view>
 
@@ -92,6 +92,8 @@
 	export default {
 		data() {
 			return {
+        withdrawalObj:null,//提币对象
+        availableBalance:0,//可用余额
         btnIndex:0,//按钮的默认
         memberObj:{},//传进来的对象
         withdrawalName:'USDT',//币的名称
@@ -121,20 +123,42 @@
 		},
 
     mounted() {
+    // this.withdraw_recording()
       try {
         this.memberObj = JSON.parse(this.$route.query.data) || {}
       } catch (e) {
         console.error(e);
       }
-
       //获取用户提款账单地址 // 判断客户是否有地址
-      let memberID = uni.getStorageSync('userId') || 0;
-      this.$u.api.user.getBillingAddressList(memberID).then(res => {}).catch(e => {
-        console.error(e);
-      });
+      // let obj = {
+      //   member: uni.getStorageSync('userId') || 0,
+      //   currency:'USDT'
+      // }
+      // this.$u.api.user.getBillingAddressList(obj).then(res => {
+      //   console.info("🇨🇳🇨🇳:res --", res)
+      // })
       this.getCurrencyList()//点击 提币列表保存费率
     },
 		methods: {
+      //提币记录
+      // withdraw_recording(){
+      //   let member = uni.getStorageSync('userId') || 0
+      //   this.$u.api.user.withdraw_recording(member).then(res => {
+      //     console.info("🇨🇳🇨🇳:提币记录 --",res)
+      //   })
+      // },
+      //获取可用钱包
+      getBalances() {
+        let member = uni.getStorageSync('userId') || 0
+        this.$u.api.user.getBalanceList(member).then(res => {
+          console.info("🇨🇳🇨🇳:钱包接口 --",res)
+          res.result.balances.forEach(e=>{
+            if(e.currency === this.withdrawalName){
+              this.availableBalance = e.assetsBalance
+            }
+          })
+        })
+      },
 
       //切换币名 更改绑定的币名 这个就是 区块链网络 三个按钮
       chainNameSwitching(e){
@@ -154,7 +178,6 @@
       //粘贴
       pasteClick() {
         navigator.clipboard.readText().then((text) => {
-          // 在此处可以使用文本变量来操作复制的内容
           this.addressInfo = text
         });
       },
@@ -170,11 +193,12 @@
       },
       //点击全部的币
       allBtn() {
-        this.numberInfo = this.memberObj.usdtPrice
+        this.numberInfo = this.availableBalance
       },
       //点击了 提币列表
       getCurrencyList(index){
         let key = 'usdt_extract_handling' //默认是usdt的手续费率. 需要请求接口换算
+        this. numberInfo = 1//提币1个
         switch (index) {
           case 0:
             this.withdrawalName = 'USDT';
@@ -200,6 +224,18 @@
             this.withdrawalRate = res.result.result.value  //保存费率
           }
         })
+        this.getBalances()//获取余额
+        //获取币地址
+        let obj = {
+          member: uni.getStorageSync('userId') || 0,
+          currency: this.btnList
+        }
+        this.$u.api.user.getBillingAddressList(obj).then(res => {
+          if(res.status === 'SUCCEED'){
+            this.withdrawalObj = res.result.result[0] || {}
+            console.info("🇨🇳🇨🇳:withdrawalObj --", this.withdrawalObj)
+          }
+        })
       },
 			back() {
 				uni.navigateBack(1)
@@ -212,15 +248,15 @@
       //提现
 			handleFn() {
         let params = {
-           type:1,
-           currency : this.withdrawalName,
-           chainName : this.chainName,
-           wallet:'0x6c20dCA0b80A04E457b7b6F22Ee4F8D7063A36B9',
-           balance:this.numberInfo,
-           // mccId:2,
-           member:uni.getStorageSync('userId'),
-            baId:100,
+          type: this.withdrawalObj.id ? 1 : 2, //类型 有提币地址是1 然后提币baId 是提币的id. 没有提币地址type是2 mccid 是2
+          currency: this.withdrawalName, //币种的名称
+          wallet: this.withdrawalObj.id ? this.withdrawalObj.address :this.addressInfo, //地址
+          balance: this.numberInfo,
+          member: uni.getStorageSync('userId'),
+          baId: this.withdrawalObj.id?.id || '', //提币ID
+          mccId: this.withdrawalObj.id ? '' : 2 //二选一 判断条件是 this.withdrawalObj 是否有值
         }
+
         this.$u.api.user.extractCoin(params).then(res=>{
           if(res.status === 'SUCCEED'){
             this.$utils.showToast(this.i18n.tbsqcg)

@@ -1403,8 +1403,7 @@
         },{
             "path" : "pages/fund/components/smartPoolDetail",
             "style" : {}
-        }
-        ,{
+        },{
             "path" : "pages/pledgeLoan/pledgeLoanOrderDetail",
             "style" :                                                                                    
             {

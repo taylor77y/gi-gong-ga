@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="right-container">
-        <div class="product-price">{{ product.price  || 0.00}}</div>
+        <div class="product-price" style="font-size: 40rpx">{{ product.price  || 0.00}}</div>
         <div class="product-earnings">累计收益(USDT)</div>
       </div>
     </div>
@@ -51,13 +51,13 @@ export default {
 .financial-product {
   background-color: #F6F6F6;
   width: 100%;
-  height: 200rpx;
+  height: 180rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10rpx;
   border-bottom: 1px solid #ddd;
-  margin-top: 10rpx;
+  margin: 15rpx 10rpx;
 }
 
 .left-container {
@@ -86,7 +86,6 @@ export default {
 .right-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .product-price {
