@@ -150,7 +150,7 @@
             "proxy" : {
                 "/api" : {
                     "target" : "http://192.168.2.15/",
-                                       // "target" : "https://www.mxoexchange.com/",
+                    // "target" : "https://www.mxoexchange.com/",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {

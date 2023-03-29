@@ -236,7 +236,7 @@ const store = new Vuex.Store({
 		// 汇率
 		setRate(state, rate) {
 			state.rate = rate
-			console.log('进来了',rate)
+			// console.log('进来了',rate)
 			uni.setStorageSync('rate',state.rate)
 		}
 		

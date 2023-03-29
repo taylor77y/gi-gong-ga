@@ -445,6 +445,13 @@ const install = (Vue, vm) => {
 		setSmartPoolOrderRedeem:(params) => vm.$u.post(`/fund/smart_pool_product/setSmartPoolOrderRedeem`,params,{ 'Content-Type': 'application/json' })
 	}
 	
+	const pledge = {
+		getFundOrderByUserId:(userId)=>vm.$u.get('/fund/pledge_order/getFundOrderByUserId?userId='+userId),
+		getLoanAmount:(borrowPrice,loanCycle,pledgePrice,pledgeName,userId)=>vm.$u.get(`/fund/pledge_order/getLoanAmount?borrowPrice=${borrowPrice}&loanCycle=${loanCycle}&pledgePrice=${pledgePrice}&pledgeName=${pledgeName}&userId=${userId}`),
+		setCheckFundOrder:(params)=>vm.$u.post(`/fund/pledge_order/setCheckFundOrder`,params,{ 'Content-Type': 'application/json' }),
+		getCountFundOrderByUserId:(userId)=>vm.$u.get('/fund/pledge_order/getCountFundOrderByUserId?userId='+userId),
+	}
+	
 	vm.$u.api = {
 		common,
 		user,
@@ -469,7 +476,8 @@ const install = (Vue, vm) => {
 		getContractorder,
 		contractNewInterface,
 		fundFinancing,
-		machine
+		machine,
+		pledge
 	};
 }
 export default {

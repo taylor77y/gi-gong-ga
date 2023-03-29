@@ -41,7 +41,7 @@
 			<view class="money">{{ i18n.zxj }}</view>
 			<view class="right">
 				24h{{ i18n.zdf }}
-				<span class="caret-wrapper" @tap="changeAscend">
+				<span class="caret-wrapper" @tap="changeAscend" v-show="tabIndex == 0">
 					<u-icon name="arrow-down-fill" size="8" class="right-icon ascending" :class="{'actived-icon': isAscend === 1}"></u-icon>
 					<u-icon name="arrow-up-fill" size="8" class="right-icon descending" :class="{'actived-icon': isAscend === 2}"></u-icon>
 				</span>
