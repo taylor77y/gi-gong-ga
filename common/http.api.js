@@ -452,6 +452,8 @@ const install = (Vue, vm) => {
 		getLoanAmount:(borrowPrice,loanCycle,pledgePrice,pledgeName,userId)=>vm.$u.get(`/fund/pledge_order/getLoanAmount?borrowPrice=${borrowPrice}&loanCycle=${loanCycle}&pledgePrice=${pledgePrice}&pledgeName=${pledgeName}&userId=${userId}`),
 		setCheckFundOrder:(params)=>vm.$u.post(`/fund/pledge_order/setCheckFundOrder`,params,{ 'Content-Type': 'application/json' }),
 		getCountFundOrderByUserId:(userId)=>vm.$u.get('/fund/pledge_order/getCountFundOrderByUserId?userId='+userId),
+		setFundOrderRedeem:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderRedeem`,params,{ 'Content-Type': 'application/json' }),
+		setFundOrderPurchase:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
 	}
 	
 	vm.$u.api = {

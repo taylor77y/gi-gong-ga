@@ -15,11 +15,11 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/usdt.png'" />
 							<view class="select" @click="showSelect = !showSelect">
 								<text class="text">{{selected}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/usdt.png'" />
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 							<view v-show="showSelect" class="select-box1">
@@ -46,11 +46,12 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
 							<view class="select" @click="showPledgeSelect = !showPledgeSelect">
 								<text class="text">{{chooseCoin.name}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
+									<!-- <image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" /> -->
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 						</view>
@@ -73,9 +74,11 @@
 							</view>
 						</view>
 					</view>
-					<view class="label">
+					<view class="label exchange-container">
 						{{i18n.kyye}}：
-						<span>-- {{chooseCoin.price}}</span>
+						<span v-if="chooseCoin.name">{{chooseCoin.price}} {{chooseCoin.name}}</span>
+						<span v-else>--</span>
+						<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 					</view>
 					<view class="mt-32">
 						<text class="loan-text mt-32">{{i18n.jbqx}}</text>
@@ -207,8 +210,16 @@
 			this.getMyCoinList()
 		},
 		methods: {
+			toExChange(){
+				uni.navigateTo({
+					url:'/pages/flashCash/index'
+				})
+			},
 			tolowerCase(name){
-				console.log('name',name)
+				if(name){
+					console.log('进来了',name)
+					return name.toLowerCase()
+				}
 				return name
 			},
 			async getInfo() {
@@ -284,6 +295,7 @@
 			chooseCoinHandler(coin) {
 				this.chooseCoin = coin
 				this.showPledgeSelect = false
+				this.getInfo()
 			},
 			async getMyCoinList() {
 				let userId = uni.getStorageSync('userId')
@@ -307,6 +319,7 @@
 			},
 			bindPickerChange(event) {
 				this.termIndex = event.detail.value
+				this.getInfo()
 			},
 			close() {},
 			open() {},
@@ -315,6 +328,18 @@
 </script>
 
 <style lang="scss" scoped>
+	
+	.exchange-container{
+		display: flex;
+		// justify-content: center;
+		align-items: center;
+	}
+	.exchange{
+		margin-left: 20rpx;
+		width: 26rpx;
+		height: 26rpx;
+	}
+	
 	.header {
 		height: 80rpx;
 		padding: 0 20rpx;
@@ -390,7 +415,7 @@
 				.img-box {
 					width: 40rpx;
 					height: 40rpx;
-					background: #000;
+					// background: #000;
 					border-radius: 50%;
 					margin-right: 14rpx;
 					display: inline-block;

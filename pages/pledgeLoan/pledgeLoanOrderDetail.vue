@@ -12,7 +12,7 @@
 				<view class="number">
 					{{ data.totalIncurDebts }} USDT
 				</view>
-				<view class="btn">
+				<view class="btn" @tap="toRePayMent()" v-show="data.status == 0">
 					还款
 				</view>
 			</view>
@@ -92,10 +92,10 @@
 				</div>
 			</view>
 			<view class="btn-container">
-				<view class="btn-add">
+				<view class="btn-add" @tap="addPledge()">
 					新增质押
 				</view>
-				<view class="btn-bro">
+				<view class="btn-bro" @tap="pledgeLoanRenew()">
 					续借
 				</view>
 			</view>
@@ -135,6 +135,21 @@
 					url: '/pages/pledgeLoan/pledgeRecord?data=' + JSON.stringify(this.data.details)
 				})
 			},
+			toRePayMent(){
+				uni.navigateTo({
+					url: '/pages/pledgeLoan/repayment?data=' + JSON.stringify(this.data)
+				})
+			},
+			addPledge(){
+				uni.navigateTo({
+					url: '/pages/pledgeLoan/addPledge?data=' + JSON.stringify(this.data)
+				})
+			},
+			pledgeLoanRenew(){
+				uni.navigateTo({
+					url: '/pages/pledgeLoan/pledgeLoanRenew?data=' + JSON.stringify(this.data)
+				})
+			}
 		}
 	}
 </script>

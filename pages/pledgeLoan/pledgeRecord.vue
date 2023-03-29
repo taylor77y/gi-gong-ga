@@ -2,7 +2,7 @@
 	<view class="page">
 		<xl-header title="质押记录" />
 		<view class="order-list">
-			<view class="item" v-for="(item,index) in list" :key="index" @tap="toDetail(item)">
+			<view class="item" v-for="(item,index) in list" :key="index">
 				<view class="top">
 					<view class="bro" :style="{color:item.type=='NEWPLEDGE'?'#13d3eb':''}">
 						{{filterType(item.type)}}
