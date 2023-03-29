@@ -30,7 +30,7 @@
 		<view class="amount-card">
 			<view class="item" v-for="(item,index) in productList" :key="index" @tap="toDetail(item)">
 				<view class="title">
-					{{item.periodDay}}天预期收益{{item.dayRate}}
+					{{item.periodDay}}{{ i18p.tyqsy }}{{item.dayRate}}
 				</view>
 				<view class="box">
 					<image src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png" class="img"></image>
@@ -39,12 +39,12 @@
 							{{ item.zhName}}
 						</view>
 						<view class="desc">
-							<text class="col">日收益率 {{item.dayRate}}</text>
-							<text class="col">限额 {{item.investmentAmountFront}} - {{item.investmentAmountBehind}} {{item.buyPairsName}}</text>
-							<text class="col">周期 {{item.periodDay}}</text>
+							<text class="col">{{i18n.rsyl}} {{item.dayRate}}</text>
+							<text class="col">{{i18p.xiane}} {{item.investmentAmountFront}} - {{item.investmentAmountBehind}} {{item.buyPairsName}}</text>
+							<text class="col">{{i18p.zhouqi}} {{item.periodDay}}</text>
 						</view>
 					</view>
-					<button type="primary" class="btn" @tap.stop="buyButtonClick(item.id)">立即租用</button>
+					<button type="primary" class="btn" @tap.stop="buyButtonClick(item.id)">{{i18p.ljzy}}</button>
 				</view>
 			</view>
 		</view>
@@ -62,6 +62,9 @@
 		computed: {
 			i18n() {
 				return this.$t("machineIndex")
+			}	,
+      i18p() {
+				return this.$t("miner")
 			}
 		},
 		onLoad() {

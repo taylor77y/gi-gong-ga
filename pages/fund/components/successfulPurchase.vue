@@ -7,18 +7,23 @@
       <div class="icon-box">
         <img src="../image/1.png" alt="Success Icon" />
       </div>
-      <h2>购买成功</h2>
-      <p>即日起可获得收益分成！</p>
+      <h2>{{i18n.goumaichenggong}}</h2>
+      <p>{{i18n.jrqkhdsyfc}}</p>
     </div>
     <div class="button-box">
 <!--      <button @click="viewOrder">查看订单</button>-->
-      <button @click="returnToTrading">返回交易</button>
+      <button @click="returnToTrading">{{i18n.fhjy}}</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  computed: {
+    i18n () {
+      return this.$t('financialManagement')
+    }
+  },
   methods: {
     viewOrder() {
       // TODO: 跳转到查看订单页面

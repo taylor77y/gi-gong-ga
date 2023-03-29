@@ -4,7 +4,7 @@
 
 		<view class="container">
 			<view class="title">
-				购买金额
+				{{i18n.gmje}}
 			</view>
 			<view class="input-container">
 				<input type="text" class="input" v-model="amount" placeholder="Enter amount"
@@ -13,12 +13,12 @@
 					USDT
 				</view>
 				<view class="all" @tap="amount = availableAmount">
-					全部
+					{{i18n.quanbu}}
 				</view>
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-					可用余额
+					{{i18n.kyye}}
 				</view>
 				<view class="right">
 					{{availableAmount}} USDT
@@ -26,7 +26,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					数量限制
+					{{i18n.slxz}}
 				</view>
 				<view class="right">
 
@@ -34,7 +34,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					最少可投
+				{{i18n.zskt}}
 				</view>
 				<view class="right">
 					{{order.min}} USDT
@@ -42,18 +42,18 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					最大可投
+					{{i18n.zdkt}}
 				</view>
 				<view class="right">
 					{{order.minx}} USDT
 				</view>
 			</view>
 			<view class="sub-title">
-				概览
+				{{i18n.gailan}}
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					购买日
+					{{i18n.gmr}}
 				</view>
 				<view class="right">
 					{{ toDay()}}
@@ -61,7 +61,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					起息日
+					{{i18n.qxr}}
 				</view>
 				<view class="right">
 					{{ amount ? toMoDay() : '--'}}
@@ -69,7 +69,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					派息时间
+					{{i18n.pxsj}}
 				</view>
 				<view class="right">
 					每天
@@ -77,13 +77,13 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-					预计今日收益
+				{{i18n.yjjrsy}}
 				</view>
 				<view class="right">
 					{{amount * order.todayRate}} USDT
 				</view>
 			</view>
-			<button class="buy-btn" type="primary" @tap="toBuyHandler()">购买</button>
+			<button class="buy-btn" type="primary" @tap="toBuyHandler()">{{i18n.goumai}}</button>
 		</view>
 	</view>
 </template>
@@ -107,6 +107,11 @@
 			let usdtBalance = uni.getStorageSync('usdtPrice');
 			this.availableAmount = usdtBalance
 		},
+    computed: {
+      i18n () {
+        return this.$t('miner')
+      }
+    },
 		methods: {
 			toDay() {
 				// return new Date()

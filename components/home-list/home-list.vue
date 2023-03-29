@@ -7,7 +7,7 @@
 					<text class="name">{{biNameFilter(item.name,0)}}<text
 							class="small">{{biNameFilter(item.name,1)}}</text></text>
 					<view class="amount">
-						成交量 {{item.amount}}
+						{{i18n.chenjiaoliang}} {{item.amount}}
 					</view>
 				</view>
 			</view>

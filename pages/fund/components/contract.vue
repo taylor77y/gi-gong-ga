@@ -104,7 +104,7 @@
       </view>
 	  <!-- {{isShow}} -->
 	  <view class="financialList" v-show="isShow == 1">
-	  	<financialList :products="productsList" />
+	  	<financialList :list="productsList" />
 	  </view>
 	  <view class="smartPool" v-show="isShow == 2">
 	  	<smartPool :list="smartPoolList"/>
@@ -230,7 +230,7 @@ export default {
   height: 100rpx;
   //background-color: red;
   .headBox {
-    margin-bottom: 200rpx;
+    margin-bottom: 30rpx;
     display: flex;
     align-items: center;
     justify-content: center;
