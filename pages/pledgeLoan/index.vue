@@ -12,7 +12,7 @@
 					<text class="loan-text">{{i18n.jk}}</text>
 					<view class="input-container">
 						<input v-model="borrowPrice" type="number" :placeholder="i18n.jksl"
-							placeholder-style="color:#878787;font-weight: 400;" class="input" />
+							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
 							<view class="img-box"></view>
@@ -43,7 +43,7 @@
 					<text class="loan-text">{{i18n.zy}}</text>
 					<view class="input-container">
 						<input v-model="pledgePrice" type="number" :placeholder="i18n.srzysl"
-							placeholder-style="color:#878787;font-weight: 400;" class="input" />
+							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
 							<view class="img-box"></view>
@@ -192,7 +192,7 @@
 				baseUrl: uni.getStorageSync('imgPath'),
 				borrowPrice: 0,
 				pledgePrice: 0,
-				detailInfo:{}
+				detailInfo: {}
 			}
 		},
 		computed: {
@@ -220,6 +220,14 @@
 					this.$utils.showToast('请选择质押币')
 					return false
 				}
+				if (this.pledgePrice > this.chooseCoin.price) {
+					this.$utils.showToast('超出可用余额')
+					
+					this.$nextTick(() => {
+					  this.pledgePrice = this.chooseCoin.price
+					})
+					return false
+				}
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
 					this.$utils.showToast('请登录')
@@ -234,35 +242,35 @@
 				}
 				return false
 			},
-			async buyBtnHanler(){
+			async buyBtnHanler() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
 					this.$utils.showToast('请登录')
 					return
 				}
 				let flag = await this.getInfo()
-				console.log('flag',flag)
-				if(!flag){
+				console.log('flag', flag)
+				if (!flag) {
 					// this.$utils.showToast('请先质押币')
 					return
 				}
 				let res = await this.$u.api.pledge.setCheckFundOrder({
-					memberId : userId,
-					borrowMoney : this.borrowPrice,
-					borrowName:'USDT',
-					pledgeMoney : this.pledgePrice,
-					pledgeName:this.chooseCoin.name,
+					memberId: userId,
+					borrowMoney: this.borrowPrice,
+					borrowName: 'USDT',
+					pledgeMoney: this.pledgePrice,
+					pledgeName: this.chooseCoin.name,
 					deadline: this.termList[this.termIndex],
-					forcePrice : this.detailInfo.forcePrice,
-					pledgeRate : this.detailInfo.pledgeRate,
-					hrRate : this.detailInfo.hrRate,
+					forcePrice: this.detailInfo.forcePrice,
+					pledgeRate: this.detailInfo.pledgeRate,
+					hrRate: this.detailInfo.hrRate,
 					dayRate: this.detailInfo.dayRate,
 					totalMoney: this.detailInfo.totalMoney,
 					predictRefundMoney: this.detailInfo.predictRefundMoney
 				})
 				if (res.status == "SUCCEED") {
 					this.$utils.showToast('借币成功')
-				}else{
+				} else {
 					this.$utils.showToast(res.errorMessage)
 				}
 			},

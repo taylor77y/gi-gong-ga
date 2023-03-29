@@ -1413,6 +1413,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/pledgeLoan/pledgeRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationStyle": "custom",

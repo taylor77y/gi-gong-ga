@@ -44,7 +44,7 @@
         <image
           class="icon_5"
           referrerpolicy="no-referrer"
-          src="/static/lanhu_jinxingrenzheng_1/psi4v85cvcgg51otbwmoxr6fj4l9v99rd9e5322bd8-1ff4-49c5-a90c-e39fec5659cd.png"
+          src="/static/lanhu_jinxingrenzheng_1/psi4v85cvcgg51otbwmxor6fj4l9v99rd9e5322bd8-1ff4-49c5-a90c-e39fec5659cd.png"
         />
         <text class="text-group_3">{{i18n.rlsb}}</text>
       </view> -->
