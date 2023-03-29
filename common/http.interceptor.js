@@ -5,9 +5,12 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
+		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/",
-		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.nvzyj.cn/",
+
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.nvzyj.cn/",
+
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/",
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/",
@@ -29,9 +32,14 @@ const install = (Vue, vm) => {
 	 // 上传图片路径
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
+	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/")
-	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.nvzyj.cn/")
+
+	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.nvzyj.cn/")
+
+	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://www.nvzyj.cn/")
+
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/")
 	// 客服连接地址
 	uni.setStorageSync('wssURL', 'ws://wap.adbaa3011.cc/socket/im/')
@@ -49,8 +57,8 @@ const install = (Vue, vm) => {
 		// config.data['lang'] = lang
 		let token = uni.getStorageSync('token');
 		let userId = uni.getStorageSync('userId');
-		config.header['token'] = uni.getStorageSync('token');
-		config.header['userId'] = uni.getStorageSync('userId')
+		config.header['token'] = token
+		config.header['userId'] = userId
 		if (!config.header['Content-Type']) config.header['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
 
 
@@ -72,12 +80,14 @@ const install = (Vue, vm) => {
 	}
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		const code = res.errorCode
-		const errorMessage = res.errorMessage;
-		switch (code) {
-		    case '0':
-		        break;
-		    case 'SYS.0015':
+		// console.log('来咯',res)
+		return res
+		// const code = res.errorCode
+		// const errorMessage = res.errorMessage;
+		// switch (code) {
+		//     case '0':
+		//         break;
+		//     case 'SYS.0015':
 			// vm.$store.commit('deleteUser')
 			// uni.clearStorageSync();
 			// setTimeout(()=>{
@@ -85,15 +95,15 @@ const install = (Vue, vm) => {
 			// 		url:'/pages/login/login'
 			// 	})
 			// },1200)
-			const jump = uni.getStorageSync('jump')
-			if (!jump) {
+			// const jump = uni.getStorageSync('jump')
+			// if (!jump) {
 				// setTimeout(()=>{
 				// 	uni.navigateTo({
 				// 		url:'/pages/login/login'
 				// 	})
 				// },2000)
-			}
-			uni.getStorageSync('jump', 'true')
+			// }
+			// uni.getStorageSync('jump', 'true')
 		       //  if (errorMessage != '密码有误') { //修改用户支付密码报这个错
 				    	// vm.$store.commit('deleteUser')
 				    	// setTimeout(()=>{
@@ -103,9 +113,9 @@ const install = (Vue, vm) => {
 				    	// },1200)
 
 		       //  }
-		        break;
-		}
-		return res;
+		        // break;
+		// }
+		// return res;
 		// 如果把originalData设置为了true，这里得到将会是服务器返回的所有的原始数据
 		// 判断可能变成了res.statueCode，或者res.data.code之类的，请打印查看结果
 		// res = JSON.parse(res)

@@ -3,35 +3,35 @@
 		<header-home />
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
-<!--		<home-notice :notifications="noticeList" />-->
-		<home-application :list="application" style="margin-top: 50rpx"/>
+		<home-notice :notifications="noticeList" v-show="noticeList && noticeList.length>0" />
+		<home-application :list="application" />
 		<view style="display: flex;justify-content: space-between;">
-		<view class="f-buy" >
-			<view class="left" style="display: flex;">
-				<view class="title" style="width:80rpx;height: 80rpx">
-					<image src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
+			<view class="f-buy h1">
+				<view class="left" style="display: flex;">
+					<view class="title" style="width:80rpx;height: 80rpx">
+						<image src="../../static/image/home/2/11.png" style="width: 100%;height: 100%;" />
+					</view>
+					<view style="line-height: 80rpx;">
+						{{i18n.kauisuchongbi}}
+					</view>
 				</view>
-				<view style="line-height: 80rpx;">
-					{{i18n.kauisuchongbi}}
-				</view>
-			</view>
-			<view class="right" @click="toF()">
-				<image src="../../static/image/home/2/13.png" />
-			</view>
-		</view>
-		<view class="f-buy" >
-			<view class="left" style="display: flex;">
-				<view class="title" style="width:80rpx;height: 80rpx">
-					<image src="../../static/image/home/2/12.png" style="width: 100%;height: 100%;" />
-				</view>
-				<view style="line-height: 80rpx;">
-					{{i18n.kuaisutibi}}
+				<view class="right" @click="toF()">
+					<image class="icon" src="../../static/image/home/2/13.png" />
 				</view>
 			</view>
-			<view class="right" @click="toWith()">
-				<image src="../../static/image/home/2/13.png" />
+			<view class="f-buy h2" style="margin-left: 40rpx;">
+				<view class="left" style="display: flex;">
+					<view class="title" style="width:80rpx;height: 80rpx">
+						<image src="../../static/image/home/2/12.png" style="width: 100%;height: 100%;" />
+					</view>
+					<view style="line-height: 80rpx;">
+						{{i18n.kuaisutibi}}
+					</view>
+				</view>
+				<view class="right" @click="toWith()">
+					<image class="icon" src="../../static/image/home/2/13.png" />
+				</view>
 			</view>
-		</view>
 		</view>
 		<!-- <home-hot-list :list="fList" /> -->
 		<home-hot-list :list="coinListT" />
@@ -39,10 +39,19 @@
 		<view class="list-title-box">
 			<view class="name">{{ i18n.mc }}</view>
 			<view class="money">{{ i18n.zxj }}</view>
-			<view class="right">24h{{ i18n.zdf }}</view>
+			<view class="right">
+				<text v-if="tabIndex == 3">{{ i18n.cje }}</text>
+				<text v-else>24h{{ i18n.zdf }}</text>
+				<span class="caret-wrapper" @tap="changeAscend">
+					<u-icon name="arrow-down-fill" size="8" class="right-icon ascending"
+						:class="{'actived-icon': isAscend === 1}"></u-icon>
+					<u-icon name="arrow-up-fill" size="8" class="right-icon descending"
+						:class="{'actived-icon': isAscend === 2}"></u-icon>
+				</span>
+			</view>
 		</view>
 		<!-- <home-list :list="bList" :state="0" :curType="cur" /> -->
-		<home-list :list="coinList" :state="0" :curType="cur" :tabIndex="tabIndex" />
+		<home-list :list="coinList" :state="0" :curType="cur" :tabIndex="tabIndex" :isAscend="isAscend" />
 		<!-- <view class="find-box">
 			<view class="left">
 				<find-title :list="findTitle" />
@@ -119,13 +128,7 @@
 				cur: "UPDOWN",
 				bList: [],
 				fList: [],
-				noticeList: [{
-						title: '测试111的撒大大叔大婶大婶大婶大婶大婶大婶大婶大婶大婶大婶大婶大婶大婶1'
-					},
-					{
-						title: '测试2222'
-					}
-				],
+				noticeList: [],
 				lang: '',
 				swiper: [],
 				activeHighQualityProject: 0,
@@ -135,14 +138,15 @@
 				showDownload: true,
 				hasClickDown: false, //是否已经点击过下载,
 				timer: null,
-				coinList:[],
-				coinListT:[],
-				tabIndex:0
+				coinList: [],
+				initCoinList: [],
+				coinListT: [],
+				tabIndex: 0,
+				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
 			};
 		},
-
 		onLoad() {
-			uni.setStorageSync('ossUrl','http://oss.obk3.com/')
+			// uni.setStorageSync('ossUrl','http://oss.obk3.com/')
 			// this.getBList("UPDOWN");
 			// this.getFList("TOP");
 			this.getCoinData()
@@ -150,7 +154,7 @@
 				title: this.$store.state.site_name
 			})
 			this.getHY()
-			
+
 			// #ifdef APP-PLUS
 			//检查更新
 			this.checkUpdate()
@@ -162,10 +166,10 @@
 				clearInterval(this.timer);
 				this.timer = null;
 			}
-		    console.log('我离开了 ')	
+			// console.log('我离开了 ')	
 		},
 		onShow() {
-			// this.getNotice()
+			this.getNotice()
 			this.timer = setInterval(() => {
 				// this.getBList(this.cur);
 				// this.getFList("TOP");
@@ -173,51 +177,112 @@
 			}, 5000);
 		},
 		methods: {
-			getCoinData(){
+			changeAscend() {
+				if (this.isAscend > 2) this.isAscend = 0;
+				else this.isAscend += 1;
+				console.log('this.isAscend', this.isAscend)
+				this.sortList(this.coinList)
+			},
+			sortList(list) {
+				this.coinList = []
+				if (this.tabIndex == 0) {
+					if (this.isAscend == 1) {
+						list.sort((v1, v2) => {
+							return v1.change_ratio - v2.change_ratio
+						})
+					} else if (this.isAscend == 2) {
+						list.sort((v1, v2) => {
+							return v2.change_ratio - v1.change_ratio
+						})
+					}
+				} else if (this.tabIndex == 1) {
+					if (this.isAscend == 1) {
+						list.sort((v1, v2) => {
+							return v1.change_ratio - v2.change_ratio
+						})
+					} else if (this.isAscend == 2) {
+						list.sort((v1, v2) => {
+							return v2.change_ratio - v1.change_ratio
+						})
+					} else {
+						list.sort((v1, v2) => {
+							return v2.change_ratio - v1.change_ratio
+						})
+					}
+				} else if (this.tabIndex == 2) {
+					if (this.isAscend == 1) {
+						list.sort((v1, v2) => {
+							return v1.change_ratio - v2.change_ratio
+						})
+					} else if (this.isAscend == 2) {
+						list.sort((v1, v2) => {
+							return v2.change_ratio - v1.change_ratio
+						})
+					} else {
+						list.sort((v1, v2) => {
+							return v1.change_ratio - v2.change_ratio
+						})
+					}
+				} else if (this.tabIndex == 3) {
+					if (this.isAscend == 1) {
+						list.sort((v1, v2) => {
+							return v1.volume - v2.volume
+						})
+					} else if (this.isAscend == 2) {
+						list.sort((v1, v2) => {
+							return v2.volume - v1.volume
+						})
+					} else {
+						list.sort((v1, v2) => {
+							return v2.volume - v1.volume
+						})
+					}
+				}
+				this.coinList = list.slice(0, 10)
+			},
+			getCoinData() {
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('getCoinData',res)
-					if(res.result){
-						try{
-							let data = JSON.parse(res.result)
-							console.log('getCoinData-data',data.data)
-							if(data.code == 0){
-								this.coinList = data.data
-								let arr = []
-								data.data.forEach(e=>{
-									if(e.name == 'BTC/USDT'){
-										arr[0] = e
-									}else if(e.name == 'ETH/USDT'){
-										arr[1] = e
-									}else if(e.name == 'ETC/USDT'){
-										arr[2] = e
-									}
-								})
-								this.coinListT = arr
-							}
-						}catch(e){
-							
+					if (res.status == 'SUCCEED') {
+						try {
+							this.sortList(res.result)
+							this.initCoinList = data.data
+							// console.log('this.coinList',this.coinList)
+							let arr = []
+							data.data.forEach(e => {
+								if (e.name == 'BTC/USDT') {
+									arr[0] = e
+								} else if (e.name == 'ETH/USDT') {
+									arr[1] = e
+								} else if (e.name == 'ETC/USDT') {
+									arr[2] = e
+								}
+							})
+							this.coinListT = arr
+						} catch (e) {
+
 						}
 					}
 				})
 			},
-			getHY(){
-				this.$u.api.fack.getCurrencyConfiguration().then(res=>{
+			getHY() {
+				this.$u.api.fack.getCurrencyConfiguration().then(res => {
 					this.$store.commit('setRate', res.result[0])
 				})
 			},
-			toF(){
+			toF() {
 				uni.navigateTo({
-					url:'/pages/recharge/rechargeList'
+					url: '/pages/recharge/rechargeList'
 				})
 			},
 			toWith() {
 				uni.navigateTo({
-					url:'/pages/withDraw/withDraw'
+					url: '/pages/withDraw/withDraw'
 				})
 			},
 			//公告列表
 			getNotice() {
-				const index = uni.getStorageSync('lang') || 'en'
+				const index = uni.getStorageSync('lang') || 'zh'
 				const language = {
 					'zh': 'CHINESE_SIM',
 					'en': 'ENGLISH',
@@ -234,8 +299,13 @@
 					this.noticeList = res.result
 				})
 			},
-			getCode(index) {
+			async getCode(index) {
+
+				// await this.getCoinData()
 				this.tabIndex = index
+				this.isAscend = 0
+				this.sortList(this.coinList)
+				// console.log('进来了',this.tabIndex)
 				switch (index) {
 					case 0:
 						this.getBList("UPDOWN");
@@ -249,6 +319,7 @@
 					default:
 						break;
 				}
+
 			},
 			//获取B的列表
 			getBList(currery) {
@@ -294,66 +365,65 @@
 				]
 			},
 			application() {
-				return [
-					 {
-					 	img: '../../static/image/home/2/1.png',
-					 	title: this.i18n.application[0],
-					 	value: '/pages/flashCash/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/2.png',
-					 	title: this.i18n.application[1],
-					 	value: '/pages/wantBuy/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/3.png',
-					 	title: this.i18n.application[2],
-					 	value: '/pages/trendDetails/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/4.png',
-					 	title: this.i18n.application[3],
-					 	value: '/pages/fm-home/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/5.png',
-					 	title: this.i18n.application[4],
-					 	value: '/pages/fund/assets'
-					 },
-					 {
-					 	img: '../../static/image/home/2/6.png',
-					 	title: this.i18n.application[5],
-					 	value: '/pages/fund/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/7.png',
-					 	title:this.i18n.application[6],
-					 	value: '/pages/machine/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/8.png',
-					 	title:this.i18n.application[7],
-					 	value: '/pages/pledgeLoan/index'
-					 },
-					 {
-					 	img: '../../static/image/home/2/9.png',
-					 	title: this.i18n.application[8],
-					 	value: '/pages/recharge/recharge-record?code=3'
-					 },
-					 {
-					 	img: '../../static/image/home/2/10.png',
-					 	title: this.i18n.application[9],
-					 	value: ''
-					 }
+				return [{
+						img: '../../static/image/home/2/1.png',
+						title: this.i18n.application[0],
+						value: '/pages/flashCash/index'
+					},
+					{
+						img: '../../static/image/home/2/2.png',
+						title: this.i18n.application[1],
+						value: '/pages/wantBuy/index'
+					},
+					{
+						img: '../../static/image/home/2/3.png',
+						title: this.i18n.application[2],
+						value: '/pages/trendDetails/index'
+					},
+					{
+						img: '../../static/image/home/2/4.png',
+						title: this.i18n.application[3],
+						value: '/pages/fm-home/index'
+					},
+					// {
+					// 	img: '../../static/image/home/2/5.png',
+					// 	title: this.i18n.application[4],
+					// 	value: '/pages/fund/assets'
+					// },
+					{
+						img: '../../static/image/home/2/6.png',
+						title: this.i18n.application[5],
+						value: '/pages/fund/index'
+					},
+					{
+						img: '../../static/image/home/2/7.png',
+						title: this.i18n.application[6],
+						value: '/pages/machine/index'
+					},
+					{
+						img: '../../static/image/home/2/8.png',
+						title: this.i18n.application[7],
+						value: '/pages/pledgeLoan/index'
+					},
+					{
+						img: '../../static/image/home/2/9.png',
+						title: this.i18n.application[8],
+						value: '/pages/recharge/recharge-record?code=3'
+					},
+					// {
+					// 	img: '../../static/image/home/2/10.png',
+					// 	title: this.i18n.application[9],
+					// 	value: ''
+					// }
 				]
 			},
 			homeTitle() {
 				return [
-				 	this.i18n2.tagBtnFour[0].name,
-					 this.i18n2.tagBtnFour[1].name,
-					 this.i18n2.tagBtnFour[2].name,
-					 this.i18n2.tagBtnFour[3].name
-				 ]
+					this.i18n2.tagBtnFour[0].name,
+					this.i18n2.tagBtnFour[1].name,
+					this.i18n2.tagBtnFour[2].name,
+					this.i18n2.tagBtnFour[3].name
+				]
 				// return [
 				// 	'自选', '热门', '新币上线', '涨幅榜', '跌幅榜'
 				// ]
@@ -385,6 +455,42 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.caret-wrapper {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		height: 28rpx;
+		width: 28rpx;
+		vertical-align: middle;
+		cursor: pointer;
+		overflow: initial;
+		position: relative;
+
+		.right-icon {
+			width: 0;
+			height: 0;
+			border: 5px solid transparent;
+			position: absolute;
+			left: 7px;
+		}
+
+		::v-deep .u-icon__icon {
+			right: 6px;
+		}
+
+		.descending {
+			bottom: 7px;
+		}
+
+		.ascending {
+			top: 5px;
+		}
+
+		.actived-icon {
+			color: #409eff;
+		}
+	}
+
 	.goods {
 		padding: 24rpx 0;
 
@@ -480,6 +586,7 @@
 	}
 
 	.f-buy {
+		flex: 1;
 		background: linear-gradient(to right, #F6F6F6, #FBFBFB);
 		border-radius: 8rpx;
 		padding: 28rpx 40rpx;
@@ -488,8 +595,19 @@
 		align-items: center;
 		margin-top: 40rpx;
 
+		&.h1 {
+			background-image: url("../../static/image/home/h.png");
+			background-size: cover;
+		}
+
+		&.h2 {
+			background-image: url("../../static/image/home/h2.png");
+			background-size: cover;
+		}
+
 		.left {
-			color: #8D9099;
+			color: #333;
+			font-weight: 600;
 			font-size: 22rpx;
 
 			.title {
@@ -498,12 +616,22 @@
 				font-size: 28rpx;
 				margin-bottom: 10rpx;
 			}
+
+			.icon {
+				width: 54rpx;
+				height: 54rpx;
+			}
 		}
 
 		.right {
 			& image {
 				width: 84rpx;
 				height: 92rpx;
+			}
+
+			.icon {
+				width: 54rpx;
+				height: 54rpx;
 			}
 		}
 	}

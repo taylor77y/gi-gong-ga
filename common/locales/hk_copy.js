@@ -1,5 +1,5 @@
 export default {
-	nav: ['首頁', '行情', '交易', '金融', '資產'],
+	nav: ['首頁', '市场', '交易', '金融', '資產'],
 	common: {
 		search: '搜索',
 		confirm: "確定",

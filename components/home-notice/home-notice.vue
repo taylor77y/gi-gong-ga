@@ -1,6 +1,6 @@
 <template>
 	<view class="notice-box">
-		<image class="icon" mode="widthFix" src="../../static/image/home/7.png"></image>
+		<image class="icon" mode="widthFix" src="../../static/image/home/notice.png"></image>
 		<swiper class="text" :vertical="true" :autoplay="true" :interval="5000" :duration="500" :circular="true">
 			<swiper-item v-for="(item, not) of notifications" :key="not">
 				<view class="swiper-item">
@@ -8,7 +8,7 @@
 				</view>
 			</swiper-item>
 		</swiper>
-		
+		<image class="icon" mode="widthFix" src="../../static/image/home/notice_list.png"></image>
 	</view>
 </template>
 
@@ -43,7 +43,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 18rpx 16rpx;
+		// padding: 18rpx 16rpx;
 		position: relative;
 		// background: rgba(220, 221, 221, .4);
 		background: #fff;
@@ -53,13 +53,13 @@
 		border-radius: 8rpx;
 
 		.icon {
-			width: 50rpx;
-			
+			width: 36rpx;
 		}
 
 		.text {
 			flex: 1;
 			height: 40rpx;
+			padding-left: 4rpx;
 
 			swiper-item {
 				display: flex;

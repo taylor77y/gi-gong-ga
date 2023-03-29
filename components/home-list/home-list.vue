@@ -3,7 +3,13 @@
 		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
 			<view class="left" v-if="code === 0">
 				<image :src="baseUrl + '/symbol/'+item.symbol+'.png'" />
-				{{item.name}}
+				<view class="num-text">
+					<text class="name">{{biNameFilter(item.name,0)}}<text
+							class="small">{{biNameFilter(item.name,1)}}</text></text>
+					<view class="amount">
+						成交量 {{item.amount}}
+					</view>
+				</view>
 			</view>
 			<view class="lefts" v-else>
 				<view class="b-name">
@@ -18,14 +24,20 @@
 				<view class="top">
 					{{item.close}}
 				</view>
-				<view class="money">
+				<!-- 				<view class="money">
 					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
+				</view> -->
+				<view class="money">
+					${{Number(item.close).toFixed(2)}}
 				</view>
 			</view>
-			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
+			<!-- 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
 				{{item.volume|SubString1(2)}}
+			</view> -->
+			<view class="cje" v-if="tabIndex == 3">
+				{{Number((item.volume || 0)).toFixed(2)}}
 			</view>
-			<view v-else class="right" :class="item.change_ratio<0?'right1':''">
+			<view class="right" :class="item.change_ratio>0?'right1':''" v-else>
 				{{ item.change_ratio>0 ? '+' + item.change_ratio : item.change_ratio}} %
 			</view>
 		</view>
@@ -59,17 +71,18 @@
 			},
 			tabIndex: {
 				type: Number
+			},
+			isAscend: {
+				type: Number,
+				default: 0,
 			}
 		},
 		watch: {
-			list(val){
+			list(val) {
 				this.renderList = val.concat()
-				// console.log('tabIndex',this.tabIndex)
-				this.sortList()
 			},
 			tabIndex(val) {
-				// console.log('我进来了 ', val)
-				this.sortList()
+				this.curIndex = val
 			}
 		},
 		computed: {
@@ -83,25 +96,18 @@
 		data() {
 			return {
 				baseUrl: uni.getStorageSync('imgPath'),
-				renderList:[]
+				renderList: [],
+				loading: false,
+				curIndex: this.tabIndex
 			}
 		},
 		methods: {
-			sortList(){
-				if(this.tabIndex == 1){
-					this.renderList.sort((v1,v2)=>{
-						return v2.change_ratio - v1.change_ratio
-					})
-				}else if(this.tabIndex == 2){
-					this.renderList.sort((v1,v2)=>{
-						return v1.change_ratio - v2.change_ratio
-					})
-				}else if(this.tabIndex == 3){
-					this.renderList.sort((v1,v2)=>{
-						return v2.volume - v1.volume
-					})
+			biNameFilter(name, fix) {
+				if (!name) {
+					return ''
 				}
-				this.renderList = this.renderList.slice(0,10)
+				let arr = name.split('/')
+				return (fix == 1 ? '/' : '') + arr[fix]
 			},
 			getPath(name) {
 				uni.navigateTo({
@@ -120,6 +126,19 @@
 			border-bottom: 2rpx solid #F6F6F6;
 			padding: 32rpx 0;
 
+			.cje {
+				flex: 1;
+				font-size: 22rpx;
+				color: #333;
+				font-weight: 600;
+			}
+
+			.small {
+				font-size: 26rpx;
+				color: #868c9a;
+				font-weight: normal;
+			}
+
 			.lefts {
 				width: 400rpx;
 
@@ -132,6 +151,7 @@
 						color: #1F222B;
 						font-weight: bold;
 					}
+
 
 					.b-btn {
 						background: #F7F4FA;
@@ -153,11 +173,21 @@
 				color: #1F222B;
 				font-weight: 900 !important;
 
+				.num-text {
+
+					.amount {
+						margin-top: 6rpx;
+						font-weight: normal;
+						font-size: 22rpx;
+						color: #868c9a;
+					}
+				}
+
 				& image {
 					border-radius: 50%;
-					width: 54rpx;
-					height: 54rpx;
-					margin-right: 14rpx;
+					width: 64rpx;
+					height: 64rpx;
+					margin-right: 18rpx;
 				}
 
 			}

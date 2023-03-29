@@ -1400,6 +1400,26 @@
         },{
             "path" : "pages/machine/bySuccess",
             "style" : {}
+        },{
+            "path" : "pages/fund/components/smartPoolDetail",
+            "style" : {}
+        },{
+            "path" : "pages/pledgeLoan/pledgeLoanOrderDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/pledgeLoan/pledgeRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
     ],
 	"globalStyle": {

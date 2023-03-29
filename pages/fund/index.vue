@@ -3,23 +3,23 @@
 		<xl-header :title="i18n.jjlc"></xl-header>
 		<view class="amount-container">
 			<text class="amount-title">
-				{{i18n.tgje}}
+				{{i18n.tgje || 0}}
 			</text>
 			<text class="amount-number">
-				{{purchasedFunds.toPrice}}
+				{{purchasedFunds.toPrice || 0}}
 			</text>
 			<view class="amount-list">
 				<view class="item">
 					<text class="title">{{i18n.yjrsy}}</text>
-					<text class="number">{{purchasedFunds.dayPrice}}</text>
+					<text class="number">{{purchasedFunds.dayPrice || 0}}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.ljsy}}</text>
-					<text class="number">{{purchasedFunds.addUpPrice}}</text>
+					<text class="number">{{purchasedFunds.addUpPrice || 0}}</text>
 				</view>
 				<view class="item">
 					<text class="title">{{i18n.tgdd}}</text>
-					<text class="number">{{purchasedFunds.size}}</text>
+					<text class="number">{{purchasedFunds.size || 0}}</text>
 				</view>
 			</view>
 		</view>

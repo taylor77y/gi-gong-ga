@@ -1,5 +1,5 @@
 export default {
-	nav: ['首頁', '行情', '交易', '金融', '資產'],
+	nav: ['首頁', '市场', '交易', '金融', '資產'],
 	common: {
 		search: '搜尋',
 		confirm: "確定",
@@ -135,7 +135,7 @@ export default {
 		yrz: '已認證',
 		shz: '審核中',
 		wrz: '未認證',
-		hyldba: '歡迎來到mox交易所',
+		hyldba: '歡迎來到mxo交易所',
 		qqzdjypt: '加入全球最大的區塊鏈資產交易平臺',
 		zc: '註冊',
 		dl: '登入',

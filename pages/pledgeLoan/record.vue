@@ -1,13 +1,36 @@
 <template>
-	<view>
-		<view class="header">
-			<u-icon name="arrow-left" size="35" @click="turnBack"></u-icon>
-			<view class="middle">{{i18n.zyjbdd}}</view>
-			<view class="left"></view>
+	<view class="page">
+		<xl-header title="质押借币订单"/>
+		<view class="order-list">
+			<view class="item" v-for="(item,index) in list" :key="index" @tap="toDetail(item)">
+				<view class="top">
+					<view class="bro">
+						借款
+						<view class="num">
+							{{item.borrowMoney}} USDT
+						</view>
+					</view>
+					<view class="status">
+						{{ statusFilter(item.status) }}
+					</view>
+				</view>
+				<view class="bot">
+					<view class="col">
+						<view class="t">贷款币种</view>
+						<view class="b">{{item.borrowName}}</view>
+					</view>
+					<view class="col">
+						<view class="t">质押率</view>
+						<view class="b">{{(item.pledgeRate || 0.00).toFixed(2)}}%</view>
+					</view>
+					<view class="col">
+						<view class="t">总负债</view>
+						<view class="b">{{item.totalIncurDebts}} USDT</view>
+					</view>
+				</view>
+			</view>
 		</view>
-		<view class="container mt-100">
-			<u-empty mode="search" text="No record"></u-empty>
-		</view>
+		<u-loadmore status="nomore" :load-text="{nomore: '已经全部加载完毕'}" />
 	</view>
 </template>
 
@@ -15,7 +38,7 @@
 	export default {
 		data() {
 			return {
-				
+				list:[]
 			};
 		},
 		computed: {
@@ -23,26 +46,93 @@
 				return this.$t("pledgeIndex")
 			}
 		},
+		onLoad() {
+			this.getCountFundOrderByUserId()
+		},
 		methods: {
+			statusFilter(status){
+				if(status == 0){
+					return '计息中'
+				}else if(status == 1){
+					return '已结清'
+				}else if(status == 2){
+					return '强平结清'
+				}
+			},
+			toDetail(item){
+				uni.navigateTo({
+					url: '/pages/pledgeLoan/pledgeLoanOrderDetail?data=' + JSON.stringify(item)
+				})
+			},
 			turnBack(){
 				uni.navigateBack()
+			},
+			async getCountFundOrderByUserId(){
+				let userId = uni.getStorageSync('userId')
+				if (!userId) {
+					this.$utils.showToast('请登录')
+					return
+				}
+				let res = await this.$u.api.pledge.getCountFundOrderByUserId(userId)
+				console.log('getCountFundOrderByUserId',res)
+				if (res.status == "SUCCEED") {
+					this.list = res.result
+				}
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-.header {
-		height: 80rpx;
-		padding: 0 20rpx;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		.uicon {
-			font-weight: bolder;
-		}
-}
-.container {
+.order-list{
+	padding: 0rpx 30rpx;
 	
+	.item{
+		background-color: #f6f6f6;
+		border-radius: 10rpx;
+		padding: 30rpx 20rpx;
+		
+		&:not(:first-child){
+			margin: 20rpx 0;
+		}
+		
+		.top{
+			color: #13d3eb;
+			font-size: 28rpx;
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: 20rpx;
+			border-bottom: 2rpx solid #e5e7ed;
+			
+			.bro{
+				display: flex;
+				.num{
+					color: #333;
+					padding-left: 6rpx;
+					font-size: 29rpx;
+				}
+			}
+			.status{
+				
+			}
+		}
+		.bot{
+			display: flex;
+			.col{
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				// justify-content: space-between;
+				margin-top: 20rpx;
+
+				.t{
+					color: #868c9a;
+				}
+				.b{
+					margin-top: 10rpx;
+				}
+			}
+		}
+	}
 }	
 </style>

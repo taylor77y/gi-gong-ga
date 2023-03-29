@@ -66,13 +66,14 @@
 	.home-application {
 		display: flex;
 		flex-wrap: wrap;
+		margin-top: 30rpx;
         
 		.item {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			width: 20%;
+			width: 25%;
 			color: #565656;
 			font-size: 24rpx;
 			margin-bottom: 20rpx;

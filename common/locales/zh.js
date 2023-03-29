@@ -1,5 +1,5 @@
 export default {
-	nav: ['首页', '行情', '交易', '合约', '资产'],
+	nav: ['首页', '市场', '交易', '合约', '资产'],
 	common: {
 		search: '搜索',
 		confirm: "确定",
@@ -135,7 +135,7 @@ export default {
 		yrz: '已认证',
 		shz: '审核中',
 		wrz: '未认证',
-		hyldba: '欢迎来到mox交易所',
+		hyldba: '欢迎来到mxo交易所',
 		qqzdjypt: '加入全球最大的区块链资产交易平台',
 		zc: '注册',
 		dl: '登录',
@@ -265,7 +265,8 @@ export default {
 		mc: '名称',
 		zxj: '最新价',
 		zdf: '涨跌幅',
-		application: ['闪兑', 'c2c', '合约交易', '理财', '现货账户','基金理财','智能矿池','质押借币','账面记录','更多'],
+		cje: '成交额',
+		application: ['闪兑', 'c2c', '合约交易', '理财', '现货账户','基金理财','智能矿池','质押借币','账变记录','更多'],
 		homeTitle: ['涨幅榜', '成交额榜', '新币榜'],
 		kauisuchongbi:'快速充币',
 		kuaisutibi:'快速提币'
@@ -320,6 +321,7 @@ export default {
 		cjl: '名称/成交量',
 		zxj: '最新价',
 		zdf: '涨跌幅',
+		cje: '成交额',
 		tagBtn: [{
 				name: '自选'
 			},
