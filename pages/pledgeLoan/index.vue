@@ -73,10 +73,11 @@
 							</view>
 						</view>
 					</view>
-					<view class="label">
+					<view class="label exchange-container">
 						{{i18n.kyye}}：
 						<span v-if="chooseCoin.name">{{chooseCoin.price}} {{chooseCoin.name}}</span>
 						<span v-else>--</span>
+						<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 					</view>
 					<view class="mt-32">
 						<text class="loan-text mt-32">{{i18n.jbqx}}</text>
@@ -208,6 +209,11 @@
 			this.getMyCoinList()
 		},
 		methods: {
+			toExChange(){
+				uni.navigateTo({
+					url:'/pages/flashCash/index'
+				})
+			},
 			tolowerCase(name){
 				if(name){
 					console.log('进来了',name)
@@ -321,6 +327,18 @@
 </script>
 
 <style lang="scss" scoped>
+	
+	.exchange-container{
+		display: flex;
+		// justify-content: center;
+		align-items: center;
+	}
+	.exchange{
+		margin-left: 20rpx;
+		width: 26rpx;
+		height: 26rpx;
+	}
+	
 	.header {
 		height: 80rpx;
 		padding: 0 20rpx;

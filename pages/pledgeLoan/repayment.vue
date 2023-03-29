@@ -16,8 +16,9 @@
 						ALL
 					</view>
 				</view>
-				<view class="money">
+				<view class="money exchange-container">
 					可用余额：{{usdtPrice}} USDT
+					<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 				</view>
 				<view class="cell mp-60">
 					<view class="l">
@@ -78,6 +79,11 @@
 			this.getBalanceList()
 		},
 		methods: {
+			toExChange(){
+				uni.navigateTo({
+					url:'/pages/flashCash/index'
+				})
+			},
 			exchange() {
 				this.rePrice = this.data.totalIncurDebts
 				this.getInfo()
@@ -135,6 +141,15 @@
 
 <style lang="scss" scoped>
 	.page {
+		.exchange-container{
+			display: flex;
+			align-items: center;
+		}
+		.exchange{
+			margin-left: 20rpx;
+			width: 26rpx;
+			height: 26rpx;
+		}
 		.container {
 			padding: 30rpx;
 			color: #868c9a;

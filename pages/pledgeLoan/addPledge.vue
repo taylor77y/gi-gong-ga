@@ -20,8 +20,9 @@
 						</view>
 					</view>
 				</view>
-				<view class="money">
+				<view class="money exchange-container">
 					可用余额：{{ablePledgePrice}} USDT
+					<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 				</view>
 				<view class="cell">
 					<view class="l">
@@ -140,6 +141,11 @@
 					return name.toLowerCase()
 				}
 				return name
+			},
+			toExChange(){
+				uni.navigateTo({
+					url:'/pages/flashCash/index'
+				})
 			}
 		}
 	}
@@ -147,6 +153,15 @@
 
 <style lang="scss" scoped>
 	.page {
+		.exchange-container{
+			display: flex;
+			align-items: center;
+		}
+		.exchange{
+			margin-left: 20rpx;
+			width: 26rpx;
+			height: 26rpx;
+		}
 		.bg {
 			width: 100%;
 			height: 280rpx;
