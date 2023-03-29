@@ -75,7 +75,8 @@
 					</view>
 					<view class="label">
 						{{i18n.kyye}}：
-						<span>-- {{chooseCoin.price}}</span>
+						<span v-if="chooseCoin.name">{{chooseCoin.price}} {{chooseCoin.name}}</span>
+						<span v-else>--</span>
 					</view>
 					<view class="mt-32">
 						<text class="loan-text mt-32">{{i18n.jbqx}}</text>
@@ -208,7 +209,10 @@
 		},
 		methods: {
 			tolowerCase(name){
-				console.log('name',name)
+				if(name){
+					console.log('进来了',name)
+					return name.toLowerCase()
+				}
 				return name
 			},
 			async getInfo() {
@@ -284,6 +288,7 @@
 			chooseCoinHandler(coin) {
 				this.chooseCoin = coin
 				this.showPledgeSelect = false
+				this.getInfo()
 			},
 			async getMyCoinList() {
 				let userId = uni.getStorageSync('userId')
@@ -307,6 +312,7 @@
 			},
 			bindPickerChange(event) {
 				this.termIndex = event.detail.value
+				this.getInfo()
 			},
 			close() {},
 			open() {},
