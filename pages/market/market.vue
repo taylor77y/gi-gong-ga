@@ -8,7 +8,7 @@
 				</view>
 				<view>
 					<input v-model="search" placeholder-style="color: #9399A2;background: #EBECF0" class="search-input"
-						:placeholder="i18n.sshy" />
+						:placeholder="i18n.sshy" @input="sortList(backCoinList)"/>
 				</view>
 			</view>
 
@@ -72,6 +72,8 @@
 				newcoinQuotations: [],
 				currentFour: 0,
 				coinList: [],
+				initCoinList:[],
+				backCoinList:[],
 				tabIndex: 0,
 				isAscend:0
 			};
@@ -124,6 +126,7 @@
 			sortList(list) {
 				this.coinList = []
 				if (this.tabIndex == 0) {
+					list = this.initCoinList
 					if (this.isAscend == 1) {
 						list.sort((v1, v2) => {
 							return v1.change_ratio - v2.change_ratio
@@ -176,12 +179,29 @@
 						})
 					}
 				}
+				this.backCoinList = list
+				if(this.search){
+					this.$u.throttle(() => {
+						const Letter = new RegExp('[A-Za-z]+')
+						if (Letter.test(this.search)) {
+							list = list.filter(array => {
+								let flag = false
+								if (array.name) {
+									let reg = new RegExp(this.search, 'i')
+									flag = array.name.match(reg)
+								}
+								return flag
+							})
+						}
+					}, 50)
+				}
 				this.coinList = list
 			},
 			getCoinData() {
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('11111111',res)
 					if (res.status == 'SUCCEED') {
+						this.initCoinList = res.result
 						this.sortList(res.result)
 					}
 				})

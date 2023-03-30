@@ -184,6 +184,7 @@
 				this.sortList(this.coinList)
 			},
 			sortList(list) {
+				list = list.slice(0, 10)
 				this.coinList = []
 				if (this.tabIndex == 0) {
 					if (this.isAscend == 1) {
@@ -238,13 +239,14 @@
 						})
 					}
 				}
-				this.coinList = list.slice(0, 10)
+				this.coinList = list
 			},
 			getCoinData() {
 				this.$u.api.common.getCoinData().then(res => {
 					// console.log('getCoinData',res)
 					if (res.status == 'SUCCEED') {
 						try {
+							this.initCoinList = res.result
 							// console.log('this.coinList',this.coinList)
 							let arr = []
 							res.result.forEach(e => {
@@ -259,7 +261,7 @@
 							this.coinListT = arr
 							// console.log('this.coinListT',this.coinListT)
 							this.sortList(res.result)
-							this.initCoinList = data.data
+							
 						} catch (e) {
 
 						}
@@ -302,11 +304,16 @@
 				})
 			},
 			async getCode(index) {
-
+				console.log('点击了',index)
 				// await this.getCoinData()
 				this.tabIndex = index
 				this.isAscend = 0
-				this.sortList(this.coinList)
+				if(index == 0){
+					this.coinList = this.initCoinList
+				}else{
+					this.sortList(this.coinList)
+				}
+				
 				// console.log('进来了',this.tabIndex)
 				switch (index) {
 					case 0:

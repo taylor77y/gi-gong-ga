@@ -897,8 +897,12 @@
 			},
       // 获取委托订单清单
 			getEntrustOrderList() {
+				if(!this.pairsItem.name){
+					return
+				}
 				let obj = new Object();
 				// obj.pairsName = this.pairsItem.pairsName;
+				console.log('getEntrustOrderList',this.pairsItem)
         obj.pairsName = this.pairsItem.name;
 				obj.member = uni.getStorageSync('userId')
 				this.$u.api.yx.getEntrustOrder(obj).then(res => {
