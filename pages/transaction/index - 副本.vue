@@ -299,7 +299,6 @@
 			}
 		},
 		methods: {
-			
 			// 获取类型的币值 实时数据
 			async getRealtime() {
 				this.$u.throttle(async () => {
