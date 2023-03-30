@@ -4,14 +4,14 @@
     <xl-header :title="data.name"></xl-header>
     <view class="container">
       <view class="title">
-        托管金额 (USDT)
+     {{i18n.lcje}}
       </view>
       <view class="input-container">
     {{   data.price}}
       </view>
       <view class="row mt-20">
         <view class="left">
-          托管时间
+          {{i18n.tgsj}}
         </view>
         <view class="right">
       {{  data.createTime}}
@@ -19,15 +19,15 @@
       </view>
       <view class="row">
         <view class="left">
-         当日收益
+          {{i18n.drsy }}
         </view>
         <view class="right">
-
+          {{data.todayMoney||0}}
         </view>
       </view>
-      <view class="row">
+      <view class="row" style="border-top: 1px solid #fbc8d4">
         <view class="left">
-          已获收益
+          {{i18n.yhsy}}
         </view>
         <view class="right">
           {{data.accumulatedIncome||0}}
@@ -35,7 +35,7 @@
       </view>
       <view class="row">
         <view class="left">
-          剩余天数
+         {{i18n.syts}}
         </view>
         <view class="right">
           {{data.periodDay||0}}
@@ -46,15 +46,23 @@
 <!--      </view>-->
       <view class="row p-30">
         <view class="left">
-          预期收益
+         {{i18n.yqsy}}
         </view>
         <view class="right">
-          0.00
+          {{data.money}}
         </view>
       </view>
       <view class="row p-30">
         <view class="left">
-        起息时间
+         {{i18n.rsyl}}
+        </view>
+        <view class="right">
+          {{data.rate}}
+        </view>
+      </view>
+      <view class="row p-30" style="border-top: 1px solid #fbc8d4">
+        <view class="left">
+       {{i18n.qxsj}}
         </view>
         <view class="right">
           {{data.valueDate|| 0}}
@@ -62,45 +70,47 @@
       </view>
       <view class="row p-30">
         <view class="left">
-          到期时间
+          {{i18n.dqsj}}
         </view>
         <view class="right">
           {{data.finishValueDate||0}}
         </view>
       </view>
-      <view class="row p-30">
-        <view class="left">
-        违约金(USDT)
+      <view style="border-top: 1px solid #fbc8d4">
+        <view class="row p-30">
+          <view class="left">
+          {{i18n.wyj}}
+          </view>
+          <view class="right">
+            {{data.penalPrice|| '-'}}
+          </view>
         </view>
-        <view class="right">
-          {{data.penalPrice|| '-'}}
+        <view class="row p-30">
+          <view class="left">
+            {{i18n.shbj}}
+          </view>
+          <view class="right">
+            {{ (data.price - data.penalPrice)  || 0}}
+          </view>
         </view>
       </view>
-      <view class="row p-30">
+      <view class="row p-30" style="border-top: 1px solid #fbc8d4">
         <view class="left">
-          赎回本金
-        </view>
-        <view class="right">
-          {{ (data.price - data.penalPrice) - data.penalPrice || 0}}
-        </view>
-      </view>
-      <view class="row p-30">
-        <view class="left">
-        订单编号
+        {{i18n.ddbh}}
         </view>
         <view class="right">
           {{data.orderNumber|| 0 }}
         </view>
       </view>
-      <view class="row p-30">
+      <view class="row p-30" >
         <view class="left">
-          订单时间
+          {{i18n.ddsj}}
         </view>
         <view class="right">
           {{data.createTime || '-'}}
         </view>
       </view>
-      <button class="buy-btn" type="primary" @click="toBuyHandler()">我要赎回</button>
+      <button class="buy-btn" type="primary" @click="toBuyHandler()">{{ i18n.wysh }}</button>
     </view>
   </view>
 </template>
@@ -117,9 +127,13 @@ export default {
     this.data.createTime = new Date(this.data.createTime).toISOString().slice(0, 10);
     this.data.updateTime = new Date(this.data.updateTime).toISOString().slice(0, 10);
     this.data.valueDate = new Date(this.data.valueDate).toISOString().slice(0, 10);
+    this.data.finishValueDate = new Date(this.data.finishValueDate).toISOString().slice(0, 10);
 
   },
   computed: {
+    i18n () {
+      return this.$t('financialManagement')
+    }
   },
   methods: {
     //确认购买

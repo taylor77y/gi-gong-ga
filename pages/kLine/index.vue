@@ -43,27 +43,30 @@
 				</view>
 			</view>
 		</view>
-		<view class="list-time">
-			<view :class="{ 'f-1F222B':timeCode === index }" @click="getTime(index)" v-for="(item, index) in listTime"
-				:key="index">
-				{{ item }}
-			</view>
-		</view>
+<!--		<view class="list-time">-->
+<!--			<view :class="{ 'f-1F222B':timeCode === index }" @click="getTime(index)" v-for="(item, index) in listTime"-->
+<!--				:key="index">-->
+<!--				{{ item }}-->
+<!--			</view>-->
+<!--		</view>-->
 		<view class="charts-box">
-			<qiun-data-charts v-if="isLine" type="candle" :opts="{xAxis: {scrollAlign: 'right'}, extra:{tooltip:{showCategory:true}}}" :ontouch="true"
-				:canvas2d="true" :onzoom="true" canvasId="klineid" :chartData="chartsDataCandle1"/>
+<!--			<qiun-data-charts v-if="isLine" type="candle" :opts="{xAxis: {scrollAlign: 'right'}, extra:{tooltip:{showCategory:true}}}" :ontouch="true"-->
+<!--				:canvas2d="true" :onzoom="true" canvasId="klineid" :chartData="chartsDataCandle1"/>-->
+      <!-- k线图 -->
+      <my-kline-chart  :activetedTime="activetedTime" :applyNewData="klineData" @changeTime="changeTime">
+      </my-kline-chart>
 		</view>
 	
 		
 		<view class="f-line-10"></view>
-		<u-tabs bg-color="#fff" inactive-color="#8D9099" bar-height="8" bar-width="40" active-color="#D4B02D"
-			:list="tagBtn" :is-scroll="false" :current="current" @change="change"></u-tabs>
+<!--		<u-tabs bg-color="#fff" inactive-color="#8D9099" bar-height="8" bar-width="40" active-color="#D4B02D"-->
+<!--			:list="tagBtn" :is-scroll="false" :current="current" @change="change"></u-tabs>-->
 
 		<view class="f-line-2"></view>
 		<view v-if="current === 0">
 			<view class="list-name">
-				<view>{{ i18n.buy }}</view>
-				<view>{{ i18n.sell }}</view>
+<!--				<view>{{ i18n.buy }}</view>-->
+<!--				<view>{{ i18n.sell }}</view>-->
 				<view class="r-icon" @click="numCode = true">
 					{{ num }}
 					<image :class="{'r-icon1' : numCode}" src="../../static/image/k-line/6.png" />
@@ -148,13 +151,22 @@
     import uCharts from '../../js_sdk/u-charts/u-charts';
     import transaction from "./components/transaction.vue"
 	import information from "./components/information.vue"
+  import { getData } from '@/common/hooks/socketData.js'
+  import myKlineChart from "./components/my-klinechart.vue";
 	export default {
 		components: {
 			transaction,
-			information
+			information,
+      myKlineChart
 		},
 		data() {
 			return {
+        currentBiType: { // 当前的 币值数据
+          name: 'BTC/USDT'
+        },
+        symbol:'btc',
+        activetedTime: { name: 'Line',value: '1min',	time: 1 }, // 图表选项
+        klineData: [],
 				json: {},
 				isLine: false,
 				// 截取后长度
@@ -162,7 +174,7 @@
 				sellData: [],
 				maxBuy: 10,
 				maxSell: 10,
-				socket: new socket(),
+				socket: null,
 				timeCode: 0,
 				code: '0', // 0 是跳转币币 1 是永续 2是交割
 				pairs: [],
@@ -188,7 +200,8 @@
 				time: '15m',
 				timer: null,
 				chengjiaoData: [],
-				scrollLoadingStatus:false
+				scrollLoadingStatus:false,
+        timerVal: null,
 			}
 		},
 		filters: {
@@ -199,6 +212,7 @@
 				console.log('注销定时器')
 				clearInterval(this.timer);
 				this.timer = null;
+        this.timerVal = null;
 			}
 			// this.$store.state.socket.removeListener('daymarket')
 		},
@@ -207,10 +221,24 @@
 				console.log('注销定时器')
 				clearInterval(this.timer);
 				this.timer = null;
+        this.timerVal = null;
 			}
 			// this.$store.state.socket.removeListener('daymarket')
 		},
+    watch:{
+      chartsDataCandle1: {
+        handler(newVal, oldVal) {
+        },
+        deep: true,
+      },
+    },
 		onLoad(e) {
+
+      this.$u.api.trendDetails.getRealtime().then(res => {
+        this.currentBiType = res.data[0]
+      });
+      this.symbol = e.name.split('/')[0].toLowerCase() || ''
+      this.getKlineData()
 			if (e && e.name) {
 				this.name = e.name || ''
 				this.code = e.code || '0'
@@ -220,6 +248,7 @@
 					this.getInfo()
 				}, 5000);
 			}
+      this.socket = new socket("wss://thasjhdhjg.site/data/websocket/3/"+this.name.split('/')[0].toLowerCase())
 			this.socket.doOpen();
 			this.socket.on("open", () => {
 				this.socket.send("PING");
@@ -253,14 +282,33 @@
 			}
 		},
 		methods: {
-			
+      //获取图标data
+      // 获取 图表数据
+
+      async getKlineData(symbol = this.symbol, line = '1min') {
+        const {
+          code,
+          data
+        } = await this.$u.api.trendDetails.getKline(symbol, line);
+        if (code == 0) {
+          this.klineData = data
+        }
+      },
+
+      // 图表时间 改变
+      changeTime(time) {
+        this.activetedTime = time
+        this.getKlineData(this.currentBiType.symbol, this.activetedTime.value)
+      },
+
+
 			getTips() {
 				this.$utils.showToast(this.$t('setting').zwkf)
 			},
 			getInfo() {
 				this.$u.api.bibi.getCoinInfo(this.name).then(res => {
 					let json = JSON.parse(res.result)
-					this.json = json
+					this.json = json || {}
 				})
 			},
 			handleData(day) {
@@ -269,9 +317,8 @@
 					)
 			},
 			onMessage(data) {
-	
+
 				if (data.openup) {
-                    // console.log(data.chengjiao)
 					this.buyData = data.openup.slice(0, 10); //显示20条
 					this.sellData = data.opendown.slice(0, 10);
 					if (data.chengjiao.length == 1 && data.chengjiao[0] == "") {

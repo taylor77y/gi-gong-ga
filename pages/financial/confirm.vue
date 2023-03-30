@@ -1,10 +1,10 @@
 <template>
 	<view class="page">
-		<xl-header title="理財5天"></xl-header>
+		<xl-header :title="orderData.name"></xl-header>
 
 		<view class="container">
 			<view class="title">
-        理财金额(USDT)
+      {{i18n.lcje}}
 			</view>
 			<view class="input-container">
 				<input disabled type="text" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0" v-model="amount" disabled>
@@ -14,7 +14,7 @@
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-          预期收益
+          {{i18n.yqsy}}
 				</view>
 				<view class="right">
           {{orderData.distribute }}
@@ -22,7 +22,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          日收益
+          {{i18n.rsy}}
 				</view>
 				<view class="right">
        {{orderData.todayRate}}
@@ -30,7 +30,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          起息日
+          {{i18n.qxr}}
 				</view>
 				<view class="right">
           {{orderData.startDate }}
@@ -38,7 +38,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          计息结束日
+          {{i18n.jxjsr}}
 				</view>
 				<view class="right">
           {{orderData.endDate}}
@@ -46,7 +46,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          订单编号
+          {{i18n.ddbh}}
         </view>
 				<view class="right">
         {{orderNumber}}
@@ -54,7 +54,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          订单时间
+          {{i18n.ddsj}}
 				</view>
 				<view class="right">
          {{orderData.buyDate}}
@@ -80,6 +80,11 @@
         productId:'',//产品ID
       }
 		},
+    computed:{
+      i18n () {
+        return this.$t("financialManagement")
+      }
+    },
     onLoad(options){
       console.info("🇨🇳🇨🇳:o --", options)
       this.orderNumber = +(new Date()).toISOString().slice(0, 10).replace(/-/g, '') + Math.random().toString().substr(2, 6);
