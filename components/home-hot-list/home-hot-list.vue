@@ -8,7 +8,7 @@
           {{ item.name }}
           <view :class="{'rate1': item.change_ratio < 0, 'rate': item.change_ratio >= 0}">
           {{ getChangeRatio(item.change_ratio) }}</view></view>
-        <view class="money">{{ item.close }}</view>
+        <view class="money" :class="{red:item.change_ratio < 0}">{{ item.close }}</view>
         <view class="equivalent">≈ {{ rateConfig.mark }} {{ item.close }}</view>
       </view>
     </view>
@@ -102,11 +102,15 @@ export default {
 					font-size: 24rpx;
 					color: #E45360;
 				}
+				
+				.red{
+					color:#e45360
+				}
 				.money {
 					font-size: 30rpx;
 					font-weight: bold;
 					margin-bottom: 10rpx;
-          color:#e45360
+					color:#5EBA89;
 				}
 				.equivalent {
 					color: #8D9099;

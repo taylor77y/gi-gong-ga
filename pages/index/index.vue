@@ -245,11 +245,9 @@
 					// console.log('getCoinData',res)
 					if (res.status == 'SUCCEED') {
 						try {
-							this.sortList(res.result)
-							this.initCoinList = data.data
 							// console.log('this.coinList',this.coinList)
 							let arr = []
-							data.data.forEach(e => {
+							res.result.forEach(e => {
 								if (e.name == 'BTC/USDT') {
 									arr[0] = e
 								} else if (e.name == 'ETH/USDT') {
@@ -259,6 +257,9 @@
 								}
 							})
 							this.coinListT = arr
+							// console.log('this.coinListT',this.coinListT)
+							this.sortList(res.result)
+							this.initCoinList = data.data
 						} catch (e) {
 
 						}
