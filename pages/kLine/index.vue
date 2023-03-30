@@ -9,7 +9,7 @@
 				</view>
 				<view class="conversion">
 					≈{{ setRate.mark }} {{json.close * setRate.rate |SubString(4)}}
-					<text class="f-E45360">{{json.updown*100|SubString(2)}}%</text>
+					<text class="f-E45360">{{json.change_ratio|SubString(2)}}%</text>
 				</view>
 			</view>
 			<view class="right">
@@ -31,7 +31,7 @@
 					<view>
 						<view>24h{{ i18n.zdj }}</view>
 						<view class="num">
-							{{json.lowPrice}}
+							{{json.low}}
 						</view>
 					</view>
 					<!-- <view>
@@ -258,9 +258,6 @@
 			this.socket.on("message", this.onMessage);
 			
 		},
-		// destroyed() {
-		//     dispose('simple_chart');
-		// },
 		beforeDestroy() {
 			this.socket.toClose();
 		},
@@ -304,8 +301,12 @@
 				this.$utils.showToast(this.$t('setting').zwkf)
 			},
 			getInfo() {
-				// this.$u.api.bibi.getCoinInfo(this.name).then(res => {
 				this.$u.api.common.getCoinData(this.name).then(res => {
+				// this.$u.api.newDataInterface.realtime('btc').then(res => {
+        //   console.info("🇨🇳🇨🇳:res --",res )
+        //   if(res.code == 0){
+        //     this.json =res.data[0]
+        //   }
           res.result.forEach(e=>{
             if(e.name == this.name){
               this.json = e

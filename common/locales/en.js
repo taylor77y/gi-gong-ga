@@ -2260,7 +2260,7 @@ export default {
 		gailan: 'Overview',
 		gmr: 'Purchase date',
 		qxr: 'Interest start date',
-		pxsj: 'Distribution time',
+		pxsy: 'Distribution time',
 		yjjrsy: 'Estimated daily earnings',
 		goumai: 'Purchase',
 		kjje: 'Mining machine amount',

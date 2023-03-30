@@ -2240,7 +2240,7 @@ export default {
 		quxiao:'取消',
 		scje: '鎖倉金額 (USDT)',
 		scsj: '鎖仓時間',
-		drsj: '當日收益',
+		drsy: '當日收益',
 		yhsy: '已獲收益',
 		syts: '剩餘天數',
 		tyqsy: '30天預期收益',

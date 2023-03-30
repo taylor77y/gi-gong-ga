@@ -2216,7 +2216,7 @@
 		 quxiao:'취소',
 		 scje: '잠금 금액 (USDT)',
 		 scsj: '잠금 시간',
-		 drsj: '당일 수익',
+		 drsy: '당일 수익',
 		 yhsy: '이미 얻은 수익',
 		 syts: '남은 일수',
 		 tyqsy: '30일 예상 수익',
