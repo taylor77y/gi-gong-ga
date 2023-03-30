@@ -165,7 +165,7 @@
 	export default {
 		data() {
 			return {
-        coinList:[],//币种数据
+				coinList:[],//币种数据
 				list: [],
 				showSpec: false,
 				magnification: false, // 0.01 倍率
@@ -236,30 +236,43 @@
 			this.$u.api.fack.getCurrencyConfiguration().then(res=>{
 				this.rate = res.result[0]
 			})
-			if(this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+			if(this.pairsItem.symbol) {
+				// this.getRealTimeOne(this.pairsItem.symbol);
+				//新数据
+				this.getNewDataDepth()
+			}
 			else this.getRealTimeOne();
 			
 			this.interval = setInterval(() => {
-				if(this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+				if(this.pairsItem.symbol) {
+					// this.getRealTimeOne(this.pairsItem.symbol);
+					//新数据
+					this.getNewDataDepth()
+				}
 				else this.getRealTimeOne();
 			}, 5000)
 		},
 		onReady() {},
-		onLoad() {},
+		onLoad() {
+			this.getNewDataRealtime()
+		},
 		onShow() {
 			this.btnCode = 1;
 			let member = uni.getStorageSync("userId") || '';
 			this.getPairsList();
 			this.getBalances(member);
 			this.getNowList();
+
 			if (member) {
 				this.timer = setInterval(() => {
+					
 					if (member) {
 						this.getRealtime()
 						
 						// this.getPairsList();
 						this.getBalances(member);
 						this.getNowList();
+						
 					} else {
 						clearInterval(this.timer);
 						this.timer = null;
@@ -299,14 +312,32 @@
 			}
 		},
 		methods: {
+			async getNewDataRealtime(){
+				let res = await this.$u.api.newData.realtime()
+				if(res.status == 'SUCCEED'){
+					this.pairs = res.result
+					console.log('this.pairs',this.pairs)
+				}
+			},
+			async getNewDataDepth(){
+				console.log('this.pairsItem',this.pairsItem)
+				let res = await this.$u.api.newData.depth(this.pairsItem.symbol)
+				if(res.status == 'SUCCEED'){
+					this.buyData = res.result.asks.slice(0, 5);
+					this.sellData = res.result.bids.slice(0, 5);
+					console.log('this.buyData',this.buyData)
+					console.log('this.sellData',this.sellData)
+				}
+			},
 			
 			// 获取类型的币值 实时数据
 			async getRealtime() {
 				this.$u.throttle(async () => {
-					const { code,	data } = await this.$u.api.trendDetails.getRealtime();
-					if (code == '0') {
-						this.pairs = data
-					}
+					// const { code,	data } = await this.$u.api.trendDetails.getRealtime();
+					// if (code == '0') {
+					// 	this.pairs = data
+					// }
+					this.getNewDataRealtime()
 				}, 2000)
 			},
 			// 获取当前币值
@@ -314,10 +345,11 @@
 				const { code, data } = await this.$u.api.trendDetails.getRealtime(symbol);
 				if (code == '0') {
 					this.pairsItem = data[0]
-					if(!this.socket) {
-						this.socket = null
-						this.socketFn()
-					}
+					this.getNewDataDepth()
+					// if(!this.socket) {
+					// 	this.socket = null
+					// 	this.socketFn()
+					// }
 				}
 			},
 			
@@ -433,10 +465,12 @@
 				})
 			},
 			getTo(item) {				
-				this.socket.send(`initEntrust-${item.pairsName}`);
+				// this.socket.send(`initEntrust-${item.pairsName}`);
+				// console.log('getTo',item)
 				this.pairsItem = item
-				this.socketFn()
-				this.getBalances()
+				this.getNewDataDepth()
+				// this.socketFn()
+				// this.getBalances()
 			},
 			//币种
 			getPairsList() {
