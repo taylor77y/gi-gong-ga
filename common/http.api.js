@@ -467,7 +467,7 @@ const install = (Vue, vm) => {
 		// 获取币交易数据
 		trade:(symbol)=>vm.$u.get('/data/data/new/trade?symbol='+symbol),
 		// 获取币趋势数据
-		trend:(symbol)=>vm.$u.get('/data/data/new/trend?symbol='+symbol),
+		trend:(symbol,bar,limit)=>vm.$u.get(`/data/data/new/trend?symbol=${symbol}&bar=${bar}&limit=${limit}`),
 	}
 	
 	vm.$u.api = {

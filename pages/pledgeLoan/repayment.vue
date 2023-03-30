@@ -1,28 +1,28 @@
 <template>
 	<view class="page">
-		<xl-header title="还款" />
+		<xl-header :title=i18n.huankuang />
 		<view class="container">
 			<view class="box">
 				<view class="title">
-					还款
+					{{i18n.huankuan}}
 				</view>
 				<view class="input-container">
-					<input v-model="rePrice" type="number" placeholder="请输入还款数量"
+					<input v-model="rePrice" type="number" :placeholder=i18n.qsrhksl
 						placeholder-style="color:#868c9a;font-size:26rpx;" class="input" @input="getInfo()" />
 					<view class="usdt">
 						USDT
 					</view>
 					<view class="all" @tap="exchange()">
-						ALL
+						{{i18n.quanbu}}
 					</view>
 				</view>
 				<view class="money exchange-container">
-					可用余额：{{usdtPrice}} USDT
+					{{i18n.keyongyue}}：{{usdtPrice}} USDT
 					<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 				</view>
 				<view class="cell mp-60">
 					<view class="l">
-						总负债
+						{{i18n.zfz}}
 					</view>
 					<view class="r">
 						{{ data.totalIncurDebts }} {{ data.borrowName}}
@@ -30,7 +30,7 @@
 				</view>
 				<view class="cell">
 					<view class="l">
-						利息
+						{{i18n.lixi}}
 					</view>
 					<view class="r">
 						{{ data.totalMoney }} {{ data.borrowName}}
@@ -38,7 +38,7 @@
 				</view>
 				<view class="cell">
 					<view class="l">
-						本金还款
+						{{i18n.bjhk}}
 					</view>
 					<view class="r">
 						{{ data.totalIncurDebts }}
@@ -46,7 +46,7 @@
 				</view>
 				<view class="cell">
 					<view class="l">
-						还款后质押率
+						{{i18n.hhhzyl}}
 					</view>
 					<view class="r">
 						{{ pledgeRate!= null ? pledgeRate.toFixed(2) : '--' }} %
@@ -54,7 +54,7 @@
 				</view>
 				<view class="btn-container">
 					<view class="btn" :class="{active:rePrice>0}" @tap="submit()">
-						确认还款
+						{{i18n.querenhuankuan}}
 					</view>
 				</view>
 			</view>
@@ -73,6 +73,11 @@
 				newData: {}
 			}
 		},
+    computed:{
+      i18n(){
+        return this.$t('pledgeIndex')
+      }
+    },
 		onLoad(options) {
 			this.data = JSON.parse(options.data)
 			console.log('this.data', this.data)
@@ -91,11 +96,11 @@
 			async getInfo() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return false
 				}
 				if (this.rePrice > this.data.totalIncurDebts) {
-					this.$utils.showToast('大于还款金额')
+					this.$utils.showToast(this.i18n.dyhkje)
 					return false
 				}
 				let res = await this.$u.api.pledge.getLoanAmount(Number(this.data.totalIncurDebts) - Number(this.rePrice), this.data
@@ -127,7 +132,7 @@
 			async getBalanceList() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return false
 				}
 				let res = await this.$u.api.user.getBalanceList(userId)

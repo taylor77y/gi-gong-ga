@@ -2120,6 +2120,17 @@ export default {
 		zyjl:'质押记录',
 		xzzy:'新增质押',
 		jiexu:'续借',
+		huankuang:'还款',
+		quanbu:'全部',
+		keyongyue:'可用余额',
+		lixi:'利息',
+		bjhk:'本金还款',
+		hhhzyl:'还款后质押率',
+		querenhuankuan:'确认还款',
+		dyhkje:'大于还款金额',
+		qsrhksl:'请输入还款数量',
+
+
 	},
 	withdraw: {
 		tbsqcg:'提现申请已经提交,如提现未到账?请联系客服',
