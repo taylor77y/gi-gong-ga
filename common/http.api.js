@@ -456,6 +456,17 @@ const install = (Vue, vm) => {
 		setFundOrderPurchase:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
 	}
 	
+	//新实时数据接口
+	const symbols = "dai,kre,apd,btc,etc,eth,ada,yfi,xtz,doge,shib,qxg,yfii,qtum,mln,xrp,ltc,tl,axs,sushi,xtg,zyq,op,sol,aave,knc,comp,tmx,lrc,atom,iotx,chr,mx,blz,bal,beth,atf,ape"
+	const transaction = {
+		realtime:(symbol = symbols)=>vm.$u.get('https://advchainex.com/wap/api/realtime!execute.action?symbol'+symbol),
+		depth:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/depth.action?symbol='+symbol),
+		trade:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/trade.action?symbol='+symbol),
+		trend:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/trend!execute.action?symbol='+symbol),
+		exchangeapplyorder:(symbol,type='orders')=>vm.$u.get(`https://advchainex.com/wap/api/exchangeapplyorder!list.action?symbol=${symbol}&type=${type}`),
+		contractorder:(symbol,type='orders')=>vm.$u.get(`https://advchainex.com/wap/api/contractorder!list.action?symbol=${symbol}&type=${type}`)
+	}
+	
 	vm.$u.api = {
 		common,
 		user,
