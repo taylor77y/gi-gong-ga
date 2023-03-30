@@ -457,10 +457,9 @@ const install = (Vue, vm) => {
 	}
 	
 	// 新实时数据接口
-	const symbols = "dai,kre,apd,btc,etc,eth,ada,yfi,xtz,doge,shib,qxg,yfii,qtum,mln,xrp,ltc,tl,axs,sushi,xtg,zyq,op,sol,aave,knc,comp,tmx,lrc,atom,iotx,chr,mx,blz,bal,beth,atf,ape"
 	const newData = {
 		// 获取全部/单币详情
-		realtime:(symbol = symbols,order = 'asc')=>vm.$u.get(`/data/data/new/realtime?symbol=${symbol}&order=${order}`),
+		realtime:(symbol,order = 'asc')=>vm.$u.get(`/data/data/new/realtime?symbol=${symbol||''}&order=${order}`),
 		// 获取币深度数据
 		depth:(symbol)=>vm.$u.get('/data/data/new/depth?symbol='+symbol),
 		// 获取币交易数据
