@@ -5,11 +5,11 @@
 		<view class="top-box">
 			<view class="left">
 				<view class="money">
-					{{json.nowPrice |SubString(4)}}
+					{{json.close |SubString(4)}}
 				</view>
 				<view class="conversion">
-					≈{{ setRate.mark }} {{json.nowPrice * setRate.rate |SubString(4)}}
-					<text class="f-E45360">{{json.updown*100|SubString(2)}}%</text>
+					≈{{ setRate.mark }} {{json.close * setRate.rate |SubString(4)}}
+					<text class="f-E45360">{{json.change_ratio|SubString(2)}}%</text>
 				</view>
 			</view>
 			<view class="right">
@@ -17,7 +17,7 @@
 					<view>
 						<view>{{ i18n.zgj }}</view>
 						<view class="num">
-							{{json.higPrice}}
+							{{json.high}}
 						</view>
 					</view>
 					<view>
@@ -31,7 +31,7 @@
 					<view>
 						<view>24h{{ i18n.zdj }}</view>
 						<view class="num">
-							{{json.lowPrice}}
+							{{json.low}}
 						</view>
 					</view>
 					<!-- <view>
@@ -233,12 +233,12 @@
       },
     },
 		onLoad(e) {
-
+      console.info("🇨🇳🇨🇳:e --", e)
       this.$u.api.trendDetails.getRealtime().then(res => {
         this.currentBiType = res.data[0]
       });
       this.symbol = e.name.split('/')[0].toLowerCase() || ''
-      this.getKlineData()
+      // this.getKlineData()
 			if (e && e.name) {
 				this.name = e.name || ''
 				this.code = e.code || '0'
@@ -246,7 +246,8 @@
 				this.getInfo()
 				this.timer = setInterval(() => {
 					this.getInfo()
-				}, 5000);
+          this.getKlineData()
+				}, 3000);
 			}
       this.socket = new socket("wss://thasjhdhjg.site/data/websocket/3/"+this.name.split('/')[0].toLowerCase())
 			this.socket.doOpen();
@@ -258,9 +259,6 @@
 			this.socket.on("message", this.onMessage);
 			
 		},
-		// destroyed() {
-		//     dispose('simple_chart');
-		// },
 		beforeDestroy() {
 			this.socket.toClose();
 		},
@@ -282,17 +280,14 @@
 			}
 		},
 		methods: {
-      //获取图标data
       // 获取 图表数据
-
       async getKlineData(symbol = this.symbol, line = '1min') {
-        const {
-          code,
-          data
-        } = await this.$u.api.trendDetails.getKline(symbol, line);
-        if (code == 0) {
-          this.klineData = data
-        }
+        const {status,result} = await this.$u.api.newData.trend(symbol, line);
+        console.info("🇨🇳🇨🇳:result --", result)
+        // const {status,result,data} = await this.$u.api.trendDetails.getKline(symbol, line);
+        // if (status === 'SUCCEED') {
+        //   this.klineData = data
+        // }
       },
 
       // 图表时间 改变
@@ -300,15 +295,18 @@
         this.activetedTime = time
         this.getKlineData(this.currentBiType.symbol, this.activetedTime.value)
       },
-
-
 			getTips() {
 				this.$utils.showToast(this.$t('setting').zwkf)
 			},
+      //币总价详情预览
 			getInfo() {
-				this.$u.api.bibi.getCoinInfo(this.name).then(res => {
-					let json = JSON.parse(res.result)
-					this.json = json || {}
+				// this.$u.api.common.getCoinData(this.name).then(res => {
+				this.$u.api.newData.realtime(this.symbol ).then(res => {
+          console.info("🇨🇳🇨🇳:res --", res)
+          if(res.status === 'SUCCEED'){
+            this.json =res.result[0]
+          }
+
 				})
 			},
 			handleData(day) {

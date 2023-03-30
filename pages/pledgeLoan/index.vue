@@ -117,47 +117,41 @@
 					<u-popup v-model="showPopup" mode="center" :zoom="false" border-radius="14" length="95%"
 						:closeable="true">
 						<view class="popup">
-							<view class="title">Rules Description</view>
+							<view class="title">{{i18n.gzsm}}</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Rules Description</text>
+									<text>{{i18n.gzsm}}</text>
 									<span class="right">75%</span>
 								</view>
 								<view class="text-grey mt-12">
-									The loanable amount is equal to the pledge amount * the initial pledge rate
+                 {{i18n.kejiejine}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Margin Pledge Rate</text>
+									<text>{{i18n.bczyl}}</text>
 									<span class="right">60%</span>
 								</view>
 								<view class="text-grey mt-12">
-									(Order loan assets + accumulated interest) is converted into pledged asset
-									price/pledged asset value ≥ 75%, the system will remind you to replenish pledged
-									assets or repay in advance * initial pledge rate
+                 {{i18n.ddjhzc}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Closing pledge rate</text>
+									<text>{{i18n.pczyl}}</text>
 									<span class="right">850</span>
 								</view>
 								<view class="text-grey mt-12">
-									(Order loan asset + accumulated interest) is converted into pledged asset
-									price/pledged asset value ≥ 83%, and the system will automatically sell/deduct the
-									pledged asset to repay the money. Please replenish the mortgage funds in time
+                {{i18n.ddjhzcjjlx}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Interest rate charges</text>
+									<text>{{i18n.llfy}}</text>
 									<span class="right"></span>
 								</view>
 								<view class="text-grey mt-12">
-									The hourly interest rate is 0.2%; the daily interest rate is 4.8%; the loan
-									repayment fee is calculated by the hour, and the payment is calculated by the hour,
-									if it is less than 1 hour, it will be calculated as 1 hour
+                 {{i18n.xsll}}
 								</view>
 							</view>
 						</view>
@@ -224,19 +218,19 @@
 			},
 			async getInfo() {
 				if (this.borrowPrice < 200) {
-					this.$utils.showToast('借币数量不能少于200')
+					this.$utils.showToast(this.i18n.xy200)
 					return false
 				}
 				if (this.pledgePrice <= 0) {
-					this.$utils.showToast('质押需大于0')
+					this.$utils.showToast(this.i18n.dy0)
 					return false
 				}
 				if (!this.chooseCoin.name) {
-					this.$utils.showToast('请选择质押币')
+					this.$utils.showToast(this.i18n.qxzzyb)
 					return false
 				}
 				if (this.pledgePrice > this.chooseCoin.price) {
-					this.$utils.showToast('超出可用余额')
+					this.$utils.showToast(this.i18n.cckyye)
 					
 					this.$nextTick(() => {
 					  this.pledgePrice = this.chooseCoin.price
@@ -245,7 +239,7 @@
 				}
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return false
 				}
 				let res = await this.$u.api.pledge.getLoanAmount(this.borrowPrice, this.termList[this.termIndex], this
@@ -260,7 +254,7 @@
 			async buyBtnHanler() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return
 				}
 				let flag = await this.getInfo()
@@ -284,7 +278,7 @@
 					predictRefundMoney: this.detailInfo.predictRefundMoney
 				})
 				if (res.status == "SUCCEED") {
-					this.$utils.showToast('借币成功')
+					this.$utils.showToast(this.i18n.jbcg)
 				} else {
 					this.$utils.showToast(res.errorMessage)
 				}
@@ -300,7 +294,7 @@
 			async getMyCoinList() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return
 				}
 				let res = await this.$u.api.pledge.getFundOrderByUserId(userId)
