@@ -890,7 +890,7 @@
 					this.list = res.result;
 				}).catch(error=>{
           this.isError = true
-          this.$utils.showToast(this.i18n.ghbbkjy)
+          // this.$utils.showToast(this.i18n.ghbbkjy)
         })
 			},
 			getTopBtn(index) {

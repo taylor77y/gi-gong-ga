@@ -1,25 +1,25 @@
 <template>
 	<view class="page">
-		<xl-header title="订单详情" />
+		<xl-header :title=i18n.ddxq />
 		<view class="container">
 			<view class="title">
 				{{statusFilter(data.status)}}
 			</view>
 			<view class="fz">
-				总负债
+        {{ i18n.zfz }}
 			</view>
 			<view class="fz-usdt">
 				<view class="number">
 					{{ data.totalIncurDebts }} USDT
 				</view>
 				<view class="btn" @tap="toRePayMent()" v-show="data.status == 0">
-					还款
+          {{ i18n.huankuang }}
 				</view>
 			</view>
 			<view class="col">
 				<view class="left">
 					<view class="t">
-						贷款币种
+						{{i18n.dkbz}}
 					</view>
 					<view class="b">
 						{{ data.borrowName}}
@@ -27,7 +27,7 @@
 				</view>
 				<view class="right">
 					<view class="t">
-						总借款
+					{{i18n.zjk}}
 					</view>
 					<view class="b">
 						{{ data.borrowMoney}}
@@ -37,7 +37,7 @@
 			<view class="col">
 				<view class="left">
 					<view class="t">
-						总利息
+				{{i18n.zlx}}
 					</view>
 					<view class="b">
 						{{ data.totalMoney}} {{ data.borrowName}}
@@ -45,7 +45,7 @@
 				</view>
 				<view class="right">
 					<view class="t">
-						时利率/天利率
+						{{i18n.shililv}}
 					</view>
 					<view class="b">
 						{{ data.hrRate}} % / {{ data.dayRate}} %
@@ -55,7 +55,7 @@
 			<view class="col">
 				<view class="left">
 					<view class="t">
-						质押率
+					{{i18n.zyl}}
 					</view>
 					<view class="b">
 						{{ data.pledgeRate}}
@@ -63,7 +63,7 @@
 				</view>
 				<view class="right">
 					<view class="t">
-						强平价格(BTC/USDT)
+            {{ i18n.qiangpingjiage }}
 					</view>
 					<view class="b">
 						{{ data.forcePrice}}
@@ -74,29 +74,29 @@
 
 			</view>
 			<view class="cell">
-				<div class="l">订单号</div>
+				<div class="l">{{i18n.ddh}}</div>
 				<div class="r">{{data.orderNumber}}</div>
 			</view>
 			<view class="cell">
-				<div class="l">借款时间</div>
+				<div class="l">{{i18n.jksj}}</div>
 				<div class="r">{{ dateFormat(data.creationTime)}}</div>
 			</view>
 			<view class="cell">
-				<div class="l">到期时间</div>
+				<div class="l">{{i18n.dqsj}}</div>
 				<div class="r">{{ dateFormat(data.expireTime)}}</div>
 			</view>
 			<view class="cell" @tap="toDetail()">
-				<div class="l link">质押记录</div>
+				<div class="l link">{{i18n.zyjl}}</div>
 				<div class="r">
 					<u-icon name="arrow-right" color="#13d3eb" size="28"></u-icon>
 				</div>
 			</view>
 			<view class="btn-container">
 				<view class="btn-add" @tap="addPledge()">
-					新增质押
+					{{i18n.xzzy}}
 				</view>
 				<view class="btn-bro" @tap="pledgeLoanRenew()">
-					续借
+					{{i18n.jiexu}}
 				</view>
 			</view>
 		</view>
@@ -107,6 +107,7 @@
 	import {
 		formatDate
 	} from "@/common/utils/dateFormat.js"
+  import i18n from "../../common/locales/config";
 	export default {
 		data() {
 			return {
@@ -117,17 +118,23 @@
 			this.data = JSON.parse(options.data)
 			console.log('this.data', this.data)
 		},
+    computed:{
+      i18n(){
+        return this.$t("pledgeIndex")
+      }
+    },
 		methods: {
+      i18n,
 			dateFormat(time){
 				return formatDate(time)
 			},
 			statusFilter(status) {
 				if (status == 0) {
-					return '计息中'
+					return this.i18n.jxz
 				} else if (status == 1) {
-					return '已结清'
+					return this.i18n.yjq
 				} else if (status == 2) {
-					return '强平结清'
+					return this.i18n.qpjq
 				}
 			},
 			toDetail() {

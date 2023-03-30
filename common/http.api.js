@@ -460,19 +460,15 @@ const install = (Vue, vm) => {
 	
 	// 新实时数据接口
 	const symbols = "dai,kre,apd,btc,etc,eth,ada,yfi,xtz,doge,shib,qxg,yfii,qtum,mln,xrp,ltc,tl,axs,sushi,xtg,zyq,op,sol,aave,knc,comp,tmx,lrc,atom,iotx,chr,mx,blz,bal,beth,atf,ape"
-	const newDataInterface = {
+	const newData = {
 		// 获取全部/单币详情
-		realtime:(symbol = symbols)=>vm.$u.get('https://advchainex.com/wap/api/realtime!execute.action?symbol'+symbol),
+		realtime:(symbol = symbols,order = 'asc')=>vm.$u.get(`/data/data/new/realtime?symbol=${symbol}&order=${order}`),
 		// 获取币深度数据
-		depth:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/depth.action?symbol='+symbol),
+		depth:(symbol)=>vm.$u.get('/data/data/new/depth?symbol='+symbol),
 		// 获取币交易数据
-		trade:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/trade.action?symbol='+symbol),
+		trade:(symbol)=>vm.$u.get('/data/data/new/trade?symbol='+symbol),
 		// 获取币趋势数据
-		trend:(symbol)=>vm.$u.get('https://advchainex.com/wap/api/trend!execute.action?symbol='+symbol),
-		// 需登录，用不上
-		exchangeapplyorder:(symbol,type='orders')=>vm.$u.get(`https://advchainex.com/wap/api/exchangeapplyorder!list.action?symbol=${symbol}&type=${type}`),
-		// 需登录，用不上
-		contractorder:(symbol,type='orders')=>vm.$u.get(`https://advchainex.com/wap/api/contractorder!list.action?symbol=${symbol}&type=${type}`)
+		trend:(symbol)=>vm.$u.get('/data/data/new/trend?symbol='+symbol),
 	}
 	
 	vm.$u.api = {
@@ -501,7 +497,8 @@ const install = (Vue, vm) => {
 		fundFinancing,
 		machine,
 		pledge,
-		newDataInterface
+		newData
+
 	};
 }
 export default {
