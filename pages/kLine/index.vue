@@ -5,10 +5,10 @@
 		<view class="top-box">
 			<view class="left">
 				<view class="money">
-					{{json.nowPrice |SubString(4)}}
+					{{json.close |SubString(4)}}
 				</view>
 				<view class="conversion">
-					≈{{ setRate.mark }} {{json.nowPrice * setRate.rate |SubString(4)}}
+					≈{{ setRate.mark }} {{json.close * setRate.rate |SubString(4)}}
 					<text class="f-E45360">{{json.updown*100|SubString(2)}}%</text>
 				</view>
 			</view>
@@ -17,7 +17,7 @@
 					<view>
 						<view>{{ i18n.zgj }}</view>
 						<view class="num">
-							{{json.higPrice}}
+							{{json.high}}
 						</view>
 					</view>
 					<view>
@@ -300,15 +300,17 @@
         this.activetedTime = time
         this.getKlineData(this.currentBiType.symbol, this.activetedTime.value)
       },
-
-
 			getTips() {
 				this.$utils.showToast(this.$t('setting').zwkf)
 			},
 			getInfo() {
-				this.$u.api.bibi.getCoinInfo(this.name).then(res => {
-					let json = JSON.parse(res.result)
-					this.json = json || {}
+				// this.$u.api.bibi.getCoinInfo(this.name).then(res => {
+				this.$u.api.common.getCoinData(this.name).then(res => {
+          res.result.forEach(e=>{
+            if(e.name == this.name){
+              this.json = e
+            }
+          })
 				})
 			},
 			handleData(day) {

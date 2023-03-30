@@ -82,7 +82,9 @@ const install = (Vue, vm) => {
 		getCurrencys: (getCoinType) => vm.$u.get("/data/data/getIndexCoin?getCoinType="+getCoinType),
 		getNotices: (params={}) => vm.$u.get(`/data/data/getNotices?noticeType=${params.noticeType}&global=${params.global}`),
 		getRechargeMethod: (member) => vm.$u.get(`/member/balance/getRechargeMethod?member=${member}`),
-		getCoinData: () => vm.$u.get("/data/data/getIndexCoinNew")
+		getCoinData: () => vm.$u.get("/data/data/getIndexCoinNew"),
+		getIndexCoinKlineTrend: (symbol) => vm.$u.get(`/data/data/getIndexCoinKlineTrend?symbol=${symbol}`)//k线图 symbol 币种
+
 	}
 	//行情页面
 	const quato = {
