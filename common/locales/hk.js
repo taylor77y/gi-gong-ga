@@ -2124,6 +2124,15 @@ export default {
 		zyjl: '質押記錄',
 		xzzy: '新增質押',
 		jiexu: '續借',
+		huankuang: '還款',
+		quanbu: '全部',
+		keyongyue: '可用餘額',
+		lixi: '利息',
+		bjhk: '本金還款',
+		hhhzyl: '還款後質押率',
+		querenhuankuan: '確認還款',
+		dyhkje: '大於還款金額',
+		qsrhksl: '請輸入還款數量',
 
 	},
 	withdraw: {

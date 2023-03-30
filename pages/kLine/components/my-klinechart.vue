@@ -7,7 +7,7 @@
         {{item.name}}
       </u-col>
     </u-row>
-    <view id="klinechart" style="width:100%;height:500px"></view>
+    <view id="klinechart" style="width:100%;height:400px"></view>
   </view>
 </template>
 

@@ -5,11 +5,11 @@
 		<view class="top-box">
 			<view class="left">
 				<view class="money">
-					{{json.close |SubString(4)}}
+					{{json.last |SubString(4)}}
 				</view>
 				<view class="conversion">
-					≈{{ setRate.mark }} {{json.close * setRate.rate |SubString(4)}}
-					<text class="f-E45360">{{json.change_ratio|SubString(2)}}%</text>
+					≈{{ setRate.mark }} {{json.last * setRate.rate |SubString(4)}}
+					<text class="f-E45360">{{computRate(json)|SubString(2)}}%</text>
 				</view>
 			</view>
 			<view class="right">
@@ -17,7 +17,7 @@
 					<view>
 						<view>{{ i18n.zgj }}</view>
 						<view class="num">
-							{{json.high}}
+							{{json.high24h}}
 						</view>
 					</view>
 					<view>
@@ -31,7 +31,7 @@
 					<view>
 						<view>24h{{ i18n.zdj }}</view>
 						<view class="num">
-							{{json.low}}
+							{{json.low24h}}
 						</view>
 					</view>
 					<!-- <view>
@@ -280,13 +280,26 @@
 			}
 		},
 		methods: {
+      //计算比例:
+      computRate(item){
+        // console.log('computRate',rate)
+        return (item.last - item.open24h) / item.open24h * 100
+      },
       // 获取 图表数据
+
       async getKlineData(symbol = this.symbol, line = '1min') {
-        const {status,result} = await this.$u.api.newData.trend(symbol, line);
-        console.info("🇨🇳🇨🇳:result --", result)
-        // const {status,result,data} = await this.$u.api.trendDetails.getKline(symbol, line);
-        // if (status === 'SUCCEED') {
-        //   this.klineData = data
+        const {status,result} = await this.$u.api.newData.trend(symbol, '15m',   2000);
+        // console.info("🇨🇳🇨🇳:result --", result)
+        const modifiedData = result.map(obj => ({
+          timestamp: Number(obj[0]),//时间戳
+          open: Number(obj[1]),//开盘价
+          high: Number(obj[2]),//最高价
+          low: Number(obj[3]),//最低价
+          close: Number(obj[4]),//收盘价
+          volume: Number(obj[5])//成交量
+        }));
+        // console.info("🇨🇳🇨🇳:modifiedData --", modifiedData)
+          this.klineData = modifiedData
         // }
       },
 
@@ -302,7 +315,7 @@
 			getInfo() {
 				// this.$u.api.common.getCoinData(this.name).then(res => {
 				this.$u.api.newData.realtime(this.symbol ).then(res => {
-          console.info("🇨🇳🇨🇳:res --", res)
+          // console.info("🇨🇳🇨🇳:哈哈哈哈 --", res)
           if(res.status === 'SUCCEED'){
             this.json =res.result[0]
           }
