@@ -22,7 +22,7 @@
 			</view>
 			<view class="cont">
 				<view class="top">
-					{{item.last}}
+					{{item.last |SubString(2)}}
 				</view>
 				<!-- 				<view class="money">
 					{{ setRate.mark }} {{Number(item.close).toFixed(2)}}
@@ -37,7 +37,7 @@
 			<view class="cje" v-if="tabIndex == 3">
 				{{Number((item.volume || 0)).toFixed(2)}}
 			</view>
-			<view class="right" :class="{right1:item.rate>0}">
+			<view class="right" :class="{right1:item.rate>0}"  v-else>
 				{{ item.rate.toFixed(2) }} %
 			</view>
 		</view>

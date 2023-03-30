@@ -207,7 +207,12 @@
 					if (res.status == 'SUCCEED') {
 						let arr = []
 						res.result.forEach(e=>{
-							arr.push({...e,rate:this.computRate(e)})
+							let r = this.computRate(e)
+							arr.push({...e,
+							rate: r,
+							change_ratio: r,
+							volume: e.high24h
+							})
 						})
 						this.initCoinList = arr
 						this.sortList(arr)

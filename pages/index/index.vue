@@ -184,7 +184,6 @@
 				this.sortList(this.coinList)
 			},
 			sortList(list) {
-				list = list.slice(0, 10)
 				this.coinList = []
 				if (this.tabIndex == 0) {
 					if (this.isAscend == 1) {
@@ -239,7 +238,7 @@
 						})
 					}
 				}
-				this.coinList = list
+				this.coinList = list.slice(0, 10)
 			},
 			computRate(item){
 				// console.log('computRate',rate)
@@ -252,7 +251,12 @@
 						try {
 							let arr = []
 							res.result.forEach(e=>{
-								arr.push({...e,rate:this.computRate(e)})
+								let r = this.computRate(e)
+								arr.push({...e,
+								rate: r,
+								change_ratio: r,
+								volume: e.high24h
+								})
 							})
 							this.initCoinList = arr
 							// console.log('this.coinList',this.coinList)
