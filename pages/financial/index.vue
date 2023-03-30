@@ -15,7 +15,7 @@
 				<view class="left" @click="showSpec = true">
 					<image src="../../static/image/new/1.png" />
 					<!-- {{pairsItem.pairsName}} -->
-					{{pairsItem.name}}
+					{{pairsItem.name }}
 					<text class="num" :class="{'text-red': pairsItem.change_ratio < 0}">
 						<text v-show="pairsItem.change_ratio > 0 "> + </text>
 						<text v-show="pairsItem.change_ratio < 0 "> - </text>
@@ -379,14 +379,21 @@
 			this.$u.api.fack.getCurrencyConfiguration().then(res => {
 				this.rate = res.result[0]
 			})
-			if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+			if (this.pairsItem.symbol) {
+				// this.getRealTimeOne(this.pairsItem.symbol);
+				
+				this.getNewDataDepth()
+			}
 			else this.getRealTimeOne();
       setInterval(()=>{
         this.getWarehousesList()
       },5000)
 			this.interval = setInterval(() => {
         this.getWarehousesList()
-				if (this.pairsItem.symbol) this.getRealTimeOne(this.pairsItem.symbol);
+				if (this.pairsItem.symbol) {
+					this.getRealTimeOne(this.pairsItem.symbol);
+					this.getNewDataDepth()
+				}
 				else this.getRealTimeOne();
 			}, 5000)
 		},
@@ -415,6 +422,7 @@
 			// this.$store.state.socket.removeListener('daymarket')
 		},
 		onLoad() {
+			this.getNewDataRealtime()
 			let member = uni.getStorageSync('userId')
 			if (member) {
 				this.getPairsList();
@@ -448,16 +456,34 @@
 
 		},
 		methods: {
+			async getNewDataRealtime(){
+				let res = await this.$u.api.newData.realtime()
+				if(res.status == 'SUCCEED'){
+					this.pairs = res.result
+					console.log('this.pairs',this.pairs)
+				}
+			},
+			async getNewDataDepth(){
+				console.log('this.pairsItem',this.pairsItem)
+				let res = await this.$u.api.newData.depth(this.pairsItem.symbol)
+				if(res.status == 'SUCCEED'){
+					this.buyData = res.result.asks.slice(0, 5);
+					this.sellData = res.result.bids.slice(0, 5);
+					console.log('this.buyData',this.buyData)
+					console.log('this.sellData',this.sellData)
+				}
+			},
 			// 获取类型的币值 实时数据
 			async getRealtime() {
 				this.$u.throttle(async () => {
-					const {
-						code,
-						data
-					} = await this.$u.api.trendDetails.getRealtime();
-					if (code == '0') {
-						this.pairs = data
-					}
+					// const {
+					// 	code,
+					// 	data
+					// } = await this.$u.api.trendDetails.getRealtime();
+					// if (code == '0') {
+					// 	this.pairs = data
+					// }
+					this.getNewDataRealtime()
 				}, 2000)
 			},
 			// 获取当前币值
@@ -469,10 +495,11 @@
 				if (code == '0') {
 					this.pairsItem = data[0]
 					// console.log(this.socket)
-					if (!this.socket) {
-						this.socket = null
-						this.socketFn()
-					}
+					this.getNewDataDepth()
+					// if (!this.socket) {
+					// 	this.socket = null
+					// 	this.socketFn()
+					// }
 				}
 			},
 
@@ -751,7 +778,7 @@
 				})
 			},
 			getLeverList() {
-				this.$u.api.yx.getLevers(this.pairsItem.pairsName).then(res => {
+				this.$u.api.yx.getLevers(this.pairsItem.pairsName || this.pairsItem.name).then(res => {
 					this.levers = res.result.map(item => {
 						return {
 							...item,
@@ -761,7 +788,7 @@
 				})
 			},
 			getCoinInfoList() {
-				this.$u.api.bibi.getCoinInfo(this.pairsItem.pairsName).then(res => {
+				this.$u.api.bibi.getCoinInfo(this.pairsItem.pairsName || this.pairsItem.name).then(res => {
 					let json = JSON.parse(res.result)
 					this.nowData = json
 					this.search = this.search ? this.search : this.nowData.nowPrice
@@ -780,11 +807,12 @@
 				);
 			},
 			getTo(item) {
-				// console.log('选中了', item)
+				console.log('选中了', item)
 				this.search = item.open
-				this.socket.send(`initEntrust-${item.pairsName}`);
+				// this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
-				this.socketFn()
+				this.getNewDataDepth()
+				// this.socketFn()
 
 				this.getLeverList();
 				this.getWarehousesList();

@@ -288,6 +288,7 @@
 					'zh': 'CHINESE_SIM',
 					'en': 'ENGLISH',
 					'ft': 'CHINESE_TRAD',
+					'hk': 'CHINESE_TRAD',
 					'hy': 'KOREAN',
 					'jp': 'JAPANESE',
 					'tg': 'THAI'
