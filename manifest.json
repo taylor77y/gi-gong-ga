@@ -1,6 +1,6 @@
 {
     "name" : "WooCloud",
-    "appid" : "__UNI__ED9969A",
+    "appid" : "__UNI__9A6BCB3",
     "description" : "测试",
     "versionName" : "0.8.1",
     "versionCode" : 81,
@@ -65,13 +65,13 @@
             },
             "icons" : {
                 "android" : {
-                    "hdpi" : "unpackage/res/icons/72x72.png",
-                    "xhdpi" : "unpackage/res/icons/96x96.png",
-                    "xxhdpi" : "unpackage/res/icons/144x144.png",
-                    "xxxhdpi" : "unpackage/res/icons/192x192.png"
+                    "hdpi" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                    "xhdpi" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                    "xxhdpi" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                    "xxxhdpi" : "/Users/erle/Pictures/电脑壁纸/13.png"
                 },
                 "ios" : {
-                    "appstore" : "unpackage/res/icons/1024x1024.png",
+                    "appstore" : "/Users/erle/Pictures/电脑壁纸/13.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -84,14 +84,14 @@
                         "spotlight@2x" : "unpackage/res/icons/80x80.png"
                     },
                     "iphone" : {
-                        "app@2x" : "unpackage/res/icons/120x120.png",
-                        "app@3x" : "unpackage/res/icons/180x180.png",
-                        "notification@2x" : "unpackage/res/icons/40x40.png",
-                        "notification@3x" : "unpackage/res/icons/60x60.png",
+                        "app@2x" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                        "app@3x" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                        "notification@2x" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                        "notification@3x" : "/Users/erle/Pictures/电脑壁纸/13.png",
                         "settings@2x" : "unpackage/res/icons/58x58.png",
-                        "settings@3x" : "unpackage/res/icons/87x87.png",
-                        "spotlight@2x" : "unpackage/res/icons/80x80.png",
-                        "spotlight@3x" : "unpackage/res/icons/120x120.png"
+                        "settings@3x" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                        "spotlight@2x" : "/Users/erle/Pictures/电脑壁纸/13.png",
+                        "spotlight@3x" : "/Users/erle/Pictures/电脑壁纸/13.png"
                     }
                 }
             }
@@ -149,8 +149,8 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/api" : {
-//                    "target": "http://192.168.2.15/",
-                     "target" : "https://www.mxoexchange.com/",
+                    "target" : "http://192.168.2.15/",
+                    // "target" : "https://www.mxoexchange.com/",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {

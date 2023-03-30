@@ -315,7 +315,7 @@
 			getInfo() {
 				// this.$u.api.common.getCoinData(this.name).then(res => {
 				this.$u.api.newData.realtime(this.symbol ).then(res => {
-          // console.info("🇨🇳🇨🇳:哈哈哈哈 --", res)
+          console.info("🇨🇳🇨🇳:哈哈哈哈 --", res)
           if(res.status === 'SUCCEED'){
             this.json =res.result[0]
           }
