@@ -13,7 +13,7 @@
 				<text class="num" :class="{'text-red': pairsItem.change_ratio < 0}">
 					<text v-show="pairsItem.change_ratio > 0 "> + </text>
 					<text v-show="pairsItem.change_ratio < 0 "> - </text>
-					{{ pairsItem.change_ratio }}%
+					{{ pairsItem.change_ratio|SubString(2) }}%
 					<!-- {{pairsItem.updown*100|SubString(2)}}% -->
 				</text>
 			</view>
@@ -36,11 +36,11 @@
 				<right-area :max-buy="maxBuy" :code="0" :openup="buyData" />
 				<view class="money">
 					<!-- {{nowData.nowPrice}} -->
-					{{pairsItem.close}}
+					{{pairsItem.last}}
 				</view>
 				<view class="zhehe">
 					<!-- ≈{{ setRate.mark }}{{ nowData.nowPrice * setRate.rate |SubString(4) }} -->
-					≈ {{ rate.mark }} {{ pairsItem.close * rate.rate |SubString(4) }}
+					≈ {{ rate.mark }} {{ pairsItem.last * rate.rate |SubString(4) }}
 				</view>
 				<right-area :max-buy="maxSell" :code="1" :openup="sellData" />
 				<view class="d-flex align-items-center">
@@ -247,6 +247,7 @@
 				if(this.pairsItem.symbol) {
 					// this.getRealTimeOne(this.pairsItem.symbol);
 					//新数据
+					this.getRealtime()
 					this.getNewDataDepth()
 				}
 				else this.getRealTimeOne();
@@ -254,7 +255,7 @@
 		},
 		onReady() {},
 		onLoad() {
-			this.getNewDataRealtime()
+			this.getNewDataRealtime(true)
 		},
 		onShow() {
 			this.btnCode = 1;
@@ -312,21 +313,64 @@
 			}
 		},
 		methods: {
-			async getNewDataRealtime(){
+			computRate(item){
+				// console.log('computRate',rate)
+				return (item.last - item.open24h) / item.open24h * 100
+			},
+			async getNewDataRealtime(first=false){
 				let res = await this.$u.api.newData.realtime()
 				if(res.status == 'SUCCEED'){
-					this.pairs = res.result
+					let arr = []
+					res.result.forEach(e=>{
+						let coinName = e.ccy + '/USDT'
+						arr.push({...e,
+						nowPrice:e.last,
+						change_ratio:this.computRate(e),
+						price:e.last,
+						symbol:coinName,
+						name:coinName,
+						pairsName:coinName
+						})
+						if(this.pairsItem.ccy == e.ccy){
+							this.pairsItem.change_ratio = this.computRate(e)
+						}
+					})
+					this.pairs = arr
+					if(!this.pairsItem){
+						console.log('进来了8899',arr[0])
+						this.pairsItem = arr[0]
+					}
+					if(first){
+						this.pairsItem = arr[0]
+						this.getNewDataDepth()
+					}
 					console.log('this.pairs',this.pairs)
 				}
 			},
 			async getNewDataDepth(){
 				console.log('this.pairsItem',this.pairsItem)
-				let res = await this.$u.api.newData.depth(this.pairsItem.symbol)
+				let res = await this.$u.api.newData.trade(this.pairsItem.ccy)
 				if(res.status == 'SUCCEED'){
-					this.buyData = res.result.asks.slice(0, 5);
-					this.sellData = res.result.bids.slice(0, 5);
-					console.log('this.buyData',this.buyData)
-					console.log('this.sellData',this.sellData)
+					if(res.result){
+						let arr1 = [];
+						let arr2 = [];
+						res.result[0].asks.slice(0, 5).forEach(e=>{
+							arr1.push({
+								price:e[0],
+								amount:e[1]
+							}) 
+						})
+						res.result[0].bids.slice(0, 5).forEach(e=>{
+							arr2.push({
+								price:e[0],
+								amount:e[1]
+							}) 
+						})
+						this.buyData = arr1
+						this.sellData = arr2
+						console.log('this.buyData',this.buyData)
+						console.log('this.sellData',this.sellData)
+					}
 				}
 			},
 			

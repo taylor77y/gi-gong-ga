@@ -158,6 +158,18 @@ class Request {
 				data
 			})
 		}
+		
+		// get请求
+		this.getNoLoading = (url, data = {}, header = {}) => {
+			
+			return this.request({
+				method: 'GET',
+				url,
+				header,
+				data,
+				showLoading:false
+			})
+		}
 
 		// post请求
 		this.post = (url, data = {}, header = {}) => {

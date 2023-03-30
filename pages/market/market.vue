@@ -186,9 +186,9 @@
 						if (Letter.test(this.search)) {
 							list = list.filter(array => {
 								let flag = false
-								if (array.name) {
+								if (array.ccy) {
 									let reg = new RegExp(this.search, 'i')
-									flag = array.name.match(reg)
+									flag = array.ccy.match(reg)
 								}
 								return flag
 							})
@@ -197,12 +197,20 @@
 				}
 				this.coinList = list
 			},
+			computRate(item){
+				// console.log('computRate',rate)
+				return (item.last - item.open24h) / item.open24h * 100
+			},
 			getCoinData() {
-				this.$u.api.common.getCoinData().then(res => {
+				this.$u.api.newData.realtime().then(res => {
 					// console.log('11111111',res)
 					if (res.status == 'SUCCEED') {
-						this.initCoinList = res.result
-						this.sortList(res.result)
+						let arr = []
+						res.result.forEach(e=>{
+							arr.push({...e,rate:this.computRate(e)})
+						})
+						this.initCoinList = arr
+						this.sortList(arr)
 					}
 				})
 			},

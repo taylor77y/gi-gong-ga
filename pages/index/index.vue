@@ -241,26 +241,34 @@
 				}
 				this.coinList = list
 			},
+			computRate(item){
+				// console.log('computRate',rate)
+				return (item.last - item.open24h) / item.open24h * 100
+			},
 			getCoinData() {
-				this.$u.api.common.getCoinData().then(res => {
+				this.$u.api.newData.realtime().then(res => {
 					// console.log('getCoinData',res)
 					if (res.status == 'SUCCEED') {
 						try {
-							this.initCoinList = res.result
-							// console.log('this.coinList',this.coinList)
 							let arr = []
-							res.result.forEach(e => {
-								if (e.name == 'BTC/USDT') {
-									arr[0] = e
-								} else if (e.name == 'ETH/USDT') {
-									arr[1] = e
-								} else if (e.name == 'ETC/USDT') {
-									arr[2] = e
+							res.result.forEach(e=>{
+								arr.push({...e,rate:this.computRate(e)})
+							})
+							this.initCoinList = arr
+							// console.log('this.coinList',this.coinList)
+							let arr2 = []
+							arr.forEach(e => {
+								if (e.ccy == 'BTC') {
+									arr2[0] = e
+								} else if (e.ccy == 'ETH') {
+									arr2[1] = e
+								} else if (e.ccy == 'ETC') {
+									arr2[2] = e
 								}
 							})
-							this.coinListT = arr
+							this.coinListT = arr2
 							// console.log('this.coinListT',this.coinListT)
-							this.sortList(res.result)
+							this.sortList(arr)
 							
 						} catch (e) {
 
