@@ -1,6 +1,6 @@
 <template>
 	<view class="home px-24">
-		<header-home />
+		<header-home @inputChange="searchChange"/>
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
 		<home-notice :notifications="noticeList" v-show="noticeList && noticeList.length>0" />
@@ -140,6 +140,8 @@
 				timer: null,
 				coinList: [],
 				initCoinList: [],
+				backCoinList:[],
+				search:'',
 				coinListT: [],
 				tabIndex: 0,
 				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
@@ -177,6 +179,11 @@
 			}, 5000);
 		},
 		methods: {
+			searchChange(val){
+				// console.log('searchChange',val)
+				this.search = val
+				this.sortList(this.backCoinList)
+			},
 			changeAscend() {
 				if (this.isAscend > 2) this.isAscend = 0;
 				else this.isAscend += 1;
@@ -237,6 +244,22 @@
 							return v2.volume - v1.volume
 						})
 					}
+				}
+				this.backCoinList = list
+				if(this.search){
+					this.$u.throttle(() => {
+						const Letter = new RegExp('[A-Za-z]+')
+						if (Letter.test(this.search)) {
+							list = list.filter(array => {
+								let flag = false
+								if (array.ccy) {
+									let reg = new RegExp(this.search, 'i')
+									flag = array.ccy.match(reg)
+								}
+								return flag
+							})
+						}
+					}, 50)
 				}
 				this.coinList = list.slice(0, 10)
 			},
