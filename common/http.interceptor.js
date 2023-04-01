@@ -5,7 +5,8 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
-		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/",
+		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/",
+		baseUrl: "http://wap.adbaa3011.cc/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/",
 
