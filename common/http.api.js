@@ -130,7 +130,7 @@ const install = (Vue, vm) => {
 		rechargeCurrency: (params={}) => vm.$u.post(`/member/balance/rechargeCurrency?amount=${params.amount}&currency=${params.currency}&memberId=${params.memberId}&chainName=${params.chainName}&paymentVoucher=${params.paymentVoucher}`),
 		//充值币种配置
 		currencyList: () => vm.$u.post("/otc/order/currencyList"),
-		getRechargeWallet: (type) => vm.$u.get(`member/balance/getRechargeWallet?type=${type}`),
+		getRechargeWallet: (type) => vm.$u.get(`member/balance/getRechargeWallet?type=${type}`),//充值币地址
 		//充值记录
 		rechargeCurrencyRecord: (member,pageNum,pageSize) => vm.$u.get(`/member/balance/rechargeCurrencyRecord?memberId=${member}&pageNum=${pageNum}&pageSize=${pageSize}`),
 		//提现记录

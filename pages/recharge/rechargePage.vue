@@ -200,6 +200,7 @@
             break
         }
         this.$u.api.user.getRechargeWallet(coinType).then(res=>{
+          console.info("🇨🇳🇨🇳:res --", res)
             if (res.status === 'SUCCEED') {
               this.rechargeAddress = res.result
               res.result.forEach(i=>{
