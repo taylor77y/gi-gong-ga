@@ -4,11 +4,10 @@
 			<view class="left" v-if="code === 0">
 				<image :src="baseUrl + '/symbol/'+(item.ccy).toLowerCase()+'.png'" />
 				<view class="num-text">
-					<text class="name">{{item.ccy}}<text
-							class="small">/USDT</text></text>
-<!-- 					<view class="amount">
-						{{i18n.chenjiaoliang}} {{item.amount}}
-					</view> -->
+					<text class="name">{{item.ccy}}<text class="small">/USDT</text></text>
+					<view class="amount">
+						{{i18n.chenjiaoliang }} {{item.sodUtc0 |SubString(2)}}
+					</view>
 				</view>
 			</view>
 			<view class="lefts" v-else>
@@ -17,7 +16,7 @@
 					<!-- /<text>xxx</text> <text class="b-btn">10x</text> -->
 				</view>
 				<view>
-					24H{{ i18n.liang }} {{parseInt(item.amount)}}
+					24H{{ i18n.liang }} {{parseInt(item.sodUtc0 * item.last) |SubString(2)}}
 				</view>
 			</view>
 			<view class="cont">
@@ -35,9 +34,9 @@
 				{{item.volume|SubString1(2)}}
 			</view> -->
 			<view class="cje" v-if="tabIndex == 3">
-				{{Number((item.volume || 0)).toFixed(2)}}
+				{{Number((item.sodUtc0 * item.last || 0)).toFixed(2)}}
 			</view>
-			<view class="right" :class="{right1:item.rate>0}"  v-else>
+			<view class="right" :class="{right1:item.rate>0}" v-else>
 				{{ item.rate.toFixed(2) }} %
 			</view>
 		</view>

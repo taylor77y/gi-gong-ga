@@ -6,9 +6,9 @@
 				<view class="num-text">
 					<text class="name">{{item.ccy}}<text
 							class="small">/USDT</text></text>
-<!-- 					<view class="amount">
-						成交量 {{item.amount}}
-					</view> -->
+					<view class="amount">
+						{{i18n.chenjiaoliang}} {{item.sodUtc0  |SubString(2)}}
+					</view>
 				</view>
 			</view>
 			<view class="lefts" v-else>
@@ -32,7 +32,7 @@
 				{{item.volume|SubString1(2)}}
 			</view>
 			<view class="cje" v-if="tabIndex == 3">
-				{{Number((item.volume || 0)).toFixed(2)}}
+				{{Number((item.sodUtc0 * item.last || 0)).toFixed(2)}}
 			</view>
 			<view class="right" :class="{right1:item.rate>0}" v-else>
 				{{ item.rate.toFixed(2) }} %
