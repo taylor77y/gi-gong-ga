@@ -5,11 +5,11 @@
     <view class="like-list">
       <view class="like-list-item" v-for="(item, index) in list" :key="index" @click="goToDetail(item.name)">
         <view class="d-flex-between-center f-title">
-          {{ item.name }}
-          <view :class="{'rate1': item.change_ratio < 0, 'rate': item.change_ratio >= 0}">
-          {{ getChangeRatio(item.change_ratio) }}</view></view>
-        <view class="money">{{ item.close }}</view>
-        <view class="equivalent">≈ {{ rateConfig.mark }} {{ item.close }}</view>
+          {{ item.ccy }}/USDT
+          <view :class="{'rate1': item.rate < 0, 'rate': item.rate >= 0}">
+          {{ getChangeRatio(item.rate) }}</view></view>
+        <view class="money" :class="{red:item.rate < 0}">{{ item.last }}</view>
+        <view class="equivalent">≈ {{ rateConfig.mark }} {{ item.last }}</view>
       </view>
     </view>
   </view>
@@ -52,7 +52,8 @@ export default {
     },
     // 获取涨跌幅的文本
     getChangeRatio(changeRatio) {
-      return `${changeRatio > 0 ? '+' : ''}${changeRatio}%`;
+		console.log('changeRatio',changeRatio)
+      return `${changeRatio > 0 ? '+' : ''}${changeRatio.toFixed(2)}%`;
     }
   }
 };
@@ -102,11 +103,15 @@ export default {
 					font-size: 24rpx;
 					color: #E45360;
 				}
+				
+				.red{
+					color:#e45360
+				}
 				.money {
 					font-size: 30rpx;
 					font-weight: bold;
 					margin-bottom: 10rpx;
-          color:#e45360
+					color:#5EBA89;
 				}
 				.equivalent {
 					color: #8D9099;

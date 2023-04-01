@@ -3,7 +3,7 @@
 		<xl-header :title="data.name"></xl-header>
 		<view class="container">
 			<view class="title">
-        购买金额
+        {{i18n.gmje}}
 			</view>
 			<view class="input-container">
 				<input type="number" class="input" placeholder="Enter amount" placeholder-style="color: #C0C0C0" v-model="amountAll">
@@ -11,12 +11,12 @@
 					USDT
 				</view>
 				<view class="all" @click="allBtn">
-					全部
+					{{i18n.quanbu}}
 				</view>
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-          可用余额
+          {{i18n.kyye}}
 				</view>
 				<view class="right">
 				{{availableAmount}} USDT
@@ -24,7 +24,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          数量限制
+          {{i18n.slxz}}
 				</view>
 				<view class="right">
 					
@@ -32,7 +32,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          最少可投
+          {{i18n.zskt}}
 				</view>
 				<view class="right">
 					{{data.min|| '-'}} USDT
@@ -40,18 +40,18 @@
 			</view>
 			<view class="row">
 				<view class="left">
-          最大可投
+          {{i18n.zdkt}}
 				</view>
 				<view class="right">
 					{{data.minx|| '-'}} USDT
 				</view>
 			</view>
 			<view class="sub-title">
-        概览
+        {{i18n.gailan}}
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          购买日
+          {{i18n.gmr}}
 				</view>
 				<view class="right">
           {{data.buyDate|| '-'}}
@@ -59,7 +59,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          起息日
+          {{i18n.qxr}}
 				</view>
 				<view class="right">
           {{data.startDate|| '-'}}
@@ -67,7 +67,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          派息时间
+          {{i18n.pxsj}}
 				</view>
 				<view class="right">
 				{{data.distribute|| '-'}}
@@ -75,7 +75,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          计息结東日
+          {{i18n.jxjsr}}
 				</view>
 				<view class="right">
 					{{data.endDate|| '-'}}
@@ -83,7 +83,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          提前赎回
+          {{i18n.tqsh}}
 				</view>
 				<view class="right">
 					{{data.ransomRate|| '-'}}
@@ -91,7 +91,7 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          预计收益
+          {{i18n.yjsy}}
 				</view>
 				<view class="right">
 					{{data.predictRate|| '-' }} USDT
@@ -99,19 +99,21 @@
 			</view>
 			<view class="row p-30">
 				<view class="left">
-          今日日收益
+          {{i18n.jrrsy}}
 				</view>
 				<view class="right">
           {{data.todayRate|| '-'}}
 				</view>
 			</view>
-			<button class="buy-btn" type="primary" @tap="toBuyHandler()">购买</button>
+			<button class="buy-btn" type="primary" @tap="toBuyHandler()">	{{i18n.goumai}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
-	export default {
+	import i18n from "../../common/locales/config";
+
+  export default {
 		data() {
 			return {
         periodDayId:0,//周期
@@ -126,6 +128,9 @@
      this.getCheckFundOrder()//获取数据
    },
     computed: {
+      i18n () {
+        return this.$t('financialManagement')
+      }
     },
 		methods: {
       //请求数据
@@ -152,15 +157,15 @@
       //确认购买
 			toBuyHandler(){
         if (this.amountAll <= 0) {
-          this.$utils.showToast('金额不能小于0')
+          this.$utils.showToast(this.i18n.jebnxy0)
           // 您可以显示错误消息给用户，而不是将消息记录在控制台中。
         }
         else if (this.amountAll < this.data.min) {
-          this.$utils.showToast('金额不能小于最少可投')
+          this.$utils.showToast(this.i18n.jebnxyzskt)
           // 在此处继续您的逻辑。
         }
         else if (this.amountAll > this.data.minx) {
-          this.$utils.showToast('金额不能大于最多可投')
+          this.$utils.showToast(this.i18n.jebndyzdkt)
           // 在此处继续您的逻辑。
         }
         else {

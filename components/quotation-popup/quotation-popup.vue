@@ -53,7 +53,7 @@
 						</view>
 					</view>
 					<view class="lower">
-						<text v-if="item.change_ratio"  :class="{'text-red': item.change_ratio < 0}"> {{item.change_ratio}}%</text>
+						<text v-if="item.change_ratio"  :class="{'text-red': item.change_ratio < 0}"> {{item.change_ratio|SubString(2)}}%</text>
 						<text v-else>{{item.updown*100|SubString(2)}}%</text>
 					</view>
 				</view>

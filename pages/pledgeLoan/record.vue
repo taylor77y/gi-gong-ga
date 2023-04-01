@@ -1,11 +1,11 @@
 <template>
 	<view class="page">
-		<xl-header title="质押借币订单"/>
+		<xl-header :title="i18n.zyjbdd"/>
 		<view class="order-list">
 			<view class="item" v-for="(item,index) in list" :key="index" @tap="toDetail(item)">
 				<view class="top">
 					<view class="bro">
-						借款
+						{{i18n.jk}}
 						<view class="num">
 							{{item.borrowMoney}} USDT
 						</view>
@@ -16,21 +16,21 @@
 				</view>
 				<view class="bot">
 					<view class="col">
-						<view class="t">贷款币种</view>
+						<view class="t">{{i18n.dkbz}}</view>
 						<view class="b">{{item.borrowName}}</view>
 					</view>
 					<view class="col">
-						<view class="t">质押率</view>
+						<view class="t">{{i18n.zyl}}</view>
 						<view class="b">{{(item.pledgeRate || 0.00).toFixed(2)}}%</view>
 					</view>
 					<view class="col">
-						<view class="t">总负债</view>
+						<view class="t">{{item.zfz}}</view>
 						<view class="b">{{item.totalIncurDebts}} USDT</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<u-loadmore status="nomore" :load-text="{nomore: '已经全部加载完毕'}" />
+		<u-loadmore status="nomore" :load-text="{nomore: i18n.ywcqbjz}" />
 	</view>
 </template>
 
@@ -52,11 +52,11 @@
 		methods: {
 			statusFilter(status){
 				if(status == 0){
-					return '计息中'
+					return this.i18n.jxz
 				}else if(status == 1){
-					return '已结清'
+					return this.i18n.yjq
 				}else if(status == 2){
-					return '强平结清'
+					return this.i18n.qpjq
 				}
 			},
 			toDetail(item){

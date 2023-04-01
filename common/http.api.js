@@ -82,7 +82,9 @@ const install = (Vue, vm) => {
 		getCurrencys: (getCoinType) => vm.$u.get("/data/data/getIndexCoin?getCoinType="+getCoinType),
 		getNotices: (params={}) => vm.$u.get(`/data/data/getNotices?noticeType=${params.noticeType}&global=${params.global}`),
 		getRechargeMethod: (member) => vm.$u.get(`/member/balance/getRechargeMethod?member=${member}`),
-		getCoinData: () => vm.$u.get("/data/data/getIndexCoinNew")
+		getCoinData: () => vm.$u.get("/data/data/getIndexCoinNew"),
+		getIndexCoinKlineTrend: (symbol) => vm.$u.get(`/data/data/getIndexCoinKlineTrend?symbol=${symbol}`)//k线图 symbol 币种
+
 	}
 	//行情页面
 	const quato = {
@@ -452,6 +454,20 @@ const install = (Vue, vm) => {
 		getLoanAmount:(borrowPrice,loanCycle,pledgePrice,pledgeName,userId)=>vm.$u.get(`/fund/pledge_order/getLoanAmount?borrowPrice=${borrowPrice}&loanCycle=${loanCycle}&pledgePrice=${pledgePrice}&pledgeName=${pledgeName}&userId=${userId}`),
 		setCheckFundOrder:(params)=>vm.$u.post(`/fund/pledge_order/setCheckFundOrder`,params,{ 'Content-Type': 'application/json' }),
 		getCountFundOrderByUserId:(userId)=>vm.$u.get('/fund/pledge_order/getCountFundOrderByUserId?userId='+userId),
+		setFundOrderRedeem:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderRedeem`,params,{ 'Content-Type': 'application/json' }),
+		setFundOrderPurchase:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
+	}
+	
+	// 新实时数据接口
+	const newData = {
+		// 获取全部/单币详情
+		realtime:(symbol,order = 'asc')=>vm.$u.get(`/data/data/new/realtime?symbol=${symbol||''}&order=${order}`),
+		// 获取币深度数据
+		depth:(symbol)=>vm.$u.get('/data/data/new/depth?symbol='+symbol),
+		// 获取币交易数据
+		trade:(symbol)=>vm.$u.get('/data/data/new/trade?symbol='+symbol),
+		// 获取币趋势数据
+		trend:(symbol,bar,limit)=>vm.$u.get(`/data/data/new/trend?symbol=${symbol}&bar=${bar}&limit=${limit}`),
 	}
 	
 	vm.$u.api = {
@@ -479,7 +495,9 @@ const install = (Vue, vm) => {
 		contractNewInterface,
 		fundFinancing,
 		machine,
-		pledge
+		pledge,
+		newData
+
 	};
 }
 export default {

@@ -13,7 +13,7 @@
 				</view>
 				<view>
 					<input v-model="search" placeholder-style="color: #9399A2;background: #F4F4F6" class="search-input"
-						placeholder="BTC" />
+						placeholder="BTC" @input="inputHandler"/>
 				</view>
 			</view>
 
@@ -69,6 +69,9 @@
 			this.getContactLink()
 		},
 		methods: {
+			inputHandler(){
+				this.$emit('inputChange',this.search)
+			},
 			async getContactLink(){
 				if (!this.contactLink) {
 					let res = await this.$u.api.kefu.getContactLink(1)

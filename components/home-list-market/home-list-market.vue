@@ -2,18 +2,18 @@
 	<view class="home-list">
 		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
 			<view class="left" v-if="code === 0">
-				<image :src="baseUrl + '/symbol/'+item.symbol+'.png'" />
+				<image :src="baseUrl + '/symbol/'+(item.ccy).toLowerCase()+'.png'" />
 				<view class="num-text">
-					<text class="name">{{biNameFilter(item.name,0)}}<text
-							class="small">{{biNameFilter(item.name,1)}}</text></text>
-					<view class="amount">
+					<text class="name">{{item.ccy}}<text
+							class="small">/USDT</text></text>
+<!-- 					<view class="amount">
 						成交量 {{item.amount}}
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<view class="lefts" v-else>
 				<view class="b-name">
-					<text class="name">{{item.name}}</text>
+					<text class="name">{{item.ccy}}</text>
 					<!-- /<text>xxx</text> <text class="b-btn">10x</text> -->
 				</view>
 				<view>
@@ -22,10 +22,10 @@
 			</view>
 			<view class="cont">
 				<view class="top">
-					{{item.close}}
+					{{item.last|SubString(2)}}
 				</view>
 				<view class="money">
-					${{Number(item.close).toFixed(2)}}
+					${{Number(item.last).toFixed(2)}}
 				</view>
 			</view>
 			<view v-if="curType == 'VOLUME'" class="right" :class="'right1'">
@@ -34,8 +34,8 @@
 			<view class="cje" v-if="tabIndex == 3">
 				{{Number((item.volume || 0)).toFixed(2)}}
 			</view>
-			<view class="right" :class="item.change_ratio>0?'right1':''" v-else>
-				{{ item.change_ratio>0 ? '+' + item.change_ratio : item.change_ratio}} %
+			<view class="right" :class="{right1:item.rate>0}" v-else>
+				{{ item.rate.toFixed(2) }} %
 			</view>
 		</view>
 	</view>

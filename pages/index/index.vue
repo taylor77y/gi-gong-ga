@@ -1,6 +1,6 @@
 <template>
 	<view class="home px-24">
-		<header-home />
+		<header-home @inputChange="searchChange"/>
 		<view style="height: 20rpx;"></view>
 		<home-banner :banner="banner" />
 		<home-notice :notifications="noticeList" v-show="noticeList && noticeList.length>0" />
@@ -140,6 +140,8 @@
 				timer: null,
 				coinList: [],
 				initCoinList: [],
+				backCoinList:[],
+				search:'',
 				coinListT: [],
 				tabIndex: 0,
 				isAscend: 0, // 1 升序 | 2 降序 | 0 正常
@@ -177,6 +179,11 @@
 			}, 5000);
 		},
 		methods: {
+			searchChange(val){
+				// console.log('searchChange',val)
+				this.search = val
+				this.sortList(this.backCoinList)
+			},
 			changeAscend() {
 				if (this.isAscend > 2) this.isAscend = 0;
 				else this.isAscend += 1;
@@ -238,27 +245,59 @@
 						})
 					}
 				}
+				this.backCoinList = list
+				if(this.search){
+					this.$u.throttle(() => {
+						const Letter = new RegExp('[A-Za-z]+')
+						if (Letter.test(this.search)) {
+							list = list.filter(array => {
+								let flag = false
+								if (array.ccy) {
+									let reg = new RegExp(this.search, 'i')
+									flag = array.ccy.match(reg)
+								}
+								return flag
+							})
+						}
+					}, 50)
+				}
 				this.coinList = list.slice(0, 10)
 			},
+			computRate(item){
+				// console.log('computRate',rate)
+				return (item.last - item.open24h) / item.open24h * 100
+			},
 			getCoinData() {
-				this.$u.api.common.getCoinData().then(res => {
+				this.$u.api.newData.realtime().then(res => {
 					// console.log('getCoinData',res)
 					if (res.status == 'SUCCEED') {
 						try {
-							this.sortList(res.result)
-							this.initCoinList = data.data
-							// console.log('this.coinList',this.coinList)
 							let arr = []
-							data.data.forEach(e => {
-								if (e.name == 'BTC/USDT') {
-									arr[0] = e
-								} else if (e.name == 'ETH/USDT') {
-									arr[1] = e
-								} else if (e.name == 'ETC/USDT') {
-									arr[2] = e
+							res.result.forEach(e=>{
+								let r = this.computRate(e)
+								arr.push({...e,
+                  name:e.ccy,
+								rate: r,
+								change_ratio: r,
+								volume: e.high24h
+								})
+							})
+							this.initCoinList = arr
+							// console.log('this.coinList',this.coinList)
+							let arr2 = []
+							arr.forEach(e => {
+								if (e.ccy == 'BTC') {
+									arr2[0] = e
+								} else if (e.ccy == 'ETH') {
+									arr2[1] = e
+								} else if (e.ccy == 'ETC') {
+									arr2[2] = e
 								}
 							})
-							this.coinListT = arr
+							this.coinListT = arr2
+							// console.log('this.coinListT',this.coinListT)
+							this.sortList(arr)
+							
 						} catch (e) {
 
 						}
@@ -287,6 +326,7 @@
 					'zh': 'CHINESE_SIM',
 					'en': 'ENGLISH',
 					'ft': 'CHINESE_TRAD',
+					'hk': 'CHINESE_TRAD',
 					'hy': 'KOREAN',
 					'jp': 'JAPANESE',
 					'tg': 'THAI'
@@ -300,11 +340,16 @@
 				})
 			},
 			async getCode(index) {
-
+				console.log('点击了',index)
 				// await this.getCoinData()
 				this.tabIndex = index
 				this.isAscend = 0
-				this.sortList(this.coinList)
+				if(index == 0){
+					this.coinList = this.initCoinList
+				}else{
+					this.sortList(this.coinList)
+				}
+				
 				// console.log('进来了',this.tabIndex)
 				switch (index) {
 					case 0:

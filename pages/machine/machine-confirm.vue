@@ -8,7 +8,7 @@
 			</view>
 			<view class="row mt-20">
 				<view class="left">
-					矿机金额
+					{{i18n.kjje}}
 				</view>
 				<view class="right">
 					{{amount}}
@@ -16,7 +16,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					30天预期收益
+					{{i18n.tyqsy}}
 				</view>
 				<view class="right">
 					{{30 * amount * order.todayRate }}
@@ -24,7 +24,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					周期
+					{{i18n.zhouqi}}
 				</view>
 				<view class="right">
 					{{order.periodDay}}
@@ -32,7 +32,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					日收益
+					{{i18n.rsy}}
 				</view>
 				<view class="right">
 					{{order.todayRate}}
@@ -40,7 +40,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					起息日
+			{{i18n.qxy}}
 				</view>
 				<view class="right">
 					{{ toMoDay()}}
@@ -48,7 +48,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					计息结束日
+				{{i18n.qxjsr}}
 				</view>
 				<view class="right">
 					--
@@ -56,7 +56,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					订单编号
+				{{i18n.ddbh}}
 				</view>
 				<view class="right">
 					{{orderNo}}
@@ -64,7 +64,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					订单时间
+					{{i18n.ddsj}}
 				</view>
 				<view class="right">
 					{{ buyTime(order.buyDate) }}
@@ -72,8 +72,8 @@
 			</view>
 
 			<view class="btn-container">
-				<button class="btn mr-20" @tap="cancelClick()">取消</button>
-				<button type="primary" class="btn ml-20" @tap="confirmClick()">确认</button>
+				<button class="btn mr-20" @tap="cancelClick()">{{i18n.quxiao}}</button>
+				<button type="primary" class="btn ml-20" @tap="confirmClick()">{{i18n.queding}}</button>
 			</view>
 		</view>
 	</view>
@@ -94,6 +94,11 @@
 				orderNo:''
 			}
 		},
+    computed: {
+      i18n () {
+        return this.$t('miner')
+      }
+    },
 		onLoad(options) {
 			this.id = options.id
 			this.amount = options.amount

@@ -15,11 +15,11 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/usdt.png'" />
 							<view class="select" @click="showSelect = !showSelect">
 								<text class="text">{{selected}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/usdt.png'" />
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 							<view v-show="showSelect" class="select-box1">
@@ -46,11 +46,12 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<view class="img-box"></view>
+							<image class="img-box" :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
 							<view class="select" @click="showPledgeSelect = !showPledgeSelect">
 								<text class="text">{{chooseCoin.name}}</text>
 								<view class="down-icon">
-									<image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" />
+									<!-- <image :src="baseUrl + '/symbol/'+tolowerCase(chooseCoin.name)+'.png'" /> -->
+									<image src="../../static/image/k-line/6.png" />
 								</view>
 							</view>
 						</view>
@@ -73,9 +74,11 @@
 							</view>
 						</view>
 					</view>
-					<view class="label">
+					<view class="label exchange-container">
 						{{i18n.kyye}}：
-						<span>-- {{chooseCoin.price}}</span>
+						<span v-if="chooseCoin.name">{{chooseCoin.price}} {{chooseCoin.name}}</span>
+						<span v-else>--</span>
+						<image class="exchange" src="../../static/image/exchange.png" @tap="toExChange()"></image>
 					</view>
 					<view class="mt-32">
 						<text class="loan-text mt-32">{{i18n.jbqx}}</text>
@@ -114,47 +117,41 @@
 					<u-popup v-model="showPopup" mode="center" :zoom="false" border-radius="14" length="95%"
 						:closeable="true">
 						<view class="popup">
-							<view class="title">Rules Description</view>
+							<view class="title">{{i18n.gzsm}}</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Rules Description</text>
+									<text>{{i18n.gzsm}}</text>
 									<span class="right">75%</span>
 								</view>
 								<view class="text-grey mt-12">
-									The loanable amount is equal to the pledge amount * the initial pledge rate
+                 {{i18n.kejiejine}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Margin Pledge Rate</text>
+									<text>{{i18n.bczyl}}</text>
 									<span class="right">60%</span>
 								</view>
 								<view class="text-grey mt-12">
-									(Order loan assets + accumulated interest) is converted into pledged asset
-									price/pledged asset value ≥ 75%, the system will remind you to replenish pledged
-									assets or repay in advance * initial pledge rate
+                 {{i18n.ddjhzc}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Closing pledge rate</text>
+									<text>{{i18n.pczyl}}</text>
 									<span class="right">850</span>
 								</view>
 								<view class="text-grey mt-12">
-									(Order loan asset + accumulated interest) is converted into pledged asset
-									price/pledged asset value ≥ 83%, and the system will automatically sell/deduct the
-									pledged asset to repay the money. Please replenish the mortgage funds in time
+                {{i18n.ddjhzcjjlx}}
 								</view>
 							</view>
 							<view class="mt-20 mb20">
 								<view class="title1">
-									<text>Interest rate charges</text>
+									<text>{{i18n.llfy}}</text>
 									<span class="right"></span>
 								</view>
 								<view class="text-grey mt-12">
-									The hourly interest rate is 0.2%; the daily interest rate is 4.8%; the loan
-									repayment fee is calculated by the hour, and the payment is calculated by the hour,
-									if it is less than 1 hour, it will be calculated as 1 hour
+                 {{i18n.xsll}}
 								</view>
 							</view>
 						</view>
@@ -207,25 +204,33 @@
 			this.getMyCoinList()
 		},
 		methods: {
+			toExChange(){
+				uni.navigateTo({
+					url:'/pages/flashCash/index'
+				})
+			},
 			tolowerCase(name){
-				console.log('name',name)
+				if(name){
+					console.log('进来了',name)
+					return name.toLowerCase()
+				}
 				return name
 			},
 			async getInfo() {
 				if (this.borrowPrice < 200) {
-					this.$utils.showToast('借币数量不能少于200')
+					this.$utils.showToast(this.i18n.xy200)
 					return false
 				}
 				if (this.pledgePrice <= 0) {
-					this.$utils.showToast('质押需大于0')
+					this.$utils.showToast(this.i18n.dy0)
 					return false
 				}
 				if (!this.chooseCoin.name) {
-					this.$utils.showToast('请选择质押币')
+					this.$utils.showToast(this.i18n.qxzzyb)
 					return false
 				}
 				if (this.pledgePrice > this.chooseCoin.price) {
-					this.$utils.showToast('超出可用余额')
+					this.$utils.showToast(this.i18n.cckyye)
 					
 					this.$nextTick(() => {
 					  this.pledgePrice = this.chooseCoin.price
@@ -234,7 +239,7 @@
 				}
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return false
 				}
 				let res = await this.$u.api.pledge.getLoanAmount(this.borrowPrice, this.termList[this.termIndex], this
@@ -249,7 +254,7 @@
 			async buyBtnHanler() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return
 				}
 				let flag = await this.getInfo()
@@ -273,7 +278,7 @@
 					predictRefundMoney: this.detailInfo.predictRefundMoney
 				})
 				if (res.status == "SUCCEED") {
-					this.$utils.showToast('借币成功')
+					this.$utils.showToast(this.i18n.jbcg)
 				} else {
 					this.$utils.showToast(res.errorMessage)
 				}
@@ -284,11 +289,12 @@
 			chooseCoinHandler(coin) {
 				this.chooseCoin = coin
 				this.showPledgeSelect = false
+				this.getInfo()
 			},
 			async getMyCoinList() {
 				let userId = uni.getStorageSync('userId')
 				if (!userId) {
-					this.$utils.showToast('请登录')
+					this.$utils.showToast(this.i18n.qdl)
 					return
 				}
 				let res = await this.$u.api.pledge.getFundOrderByUserId(userId)
@@ -307,6 +313,7 @@
 			},
 			bindPickerChange(event) {
 				this.termIndex = event.detail.value
+				this.getInfo()
 			},
 			close() {},
 			open() {},
@@ -315,6 +322,18 @@
 </script>
 
 <style lang="scss" scoped>
+	
+	.exchange-container{
+		display: flex;
+		// justify-content: center;
+		align-items: center;
+	}
+	.exchange{
+		margin-left: 20rpx;
+		width: 26rpx;
+		height: 26rpx;
+	}
+	
 	.header {
 		height: 80rpx;
 		padding: 0 20rpx;
@@ -390,7 +409,7 @@
 				.img-box {
 					width: 40rpx;
 					height: 40rpx;
-					background: #000;
+					// background: #000;
 					border-radius: 50%;
 					margin-right: 14rpx;
 					display: inline-block;

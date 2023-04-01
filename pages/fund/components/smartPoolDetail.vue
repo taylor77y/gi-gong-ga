@@ -3,14 +3,14 @@
 		<xl-header :title="data.name"></xl-header>
 		<view class="container">
 			<view class="title">
-				锁仓金额 (USDT)
+		{{i18n.scje}}
 			</view>
 			<view class="input-container">
 				{{ data.price}}
 			</view>
 			<view class="row mt-20 tb">
 				<view class="left">
-					锁仓时间
+          {{i18n.scsj }}
 				</view>
 				<view class="right">
 					{{ data.createTime}}
@@ -18,7 +18,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					当日收益
+					{{i18n.drsy}}
 				</view>
 				<view class="right">
 					{{ data.todayPrice }} USDT
@@ -26,7 +26,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					已获收益
+          {{ i18n.yhsy }}
 				</view>
 				<view class="right">
 					{{data.accumulatedIncome||0}}
@@ -34,7 +34,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					剩余天数
+				{{i18n.syts}}
 				</view>
 				<view class="right">
 					{{data.residueDay||0}} 天
@@ -42,7 +42,7 @@
 			</view>
 			<view class="row tb">
 				<view class="left">
-					30天预期收益
+				{{i18n.tyqsy}}
 				</view>
 				<view class="right">
 					{{ data.threePrice || 0 }} USDT
@@ -50,7 +50,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					日收益率
+				{{i18n.rsyl}}
 				</view>
 				<view class="right">
 					{{ data.dayRate || 0 }} %
@@ -58,7 +58,7 @@
 			</view>
 			<view class="row tb">
 				<view class="left">
-					起息时间
+				{{i18n.qxsj}}
 				</view>
 				<view class="right">
 					{{data.valueDate|| 0}}
@@ -66,7 +66,7 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					到期时间
+			{{i18n.dqsj}}
 				</view>
 				<view class="right">
 					{{data.finishValueDate|| '--'}}
@@ -75,7 +75,7 @@
 
 			<view class="row tb">
 				<view class="left">
-					订单编号
+					{{i18n.ddbh}}
 				</view>
 				<view class="right">
 					{{data.orderNumber|| 0 }}
@@ -83,14 +83,14 @@
 			</view>
 			<view class="row">
 				<view class="left">
-					订单时间
+				{{i18n.ddsj}}
 				</view>
 				<view class="right">
 					{{data.createTime || '-'}}
 				</view>
 			</view>
 			<view style="padding: 0 20rpx;">
-				<button class="buy-btn" type="primary" @click="toBuyHandler()">我要赎回</button>
+				<button class="buy-btn" type="primary" @click="toBuyHandler()">{{i18n.wysh}}</button>
 			</view>
 		</view>
 	</view>
@@ -111,7 +111,11 @@
 			this.data.valueDate = new Date(this.data.valueDate).toISOString().slice(0, 10);
 
 		},
-		computed: {},
+    computed: {
+      i18n () {
+        return this.$t('miner')
+      }
+    },
 		methods: {
 			//确认购买
 			toBuyHandler() {
