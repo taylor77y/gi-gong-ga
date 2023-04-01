@@ -57,7 +57,7 @@
 			</view>
 			<view class="item mt-50">
 				<view class="label">{{ i18n.zjzsc }}</view>
-				<u-row gutter="16" justify="space-between" class="mt-20">
+				<u-row gutter="16" justify="space-around" class="mt-20">
 					<u-col :span="4">
 						<u-upload :action="action" :header="header" @on-success="onSus1" @on-remove="positiveLink = ''" max-count="1" :custom-btn="true" class="upload" ref='zm'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
@@ -74,20 +74,20 @@
 						</u-upload>
 						<view class="label mt-10 u-margin-left-40">{{ i18n.zjfm }}</view>
 					</u-col>
-					<u-col :span="4">
+					<!-- <u-col :span="4">
 						<u-upload :action="action" :header="header" @on-success="onSus3" @on-remove="handLink = ''" max-count="1" :custom-btn="true" class="upload" ref='hc'>
 							<view slot="addBtn" class="slot-btn" hover-class="slot-btn__hover" hover-stay-time="150">
 								<u-icon name="camera-fill" size="60" :color="$u.color['lightColor']"></u-icon>
 							</view>
 						</u-upload>
 						<view class="label mt-10 u-margin-left-35">{{ i18n.zjsc }}</view>
-					</u-col>
+					</u-col> -->
 				</u-row>
 			</view>
 			<view class="item mt-50 pb-50">
 				<view class="label">{{ i18n.pssl }}</view>
 				<view class="mt-20">
-					<image src="../../static/img/identity.png" mode=""></image>
+					<image src="../../static/img/identity2.png" mode=""></image>
 				</view>
 			</view>
 			<view class="item mt-50">
@@ -221,9 +221,9 @@
 				if(!this.sideLink){
 					return this.$utils.showToast(this.i18n.sideLink)
 				}
-				if(!this.handLink){
-					 return this.$utils.showToast(this.i18n.handLink)
-				}
+				// if(!this.handLink){
+				// 	 return this.$utils.showToast(this.i18n.handLink)
+				// }
 				//验证3张照片是否全部上传
 				// let files = [];
 				//console.log(this.$refs.fm.lists[0].url);
@@ -263,9 +263,9 @@
 				this.$u.api.user.setAuthenWithAll(setAu).then(res=>{
 					console.log('setAuthenWithAll',res);
 					if(res?.status == "SUCCEED"){
-						return this.next()
+						return this.next();
 					}
-					return this.$utils.showToast(res?.errorMessage)
+					return this.$utils.showToast(res?.errorMessage);
 					// if(res.status == "SUCCEED"){}
 					// this.$utils.showToast(res.errorMessage)
 					// if(){
@@ -364,7 +364,8 @@
 		}
 		::v-deep uni-image {
 			width: 100%;
-			height: 110px;
+			height: 125px;
+			margin-left: 0;
 		}
 		.upload {
 			width: 100px;
