@@ -38,7 +38,7 @@
     </view>
 <!--    复制-->
     <view style="padding: 20px;">
-      <u-button type="primary" :plain="true" :hairline="true"  @click="">{{i18n.fz}}</u-button>
+      <u-button type="primary" :plain="true" :hairline="true"  @click="copyHandler()">{{i18n.fz}}</u-button>
     </view>
 
     <view class="verificationCode">
@@ -48,7 +48,7 @@
           </view>
         <view class="btn">
           <a href="javascript:0;" style=" color: #4D7CF5; margin-right: 10rpx; text-decoration : none" @click="clearInputNum()">{{i18n.qc}}</a>
-          <a href="javascript:0;" style="color: #4D7CF5;  text-decoration : none" >{{i18n.zt}}</a>
+          <a href="javascript:0;" style="color: #4D7CF5;  text-decoration : none" @click="getClipboardData()" >{{i18n.zt}}</a>
         </view>
       </view>
 	  <view>
@@ -105,6 +105,21 @@
       },
     },
     methods: {
+		getClipboardData(){
+			uni.getClipboardData({
+				success(res) {
+					console.log('getClipboardData',res)
+					if(res.length == 6){
+						this.$refs.inputmsg.valueModel = res
+					}
+				}
+			})
+		},
+		copyHandler(){
+			uni.setClipboardData({
+				data:this.secret
+			})
+		},
 		clearInputNum(){
 			this.$refs.inputmsg.valueModel = ''
 		},
