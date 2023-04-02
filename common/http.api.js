@@ -470,6 +470,12 @@ const install = (Vue, vm) => {
 		trend:(symbol,bar,limit)=>vm.$u.get(`/data/data/new/trend?symbol=${symbol}&bar=${bar}&limit=${limit}`),
 	}
 	
+	const googleAuth = {
+		getSecret:(name)=>vm.$u.get('/member/google/auth/getSecret?name='+name),
+		// getQrcode:(secret,name)=>vm.$u.get(`/member/google/auth/getQrcode?secret=${secret}&name=${name}`),
+		checkCode:(secret,code)=>vm.$u.get(`/member/google/auth/checkCode?secret=${secret}&code=${code}`)
+	}
+	
 	vm.$u.api = {
 		common,
 		user,
@@ -496,8 +502,8 @@ const install = (Vue, vm) => {
 		fundFinancing,
 		machine,
 		pledge,
-		newData
-
+		newData,
+		googleAuth
 	};
 }
 export default {
