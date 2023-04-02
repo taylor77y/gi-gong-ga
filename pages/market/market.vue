@@ -209,10 +209,10 @@
 						res.result.forEach(e=>{
 							let r = this.computRate(e)
 							arr.push({...e,
-                name:e.ccy,
+							name:e.ccy,
 							rate: r,
 							change_ratio: r,
-							volume: e.high24h
+							volume: e.sodUtc0 * e.last
 							})
 						})
 						this.initCoinList = arr
