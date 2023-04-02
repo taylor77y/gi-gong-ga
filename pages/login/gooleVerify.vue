@@ -22,15 +22,15 @@
     <view class="qrCode">
       <view class="imageBox">
 <!--       <view class="image">二维码</view>-->
-        <image @click="cancel()" class="image" referrerpolicy="no-referrer"  :src="src" />
+        <image @click="getSecret()" class="image" referrerpolicy="no-referrer"  :src="qrcode" />
       </view>
     </view>
 
     <!--地址 备注-->
     <view class="remarks">
       <view class="address">
-        <text style="margin-right: 15rpx" >2NXQFTOOWPTFWO5B</text>
-        <u-icon name="reload" @click="cancel()"></u-icon>
+        <text style="margin-right: 15rpx" >{{secret}}</text>
+        <u-icon name="reload" @click="getSecret()"></u-icon>
       </view>
       <view class="remarks">
         <text>{{i18n.ts}}</text>
@@ -47,8 +47,8 @@
               {{i18n.ggyzm}}
           </view>
         <view class="btn">
-          <a href="#" style=" color: #4D7CF5; margin-right: 10rpx; text-decoration : none">{{i18n.qc}}</a>
-          <a href="#" style="color: #4D7CF5;  text-decoration : none" >{{i18n.zt}}</a>
+          <a href="javascript:0;" style=" color: #4D7CF5; margin-right: 10rpx; text-decoration : none" @click="clearInputNum()">{{i18n.qc}}</a>
+          <a href="javascript:0;" style="color: #4D7CF5;  text-decoration : none" >{{i18n.zt}}</a>
         </view>
       </view>
 	  <view>
@@ -91,17 +91,34 @@
           name: this.$t('member').qjy
         }, ],
 		//ggnum:'',
+		secret:'',
+		qrcode:null
       }
     },
     created() { },
-    mounted() { },
+    mounted() { 
+		this.getSecret()
+	},
     computed:{
       i18n() {
         return this.$t("gooleVerify")
       },
     },
     methods: {
-	  nextup(){
+		clearInputNum(){
+			this.$refs.inputmsg.valueModel = ''
+		},
+		async getSecret(){
+			let res = await this.$u.api.googleAuth.getSecret('Auth')
+			console.log('getSecret',res)
+			if(res.status == 'SUCCEED'){
+				this.secret = res.result.secret
+				this.qrcode = res.result.qrcode
+			}
+			
+		},
+	  async nextup(){
+		  // console.log('this.$refs.inputmsg.valueModel',this.$refs.inputmsg.valueModel)
 		  if(this.$refs.inputmsg.valueModel.length != 6){
 			uni.showToast({
 				icon:'none',
@@ -109,12 +126,14 @@
 			});
 			return ;  
 		  }
-		  this.$u.api.user.checkSmsCode(phMail,code,type).then(res=>{
-			  console.log(res);
-		  })
-		  uni.navigateTo({
-		  	url:'/pages/login/finish'
-		  })
+		  let res = await this.$u.api.googleAuth.checkCode(this.secret,this.$refs.inputmsg.valueModel)
+		  if(res.status == 'SUCCEED'){
+			  uni.navigateTo({
+			  	url:'/pages/login/finish'
+			  })
+			  return
+		  }
+			this.$utils.showToast(res.errorMessage)
 	  },
       back() {
         uni.navigateBack(1)
