@@ -18,7 +18,7 @@
 					{{pairsItem.name }}
 					<text class="num" :class="{'text-red': pairsItem.change_ratio < 0}">
 						<text v-show="pairsItem.change_ratio > 0 "> + </text>
-						<text v-show="pairsItem.change_ratio < 0 "> - </text>
+						<!-- <text v-show="pairsItem.change_ratio < 0 "> - </text> -->
 						{{ pairsItem.change_ratio|SubString(2) }}%
 						<!-- {{pairsItem.updown*100|SubString(2)}}% -->
 					</text>
@@ -480,19 +480,16 @@
 						}
 					})
 					this.pairs = arr
-					if(!this.pairsItem){
-						console.log('进来了8899',arr[0])
-						this.pairsItem = arr[0]
-					}
 					if(first){
 						this.pairsItem = arr[0]
+						// console.log('进来了8899',arr[0])
 						this.getNewDataDepth()
 					}
-					console.log('this.pairs',this.pairs)
+					// console.log('this.pairs',this.pairs)
 				}
 			},
 			async getNewDataDepth(){
-				console.log('this.pairsItem',this.pairsItem)
+				// console.log('this.pairsItem',this.pairsItem)
 				let res = await this.$u.api.newData.trade(this.pairsItem.ccy)
 				if(res.status == 'SUCCEED'){
 					if(res.result){
@@ -512,8 +509,8 @@
 						})
 						this.buyData = arr1
 						this.sellData = arr2
-						console.log('this.buyData',this.buyData)
-						console.log('this.sellData',this.sellData)
+						// console.log('this.buyData',this.buyData)
+						// console.log('this.sellData',this.sellData)
 					}
 				}
 			},
@@ -955,6 +952,7 @@
 			},
       //获取持仓列表
 			getWarehousesList() {
+				this.userId = uni.getStorageSync('userId')
         if(!this.userId) {
           return
         }

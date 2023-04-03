@@ -52,7 +52,7 @@ export default {
     },
     // 获取涨跌幅的文本
     getChangeRatio(changeRatio) {
-		console.log('changeRatio',changeRatio)
+		// console.log('changeRatio',changeRatio)
       return `${changeRatio > 0 ? '+' : ''}${changeRatio.toFixed(2)}%`;
     }
   }

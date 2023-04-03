@@ -78,6 +78,9 @@ class Request {
 						if(!router.includes(routes)) {
 							if (response.data.errorCode === 'SYS.0015') {
 								console.log('routes',routes)
+								//清token userId
+								uni.removeStorageSync("token")
+								uni.removeStorageSync("userId")
 								if('pages/login/login' != routes){
 									uni.navigateTo({
 										url:'/pages/login/login'

@@ -187,7 +187,7 @@
 			changeAscend() {
 				if (this.isAscend > 2) this.isAscend = 0;
 				else this.isAscend += 1;
-				console.log('this.isAscend', this.isAscend)
+				// console.log('this.isAscend', this.isAscend)
 				this.sortList(this.coinList)
 			},
 			sortList(list) {
@@ -340,7 +340,7 @@
 				})
 			},
 			async getCode(index) {
-				console.log('点击了',index)
+				// console.log('点击了',index)
 				// await this.getCoinData()
 				this.tabIndex = index
 				this.isAscend = 0

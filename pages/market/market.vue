@@ -120,7 +120,7 @@
 			changeAscend() {
 				if(this.isAscend > 2) this.isAscend = 0;
 				else this.isAscend += 1;
-				console.log('this.isAscend',this.isAscend)
+				// console.log('this.isAscend',this.isAscend)
 				this.sortList(this.coinList)
 			},
 			sortList(list) {
@@ -238,7 +238,7 @@
 			changeFour(e) {
 				this.tabIndex = e
 				this.currentFour = e
-				console.log('changeFour',e)
+				// console.log('changeFour',e)
 				this.sortList(this.coinList)
 				// switch (e) {
 				//   case 0:
