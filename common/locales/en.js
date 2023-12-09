@@ -265,7 +265,9 @@ export default {
 		application: ['Exchange', 'c2c', 'Contract', 'Financial', 'Spot','Fund management','Smart Pool','Pledge loan','Consume Record','More'],
 		homeTitle: ['Growth List', 'Turnover List', 'New Coin List'],
 		kscb:'Deposit',
-		kstb:'Withdrawal'
+		kstb:'Withdrawal',
+		kuaisutibi:'Quickwithdrawal',
+		kauisuchongbi: 'Quickcharge'
 	},
 	kLine: {
 		zgj: 'Highest price',

@@ -102,7 +102,7 @@
 		},
 
 		methods: {
-			// ×ª»»
+			// ×ªï¿½ï¿½
 			getClick() {
 				this.switchCode = !this.switchCode 
 				const res = this.lfItem
@@ -113,11 +113,11 @@
 				this.leftNum = ''
 				this.rightNum = ''
 			},
-			//±ÒÖÖ
+			//ï¿½ï¿½ï¿½ï¿½
 			getPairsList() {
 				let member = uni.getStorageSync('userId')
 				this.$u.api.sd.getIndexCoin(member).then(res => {
-					console.log("±ÒÖÖ", res)
+					console.log("ï¿½ï¿½ï¿½ï¿½", res)
 					this.tokenCurlist = res.result;
 					
 					res.result.map(item => {
@@ -132,7 +132,7 @@
 					this.tokenCurlist = this.tokenCurlist.filter(item => item.tokenCur === 'USDT' || item.tokenCur === 'ETH' || item.tokenCur === 'BTC') || []
 				})
 			},
-			//Ç®°ü
+			//Ç®ï¿½ï¿½
 			getBalances() {
 				let member = uni.getStorageSync('userId')
 				this.$u.api.user.getBalanceList(member).then(res => {
@@ -144,7 +144,7 @@
 					})
 				})
 			},
-			//¼ÆËã»ãÂÊ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			calExc() {
 				let leftMoney = 0
 				let rightMoney = 0
@@ -158,7 +158,7 @@
 				})
 				this.rate = (leftMoney / rightMoney).toFixed(8)
 			},
-			// ÉÏÃæµÄ 
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			selCurrency(item, index) {
 				this.leftCode = index
 				this.leftCurrency = item.tokenCur
@@ -174,7 +174,7 @@
 					this.rightNum = this.$utils.SubString(this.leftNum * this.rate, 4)
 				}
 			},
-			// ÏÂÃæµÄ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½
 			selRightCurrency(item, index) {
 				this.rightCode = index
 				this.rightImgCode = false
@@ -185,27 +185,27 @@
 					this.rightNum = this.$utils.SubString(this.leftNum * this.rate, 4)
 				}
 			},
-			// ÏÞ¼Û ÊäÈëÏÞÖÆ
+			// ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			checkNum() {
 				console.log(this.rate)
 				this.rightNum = this.$utils.SubString(this.leftNum * this.rate, 4)
 				this.$nextTick(() => {
 					let val = this.leftNum;
-					val = val.replace(/[^\d.]/g, ""); //Çå³ý"Êý×Ö"ºÍ"."ÒÔÍâµÄ×Ö·û
-					val = val.replace(/\.{2,}/g, "."); //Ö»±£ÁôµÚÒ»¸ö. Çå³ý¶àÓàµÄ
+					val = val.replace(/[^\d.]/g, ""); //ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"."ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
+					val = val.replace(/\.{2,}/g, "."); //Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					val = val.replace(/^0+\./g, '0.');
 					val = val.match(/^0+[1-9]+/) ? val = val.replace(/^0+/g, '') : val
 					val = (val.match(/^\d*(\.?\d{0,4})/g)[0]) || ''
 					this.leftNum = val;
 				});
 			},
-			// ÏÞ¼Û ÊäÈëÏÞÖÆ
+			// ï¿½Þ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			checkNum1() {
 
 				this.$nextTick(() => {
 					let val = this.rightNum;
-					val = val.replace(/[^\d.]/g, ""); //Çå³ý"Êý×Ö"ºÍ"."ÒÔÍâµÄ×Ö·û
-					val = val.replace(/\.{2,}/g, "."); //Ö»±£ÁôµÚÒ»¸ö. Çå³ý¶àÓàµÄ
+					val = val.replace(/[^\d.]/g, ""); //ï¿½ï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½"ï¿½ï¿½"."ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½
+					val = val.replace(/\.{2,}/g, "."); //Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					val = val.replace(/^0+\./g, '0.');
 					val = val.match(/^0+[1-9]+/) ? val = val.replace(/^0+/g, '') : val
 					val = (val.match(/^\d*(\.?\d{0,4})/g)[0]) || ''
@@ -213,7 +213,7 @@
 				});
 			},
 			toMax() {
-				console.log("×î´ó")
+				console.log("ï¿½ï¿½ï¿½")
 				if (this.nowAmount === 0) {
 					return
 				}
