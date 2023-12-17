@@ -3,7 +3,7 @@
 		<xl-header :title="i18n.gz"></xl-header>
 		<view class="container">
 			<view class="header">
-				<image src="https://db23app.vip/wap/img/logo.681b8bb1.png" class="icon"></image>
+				<image src="../../static/image/logo.681b8bb1.png" class="icon"></image>
 				<view class="title">
 					{{i18n.lcgz}}
 				</view>
