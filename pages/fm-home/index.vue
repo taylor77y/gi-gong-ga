@@ -25,7 +25,7 @@
 								<view class="line2">{{i18n.axzz}}</view>
 							</view>
 						</view>
-						<image src="https://db23app.vip/wap/img/f-bg.4c1afd1b.png" class="bg"></image>
+						<image src="../../static/image/licai/f-bg.4c1afd1b.png" class="bg"></image>
 					</view>
 					<view class="list-item" @tap="toPage('/pages/machine/index')">
 						<view class="text">
@@ -37,7 +37,7 @@
 								<text class="line2">{{i18n.zdxldkj}}</text>
 							</view>
 						</view>
-						<image src="https://db23app.vip/wap/img/l-bg.6251df80.png" class="bg"></image>
+						<image src="../../static/image/licai/l-bg.6251df80.png" class="bg"></image>
 					</view>
 					<view class="list-item" @tap="toPage('/pages/pledgeLoan/index')">
 						<view class="text">
@@ -49,7 +49,7 @@
 								<text>{{i18n.xxsxf}}</text>
 							</view>
 						</view>
-						<image src="https://db23app.vip/wap/img/p-bg.4773be7e.png" class="bg"></image>
+						<image src="../../static/image/licai/p-bg.4773be7e.png" class="bg"></image>
 					</view>
 				</view>
 			</view>

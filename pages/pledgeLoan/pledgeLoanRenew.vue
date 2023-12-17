@@ -8,7 +8,7 @@
 					<input v-model="borrowPrice" type="number" placeholder="请输入借款数量"
 						placeholder-style="color:#868c9a;font-size:26rpx;" class="input" @input="getInfo()" />
 					<view class="coin" @click="showSelect = !showSelect">
-						<image class="icon" :src="baseUrl + '/symbol/usdt.png'" />
+						<image class="icon" src="../../static/image/symbol/usdt.png" />
 						<view class="name">
 							USDT
 						</view>

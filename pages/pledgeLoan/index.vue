@@ -6,7 +6,7 @@
 			<u-icon name="order" size="40" class="uicon" @click="turnToPage"></u-icon>
 		</view>
 		<view class="pledgeLoan">
-			<image src="https://db23app.vip/wap/img/pledgeLoanBg.7458befc.png" class="bg"></image>
+			<image src="../../static/image/pledge/pledgeLoanBg.7458befc.png" class="bg"></image>
 			<view class="container">
 				<view class="card loan-container">
 					<text class="loan-text">{{i18n.jk}}</text>
@@ -15,7 +15,7 @@
 							placeholder-style="color:#878787;font-weight: 400;" class="input" @input="getInfo()" />
 						<view class="split"></view>
 						<view class="right-select">
-							<image class="img-box" :src="baseUrl + '/symbol/usdt.png'" />
+							<image class="img-box" src="../../static/image/symbol/usdt.png" />
 							<view class="select" @click="showSelect = !showSelect">
 								<text class="text">{{selected}}</text>
 								<view class="down-icon">

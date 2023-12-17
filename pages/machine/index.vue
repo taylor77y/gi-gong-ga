@@ -33,7 +33,7 @@
 					{{item.periodDay}}{{ i18p.tyqsy }}{{item.dayRate}}
 				</view>
 				<view class="box">
-					<image src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png" class="img"></image>
+					<image src="../../static/image/machine1.a2aa1a2b.png" class="img"></image>
 					<view class="content">
 						<view class="title">
 							{{ item.zhName}}

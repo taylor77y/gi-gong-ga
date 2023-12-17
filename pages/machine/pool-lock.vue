@@ -4,7 +4,7 @@
 		<view class="container">
 			<div class="info-card">
 				<div class="top">
-					<image class="banner" src="https://db23app.vip/wap/img/machine1.a2aa1a2b.png"></image>
+					<image class="banner" src="../../static/image/machine1.a2aa1a2b.png"></image>
 					<view class="title">
 						{{product.zhName}}
 					</view>
@@ -126,7 +126,7 @@
 			.info-card {
 				display: flex;
 				flex-direction: column;
-				background: url("https://db23app.vip/wap/img/machine-bg.64b34643.png") no-repeat 50%;
+				background: url("../../static/image/machine-bg.64b34643.png") no-repeat 50%;
 				padding: 40rpx 30rpx;
 				box-sizing: border-box;
 				border-radius: 20rpx;

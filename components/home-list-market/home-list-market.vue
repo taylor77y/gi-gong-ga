@@ -2,7 +2,7 @@
 	<view class="home-list">
 		<view class="item" v-for="(item, index) in renderList" :key="index" @click="getPath(item.name)">
 			<view class="left" v-if="code === 0">
-				<image :src="baseUrl + '/symbol/'+(item.ccy).toLowerCase()+'.png'" />
+				<image :src="'../../' + 'static/image/symbol/'+(item.ccy).toLowerCase()+'.png'" />
 				<view class="num-text">
 					<text class="name">{{item.ccy}}<text
 							class="small">/USDT</text></text>
