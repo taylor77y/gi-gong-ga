@@ -249,7 +249,7 @@
           this.getKlineData()
 				}, 3000);
 			}
-      this.socket = new socket("wss://thasjhdhjg.site/data/websocket/3/"+this.name.split('/')[0].toLowerCase())
+      this.socket = new socket("wss://localhost:8782/websocket/3/"+this.name.split('/')[0].toLowerCase())
 			this.socket.doOpen();
 			this.socket.on("open", () => {
 				this.socket.send("PING");

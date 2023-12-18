@@ -550,7 +550,7 @@
         if (this.socket) this.socket.toClose();
         this.socket = null
 
-				this.socket = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.pairsItem.symbol}`)
+				this.socket = new socket(`wss://localhost:8782/websocket/3/${this.pairsItem.symbol}`)
 				this.socket.doOpen();
 				this.interval2 = setInterval(() => {
 					let {
