@@ -391,18 +391,22 @@
 					method_type: this.methodType?this.methodType:'',
 					language: uni.getStorageSync('lang')
 				}
-				const res = await this.$u.api.wantBuy.getC2cList(param)
-				// const res = await this.$u.api.bibi.getHistoryEntrust(param);
-				console.log(res)
+        const { status, result } = await this.$u.api.wantBuy.getC2cList(param)
+        if(status === 'SUCCEED') {
+
+          console.log(result)
+        }
 			},
 			// 获取交易方式
 			async getMethodsType() {
 				console.log(uni.getStorageSync('lang'))
 				let lang = uni.getStorageSync('lang')
-				const { code, data } = await this.$u.api.wantBuy.getC2cPaymentMethod(lang)
-				if(code == 0) {
+				const { status, result } = await this.$u.api.wantBuy.getC2cPaymentMethod(lang)
+				if(status === 'SUCCEED') {
 					let obj = {}
-					Object.assign(obj,this.motBntList, data)
+          let tmp = { 13: 'ALL' };
+          Object.assign(obj, tmp);
+					Object.assign(obj,this.motBntList, result)
 					this.motBntList = obj
 					console.log(this.methodType)
 				}

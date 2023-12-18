@@ -1,16 +1,16 @@
 <template>
 	<view class="exchange-history">
 		<head-slot>
-			<template #middle><text>Flash history</text></template>
+			<template #middle><text>{{i18n.exchangeHistory}}</text></template>
 		</head-slot>
 		<view class="content">
 			<view class="content-header">
-				<view><text>From</text></view>
-				<view><text>To</text></view>
+				<view><text>{{i18n.from}}</text></view>
+				<view><text>{{i18n.to}}</text></view>
 			</view>
 			<view class="content-list">
 				<view class="content-bottom">
-					<text>All loaded</text>
+					<text>{{i18n.allLoaded}}</text>
 				</view>
 			</view>
 		</view>
@@ -27,7 +27,12 @@
 			return {
 				title: 'Flash history'
 			};
-		}
+		},
+    computed : {
+      i18n() {
+        return this.$t('exchangeHistory')
+      },
+    }
 	}
 </script>
 

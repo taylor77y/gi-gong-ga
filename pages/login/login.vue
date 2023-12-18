@@ -33,7 +33,7 @@
 	<text class="text_2" v-text="loginTypeText"></text>
 	<view v-if="!showPhone" class="login-input" :class="{'f-border': verificationCode}">
 		
-		 <input :placeholder="inputTag" placeholder-style="color: #999" v-model="userName" class="inputCum"/>
+		 <input :placeholder="inputTag" placeholder-style="color: #999;font-size: 32rpx" v-model="userName" class="inputCum"/>
 	</view>
 	
 	<view v-else class="login-input" :class="{'f-border': verificationCode}">
@@ -45,13 +45,13 @@
 		   src="/static/lanhu_denglu/ps04twdt13087chpihojawqbuipb5dvmfz1068353f9-a9e8-4434-9048-6cb91bdf69d9.png"
 		 />
 		 </view>
-		 <input :placeholder="inputTag" placeholder-style="color: #999" v-model="userName" class="inputCum"/>
+		 <input :placeholder="inputTag" placeholder-style="color: #999;font-size: 32rpx" v-model="userName" class="inputCum"/>
 	</view>
 	
 	<text class="text_2" v-text="i18n.mm"></text>
 	<view class="login-input" :class="{'f-border': verificationCode}">
 		
-		 <input :placeholder="i18n.qsrmm" placeholder-style="color: #999" type="password" v-model="password" class="inputCum"/>
+		 <input :placeholder="i18n.qsrmm" placeholder-style="color: #999;font-size: 32rpx" type="password" v-model="password" class="inputCum"/>
 	</view>
 	<view @click="getPath(2)" class="wjmm">{{i18n.wjmm}}</view>
 	<button style="background: #2c78ff;" class="button_1 f-flex-center flex-col" @click="nextStep()">
@@ -273,7 +273,7 @@ export default {
 		    padding-left: 1.25rem;
 		    color: #333;
 			background: #f5f5f5;
-			font: inherit;
+			//font: inherit;
 			/* background-color: rgb(232, 240, 254) !important; */
 			    /* background-image: none !important; */
 			    color: -internal-light-dark-color(black, white) !important;

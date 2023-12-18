@@ -2,16 +2,16 @@
 const install = (Vue, vm) => {
 	// 合约交易
 	const trendDetails = {
-		getExchangerateuserconfig: () => vm.$u.get(`https://unlqloll.com/wap//api/exchangerateuserconfig!get.action`),
-		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://db23app.vip/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
-		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://unlqloll.com/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
+		getExchangerateuserconfig: () => vm.$u.get(`https://thasjhdhjg.site/wap//api/exchangerateuserconfig!get.action`),
+		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://thasjhdhjg.site/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
+		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://thasjhdhjg.site/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
 	const wantBuy = {
 		// language 语言
-		getC2cPaymentMethod: (language='en') => vm.$u.get(`https://unlqloll.com/wap/api/c2cPaymentMethod!method_type.action?language=${language}`),
-		c2cPaymentMethodList: (language='en', token) => vm.$u.get(`https://unlqloll.com/wap/api/c2cPaymentMethod!list.action?language=${language}&token=${token}`),
-		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`https://db23app.vip/wap/api/c2cAdvert!list.action?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
-		c2cPaymentMethod:(param={}) => vm.$u.get(`https://unlqloll.com/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
+		getC2cPaymentMethod: (language='en') => vm.$u.get(`/c2c/c2c/methodTypeList?language=${language}`),
+		c2cPaymentMethodList: (language='en', token) => vm.$u.get(`/c2c/c2c/paymentMethodList?language=${language}&token=${token}`),
+		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`/c2c/c2c/advertList?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
+		c2cPaymentMethod:(param={}) => vm.$u.get(`https://thasjhdhjg.site/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
 	}
 	
 	
@@ -127,7 +127,7 @@ const install = (Vue, vm) => {
 		//身份验证
 		advancedCertification: (params = {}) => vm.$u.post(`/member/member/advancedCertification?name=${params.name}2&code=${params.code}&positiveLink=${params.positiveLink}&sideLink=${params.sideLink}&member=${params.member}`),
 		//用户充值
-		rechargeCurrency: (params={}) => vm.$u.post(`/member/balance/rechargeCurrency?amount=${params.amount}&currency=${params.currency}&memberId=${params.memberId}&chainName=${params.chainName}&paymentVoucher=${params.paymentVoucher}`),
+		rechargeCurrency: (params={}) => vm.$u.post(`/api/member/balance/rechargeCurrency?amount=${params.amount}&currency=${params.currency}&memberId=${params.memberId}&chainName=${params.chainName}&paymentVoucher=${params.paymentVoucher}`),
 		//充值币种配置
 		currencyList: () => vm.$u.post("/otc/order/currencyList"),
 		getRechargeWallet: (type) => vm.$u.get(`member/balance/getRechargeWallet?type=${type}`),//充值币地址
@@ -138,8 +138,8 @@ const install = (Vue, vm) => {
 		//资金记录
 		getBalanceRecord: (member,pageNum,pageSize) => vm.$u.get(`/member/member/getBalanceRecord?pageNum=${pageNum}&pageSize=${pageSize}&member=${member}&type=`),
 		//提币
-		// extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin?member=${params.member}&balance=${params.balance}&type=${params.type}&currency=${params.currency}&baId=${params.baId}`),
-		extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin`,params),
+		extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin?member=${params.member}&balance=${params.balance}&type=${params.type}&currency=${params.currency}&baId=${params.baId}`),
+		// extractCoin: (params={}) => vm.$u.post(`/member/balance/extractCoin`,params),
 		//提币地址列表
 		// getBillingAddressList: (member) => vm.$u.get(`/member/member/getBillingAddressList?member=${member}`),
 		getBillingAddressList: (params) => vm.$u.get(`/member/member/getBillingAddressList`,params),
@@ -179,7 +179,7 @@ const install = (Vue, vm) => {
 		// 获取手续费
 		getRechangeConfiqunation: (key) => vm.$u.get(`/member/balance/new/getRechargeConfiguration?key=${key}`),
 		//充值提交
-		rechargeCurrency: (params) => vm.$u.post(`/member/balance/rechargeCurrency`,params),
+		// rechargeCurrency: (params) => vm.$u.post(`/member/balance/rechargeCurrency`,params),
 		// getBillingAddressList: (id) => vm.$u.post(`/member/getBillingAddressList?member=${id}`),
 	}
 	const setting = {
@@ -423,7 +423,7 @@ const install = (Vue, vm) => {
 		getContractOrder: (orderId) => vm.$u.post("/contract/perpetual_contract/getContractOrder?orderId="+orderId),//订单详情
 		getHistoryOrders: (member) => vm.$u.get(`/contract/perpetual_contract/getHistoryOrders?member=${member}&pageNum=1&pageSize=999`),//获取历史列表
 		getWarehouses: (memberId,pairsName,price) => vm.$u.get(`/contract/perpetual_contract/getWarehouses?memberId=${memberId}&pairsName=${pairsName}&price=${price}`),//获取持仓列表
-		setAllContractMatch: (params) => vm.$u.post(`/contract/perpetual_contract/setAllContractMatch`,params),//一键平仓
+		setAllContractMatch: (params) => vm.$u.post(`/contract/perpetual_contract/setAllContractMatch?memberId=${params.memberId}&pairsName=${params.pairsName}&coinName=${params.coinName}&price=${params.price}`),//一键平仓
 		setOrderMatch: (id,coinName,price) => vm.$u.post(`/contract/perpetual_contract/setOrderMatch?id=${id}&coinName=${coinName}&price=${price}`),//单独平仓
 		setContractOrderBuy: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderBuy`,params,{ 'Content-Type': 'application/json' }),//多开多空
 		setContractOrderSell: (params) => vm.$u.post(`/contract/perpetual_contract/setContractOrderSell`,params,{ 'Content-Type': 'application/json' }),//平多平空

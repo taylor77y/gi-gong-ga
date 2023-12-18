@@ -1,14 +1,14 @@
 <template>
 	<view class="perpetual-history">
 		<head-slot>
-			<template #middle><text>USD-M history</text></template>
+			<template #middle><text>{{i18n.uHistory}}</text></template>
 		</head-slot>
 		<view class="content-header">
 			<u-tabs-swiper 
 				active-color="#2c78f8" 
 				bar-width="263" 
 				ref="tabs" 
-				:list="list" 
+				:list="tagBtn"
 				:is-scroll="false" 
 				inactive-color="#333"
 				@change="tabsChange"
@@ -46,6 +46,14 @@
 				swiperCurrent: 0 // swiper组件的current值，表示当前那个swiper-item是活动的
 			};
 		},
+    computed : {
+      i18n() {
+        return this.$t('perpetualHistory')
+      },
+      tagBtn() {
+        return this.i18n.tagBtn1
+      },
+    },
 		methods: {
 			// tabs通知swiper切换
 			tabsChange(index) {

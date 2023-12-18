@@ -7,8 +7,13 @@
 			</h2>
 			<view class="right"></view>
 		</view>
-		<view class="content">
-			
+		<view class="content" v-for="(item,index) in list" :key="index">
+      <view class="item">
+        <view class="title">{{ item.methodName }}</view>
+        <view class="title1">{{ item.realName }}</view>
+        <view class="title2">{{ item.paramValue1 }}</view>
+
+      </view>
 		</view>
 		<view class="footer">
 			<u-button type="primary" @click="open">添加收款方式</u-button>
@@ -31,12 +36,13 @@
 			async getList() {
 				const language = uni.getStorageSync('lang')
 				const token = uni.getStorageSync('token')
-				const {code, data, msg} = await this.$u.api.wantBuy.c2cPaymentMethodList(language, token)
-				if(code == 0) {
-					this.list = data
+				const {status, result, errorMessage} = await this.$u.api.wantBuy.c2cPaymentMethodList(language, token)
+				if(status === 'SUCCEED') {
+          console.log(result)
+					this.list = result
 				} else {
 					this.$refs.uToast.show({
-						title: msg,
+						title: errorMessage,
 						type: 'error',
 						// url: '/pages/login/login',
 					})

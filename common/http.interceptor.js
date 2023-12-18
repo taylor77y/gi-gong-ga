@@ -42,7 +42,7 @@ const install = (Vue, vm) => {
 
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/")
 	// 客服连接地址
-	uni.setStorageSync('wssURL', 'ws://wap.adbaa3011.cc/socket/im/')
+	uni.setStorageSync('wssURL', 'ws://localhost:8782/websocket')
 	// 图片拼接路径
 	
 	// uni.setStorageSync('domainPay', 'http://oss.obk3.com/')

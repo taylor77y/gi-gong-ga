@@ -74,6 +74,7 @@
 			}
 		},
 		onLoad(e) {
+		  debugger
 			if (e && e.code) {
 				this.current = Number(e.code)
 				this.pageLoading()

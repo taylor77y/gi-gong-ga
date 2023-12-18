@@ -1910,6 +1910,37 @@ export default {
 		pingchangshijian:'平仓时间',
 		duokaiTL:'多开 TL/USDT',
 	},
+	financialHistory: {
+		history: '历史',
+		tagBtn1: [
+			{
+				name: '购买'
+			},
+			{
+				name: '赎回'
+			},
+			{
+				name: '利息'
+			}
+		]
+	},
+	exchangeHistory: {
+		exchangeHistory: '闪兑历史',
+		from: '从',
+		to: '至',
+		allLoaded: '已经全部加载完毕',
+	},
+	perpetualHistory: {
+		uHistory: 'U本位合约历史',
+		tagBtn1: [
+			{
+				name: '当前委托'
+			},
+			{
+				name: '历史仓位'
+			},
+		]
+	},
 	delivery: {
 		ddqr: '订单确认',
 		mc: '名称',

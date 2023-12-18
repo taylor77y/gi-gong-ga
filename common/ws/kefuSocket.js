@@ -24,13 +24,13 @@ class socket {
     // }
     this.BrowserWebSocket = window.WebSocket || window.MozWebSocket
 
-    this.url = ''
+    this.url = 'ws://localhost:8782/websocket/'
 
   }
   handleUrl(url,id) {
     console.log('连接客服',url,id)
     // this.id = id
-    this.url = url + id
+    this.url = 'ws://localhost:8782/websocket/' + id
   }
   // handleUrl(id) {
   //   console.log(id)

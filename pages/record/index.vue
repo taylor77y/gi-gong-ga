@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
-		
-		<head-title :title="$t('fack').qb" />
+    <xl-header :title="$t('fack').qb"></xl-header>
+<!--		<head-title :title="$t('fack').qb" />-->
 		<u-tabs bg-color="#fff" inactive-color="#8D9099" bar-height="8" bar-width="40" active-color="#D4B02D"
 			:list="tagBtn" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view v-if="list.length > 0">

@@ -1844,6 +1844,20 @@ export default {
 		pingchangshijian:'Closing time',
 		duokaiTL:'Buy Long TL/USDT',
 	},
+	financialHistory: {
+		history: 'history',
+		tagBtn1: [
+			{
+				name: 'buy'
+			},
+			{
+				name: 'redeemed'
+			},
+			{
+				name: 'interest'
+			}
+		]
+	},
 	delivery: {
 		ddqr: 'Order Confirmation',
 		mc: 'name',
