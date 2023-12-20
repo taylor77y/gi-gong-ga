@@ -1703,7 +1703,12 @@ export default {
 			54: '系统提现',
 			55: '提现驳回',
 			56: '资金可用减少',
-			57: '资金可用增加'
+			57: '资金可用增加',
+
+			61: '基金理财-可用减少',
+			62: '基金理财-可用增加',
+			63: '智能矿池-可用减少',
+			64: '智能矿池-可用增加',
 		},
 		tagBtn1: [{
 				name: '充值'
@@ -1928,7 +1933,10 @@ export default {
 		exchangeHistory: '闪兑历史',
 		from: '从',
 		to: '至',
-		allLoaded: '已经全部加载完毕',
+		bgq: '变更前',
+		bgh: '变更后',
+		yiwancheng: '已完成',
+		all_loaded: '已经全部加载完毕',
 	},
 	perpetualHistory: {
 		uHistory: 'U本位合约历史',
@@ -1938,6 +1946,17 @@ export default {
 			},
 			{
 				name: '历史仓位'
+			},
+		]
+	},
+	assetsCenter:{
+		whistory: '充提历史',
+		tagBtn1: [
+			{
+				name: '充值'
+			},
+			{
+				name: '提现'
 			},
 		]
 	},

@@ -13,8 +13,8 @@ const install = (Vue, vm) => {
 		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`/c2c/c2c/advertList?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
 		c2cPaymentMethod:(param={}) => vm.$u.get(`https://thasjhdhjg.site/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
 	}
-	
-	
+
+
 	//币币交易
 	const bibi = {
 		getPairs: (mainCur,type) => vm.$u.get(`/data/data/getPairsByMainCur?mainCur=${mainCur}&type=${type}`),
@@ -69,7 +69,11 @@ const install = (Vue, vm) => {
 		//止盈(TRIGGER)止损(ORD)
 		setOrdTriggerMatch: (params = {}) => vm.$u.post(`/contract/contract/setOrdTriggerMatch?id=${params.id}&price=${params.price}&matchType=${params.matchType}`),
 		//一键平仓
-		setAllContractMatch: (member,pairsName) => vm.$u.post(`/contract/contract/setAllContractMatch?memberId=${member}&pairsName=${pairsName}`)
+		setAllContractMatch: (member,pairsName) => vm.$u.post(`/contract/contract/setAllContractMatch?memberId=${member}&pairsName=${pairsName}`),
+
+		// U本位合约历史
+		getPerpetualHistory: (pairsName,member, pageNum, pageSize) => vm.$u.get(`contract/perpetual_contract/getHistoryOrders?pairsName=${pairsName}&member=${member}&pageNum=${pageNum}&pageSize=${pageSize}`),
+
 	}
 
 	// 此处没有使用传入的params参数
@@ -107,7 +111,7 @@ const install = (Vue, vm) => {
 		//校验支付密码
 		verifyFundPassword: (member,password) => vm.$u.post(`/member/member/verifyFundPassword?member=${member}&password=${password}`),
 	}
-		//用户
+	//用户
 	const user = {
 		//发送邮箱验证码
 		sendMailCode: (user_string) => vm.$u.post("/sms_mail", {user_string,scene:'register',area_code_id: 1,area_code: 86,lang: 'zh',email_code:''}),
@@ -165,7 +169,7 @@ const install = (Vue, vm) => {
 		setAuthenWithAll: (params) => vm.$u.post(`/member/member/setAuthenWithAll`,params),
 		//上传证件图片
 		setCardImg: (member,positiveFile,sideFile,handLink) => vm.$u.post(`/member/setCardImg?member=${member}&positiveFile=${positiveFile}&sideFile=${sideFile}&handLink=${handLink}`),
-		
+
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息
@@ -409,7 +413,7 @@ const install = (Vue, vm) => {
 	const game = {
 
 	}
-	
+
 	const kefu = {
 		getContactLink: (type) => vm.$u.get("/member/member/getContactLink?type="+type),
 	}
@@ -430,15 +434,16 @@ const install = (Vue, vm) => {
 	}
 	// 基金理财
 	const fundFinancing = {
-		getFundOrderByUserId: (userId,status) => vm.$u.get(`/fund/fund_product/getFundOrderByUserId?userId=${userId}&status=${status}`),//用户的理财订单
+		getFundOrderByUserId: (userId,status, pageNum, pageSize) => vm.$u.get(`/fund/fund_product/getFundOrderByUserId?userId=${userId}&status=${status}&pageNum=${pageNum}&pageSize=${pageSize}`),//用户的理财订单
 		getFundProduct: () => vm.$u.get("/fund/fund_product/getFundProduct"),//获取基金理财产品
 		setFundOrderPurchase: (params) => vm.$u.post(`/fund/fund_product/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),//买入理财产品
 		setFundOrderRedeem: (params) => vm.$u.post(`/fund/fund_product/setFundOrderRedeem`,params,{ 'Content-Type': 'application/json' }),//赎回产品
 		getCheckFundOrder: (productId) => vm.$u.post(`/fund/fund_product/getCheckFundOrder?productId=${productId}` ),//获取用户购买基金统计信息
 		getCountFundOrderByUserId: (userId) => vm.$u.post(`/fund/fund_product/getCountFundOrderByUserId?userId=${userId}` ),//获取确认订单信息的详情
 
+		getInterestRecord: (member,pageNum,pageSize) => vm.$u.get(`/member/balance_record/getBalanceRecordList?pageNum=${pageNum}&pageSize=${pageSize}&member=${member}&type=62`), // 利息记录
 	}
-	
+
 	//智能矿池
 	const machine = {
 		getCountSmartPoolOrderByUserId: (userId)=> vm.$u.get("/fund/smart_pool_product/getCountSmartPoolOrderByUserId?userId="+userId),
@@ -448,7 +453,7 @@ const install = (Vue, vm) => {
 		getSmartPoolOrderByUserId: (userId,status=0) => vm.$u.get(`/fund/smart_pool_product/getSmartPoolOrderByUserId?userId=${userId}&status=${status}`),
 		setSmartPoolOrderRedeem:(params) => vm.$u.post(`/fund/smart_pool_product/setSmartPoolOrderRedeem`,params,{ 'Content-Type': 'application/json' })
 	}
-	
+
 	const pledge = {
 		getFundOrderByUserId:(userId)=>vm.$u.get('/fund/pledge_order/getFundOrderByUserId?userId='+userId),
 		getLoanAmount:(borrowPrice,loanCycle,pledgePrice,pledgeName,userId)=>vm.$u.get(`/fund/pledge_order/getLoanAmount?borrowPrice=${borrowPrice}&loanCycle=${loanCycle}&pledgePrice=${pledgePrice}&pledgeName=${pledgeName}&userId=${userId}`),
@@ -457,7 +462,7 @@ const install = (Vue, vm) => {
 		setFundOrderRedeem:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderRedeem`,params,{ 'Content-Type': 'application/json' }),
 		setFundOrderPurchase:(params)=>vm.$u.post(`/fund/pledge_order/setFundOrderPurchase`,params,{ 'Content-Type': 'application/json' }),
 	}
-	
+
 	// 新实时数据接口
 	const newData = {
 		// 获取全部/单币详情
@@ -469,13 +474,13 @@ const install = (Vue, vm) => {
 		// 获取币趋势数据
 		trend:(symbol,bar,limit)=>vm.$u.get(`/data/data/new/trend?symbol=${symbol}&bar=${bar}&limit=${limit}`),
 	}
-	
+
 	const googleAuth = {
 		getSecret:(name)=>vm.$u.get('/member/google/auth/getSecret?name='+name),
 		// getQrcode:(secret,name)=>vm.$u.get(`/member/google/auth/getQrcode?secret=${secret}&name=${name}`),
 		checkCode:(secret,code)=>vm.$u.get(`/member/google/auth/checkCode?secret=${secret}&code=${code}`)
 	}
-	
+
 	vm.$u.api = {
 		common,
 		user,
