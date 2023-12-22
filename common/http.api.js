@@ -19,12 +19,12 @@ const install = (Vue, vm) => {
 	const bibi = {
 		getPairs: (mainCur,type) => vm.$u.get(`/data/data/getPairsByMainCur?mainCur=${mainCur}&type=${type}`),
 		getCoinInfo: (pairsName) => vm.$u.get(`/data/data/getCoinInfo?pairsName=${pairsName}`),
-		getEntrustList: (member,pairsName) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=${pairsName}`),
+		// getEntrustList: (member,pairsName) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=${pairsName}`),
 		setEntrust: (params={}) => vm.$u.post("/entrust/entrust/setEntrust",params,{ 'Content-Type': 'application/json' }),
 		//历史委托
 		getHistoryEntrust: (params = {}) => vm.$u.get(`/entrust/entrust/getHistoryEntrust?member=${params.member}&pairsName=&pageNum=${params.pageNum}&pageSize=${params.pageSize}`),
 		//当前委托
-		getEntrustList: (member) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=`),
+		getEntrustList: (member,pairsName) => vm.$u.get(`/entrust/entrust/getEntrustList?member=${member}&pairsName=${pairsName}`),
 		//撤单
 		closeEntrust: (entrust) => vm.$u.post(`/entrust/entrust/closeEntrust?entrust=${entrust}`),
 		closeEntrust1: (id) => vm.$u.post(`/contract/contract/closeContractOrder?orderId=${id}`),
@@ -36,7 +36,7 @@ const install = (Vue, vm) => {
 		//闪兑兑换
 		currencyExchange: (params = {}) => vm.$u.post(`/member/balance/currencyExchange?member=${params.member}&currency=${params.currency}&currencyTarget=${params.currencyTarget}&quantity=${params.quantity}`),
 		//闪兑记录
-		currencyExchangeRecord: (params = {}) => vm.$u.get(`/member/balance/currencyExchangeRecord?pageNum=${params.page}&pageSize=${params.size}&member=${params.member}`)
+		currencyExchangeRecord: (member,pageNum,pageSize) => vm.$u.get(`/member/balance/currencyExchangeRecord?pageNum=${pageNum}&pageSize=${pageSize}&member=${member}`)
 
 	}
 	//秒合约
@@ -179,7 +179,7 @@ const install = (Vue, vm) => {
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),
 		// 获取充值接口
-		getRechargeWallet: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
+		// getRechargeWallet: (type) => vm.$u.get(`/member/balance/getRechargeWallet?type=${type}`),
 		// 获取手续费
 		getRechangeConfiqunation: (key) => vm.$u.get(`/member/balance/new/getRechargeConfiguration?key=${key}`),
 		//充值提交

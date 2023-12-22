@@ -1244,7 +1244,8 @@
         "enablePullDownRefresh": false
       }
 
-    } ,{
+    }
+  ,{
       "path" : "pages/withDraw/withDraw",
       "style" :
       {
@@ -1252,7 +1253,17 @@
         "enablePullDownRefresh": false
       }
 
-    },{
+    }
+  ,{
+      "path" : "pages/withDraw/withdrawDetail",
+      "style" :
+      {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }
+  ,{
       "path" : "pages/withDraw/successfulWthdrawal",
       "style" :
       {
@@ -1342,6 +1353,15 @@
     }
   ,{
       "path" : "pages/recharge/rechargePage",
+      "style" :
+      {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+
+    }
+  ,{
+      "path" : "pages/recharge/rechargeDetail",
       "style" :
       {
         "navigationBarTitleText": "",

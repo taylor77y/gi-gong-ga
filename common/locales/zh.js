@@ -1936,7 +1936,8 @@ export default {
 		bgq: '变更前',
 		bgh: '变更后',
 		yiwancheng: '已完成',
-		all_loaded: '已经全部加载完毕',
+		ddwk: '订单为空',
+		// all_loaded: '已经全部加载完毕',
 	},
 	perpetualHistory: {
 		uHistory: 'U本位合约历史',
@@ -1951,6 +1952,10 @@ export default {
 	},
 	assetsCenter:{
 		whistory: '充提历史',
+		shenhezho: '待审核',
+		shtg: '审核通过',
+		shbh: '审核驳回',
+		close: '关闭',
 		tagBtn1: [
 			{
 				name: '充值'

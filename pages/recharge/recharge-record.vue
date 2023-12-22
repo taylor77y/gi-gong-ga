@@ -74,7 +74,6 @@
 			}
 		},
 		onLoad(e) {
-		  debugger
 			if (e && e.code) {
 				this.current = Number(e.code)
 				this.pageLoading()
@@ -191,11 +190,12 @@
 				})
 			},
 			getSdRecord() {
-				let obj = new Object();
-				obj.member = uni.getStorageSync('userId');
-				obj.page = 1;
-				obj.size = 10;
-				this.$u.api.sd.currencyExchangeRecord(obj).then(res => {
+				// let obj = new Object();
+				// obj.member = uni.getStorageSync('userId');
+				// obj.page = 1;
+				// obj.size = 20;
+        let member = uni.getStorageSync('userId');
+				this.$u.api.sd.currencyExchangeRecord(member, this.page, this.size).then(res => {
 					console.log("闪兑记录", res)
 					this.list = this.list.concat(res.result.records)
 					this.handlePageFn(res.result.total)
