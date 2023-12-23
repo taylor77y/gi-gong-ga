@@ -55,14 +55,25 @@
 				<view class="item">
 					<view class="left">
 						<image class="icon"
-							src="data:image/png;base64,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">
+							src="../../static/image/coinbase.800bd120.png">
 						</image>
 						<view class="title" @click="officialCharge(3)">
-              Coincola{{i18n.gfcztd}}
+              Coinbase{{i18n.gfcztd}}
 						</view>
 					</view>
 					<u-icon name="arrow-right" color="#868c9a" />
 				</view>
+        <view class="item">
+          <view class="left">
+            <image class="icon"
+                   src="../../static/image/crypto.5bb7e039.png">
+            </image>
+            <view class="title" @click="officialCharge(4)">
+              Crypto{{i18n.gfcztd}}
+            </view>
+          </view>
+          <u-icon name="arrow-right" color="#868c9a" />
+        </view>
 			</view>
 		</view>
 	</view>
@@ -87,7 +98,10 @@
               window.open('https://www.binance.com/');
             break;
             case  3:
-            window.open('https://www.coincola.com/')
+            window.open('https://www.coinbase.com/')
+            break;
+          case  4:
+            window.open('https://crypto.com/')
             break;
         }
       },

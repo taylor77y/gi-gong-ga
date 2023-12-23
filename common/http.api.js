@@ -2,16 +2,16 @@
 const install = (Vue, vm) => {
 	// 合约交易
 	const trendDetails = {
-		getExchangerateuserconfig: () => vm.$u.get(`https://thasjhdhjg.site/wap//api/exchangerateuserconfig!get.action`),
-		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://thasjhdhjg.site/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
-		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://thasjhdhjg.site/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
+		getExchangerateuserconfig: () => vm.$u.get(`https://dot2c.com/wap//api/exchangerateuserconfig!get.action`),
+		getRealtime: (symbol='btc,eth,algo,mln,dot,neo,iota,yfi,etc,xrp,axs,sand,ltc,mana,sol,eos,bhd,link,mx,chr,chz') => vm.$u.get(`https://dot2c.com/wap/api/hobi!getRealtime.action?symbol=${symbol}`),
+		getKline: (symbol='btc', line='1min') => vm.$u.get(`https://dot2c.com/wap/api/hobi!getKline.action?symbol=${symbol}&line=${line}&token=69f5f8669d794f39be7c3f127ac7e98e`),
 	}
 	const wantBuy = {
 		// language 语言
 		getC2cPaymentMethod: (language='en') => vm.$u.get(`/c2c/c2c/methodTypeList?language=${language}`),
 		c2cPaymentMethodList: (language='en', token) => vm.$u.get(`/c2c/c2c/paymentMethodList?language=${language}&token=${token}`),
 		getC2cList: (param = { page_no:1,direction:'buy',currency:'USD',symbol:'btc',amount:'',method_type:'',language:'zh-CN',token}) => vm.$u.get(`/c2c/c2c/advertList?page_no=${param.page_no}&direction=${param.direction}&currency=${param.currency}&symbol=${param.symbol}&amount=${param.amount}&method_type=${param.method_type}&language=${param.language}&token=${param.token}`),
-		c2cPaymentMethod:(param={}) => vm.$u.get(`https://thasjhdhjg.site/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
+		c2cPaymentMethod:(param={}) => vm.$u.get(`https://dot2c.com/wap/api/c2cPaymentMethod!list.action?language=zh-CN&token=0455501841974cd6bbed05e7b3d5e4bd`),
 	}
 
 
