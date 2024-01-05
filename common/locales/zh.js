@@ -1834,7 +1834,7 @@ export default {
 		shijian: '时间',
 		zhiyin: '止盈',
 		zhixsun: '止损',
-
+		details: '详情',
 	},
 	financial: {
 		ypc:'已平仓',

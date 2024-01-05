@@ -131,7 +131,7 @@ const install = (Vue, vm) => {
 		//身份验证
 		advancedCertification: (params = {}) => vm.$u.post(`/member/member/advancedCertification?name=${params.name}2&code=${params.code}&positiveLink=${params.positiveLink}&sideLink=${params.sideLink}&member=${params.member}`),
 		//用户充值
-		rechargeCurrency: (params={}) => vm.$u.post(`/api/member/balance/rechargeCurrency?amount=${params.amount}&currency=${params.currency}&memberId=${params.memberId}&chainName=${params.chainName}&paymentVoucher=${params.paymentVoucher}`),
+		rechargeCurrency: (params={}) => vm.$u.post(`http://localhost:8760/member/balance/rechargeCurrency?amount=${params.amount}&currency=${params.currency}&memberId=${params.memberId}&chainName=${params.chainName}&paymentVoucher=${params.paymentVoucher}`),
 		//充值币种配置
 		currencyList: () => vm.$u.post("/otc/order/currencyList"),
 		getRechargeWallet: (type) => vm.$u.get(`member/balance/getRechargeWallet?type=${type}`),//充值币地址
@@ -173,8 +173,8 @@ const install = (Vue, vm) => {
 		//绑定邮箱
 		setPhMail: (member,phMail,code) => vm.$u.post(`/member/member/setPhMail?regType=MAIL&member=${member}&phMail=${phMail}&code=${code}`),
 		//修改信息
-		updateMember: (member,name,avatar) => vm.$u.post(`/member/member/updateMember?member=${member}&nikeName=${name}&avatarAddress=${avatar}`),
-		updateMemberNew: (member,name,avatar) => vm.$u.post(`/member/member/updateMember`,{member:member,nikeName:name,avatarAddress:avatar}),
+		updateMember: (member,name,avatar) => vm.$u.post(`https://bityou.cc/member/member/updateMember?member=${member}&nikeName=${name}&avatarAddress=${avatar}`),
+		updateMemberNew: (member,name,avatar) => vm.$u.post(`https://bityou.cc/member/member/updateMember?member=${member}&nikeName=${name}&avatarAddress=${avatar}`),
 		// 忘记密码
 		recomposeInformation: (phMail,code,type,password,) => vm.$u.post(`/member/member/recomposeInformation
 ?&phMail=${phMail}&code=${code}&type=${type ? type:'SETPHMAIL'}&password=${password}`),

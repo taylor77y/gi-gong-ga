@@ -35,8 +35,11 @@
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
 					{{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai}}
-					<text></text> {{item.pairsName}}
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
 				</view>
+        <view class="right" @click="goDetails(item)">
+          {{ i18n.details }}
+        </view>
 				<view class="right">
           <view class="right"  @click.stop="pingchang(item)">
             {{ i18n.pingchang }}
@@ -91,11 +94,11 @@
 					<text>
 					</text>
 				</view>
-<!--				<view class="conta">-->
-<!--					{{ $t('newFy').wsxyk }}-->
-<!--				</view>-->
+				<view class="conta">
+					{{ $t('newFy').wsxyk }}
+				</view>
         <view class="conta">
-<!--          {{ $t('newFy').bzj }}-->
+          {{ $t('newFy').bzj }}
 				</view>
 				<view class="right">
 					{{ $t('newFy').syl }}
@@ -142,8 +145,8 @@
 					{{ item.price|SubStringZreo(4) }}
 				</view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
-<!--					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}-->
-<!--          {{item.margin|SubStringZreo(4)}}-->
+					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}
+          {{item.margin|SubStringZreo(4)}}
 				</view>
 <!--        收益率-->
 				<view class="right" :class="item.num?'c_red':'c_green'">
@@ -325,12 +328,12 @@
 					<text>
 					</text>
 				</view>
-<!-- 				<view class="conta" @click="zhiyin(item,1)">
+ 				<view class="conta" @click="zhiyin(item,1)">
 					<u-tag :text="i18n.zhiyin" size="mini" type="success" />
 				</view>
 				<view class="right" @click="zhiyin(item,2)">
 					<u-tag :text="i18n.zhixsun" size="mini" type="warning" />
-				</view> -->
+				</view>
 			</view>
 		</view>
 	</view>
@@ -410,7 +413,7 @@
       },
       //详情  
       goDetails(item){
-        if(this.mode == 3){
+        if(this.mode == 3 || this.mode == 4){
           uni.navigateTo({
             url:`/pages/financial/details?data=` + JSON.stringify(item)
           })
@@ -509,11 +512,11 @@
         background-color: #937480; /* 按钮的背景颜色 */
         border: none;
         color: white; /* 按钮的字体颜色 */
-        padding: 3rpx 8rpx; /* 按钮内部的间距 */
+        padding: 5rpx 10rpx; /* 按钮内部的间距 */
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 10rpx; /* 按钮字体的大小 */
+        font-size: 14rpx; /* 按钮字体的大小 */
         margin: 4rpx 2rpx;
         cursor: pointer;
         border-radius: 4rpx;

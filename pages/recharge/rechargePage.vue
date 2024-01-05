@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<xl-header title="Fast deposit"></xl-header>
+		<xl-header :title="i18n.fastdeposit"></xl-header>
 		<view class="container">
 			<view class="title">
 				{{currency}} Deposit
@@ -99,7 +99,7 @@
   export default {
     data() {
       return {
-        action:  uni.getStorageSync('imgPath') + '/member/upload/new' || '-', //图片上传地址
+        action:  'http://localhost:8760/member/upload/new' || '-', //图片上传地址
         header: {
           'token': uni.getStorageSync('token'),
           'userId': uni.getStorageSync('userId')
@@ -248,6 +248,7 @@
         }
         //充值接口
         this.$u.api.user.rechargeCurrency(temp).then(res => {
+          console.log()
           if (res.status == "SUCCEED") {
             this.$utils.showToast(this.i18n.czcg)
             uni.navigateTo({

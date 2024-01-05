@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<!-- <view style="height: 56rpx;"></view> -->
+<!--		 <view style="height: 56rpx;"></view>-->
 		<view class="white">
 			<view class="top-btn">
 				<view class="item" @click="getTopBtn(index)" :class="{'item1': btnCode === index}"
@@ -46,10 +46,10 @@
 					{{ cuBond === 0 ? i18n.kaican:i18n.pingcan }}
 					<!--					<image style="width: 18rpx;height: 10rpx;" src="../../static/image/new/6.png" />-->
 				</view>
-				<view class="cont-selset d-flex-between-center" @click="leversState = false">
+				<view class="cont-selset d-flex-between-center" @click="leversState = true">
 					{{ leversCode }}
-					<!--					<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"-->
-					<!--						src="../../static/image/new/6.png" />-->
+										<image :class="{'r-icon1' : leversState}" style="width: 18rpx;height: 10rpx;transition: all 0.3s;"
+											src="../../static/image/new/6.png" />
 				</view>
 				<!-- <view class="right-name">
 					<view>
@@ -160,8 +160,8 @@
 							<view class="amount">{{search1 * 1000 * 0.03 ||0.00}}</view>
 						</view>
 					</view>
-					<view style="height: 40rpx;"></view>
-					<!-- <view class="stop" @click="stopCode = !stopCode">
+<!--					<view style="height: 40rpx;"></view>-->
+					<view class="stop" @click="stopCode = !stopCode">
 						<view class="circular" v-if="!stopCode"></view>
 						<view v-else>
 							<image src="../../static/image/new/15.png"></image>
@@ -177,7 +177,7 @@
 							<input type="number" placeholder="止损" v-model="stop2"
 								placeholder-style="background: #F6F6F6;color: #B0B3BA" class="f-input" />
 						</view>
-					</view> -->
+					</view>
 					<!-- <view class="stop" @click="reduceCode = !reduceCode">
 						<view class="circular" v-if="!reduceCode"></view>
 						<view v-else>
@@ -232,7 +232,7 @@
 		<view class="yx-title">
 			<!--			<view>{{ i18n.cclb }}</view>-->
 			<view></view>
-			<!--      一件平仓-->
+			<!--      一键平仓-->
 			<view class="right" @click="isPosition = true" v-if="list.length>0">{{ i18n.yjpc }}</view>
 		</view>
 		<view v-if="current === 0">
@@ -253,9 +253,9 @@
 		</view>
 		<!--		<bond-popup @getAdd="getBondAdd" :show-spec.sync="showBond" />-->
 		<quotation-popup :show-spec.sync="showSpec" :list="pairs" @getTo="getTo" />
-		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">
-		</u-action-sheet>
-		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLevers" :list="levers" v-model="leversState">
+<!--		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="lever" v-model="magnification">-->
+<!--		</u-action-sheet>-->
+		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickLever" :list="levers" v-model="leversState">
 		</u-action-sheet>
 		<yx-add-popup @getAdd="sub" :show-pup.sync="ydAddCode" :current-dta="currentDta" />
 		<u-modal :title="$t('common').hint" :confirm-text="$t('common').confirm" :cancel-text="$t('common').cancel"
@@ -313,23 +313,23 @@
 				stopCode: false, // 止盈 状态
 				showSpec: false,
 				magnification: false, // 0.01 倍率
-				leverCode: '0.1', // 默认第一个
-				lever: [{
-						text: '0.1'
-
-					}, {
-						text: '1',
-
-					}, {
-						text: '10'
-					},
-					{
-						text: '50'
-					},
-					{
-						text: '100'
-					}
-				],
+				// leverCode: '0.1', // 默认第一个
+				// lever: [{
+				// 		text: '0.1'
+        //
+				// 	}, {
+				// 		text: '1',
+        //
+				// 	}, {
+				// 		text: '10'
+				// 	},
+				// 	{
+				// 		text: '50'
+				// 	},
+				// 	{
+				// 		text: '100'
+				// 	}
+				// ],
 				priceCode: 0, // 摸认 市价
 				fixedPriceCode: false, // 限价单弹窗
 				sellState: false, // false 买入 true 卖出
@@ -438,7 +438,7 @@
 				this.timer = null;
 			}
 			let member = uni.getStorageSync('userId') || ''
-			// this.getPairsList();
+			this.getPairsList();
 
 			this.sellState = this.setSellCode === 1 ? false : true
 			if (member) {
@@ -545,12 +545,12 @@
 			},
 
 			socketFn() {
-				// console.log(this.pairsItem)
+				console.log(this.pairsItem)
 				if (!this.pairsItem.symbol) return;
         if (this.socket) this.socket.toClose();
         this.socket = null
 
-				this.socket = new socket(`wss://localhost:8782/websocket/3/${this.pairsItem.symbol}`)
+				this.socket = new socket(`wss://hajhiug.com/data/websocket/1/${this.pairsItem.ccy}`)
 				this.socket.doOpen();
 				this.interval2 = setInterval(() => {
 					let {
@@ -624,7 +624,7 @@
 			},
 			//切换开仓
 			sectionChange(i) {
-				// console.log('切换开仓',i)
+				console.log('切换开仓',i)
 				this.cuBond = i
 			},
 			//撤单
@@ -735,6 +735,7 @@
 			},
       //开仓/平仓
 			sub(code) {
+			  debugger
         if(this.isError){
           this.$utils.showToast(this.i18n.ghbbkjy)
           return
@@ -754,6 +755,7 @@
 				let leverId = ''
 				let currentGangganType = 0
 				this.levers.forEach(item => {
+				  console.log("lever:--" + this.leversCode)
 					if (item.leverDesc === this.leversCode) {
 						leverId = item.id
 						currentGangganType = item.lever
@@ -772,7 +774,7 @@
           newParams.amount = this.search1 * 1000//合约金额
           newParams.margin = this.search1 * 1000//保证金
           newParams.matchFee  = this.search1 * 30 //手续费
-          newParams.leverId  = 'f25d2c1dcd6f74037f61ae681fc34fc4' //杠杆ID
+          newParams.leverId  = leverId //杠杆ID
           newParams.contractHands  = this.search1 //手
           if (this.cuBond == 0) {
             newParams.tradeType = sellState ? "OPEN_DOWN" : "OPEN_UP" //或者 开空 开多
@@ -832,7 +834,9 @@
 				this.$u.api.bibi.getCoinInfo(this.pairsItem.pairsName || this.pairsItem.name).then(res => {
 					let json = JSON.parse(res.result)
 					this.nowData = json
-					this.search = this.search ? this.search : this.nowData.nowPrice
+          if(this.nowData != null){
+            this.search = this.search ? this.search : this.nowData.nowPrice
+          }
 				})
 			},
 			onMessage(data) {
@@ -853,9 +857,10 @@
 				// this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
 				this.getNewDataDepth()
-				// this.socketFn()
+				this.socketFn()
 
 				this.getLeverList();
+				debugger
 				this.getWarehousesList();
 				this.getCoinInfoList();
 			},
@@ -893,20 +898,21 @@
 
 			// 点击
 			onClickLever(index) {
-				this.leverCode = this.lever[index].text
+				this.leversCode = this.levers[index].text
+        console.log("xxx" + this.leversCode)
 			},
-			getLever() {
-				this.magnification = !this.magnification
-				if (this.magnification) {
-					this.lever.forEach(item => {
-						if (item.text === this.leverCode) {
-							item.color = '#D4B02D'
-						} else {
-							item.color = ''
-						}
-					})
-				}
-			},
+			// getLever() {
+			// 	this.magnification = !this.magnification
+			// 	if (this.magnification) {
+			// 		this.lever.forEach(item => {
+			// 			if (item.text === this.leverCode) {
+			// 				item.color = '#D4B02D'
+			// 			} else {
+			// 				item.color = ''
+			// 			}
+			// 		})
+			// 	}
+			// },
 			// 限价
 			getLimit(index) {
 				this.priceCode = index

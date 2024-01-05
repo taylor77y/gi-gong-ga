@@ -5,7 +5,7 @@ const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
 
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
-		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/",
+		baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "https://bityou.cc/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/",
 		// baseUrl: process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/",
 
@@ -32,7 +32,7 @@ const install = (Vue, vm) => {
 	 // 上传图片路径
 	// uni.setStorageSync('imgPath', 'http://wap.mxoexchange.vip/upfile')
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.adbaa3011.cc/")
-	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxoexchange.com/")
+	uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://bityou.cc/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://wap.mxoexchange.vip/")
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "http://www.mxoex182.cn/")
 
@@ -42,7 +42,7 @@ const install = (Vue, vm) => {
 
 	// uni.setStorageSync('imgPath', process.env.NODE_ENV === 'development' ? '/api' : "https://www.mxo888.cn/")
 	// 客服连接地址
-	uni.setStorageSync('wssURL', 'ws://localhost:8782/websocket')
+	uni.setStorageSync('wssURL', 'ws://localhost:9045/websocket')
 	// 图片拼接路径
 	
 	// uni.setStorageSync('domainPay', 'http://oss.obk3.com/')

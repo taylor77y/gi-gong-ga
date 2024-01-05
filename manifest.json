@@ -1,8 +1,8 @@
 {
     "name" : "WooCloud",
-    "appid" : "__UNI__BD026BD",
+    "appid" : "__UNI__080400A",
     "description" : "测试",
-    "versionName" : "0.8.1",
+    "versionName" : "1.0.1",
     "versionCode" : 81,
     "transformPx" : false,
     "app-plus" : {
@@ -30,27 +30,25 @@
         "distribute" : {
             "android" : {
                 "permissions" : [
-                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
-                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
                     "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
                     "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
                     "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
-                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
@@ -140,7 +138,7 @@
                 "enable" : true
             }
         },
-        "title" : "Webull",
+        "title" : "bityou",
         "sdkConfigs" : {
             "maps" : {}
         },
@@ -150,7 +148,7 @@
             "proxy" : {
                 "/api" : {
                     "target" : "http://localhost:8760/",
-//                    "target" : "https://www.mxoexchange.com/",
+                    //"target" : "https://www.mxoexchange.com/",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {
@@ -159,19 +157,10 @@
                 }
             },
             "https" : false,
-            "port" : ""
+            "port" : 80
         },
         "domain" : "wap.adbaa3011.cc"
     },
     "locale" : "en",
     "fallbackLocale" : "en"
 }
-// ,"disableHostCheck" : true,
-// "proxy" : {
-//     "/api" : {
-//         "target" : "https://www.qkged.xyz",
-//         "changeOrigin" : true,
-//         "secure" : false
-//     }
-// }
-
