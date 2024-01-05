@@ -1659,6 +1659,7 @@ export default {
 		shtg: '审核通过',
 		shbh: '审核驳回',
 		jujue: '拒绝',
+		fastdeposit: '快速充币',
 		yiwancheng: '已完成',
 		ddwk: '订单为空',
 		stateInfo: {
@@ -2123,6 +2124,25 @@ export default {
 		scqjyh: '锁仓期间用户将无法对挖矿账户中被锁定的数字货币进行交易等操作，投资期限结束后一次性返还本金。',
 		kjgmm: '矿机购买满24小时之后每日凌晨4点收益将直接发放至账户，可进行交易等操作。去挖矿',
 		qwk: '去挖矿'
+	},
+	machinePoolLock: {
+		kcsc: '矿池锁仓',
+		applicable_algorithm: '适用算法',
+		official_power_consumption: '官方功耗',
+		rated_hashrate: '额定算力',
+		revenue: '挖矿收益',
+		coin: '币种',
+		est_diy: '预计日收益',
+		expected_net_profit: '预计净利润',
+		direction: '操作',
+		basic_data: '基础数据',
+		producer: '生产厂家',
+		wall_power_consumption: '墙上功耗',
+		carton_size: '外箱尺寸',
+		machine_weight: '整机重量',
+		operating_temperature: '工作温度',
+		working_humidity: '工作湿度',
+		network_link: '网络链接',
 	},
 	pledgeIndex: {
 		zyjb: '质押借币',

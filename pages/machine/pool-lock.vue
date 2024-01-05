@@ -1,6 +1,6 @@
 <template>
 	<view class="page">
-		<xl-header title="矿池锁仓"></xl-header>
+		<xl-header :title="i18n.kcsc"></xl-header>
 		<view class="container">
 			<div class="info-card">
 				<div class="top">
@@ -11,28 +11,28 @@
 				</div>
 				<div class="bottom">
 					<div class="item">
-						<div class="desc">Applicable algorithm</div>
+						<div class="desc">{{i18n.applicable_algorithm}}</div>
 						<div class="title">{{detail.algorithm}}</div>
 					</div>
 					<div class="item">
-						<div class="desc">Official power consumption</div>
+						<div class="desc">{{i18n.official_power_consumption}}</div>
 						<div class="title">{{detail.waste}}</div>
 					</div>
 					<div class="item">
-						<div class="desc">Rated hashrate</div>
+						<div class="desc">{{i18n.rated_hashrate}}</div>
 						<div class="title">{{detail.rated}}</div>
 					</div>
 				</div>
 			</div>
 			<div class="sub-title">
-				Revenue
+        {{ i18n.revenue }}
 			</div>
 			<div class="table-container mt-20">
 				<div class="th">
-					<div class="cel">Coin</div>
-					<div class="cel">Est. DIY</div>
-					<div class="cel">Expected net profit</div>
-					<div class="cel">Direction</div>
+					<div class="cel">{{i18n.coin}}</div>
+					<div class="cel">{{i18n.est_diy}}</div>
+					<div class="cel">{{i18n.expected_net_profit}}</div>
+					<div class="cel">{{i18n.direction}}</div>
 				</div>
 				<div class="td">
 					<div class="cel">{{ product.buyPairsName }}</div>
@@ -48,35 +48,35 @@
 			</div>
 			<div class="list-container mt-20">
 				<div class="item">
-					<div class="left">Producer</div>
+					<div class="left">{{i18n.producer}}</div>
 					<div class="right">{{detail.factory}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Rated hashrate</div>
+					<div class="left">{{i18n.rated_hashrate}}</div>
 					<div class="right">{{detail.rated}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Wall power consumption</div>
+					<div class="left">{{i18n.wall_power_consumption}}</div>
 					<div class="right">{{detail.waste}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Carton size</div>
+					<div class="left">{{i18n.carton_size}}</div>
 					<div class="right">{{detail.size}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Machine weight</div>
+					<div class="left">{{i18n.machine_weight}}</div>
 					<div class="right">{{detail.weight}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Operating temperature</div>
+					<div class="left">{{i18n.operating_temperature}}</div>
 					<div class="right">{{detail.temperature}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Working humidity</div>
+					<div class="left">{{i18n.working_humidity}}</div>
 					<div class="right">{{detail.humidity}}</div>
 				</div>
 				<div class="item">
-					<div class="left">Network link</div>
+					<div class="left">{{i18n.network_link}}</div>
 					<div class="right">{{detail.link}}</div>
 				</div>
 			</div>
