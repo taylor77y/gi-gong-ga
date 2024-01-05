@@ -2,16 +2,16 @@
 	<view class="f-assets-list">
 		<view class="item" v-for="(item, index) in list" :key="index">
 			<view class="left-img">
-				<!-- <image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" /> -->
+        <image :src="'../../' + 'static/image/symbol/'+(item.currency).toLowerCase()+'.png'" />
 			</view>
 			<view class="assets-cont">
 				<view class="coin">
 					<view class="left">{{item.currency}}</view>
 					<view class="right">{{item.assetsBalance+item.assetsBlockedBalance | SubString(5)}}</view>
 				</view>
-				<view class="tips">
-					United Arab Emirates...
-				</view>
+<!--				<view class="tips">-->
+<!--					United Arab Emirates...-->
+<!--				</view>-->
 				<view class="available-box">
 					<view>{{ i18n.keyong }}</view>
 					<view>{{ i18n.dongjie }}</view>
@@ -87,11 +87,11 @@
 					 font-weight: bold;
 				 }
 			 }
-			 .tips {
-				 margin-bottom: 12rpx;
-				 color: #8D9099;
-				 font-size: 22rpx;
-			 }
+			 //.tips {
+				// margin-bottom: 12rpx;
+				// color: #8D9099;
+				// font-size: 22rpx;
+			 //}
 		 }
 		 .available-box {
 			 display: flex;
