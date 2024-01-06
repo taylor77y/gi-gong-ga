@@ -409,7 +409,8 @@
 			socketFn() {
 				console.log(this.pairsItem)
 				if(!this.pairsItem.symbol) return;
-				this.socket = new socket(`wss://localhost:8782/websocket/3/${this.pairsItem.symbol}`)
+				// this.socket = new socket(`wss://localhost:8782/websocket/3/${this.pairsItem.symbol}`)
+				this.socket = new socket(`wss://hajhiug.com/data/websocket/3/${this.pairsItem.symbol}`)
 				this.socket.doOpen();
 				this.interval2 = setInterval(()=> {
 					let {code, data} = getData()

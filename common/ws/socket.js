@@ -3,7 +3,9 @@ import {
 } from "crypto";
 import pako  from './pako.min.js'
 // const wsURL = "ws://qcapi.obk3.com/wss";
-const wsURL = "wss://localhost:8782/websocket/1/btc";
+// const wsURL = "wss://localhost:8782/websocket/1/btc";
+
+const wsURL = " wss://hajhiug.com/data/websocket/3/btc";
 
 import { setData } from '@/common/hooks/socketData.js'
 
