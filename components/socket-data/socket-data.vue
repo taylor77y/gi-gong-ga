@@ -67,7 +67,7 @@
 				const { close } = data[0]
 				// console.log(data)
 				this.price = close
-				this.$emit('price', close)
+				this.$emit('price', data[0])
 			})
 		},
 		destroyed() {

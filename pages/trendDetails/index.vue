@@ -297,6 +297,7 @@
 					data
 				} = res // res.data[0]
 				this.currentBiType = data.find(item => item.name === this.symbol)
+				console.log(data, this.symbol)
 				this.getKlineData()
 				this.getSocketData()
 			});
@@ -380,7 +381,6 @@
 			},
 			// 获取Socket的数据
 			getSocketData() {
-				//this.socketObj = new socket('wss://hajhiug.com/data/websocket/3/btc')
 				this.socketObj = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.currentBiType.symbol}`)
 				this.socketObj.doOpen()
 				this.interval1 = setInterval(() => {
@@ -399,7 +399,7 @@
 			// 获取Socket last deal 的数据
 			getDealData() {
 				this.dealData = [];
-				this.socketObj1 = new socket(`wss://hajhiug.com/data/websocket/2/${this.currentBiType.symbol}`)
+				this.socketObj1 = new socket(`wss://thasjhdhjg.site/data/websocket/2/${this.currentBiType.symbol}`)
 				this.socketObj1.doOpen()
 				this.interval1 = setInterval(() => {
 					let {
