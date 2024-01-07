@@ -5,19 +5,19 @@
 				<view :style="{ color: `${colorFn}`}">
 					<text v-if="code === 0">
 					<!-- 	{{ item.num | SubString(4) }} -->
-					{{ item.amount | SubString(4) }}
+					{{ item.amount | SubString(4) || '--'}}
 					</text>
 					<text v-else>
-						{{ item.price | SubStringZreo(4) }}
+						{{ item.price | SubStringZreo(4) || '--' }}
 					</text>
 				</view>
 				<view >
 					<text v-if="code === 0">
-						{{ item.price | SubStringZreo(4) }}
+						{{ item.price | SubStringZreo(4) || '--'}}
 					</text>
 					<text v-else>
 						<!-- {{ item.num | SubString(4) }} -->
-						{{ item.amount | SubString(4) }}
+						{{ item.amount | SubString(4) || '--' }}
 					</text>
 				</view>
 

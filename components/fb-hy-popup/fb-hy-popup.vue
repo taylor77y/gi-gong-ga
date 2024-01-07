@@ -87,6 +87,12 @@
 			list: {
 				type: Array,
 				default: []
+			},
+			extroInfo: {
+				type: Object,
+				default() {
+					return {}
+				}
 			}
 		},
 		data() {

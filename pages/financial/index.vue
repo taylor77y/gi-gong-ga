@@ -61,7 +61,7 @@
 				</view> -->
 			</view>
 			<view class="d-flex-between-center" v-if="cuBond == 0 || cuBond == 1">
-				<view class="left">
+				<!-- <view class="left">
 					<view class="d-flex-between-center">
 						<view>{{ i18n.shuliang }}</view>
 						<view>{{ i18n.jiage }}</view>
@@ -70,7 +70,7 @@
 					</view>
 					<right-area :max-buy="maxBuy" :code="0" :openup="buyData" />
 					<view class="money">
-						<!--						{{nowData.nowPrice}}-->
+						
 						{{pairsItem.last}}
 					</view>
 					<view class="zhehe">
@@ -78,7 +78,8 @@
 					</view>
 					<right-area :max-buy="maxSell" :code="1" :openup="sellData" />
 
-				</view>
+				</view> -->
+				<socket-data :symbol="pairsItem.ccy" v-if="show && pairsItem.ccy" :key="pairsItem.ccy"></socket-data>
 				<view class="right">
 					<view class="r-img" v-if="!sellState">
 						<view class="l-sell">
@@ -138,12 +139,13 @@
 					<view class="stpes-list">
 						<!-- <view :class="{'item1': percentCode.includes(index)}" @click="getPercent(index)" class="item"
 							v-for="(item, index) in numberFn" :key="index"></view> -->
-						<view :class="{'item1': item.code}" @click="getPercent(index)" class="item"
-							v-for="(item, index) in numberFn" :key="index"></view>
+						<!-- <view :class="{'item1': item.code}" @click="getPercent(index)" class="item"
+							v-for="(item, index) in numberFn" :key="index"></view> -->
+							<u-slider v-model="sliderLen"  step="1" @moving="onChange"  v-if="show && pairsItem.ccy"></u-slider>
 					</view>
-					<view class="percent d-flex align-items-center">
+					<!-- <view class="percent d-flex align-items-center">
 						<view class="item" v-for="(item, index) in numberFn" :key="index">{{ item.val }}</view>
-					</view>
+					</view> -->
 
 					<!--          展示的 合约金额 保证金 建仓手续费-->
 					<view class="amountDisplayBox" v-if="userId">
@@ -277,6 +279,7 @@
 	export default {
 		data() {
 			return {
+				show: false, // 启动socket
         coinName:'',//货币名
         isError:false,
 				userId: uni.getStorageSync('userId'),
@@ -372,6 +375,8 @@
 				interval1: null,
 				interval2: null,
 				rate: {},
+				// value: 30,
+				sliderLen: 0
 			};
 		},
 		created() {
@@ -423,6 +428,7 @@
 			// this.$store.state.socket.removeListener('daymarket')
 		},
 		onLoad() {
+			this.show = true
 			this.getNewDataRealtime(true)
 			let member = uni.getStorageSync('userId')
 			// if (member) {
@@ -576,16 +582,24 @@
         if (value < 1) {
           this.$nextTick(() => {
             this.search1 = 0
+			this.sliderLen = 0
           })
         } else if (value > (this.usdtPrice / 1030)) {
           this.$nextTick(() => {
             this.search1 = Math.floor(this.usdtPrice / 1030)
             // this.search1 = 0
+			this.sliderLen = 100
           })
         } else {
           this.search1 = value
+		  this.sliderLen = value / Math.floor(this.usdtPrice / 1030) * 100
+		  // console.log('sliderLen', this.sliderLen)
         }
       },
+	  onChange(){ // 拖动滑块
+		const len = Math.floor(this.usdtPrice / 1030 / 100 * this.sliderLen)
+		this.search1= len
+	  },
       //计算输入框价格
       getPercent(index) {
         let amount = this.usdtPrice / 4;
@@ -791,6 +805,10 @@
             this.$utils.showToast(res.errorMessage)
           }
           this.search1 = 1
+		  this.$nextTick(() => {
+			  this.onChange()
+		  })
+		  
         }
         if (this.cuBond === 0) {
           this.$u.api.contractNewInterface.setContractOrderBuy(newParams).then(onSuccess)
@@ -976,12 +994,16 @@
 			getTopBtn(index) {
 				if (index === 0) {
 					uni.navigateTo({
-						url: `/pages/trendDetails/index`
+						// url: `/pages/trendDetails/index`,
+						url: `/pages/financial/delivery`
 					})
 				}
 			}
 		},
 		computed: {
+			caclSlide() {
+				return this.search1 / (this.usdt/1030) * 100
+			},
 			setRate() {
 				return this.$store.state.rate || {}
 			},
@@ -1006,6 +1028,12 @@
 			warehouse() {
 				return this.i18n.warehouse
 			}
+		},
+		activated() {
+			this.show = true
+		},
+		deactivated(){
+			this.show = false
 		}
 
 	}
@@ -1241,7 +1269,7 @@
 				}
 
 				.stpes-list {
-					display: flex;
+					// display: flex;
 					align-items: center;
 					margin: 14rpx;
 
