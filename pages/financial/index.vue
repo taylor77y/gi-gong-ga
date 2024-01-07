@@ -79,7 +79,7 @@
 					<right-area :max-buy="maxSell" :code="1" :openup="sellData" />
 
 				</view> -->
-				<socket-data :symbol="pairsItem.ccy" v-if="show && pairsItem.ccy" :key="pairsItem.ccy"></socket-data>
+				<socket-data :symbol="pairsItem.ccy" v-if="show && pairsItem.ccy" :key="pairsItem.ccy" @price="onPrice"></socket-data>
 				<view class="right">
 					<view class="r-img" v-if="!sellState">
 						<view class="l-sell">
@@ -376,7 +376,8 @@
 				interval2: null,
 				rate: {},
 				// value: 30,
-				sliderLen: 0
+				sliderLen: 0,
+				realTimeObj: {},
 			};
 		},
 		created() {
@@ -466,6 +467,10 @@
 			computRate(item){
 				// console.log('computRate',rate)
 				return (item.last - item.open24h) / item.open24h * 100
+			},
+			onPrice(e) { // 获取实时价格
+				console.log('e', e)
+				this.realTimeObj = e;
 			},
 			async getNewDataRealtime(first=false){
 				let res = await this.$u.api.newData.realtime()
@@ -787,7 +792,9 @@
           newParams.memberId = uni.getStorageSync('userId') || 0
           newParams.pairsName = name//全名
           newParams.coinName  = name.split("/")[1]//前两位名
-          newParams.kPrice = Number(last).toFixed(4) || price//建仓价
+          // newParams.kPrice = Number(last).toFixed(4) || price//建仓价
+		  console.log('这里是socket推过来的实时数据', this.realTimeObj)
+		  newParams.kPrice = this.realTimeObj.close //建仓价
           newParams.amount = this.search1 * 1000//合约金额
           newParams.margin = this.search1 * 1000//保证金
           newParams.matchFee  = this.search1 * 30 //手续费

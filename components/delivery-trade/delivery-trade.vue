@@ -156,7 +156,8 @@
 				this.activeIndex = index
 			},
 			onPrice(val) { // 更新价格
-				this.price = val
+				const { close } = val
+				this.price = close
 			},
 			operationFn(type) { // 0 涨，1跌
 				if (this.count < this.mininum) {

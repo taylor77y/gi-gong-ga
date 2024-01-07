@@ -296,6 +296,7 @@
 					data
 				} = res // res.data[0]
 				this.currentBiType = data.find(item => item.name === this.symbol)
+				console.log(data, this.symbol)
 				this.getKlineData()
 				this.getSocketData()
 			});
