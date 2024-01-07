@@ -46,7 +46,8 @@
 			<u-col span="6" @click="activetedTab='0'">
 				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '0'}">{{i18n.jghy}}</view>
 			</u-col>
-			<u-col span="6" @click="jumpToEternity">
+			<!-- jumpToEternity -->
+			<u-col span="6" @click="activetedTab='1'">
 				<view class="mb-20 bnt" :class="{'bnt-primary': activetedTab === '1'}">{{i18n.yxhy}}</view>
 			</u-col>
 		</u-row>
@@ -87,17 +88,19 @@
 			<view class="echart mt-20">
 				<view class="charts-box">
 					<!-- k线图 -->
-					<my-klinechart :themeVal="theme" :activetedTime="activetedTime" :applyNewData="klineData" @changeTime="changeTime">
+					<my-klinechart ref="kline" v-if="currentBiType.symbol" :symbol="currentBiType.symbol" :themeVal="theme"
+						:activetedTime="activetedTime" :applyNewData="klineData" @changeTime="changeTime"
+						@updateData="updateData">
 					</my-klinechart>
 				</view>
 			</view>
 		</view>
-		<view class="bg-black" :style="{backgroundColor: isNight ? '#1e2030' : '#eaedf2'}"></view>
+		<view :style="{backgroundColor: isNight ? '#1e2030' : '#eaedf2'}"></view>
 		<!-- 列表数据 -->
 		<view class="list-tab">
-			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a" :current="currentIndex"
-			 @change="tabClickHanlder" />
-			 <u-line style="position:relative;bottom: 6rpx;"></u-line>
+			<u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a"
+				:current="currentIndex" @change="tabClickHanlder" />
+			<u-line style="position:relative;bottom: 6rpx;"></u-line>
 			<swiper :current="currentIndex">
 				<swiper-item>
 					<scroll-view :scroll-y="true">
@@ -116,8 +119,8 @@
 										</u-col>
 									</u-row>
 								</view>
-								<u-row gutter="16" v-for="(item,index) in leftList" :key="index" justify="space-betweent"
-									class="list-row">
+								<u-row gutter="16" v-for="(item,index) in leftList" :key="index"
+									justify="space-betweent" class="list-row">
 									<u-col span="6">
 										<text>{{item.price}}</text>
 									</u-col>
@@ -140,8 +143,8 @@
 										</u-col>
 									</u-row>
 								</view>
-								<u-row gutter="16" v-for="(item, index) in rightList" :key="index" justify="space-betweent"
-									class="list-row">
+								<u-row gutter="16" v-for="(item, index) in rightList" :key="index"
+									justify="space-betweent" class="list-row">
 									<u-col span="6"><text>{{item.price}}</text></u-col>
 									<u-col span="6" class="text-red right-col">
 										<text>{{item.amount}}</text>
@@ -162,35 +165,40 @@
 						<u-row gutter="16" v-for="(item,index) in dealData" :key="index" justify="space-between"
 							class="list-row">
 							<u-col span="3">{{item.current_time}}</u-col>
-							<u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+							<u-col span="3" class="text-green"
+								:class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
 								{{item.direction}}
 							</u-col>
-							<u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+							<u-col span="3" class="text-green"
+								:class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
 								{{item.price}}
 							</u-col>
-							<u-col span="3" >{{item.amount}}</u-col>
+							<u-col span="3">{{item.amount}}</u-col>
 						</u-row>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
-		<tool-bar class="mt-20"/>
+		<tool-bar class="mt-20" @order="order"/>
 	</view>
 </template>
 
 <script>
 	import toolBar from "./tool-bar.vue"
 	import socket from '../../common/ws/socket.js'
-	import { getData } from '@/common/hooks/socketData.js'
+	import {
+		getData
+	} from '@/common/hooks/socketData.js'
 	export default {
 		components: {
 			toolBar
 		},
 		data() {
 			return {
-				isNight: true,
+				symbol: '', /// 币种
+				isNight: false,
 				currentBiType: { // 当前的 币值数据
-					name: 'BTC/USDT'
+					// name: 'BTC/USDT'
 				},
 				showTypePopUp: false,
 				realTimeList: [{
@@ -211,15 +219,19 @@
 				isStar: false, // 收藏
 				activetedTab: '0',
 
-				activetedTime: { name: 'Line',value: '1min',	time: 1 }, // 图表选项
+				activetedTime: {
+					name: 'Line',
+					value: '1min',
+					time: 1
+				}, // 图表选项
 				klineData: [],
 
 				currentIndex: 0,
-				
+
 				socketObj: null,
 				socketObj1: null,
 				interval1: null,
-					
+
 				leftList: [],
 				rightList: [],
 				dealData: [],
@@ -234,9 +246,12 @@
 				return this.$t("trendDetails")
 			},
 			tabList() {
-				return [
-					{ name: this.i18n.wtdd},
-					{ name: this.i18n.zxjy}
+				return [{
+						name: this.i18n.wtdd
+					},
+					{
+						name: this.i18n.zxjy
+					}
 				];
 			},
 			getMotBntList() {
@@ -266,28 +281,58 @@
 			clearInterval(this.interval1)
 			this.interval1 = null
 		},
+		onLoad(e) {
+			console.log(e)
+			const {
+				code,
+				name
+			} = e
+			this.activetedTab = code + ''
+			this.symbol = name
+		},
 		created() {
 			this.$u.api.trendDetails.getRealtime().then(res => {
-				this.currentBiType = res.data[0]
+				// 获取页面币种
+				const {
+					data
+				} = res // res.data[0]
+				this.currentBiType = data.find(item => item.name === this.symbol)
+				this.getKlineData()
+				this.getSocketData()
 			});
-			this.getKlineData()
-			if(this.socketObj || this.socketObj1){
+
+			if (this.socketObj || this.socketObj1) {
 				this.socketObj = null
 				this.socketObj1 = null
 				this.socketObj.destroy();
 				this.socketObj1.destroy();
 			}
-			this.getSocketData()
 		},
 		methods: {
-      //跳转永续
-      jumpToEternity(){
-        this.activetedTab='1'
-        uni.navigateTo({
-              // url: `/pages/financial/delivery`
-          url:`/pages/financial/index`
-            })
-      },
+			order(e) {
+				console.log(this.activetedTab)
+				if (this.activetedTab == 1) {
+					uni.navigateTo({
+						url: '/pages/financial/index'
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/financial/delivery'
+					})
+				}
+			},
+			updateData(e) { // 更新顶部信息
+				this.currentBiType = { ...this.currentBiType, ...e }
+				// console.log(this.currentBiType, e)
+			},
+			//跳转永续
+			jumpToEternity() {
+				this.activetedTab = '1'
+				uni.navigateTo({
+					// url: `/pages/financial/delivery`
+					url: `/pages/financial/index`
+				})
+			},
 			// 获取类型的币值 实时数据
 			async getRealtime(symbol) {
 				this.$u.throttle(async () => {
@@ -317,12 +362,12 @@
 			},
 			async tabClickHanlder(val) {
 				this.currentIndex = val
-				
-				this.socketObj ? await this.socketObj.destroy() :null;
-				this.socketObj1 ? await this.socketObj1.destroy() :null;
+
+				this.socketObj ? await this.socketObj.destroy() : null;
+				this.socketObj1 ? await this.socketObj1.destroy() : null;
 				clearInterval(this.interval1)
 				this.interval1 = null
-				if(val === 0) this.getSocketData();
+				if (val === 0) this.getSocketData();
 				else this.getDealData();
 			},
 			// 图表时间 改变
@@ -335,11 +380,17 @@
 			},
 			// 获取Socket的数据
 			getSocketData() {
-				this.socketObj = new socket('wss://hajhiug.com/data/websocket/3/btc')
+				//this.socketObj = new socket('wss://hajhiug.com/data/websocket/3/btc')
+				this.socketObj = new socket(`wss://thasjhdhjg.site/data/websocket/3/${this.currentBiType.symbol}`)
 				this.socketObj.doOpen()
-				this.interval1 = setInterval(()=> {
-					let {code, data} = getData()
-					if(code == '0') {
+				this.interval1 = setInterval(() => {
+
+					let {
+						code,
+						data
+					} = getData()
+
+					if (code == '0') {
 						this.leftList = data.asks
 						this.rightList = data.bids
 					}
@@ -348,10 +399,12 @@
 			// 获取Socket last deal 的数据
 			getDealData() {
 				this.dealData = [];
-				this.socketObj1 = new socket('wss://hajhiug.com/data/websocket/2/btc')
+				this.socketObj1 = new socket(`wss://hajhiug.com/data/websocket/2/${this.currentBiType.symbol}`)
 				this.socketObj1.doOpen()
-				this.interval1 = setInterval(()=> {
-					let { data } = getData()
+				this.interval1 = setInterval(() => {
+					let {
+						data
+					} = getData()
 					this.dealData = data.data
 				}, 3000)
 			},
@@ -360,7 +413,7 @@
 				const {
 					code,
 					data
-				} = await this.$u.api.trendDetails.getKline(symbol, line);
+				} = await this.$u.api.trendDetails.getKline(this.currentBiType.symbol, line);
 
 				if (code == 0) {
 					this.klineData = data
@@ -499,11 +552,12 @@
 			::v-deep .u-tabs {
 				background: inherit !important;
 			}
+
 			uni-swiper {
 				min-height: 600px;
 				padding-bottom: 100px;
 			}
-			
+
 			.title {
 				font-size: 16px;
 			}
