@@ -5,11 +5,14 @@
 		<view class="right">
 		  <image @click="getPath" src="../../static/image/k-line/1.png" />	{{ title }}
 		</view>
-		<!-- <view class="r-img">
-			<image src="../../static/image/k-line/2.png" />
-			<image src="../../static/image/k-line/3.png" />
+		<view class="r-img">
+				<span @click="isNight = !isNight" class="icon-span">
+					<image class="icon-img" v-if="isNight" src="../../static/image/dayOrNight/day.png" mode=""></image>
+					<image class="icon-img" v-else src="../../static/image/dayOrNight/night.png" mode=""></image>
+				</span>
 			<image @click="isCollection = !isCollection" :src="isCollection ? '../../static/image/k-line/5.png':'../../static/image/k-line/4.png' " />
-		</view> -->
+      <u-icon name="order" size="30" class="uicon" @click="turnTo"></u-icon>
+		</view>
 	</view>
 </template>
 
@@ -46,7 +49,7 @@
 
 <style lang="scss" scoped>
 	.f-head {
-		margin: 56rpx 0 70rpx 24rpx;
+		margin: 16rpx 0 70rpx 24rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -70,6 +73,16 @@
 			   margin-right: 14rpx;
 		   }
 	   }
+
+    .icon-span {
+      .icon-img {
+        width: 33rpx;
+        height: 33rpx;
+        position: relative;
+        top: 6rpx;
+      }
+    }
+
 		.right {
 			font-size: 38rpx;
 			color: #000000;

@@ -37,8 +37,10 @@
 					{{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai}}
 					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
 				</view>
-        <view class="right" @click="goDetails(item)">
-          {{ i18n.details }}
+        <view class="right">
+          <view class="right" @click="goDetails(item)">
+            {{ i18n.details }}
+          </view>
         </view>
 				<view class="right">
           <view class="right"  @click.stop="pingchang(item)">
@@ -146,8 +148,10 @@
 				</view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
 					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}
-          {{item.margin|SubStringZreo(4)}}
 				</view>
+        <view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
+          {{item.margin|SubStringZreo(4)}}
+        </view>
 <!--        收益率-->
 				<view class="right" :class="item.num?'c_red':'c_green'">
 					{{ item.profitUp }}

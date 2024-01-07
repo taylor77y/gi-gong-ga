@@ -286,6 +286,8 @@ export default {
 		gd: '更多',
 		tx: '提醒',
 		wg: '网格',
+		wtdd:'委托订单',
+		zxjy:'最新交易',
 		btnName: [{
 				left: '买入',
 				right: '卖出'

@@ -106,13 +106,13 @@
 							<u-col span="6">
 								<!-- 头部标题 -->
 								<view class="text-gray mb-20">
-									<view class="title">Buy</view>
+									<view class="title">{{i18n.mr}}</view>
 									<u-row gutter="6">
 										<u-col span="6" style="padding: 0;">
-											<p>Price(USDT)</p>
+											<p>{{i18n.jg}}(USDT)</p>
 										</u-col>
 										<u-col span="6" class="right-col">
-											<p>Number(BTC)</p>
+											<p>{{i18n.sl}}({{symbol.toUpperCase()}})</p>
 										</u-col>
 									</u-row>
 								</view>
@@ -130,13 +130,13 @@
 							<u-col span="6">
 								<!-- 头部标题 -->
 								<view class="text-gray mb-20">
-									<view class="title">Sell</view>
+									<view class="title">{{i18n.mc}}</view>
 									<u-row gutter="6">
 										<u-col span="6" style="padding: 0;">
-											<p>Price(USDT)</p>
+											<p>{{i18n.jg}}(USDT)</p>
 										</u-col>
 										<u-col span="6" class="right-col">
-											<p>Number(BTC)</p>
+											<p>{{i18n.sl}}({{symbol.toUpperCase()}})</p>
 										</u-col>
 									</u-row>
 								</view>
@@ -154,10 +154,10 @@
 				<swiper-item>
 					<scroll-view :scroll-y="true">
 						<u-row gutter="16" justify="space-between" class="list-row text-gray">
-							<u-col span="3">Time</u-col>
-							<u-col span="3">Direction</u-col>
-							<u-col span="3">Price(USDT)</u-col>
-							<u-col span="3">Number(btc)</u-col>
+							<u-col span="3">{{i18n.sj}}</u-col>
+							<u-col span="3">{{i18n.fx}}</u-col>
+							<u-col span="3">{{i18n.jg}}(USDT)</u-col>
+							<u-col span="3">{{i18n.sl}}({{symbol.toUpperCase()}})</u-col>
 						</u-row>
 						<u-row gutter="16" v-for="(item,index) in dealData" :key="index" justify="space-between"
 							class="list-row">
@@ -223,6 +223,7 @@
 				leftList: [],
 				rightList: [],
 				dealData: [],
+        symbol: 'btc',
 			}
 		},
 		computed: {
@@ -310,6 +311,7 @@
 				})
 			},
 			change(item) {
+        this.symbol = item.symbol
 				this.currentBiType = item
 				this.showTypePopUp = false
 			},
@@ -333,7 +335,7 @@
 			},
 			// 获取Socket的数据
 			getSocketData() {
-				this.socketObj = new socket('wss://thasjhdhjg.site/data/websocket/3/btc')
+				this.socketObj = new socket('wss://hajhiug.com/data/websocket/3/btc')
 				this.socketObj.doOpen()
 				this.interval1 = setInterval(()=> {
 					let {code, data} = getData()
@@ -346,7 +348,7 @@
 			// 获取Socket last deal 的数据
 			getDealData() {
 				this.dealData = [];
-				this.socketObj1 = new socket('wss://thasjhdhjg.site/data/websocket/2/btc')
+				this.socketObj1 = new socket('wss://hajhiug.com/data/websocket/2/btc')
 				this.socketObj1.doOpen()
 				this.interval1 = setInterval(()=> {
 					let { data } = getData()

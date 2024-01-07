@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<k-head-title :title="name" @onSwitch="showSpec = true" />
-
+<!--    <xl-header :title="name" ></xl-header>-->
 		<view class="top-box">
 			<view class="left">
 				<view class="money">
@@ -15,13 +15,13 @@
 			<view class="right">
 				<view class="top">
 					<view>
-						<view>{{ i18n.zgj }}</view>
+						<view>24h{{ i18n.zgj }}</view>
 						<view class="num">
 							{{json.high24h}}
 						</view>
 					</view>
 					<view>
-						<view>24h</view>
+						<view>24h成交额</view>
 						<view class="num">
 							{{json.volume | SubString(2)}}
 						</view>
@@ -34,12 +34,12 @@
 							{{json.low24h}}
 						</view>
 					</view>
-					<!-- <view>
+					<view>
 						<view>24h成交量(BNB)</view>
 						<view class="num">
 							114,074.74
 						</view>
-					</view> -->
+					</view>
 				</view>
 			</view>
 		</view>
@@ -118,7 +118,7 @@
 		<information v-if="current === 3"/>
 		<view style="height: 130rpx;"></view>
 		<view class="footer-box">
-			<!-- <view class="f-other" @click="getTips">
+			<view class="f-other" @click="getTips">
 				<image src="../../static/image/k-line/8.png" />
 				<view>{{ i18n.gd }}</view>
 			</view>
@@ -129,7 +129,7 @@
 			<view class="f-other" @click="getTips">
 				<image src="../../static/image/k-line/10.png" />
 				<view>{{ i18n.wg }}</view>
-			</view> -->
+			</view>
 			<view class="f-btn" @click="addBay()">
 				{{ btnName[code].left }}
 			</view>
@@ -140,7 +140,89 @@
 		<u-action-sheet :cancel-text="$t('fack').qx" @click="onClickNum" :list="numInfo" v-model="numCode">
 		</u-action-sheet>
 		<quotation-popup :list="pairs" @getTo="getTo" :show-spec.sync="showSpec" />
-		
+
+
+    <!-- 列表数据 -->
+    <view class="list-tab">
+      <u-tabs :list="tabList" :scrollable="false" active-color="#2979ff" inactive-color="#868c9a" :current="currentIndex"
+              @change="tabClickHanlder" />
+      <u-line style="position:relative;bottom: 6rpx;"></u-line>
+      <swiper :current="currentIndex">
+        <swiper-item>
+          <scroll-view :scroll-y="true">
+            <u-row gutter="16" justify="space-betweent">
+              <!-- 左边列表数据 -->
+              <u-col span="6">
+                <!-- 头部标题 -->
+                <view class="text-gray mb-20">
+                  <view class="title">{{i18n.mairu}}</view>
+                  <u-row gutter="6">
+                    <u-col span="6" style="padding: 0;">
+                      <p>{{i18n.jg}}(USDT)</p>
+                    </u-col>
+                    <u-col span="6" class="right-col">
+                      <p>{{i18n.sl}}({{symbol.toUpperCase()}})</p>
+                    </u-col>
+                  </u-row>
+                </view>
+                <u-row gutter="16" v-for="(item,index) in leftList" :key="index" justify="space-betweent"
+                       class="list-row">
+                  <u-col span="6">
+                    <text>{{item.price}}</text>
+                  </u-col>
+                  <u-col span="6" class="text-green right-col">
+                    <text>{{item.amount}}</text>
+                  </u-col>
+                </u-row>
+              </u-col>
+              <!-- 右边列表数据 -->
+              <u-col span="6">
+                <!-- 头部标题 -->
+                <view class="text-gray mb-20">
+                  <view class="title">{{i18n.maichu}}</view>
+                  <u-row gutter="6">
+                    <u-col span="6" style="padding: 0;">
+                      <p>{{i18n.jg}}(USDT)</p>
+                    </u-col>
+                    <u-col span="6" class="right-col">
+                      <p>{{i18n.sl}}({{symbol.toUpperCase()}})</p>
+                    </u-col>
+                  </u-row>
+                </view>
+                <u-row gutter="16" v-for="(item, index) in rightList" :key="index" justify="space-betweent"
+                       class="list-row">
+                  <u-col span="6"><text>{{item.price}}</text></u-col>
+                  <u-col span="6" class="text-red right-col">
+                    <text>{{item.amount}}</text>
+                  </u-col>
+                </u-row>
+              </u-col>
+            </u-row>
+          </scroll-view>
+        </swiper-item>
+        <swiper-item>
+          <scroll-view :scroll-y="true">
+            <u-row gutter="16" justify="space-between" class="list-row text-gray">
+              <u-col span="3">{{i18n.sj}}</u-col>
+              <u-col span="3">{{i18n.fx}}</u-col>
+              <u-col span="3">{{i18n.jg}}(USDT)</u-col>
+              <u-col span="3">{{i18n.sl}}({{symbol.toUpperCase()}})</u-col>
+            </u-row>
+            <u-row gutter="16" v-for="(item,index) in dealData" :key="index" justify="space-between"
+                   class="list-row">
+              <u-col span="3">{{item.current_time}}</u-col>
+              <u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+                {{item.direction}}
+              </u-col>
+              <u-col span="3" class="text-green" :class="{'text-red': item.direction === 'sell' || item.direction === 'Sell'}">
+                {{item.price}}
+              </u-col>
+              <u-col span="3" >{{item.amount}}</u-col>
+            </u-row>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
 	</view>
 </template>
 
@@ -202,6 +284,11 @@
 				chengjiaoData: [],
 				scrollLoadingStatus:false,
         timerVal: null,
+        currentIndex: 0,
+
+        leftList: [],
+        rightList: [],
+        dealData: [],
 			}
 		},
 		filters: {
@@ -249,7 +336,7 @@
           this.getKlineData()
 				}, 3000);
 			}
-      this.socket = new socket("wss://localhost:8782/websocket/3/"+this.name.split('/')[0].toLowerCase())
+      this.socket = new socket("wss://hajhiug.com/data/websocket/1/"+this.name.split('/')[0].toLowerCase())
 			this.socket.doOpen();
 			this.socket.on("open", () => {
 				this.socket.send("PING");
@@ -266,6 +353,12 @@
 			i18n() {
 				return this.$t("kLine")
 			},
+      tabList() {
+        return [
+          { name: this.i18n.wtdd},
+          { name: this.i18n.zxjy}
+        ];
+      },
 			btnName() {
 				return this.i18n.btnName
 			},
@@ -279,6 +372,20 @@
 				return this.i18n.listTime
 			}
 		},
+    created() {
+      this.$u.api.trendDetails.getRealtime().then(res => {
+        this.currentBiType = res.data[0]
+      });
+      this.getKlineData()
+      if(this.socketObj || this.socketObj1){
+        this.socketObj = null
+        this.socketObj1 = null
+        this.socketObj.destroy();
+        this.socketObj1.destroy();
+      }
+      this.getSocketData()
+    },
+
 		methods: {
       //计算比例:
       computRate(item){
@@ -453,7 +560,41 @@
 				// 	return
 				// }
 				this.current = e		
-			}
+			},
+      async tabClickHanlder(val) {
+        this.currentIndex = val
+
+        this.socketObj ? await this.socketObj.destroy() :null;
+        this.socketObj1 ? await this.socketObj1.destroy() :null;
+        clearInterval(this.interval1)
+        this.interval1 = null
+        if(val === 0) this.getSocketData();
+        else this.getDealData();
+      },
+
+      // 获取Socket last deal 的数据
+      getDealData() {
+        this.dealData = [];
+        this.socketObj1 = new socket('wss://hajhiug.com/data/websocket/2/btc')
+        this.socketObj1.doOpen()
+        this.interval1 = setInterval(()=> {
+          let { data } = getData()
+          this.dealData = data.data
+        }, 3000)
+      },
+
+      // 获取Socket的数据
+      getSocketData() {
+        this.socketObj = new socket('wss://hajhiug.com/data/websocket/3/btc')
+        this.socketObj.doOpen()
+        this.interval1 = setInterval(()=> {
+          let {code, data} = getData()
+          if(code == '0') {
+            this.leftList = data.asks
+            this.rightList = data.bids
+          }
+        }, 3000)
+      },
 		}
 	}
 </script>
