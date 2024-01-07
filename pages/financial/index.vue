@@ -749,7 +749,7 @@
 			},
       //开仓/平仓
 			sub(code) {
-			  debugger
+			  // debugger
         if(this.isError){
           this.$utils.showToast(this.i18n.ghbbkjy)
           return
@@ -874,11 +874,15 @@
 				this.search = item.open
 				// this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
+				this.show = false
+				this.$nextTick(() => {
+					this.show = true
+				})
 				this.getNewDataDepth()
 				this.socketFn()
 
 				this.getLeverList();
-				debugger
+				// debugger
 				this.getWarehousesList();
 				this.getCoinInfoList();
 			},
