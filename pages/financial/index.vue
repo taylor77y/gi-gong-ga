@@ -734,8 +734,11 @@
 				})
 			},
 			getLine() {
+				// uni.navigateTo({
+				// 	url: `/pages/kLine/index?name=${this.pairsItem.pairsName}&code=1`
+				// })
 				uni.navigateTo({
-					url: `/pages/kLine/index?name=${this.pairsItem.pairsName}&code=1`
+					url: `/pages/trendDetails/index?name=${this.pairsItem.pairsName}&code=1`
 				})
 			},
 			emptyFn() {

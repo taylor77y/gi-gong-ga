@@ -185,8 +185,11 @@
 				// }
 			},
 			getLine() {
+				// uni.navigateTo({
+				// 	url: `/pages/kLine/index?name=${this.pairsItem.pairsName}&code=2`
+				// })
 				uni.navigateTo({
-					url: `/pages/kLine/index?name=${this.pairsItem.pairsName}&code=2`
+					url: `/pages/trendDetails/index?name=${this.pairsItem.pairsName}&code=0`
 				})
 			},
 			//定时器没过1秒参数减1
@@ -224,8 +227,9 @@
 				this.$u.api.mhy.getSecondsContract().then(res => {
 					// console.log('res', res)
 					if (res && res.status == "SUCCEED") {
-						this.listTime = res.result.filter((item, key) => key < 2)
-						// console.log(this.listTime)
+						// this.listTime = res.result.filter((item, key) => key < 2)
+						this.listTime = res.result
+						console.log('listTime', this.listTime)
 						uni.setStorageSync('listTime', JSON.stringify(res.result))
 
 					} else if (res.status == "FAILED") {

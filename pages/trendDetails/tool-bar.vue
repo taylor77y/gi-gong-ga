@@ -8,10 +8,10 @@
 			}}</text>
 		</view>
 		<view class="long">
-			<button class="btn" type="warn">{{i18n.kd}}</button>
+			<button class="btn" type="warn" @click="onBtn('buy')">{{i18n.kd}}</button>
 		</view>
 		<view class="short">
-			<button class="btn" type="warn">{{i18n.kk}}</button>
+			<button class="btn" type="warn" @click="onBtn('sell')">{{i18n.kk}}</button>
 		</view>
 	</view>
 </template>
@@ -26,6 +26,11 @@
 				return this.$t("trendDetails")
 			},
 		},
+		methods: {
+			onBtn(e) {
+				this.$emit('order', e)
+			}
+		}
 	}
 </script>
 
