@@ -195,6 +195,21 @@
 					const lastData = dataList[dataList.length - 1]
 					const nowData = _data
 					// const timeValue = this.timeValue
+					// const newData = {
+					//   close: nowData.close / 1,
+					//   // current_time: lastData.current_time,
+					//   high: lastData.high > nowData.close / 1 ? lastData.high : (nowData.close / 1),
+					//   // high: lastData.high,
+					//   line: this.activetedTime.value,
+					//   low: lastData.low < nowData.close / 1 ? lastData.low : (nowData.close / 1),
+					//   // low: lastData.low,
+					//   open: lastData.open,
+					//   symbol: lastData.symbol,
+					//   ts: lastData.ts, //
+					//   // timestamp: nowData.ts,
+					//   timestamp: (nowData.ts - lastData.ts) < timeValue.ts ? lastData.ts : (lastData.ts + timeValue.ts),
+					//   volume: lastData.volume / 1
+					// }
 					const newData = {
 					  close: nowData.close / 1,
 					  // current_time: lastData.current_time,
@@ -205,9 +220,11 @@
 					  // low: lastData.low,
 					  open: lastData.open,
 					  symbol: lastData.symbol,
-					  ts: lastData.ts, //
+					  // ts: lastData.ts, //
+					  ts: nowData.ts,
+					  timestamp: nowData.ts,
 					  // timestamp: nowData.ts,
-					  timestamp: (nowData.ts - lastData.ts) < timeValue.ts ? lastData.ts : (lastData.ts + timeValue.ts),
+					  // timestamp: (nowData.ts - lastData.ts) < timeValue.ts ? lastData.ts : (lastData.ts + timeValue.ts),
 					  volume: lastData.volume / 1
 					}
 					
