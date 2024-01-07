@@ -313,7 +313,12 @@
 				// this.socket.on("message", this.onMessage);
 			},
 			getTo(item) {
-				this.socket.send(`initEntrust-${item.pairsName}`);
+				console.log('itme', item)
+				this.show = false
+				this.$nextTick(() => {
+					this.show = true
+				})
+				// this.socket.send(`initEntrust-${item.pairsName}`);
 				this.pairsItem = item
 				this.getCoinInfoList();
 			},

@@ -58,7 +58,7 @@
 					</view>
 				</view>
 				<!-- 右边部分-->
-				<socket-data @price="onPrice" :symbol="symbol" v-if="symbol"></socket-data>
+				<socket-data @price="onPrice" :symbol="symbol" :key="symbol" v-if="symbol"></socket-data>
 				<!-- <view class="left">
 					<view class="d-flex-between-center">
 						<view>{{ i18n.shuliang }}</view>
