@@ -25,7 +25,7 @@
 
         <view class="detailsList right">
           <view class="detailsListItem title">{{ type }}{{list.pairsName}}</view>
-          <view class="detailsListItem"  style="color : red">{{ list.orderState ? i18n.ypc: '-'}}</view>
+          <view class="detailsListItem"  style="color : red">{{ list.orderState ? i18n.chic: i18n.ypc}}</view>
           <view class="detailsListItem">{{list.amount || 0.00}}</view>
           <view class="detailsListItem">{{list.amount || 0.00}}</view>
           <view class="detailsListItem">{{list.margin || 0.00}}</view>

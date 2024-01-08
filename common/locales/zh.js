@@ -1846,6 +1846,7 @@ export default {
 	// },
 	financial: {
 		ypc:'已平仓',
+		chic:'持仓',
 		ghbbkjy:'该货币不可交易.',
 		kaican: '开仓',
 		pingcan: '平仓',

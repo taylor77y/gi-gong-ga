@@ -802,7 +802,7 @@
           newParams.pairsName = name//全名
           newParams.coinName  = name.split("/")[1]//前两位名
           // newParams.kPrice = Number(last).toFixed(4) || price//建仓价
-		  console.log('这里是socket推过来的实时数据', this.realTimeObj)
+		  // console.log('这里是socket推过来的实时数据', this.realTimeObj)
 		  newParams.kPrice = this.realTimeObj.close //建仓价
           newParams.amount = this.search1 * 1000//合约金额
           newParams.margin = this.search1 * 1000//保证金
@@ -1006,7 +1006,7 @@
         let pairsName =  this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name
 				let memberId = uni.getStorageSync('userId')
         // let price = this.pairsItem.close || this.pairsItem.price
-        console.log('这里是socket推过来的实时数据xx', this.realTimeObj)
+        // console.log('这里是socket推过来的实时数据xx', this.realTimeObj)
         let price = this.realTimeObj.close
         if(price != '' || price != null){
           this.$u.api.contractNewInterface.getWarehouses(memberId,pairsName,price).then(res => {
@@ -1017,7 +1017,6 @@
             // this.$utils.showToast(this.i18n.ghbbkjy)
           })
         }
-
 			},
 			getTopBtn(index) {
 				if (index === 0) {

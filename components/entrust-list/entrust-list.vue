@@ -35,7 +35,7 @@
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
 					{{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai}}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }} {{item.leverNum | toFixed(2)}}X
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }} {{item.contractHandsx}}*{{item.leverNum}}X
 				</view>
         <view class="right">
           <view class="right" @click="goDetails(item)">
@@ -91,17 +91,14 @@
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 4">
-				<view class="left">
-					{{ i18n.start_price }}
-				</view>
+        <view class="left">
+          {{ i18n.start_price }}
+        </view>
         <view class="conta">
           {{ i18n.end_price }}
         </view>
 				<view class="conta">
-					{{ i18n.wsxyk }}
-				</view>
-        <view class="conta">
-          {{ i18n.bzj }}
+					{{ i18n.wsxyk }}usdt
 				</view>
 				<view class="right">
 					{{ i18n.syl }}
@@ -148,15 +145,12 @@
 					{{ item.price|SubStringZreo(2) }}
 				</view>
         <view style="width: 20rpx;"></view>
-        <view class="left" :class="item.price>0?'c_green':'c_red'">
-          {{ item.price|SubStringZreo(2) }}
+        <view class="conta" :class="item.price>0?'c_green':'c_red'">
+          {{ item.nowPricex|SubStringZreo(2) }}
         </view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
 					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(2)}}
 				</view>
-        <view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
-          {{item.margin|SubStringZreo(2)}}
-        </view>
 <!--        收益率-->
 				<view class="right" :class="item.num?'c_red':'c_green'">
 					{{ item.profitUp }}
@@ -190,6 +184,16 @@
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 4">
+        <view class="left">
+          {{ i18n.bzj }}
+        </view>
+        <view class="right">
+          <!-- 维持保证金率 -->
+          <!--					{{ $t('newFy').zyjg }}-->
+          {{ i18n.chengjiaoshijian }}
+          <text>
+          </text>
+        </view>
 <!--				<view class="left">-->
 <!--					{{ $t('newFy').ygqp }}-->
 <!--					<text>-->
@@ -206,10 +210,12 @@
 <!--				<view class="left">-->
 <!--					{{item.forcePrice|toFixed(4)}}-->
 <!--				</view>-->
-				<view class="conta">
-<!--					{{item.margin|SubStringZreo(4)}}-->
+				<view class="left">
+					{{item.margin}}
 				</view>
-				
+        <view class="right">
+          {{processedList(item) || '-'}}
+        </view>
 <!--				<view class="right" >-->
 <!--					{{item.hands}}-->
 <!--				</view>-->
@@ -252,16 +258,6 @@
 				</view>
 			</view>
 			<view class="f-row" v-if="mode === 4">
-				<view class="left">
-					<!-- 维持保证金率 -->
-<!--					{{ $t('newFy').zyjg }}-->
-          {{ i18n.chengjiaoshijian }}
-					<text>
-					</text>
-				</view>
-				<view class="conta">
-          {{processedList(item) || '-'}}
-				</view>
 <!--				<view class="right">-->
 <!--					{{ $t('newFy').zsjg }}-->
 <!--				</view>-->
@@ -423,6 +419,7 @@
       //详情  
       goDetails(item){
         if(this.mode == 3 || this.mode == 4){
+          // console.log('hibernate:---' +JSON.stringify(item))
           uni.navigateTo({
             url:`/pages/financial/details?data=` + JSON.stringify(item)
           })
