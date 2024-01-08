@@ -920,7 +920,7 @@
 			align-items: center;
 			overflow-x: scroll;
 
-			padding: 0 30rpx;
+			// padding: 0 30rpx;
 
 			::-webkit-scrollbar {
 				display: none
@@ -947,7 +947,7 @@
 				flex-shrink: 0;
 				font-size: 26rpx;
 				color: #8D9099;
-				margin-right: 50rpx;
+				// margin-right: 50rpx;
 			}
 
 			.item1 {

@@ -1,16 +1,25 @@
 <template>
 	<view class="container">
-<!--		 <view style="height: 56rpx;"></view>-->
-		<view class="white">
-			<view class="top-btn">
+		 <view style="height: 56rpx;"></view>
+		 <view class="top-btn">
+		 	<view class="item" @click="getTopBtn(index)" :class="{'item1': btnCode === index}"
+		 		v-for="(item, index) in topName" :key="index">{{ item }}
+		 		<view class="bot" v-if="btnCode === index"></view>
+		 		<view class="btn-tag" v-if="index === 2">
+		 			new
+		 		</view>
+		 	</view>
+		 </view>
+		<view class="white1">
+			<!-- <view class="top-btn">
 				<view class="item" @click="getTopBtn(index)" :class="{'item1': btnCode === index}"
 					v-for="(item, index) in topName" :key="index">{{ item }}
 					<view class="bot" v-if="btnCode === index"></view>
 					<view class="btn-tag" v-if="index === 2">
 						new
 					</view>
-				</view>
-			</view>
+				</view> 
+			</view>-->
 			<view class="bi-title d-flex-between-center">
 				<view class="left" @click="showSpec = true">
 					<image src="../../static/image/new/1.png" />
@@ -469,7 +478,7 @@
 				return (item.last - item.open24h) / item.open24h * 100
 			},
 			onPrice(e) { // 获取实时价格
-				console.log('e', e)
+				// console.log('e', e)
 				this.realTimeObj = e;
 			},
 			async getNewDataRealtime(first=false){
@@ -1483,27 +1492,88 @@
 			}
 		}
 
+		// .top-btn {
+		// 	margin: 0 24rpx;
+		// 	// border: 1rpx solid #B0B3BA;
+		// 	color: #000;
+		// 	border-radius: 15rpx;
+		// 	display: flex;
+		// 	align-items: center;
+		// 	overflow-x: scroll;
+
+		// 	.bot {
+		// 		margin-top: 6rpx;
+		// 		width: 40rpx;
+		// 		border-bottom: 5rpx solid #BE1852;
+		// 	}
+
+		// 	//padding: 0 30rpx;
+
+		// 	::-webkit-scrollbar {
+		// 		display: none
+		// 	}
+
+		// 	.btn-tag {
+		// 		position: absolute;
+		// 		top: -6rpx;
+		// 		right: -44rpx;
+		// 		color: #1F222B;
+		// 		font-size: 14rpx;
+		// 		background: linear-gradient(360deg, #ECBD4C 0%, #FADE72 100%);
+		// 		border-radius: 2rpx;
+		// 		padding: 0 6rpx;
+		// 		-webkit-transform: scale(0.5)
+		// 	}
+
+		// 	.item {
+		// 		position: relative;
+		// 		text-align: center;
+		// 		flex: 1;
+		// 		width: auto;
+		// 		flex-basis: auto;
+		// 		flex-shrink: 0;
+		// 		font-size: 26rpx;
+		// 		color: #333;
+		// 		justify-content: center;
+		// 		align-items: center;
+		// 		display: flex;
+		// 		flex-direction: column;
+		// 		// margin-right: 50rpx;
+		// 	}
+
+		// 	.item1 {
+		// 		position: relative;
+		// 		color: #1F222B;
+		// 		font-size: 28rpx;
+		// 		font-weight: 600;
+		// 		border-radius: 6rpx;
+		// 		padding: 10rpx 0;
+
+		// 		justify-content: center;
+		// 		align-items: center;
+		// 		display: flex;
+		// 		flex-direction: column;
+		// 		//background: #fff;
+		// 		// border-radius: 25rpx;
+		// 		// background: #2c78f8;
+		// 		color: #BE1852;
+		// 		border: none;
+		// 	}
+		// }
 		.top-btn {
 			margin: 0 24rpx;
-			// border: 1rpx solid #B0B3BA;
-			color: #000;
-			border-radius: 15rpx;
+			border: 1rpx solid #B0B3BA;
+			border-radius: 6rpx;
 			display: flex;
 			align-items: center;
 			overflow-x: scroll;
-
-			.bot {
-				margin-top: 6rpx;
-				width: 40rpx;
-				border-bottom: 5rpx solid #BE1852;
-			}
-
-			//padding: 0 30rpx;
-
+		
+			// padding: 0 30rpx;
+		
 			::-webkit-scrollbar {
 				display: none
 			}
-
+		
 			.btn-tag {
 				position: absolute;
 				top: -6rpx;
@@ -1515,7 +1585,7 @@
 				padding: 0 6rpx;
 				-webkit-transform: scale(0.5)
 			}
-
+		
 			.item {
 				position: relative;
 				text-align: center;
@@ -1524,31 +1594,18 @@
 				flex-basis: auto;
 				flex-shrink: 0;
 				font-size: 26rpx;
-				color: #333;
-				justify-content: center;
-				align-items: center;
-				display: flex;
-				flex-direction: column;
+				color: #8D9099;
 				// margin-right: 50rpx;
 			}
-
+		
 			.item1 {
 				position: relative;
 				color: #1F222B;
-				font-size: 28rpx;
+				font-size: 26rpx;
 				font-weight: 600;
 				border-radius: 6rpx;
-				padding: 10rpx 0;
-
-				justify-content: center;
-				align-items: center;
-				display: flex;
-				flex-direction: column;
-				//background: #fff;
-				// border-radius: 25rpx;
-				// background: #2c78f8;
-				color: #BE1852;
-				border: none;
+				padding: 10rpx 33rpx;
+				background: #fff;
 			}
 		}
 
