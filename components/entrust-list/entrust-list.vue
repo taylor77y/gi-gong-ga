@@ -23,7 +23,7 @@
       <view class="list-title" v-if="mode === 3">
 				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
           {{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai }}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }} {{item.leverNum | toFixed(2)}}X
 				</view>
 				<view class="right" v-if="state === 10 && state === 2" @click.stop="chedan(item)">
 					{{ i18n.chedan }}
@@ -35,7 +35,7 @@
 			<view class="list-title" v-if="mode === 4">
 				<view class="left" :class="{'left1': item.tradeType!='OPEN_UP'}">
 					{{item.tradeType=='OPEN_DOWN' ? i18n.kaikongzhuangtai:i18n.kaiduozhuangtai}}
-					<text></text> {{item.pairsName}}{{ i18n.yongxu }}{{item.leverNum | toFixed(2)}}X
+					<text></text> {{item.pairsName}}{{ i18n.yongxu }} {{item.leverNum | toFixed(2)}}X
 				</view>
         <view class="right">
           <view class="right" @click="goDetails(item)">
@@ -92,18 +92,19 @@
 			</view>
 			<view class="f-row" v-if="mode === 4">
 				<view class="left">
-					{{ $t('newFy').cjjj }}
-					<text>
-					</text>
-				</view>
-				<view class="conta">
-					{{ $t('newFy').wsxyk }}
+					{{ i18n.start_price }}
 				</view>
         <view class="conta">
-          {{ $t('newFy').bzj }}
+          {{ i18n.end_price }}
+        </view>
+				<view class="conta">
+					{{ i18n.wsxyk }}
+				</view>
+        <view class="conta">
+          {{ i18n.bzj }}
 				</view>
 				<view class="right">
-					{{ $t('newFy').syl }}
+					{{ i18n.syl }}
 				</view>
 			</view>
 			<view class="f-row f-000" v-if="mode === 1">
@@ -144,13 +145,17 @@
 			</view>
 			<view class="f-row f-000" v-if="mode === 4">
 				<view class="left" :class="item.price>0?'c_green':'c_red'">
-					{{ item.price|SubStringZreo(4) }}
+					{{ item.price|SubStringZreo(2) }}
 				</view>
+        <view style="width: 20rpx;"></view>
+        <view class="left" :class="item.price>0?'c_green':'c_red'">
+          {{ item.price|SubStringZreo(2) }}
+        </view>
 				<view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
-					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(4)}}
+					{{item.unProfitLoss>0?'+':''}}{{item.unProfitLoss|SubStringZreo(2)}}
 				</view>
         <view class="conta" :class="item.unProfitLoss>0?'c_green':'c_red'">
-          {{item.margin|SubStringZreo(4)}}
+          {{item.margin|SubStringZreo(2)}}
         </view>
 <!--        收益率-->
 				<view class="right" :class="item.num?'c_red':'c_green'">

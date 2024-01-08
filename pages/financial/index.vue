@@ -996,14 +996,19 @@
         }
         let pairsName =  this.pairsItem.pairsName  ? this.pairsItem.pairsName : this.pairsItem.name
 				let memberId = uni.getStorageSync('userId')
-        let price = this.pairsItem.close || this.pairsItem.price
-				this.$u.api.contractNewInterface.getWarehouses(memberId,pairsName,price).then(res => {
-          this.isError = false;
-					this.list = res.result;
-				}).catch(error=>{
-          this.isError = true
-          // this.$utils.showToast(this.i18n.ghbbkjy)
-        })
+        // let price = this.pairsItem.close || this.pairsItem.price
+        console.log('这里是socket推过来的实时数据xx', this.realTimeObj)
+        let price = this.realTimeObj.close
+        if(price != '' || price != null){
+          this.$u.api.contractNewInterface.getWarehouses(memberId,pairsName,price).then(res => {
+            this.isError = false;
+            this.list = res.result;
+          }).catch(error=>{
+            this.isError = true
+            // this.$utils.showToast(this.i18n.ghbbkjy)
+          })
+        }
+
 			},
 			getTopBtn(index) {
 				if (index === 0) {
